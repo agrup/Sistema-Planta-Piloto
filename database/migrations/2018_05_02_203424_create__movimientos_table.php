@@ -15,7 +15,17 @@ class CreateMovimientosTable extends Migration
     {
         Schema::create('movimientos', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+
+            $table->integer('idLoteConsumidor');
+            $table->integer('idLotaConsumido');
+            $table->date('fecha');
+            $table->integer('producto');
+            $table->float('debe');
+            $table->float('haber');
+            $table->float('saldoglobal');
+            $table->float('saldoLote');
+            $table->integer('tipo');
+            $table->timestamps();  
         });
     }
 
