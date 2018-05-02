@@ -15,7 +15,8 @@ class CreateLotesTable extends Migration
     {
         Schema::create('lotes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_producto')->unasigned();
+            $table->integer('id_producto')->unsigned();
+            $table->foreign('id_producto')->references('id')->on('productos');
             $table->date('fechaInicio');
             $table->date('fechaInicioMaduracion');
             $table->date('fechaFinalizacion');

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlnificacionesTable extends Migration
+class CreatePlanificacionesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePlnificacionesTable extends Migration
      */
     public function up()
     {
-        Schema::create('plnificaciones', function (Blueprint $table) {
+        Schema::create('planificaciones', function (Blueprint $table) {
             $table->increments('id');
             $table->date('fecha');
             $table->text('diaSemana');
@@ -30,6 +30,6 @@ class CreatePlnificacionesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plnificaciones');
+        Schema::dropIfExists('planificaciones');
     }
 }
