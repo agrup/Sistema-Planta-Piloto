@@ -10,7 +10,7 @@ class TipoMovimiento extends SplEnum
 {
     const __default = self::SIN_TIPO;
 
-    const SIN_TIPO=0;
+    const SIN_TIPO=-1;
     const TIPO_MOV_ENTRADA_INSUMO=1;
     const TIPO_MOV_SALIDA_VENTAS=2;
     const TIPO_MOV_SALIDA_EXCEP=3;
@@ -27,4 +27,40 @@ class TipoMovimiento extends SplEnum
     const TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO=14;
     const TIPO_MOV_CONSUMO_PLANIF_INCUMPLIDO=15;
 
+
+    /**
+     * @param int $tipo
+     * @return int
+     */
+    public static function cumplidoDe(int $tipo)
+    {
+        switch ($tipo){
+            case self::TIPO_MOV_CONSUMO_PLANIF :
+                return self::TIPO_MOV_CONSUMO_PLANIF_CUMPLIDO;
+            case self::TIPO_MOV_ENTRADA_INSUMO_PLANIF:
+                return self::TIPO_MOV_ENTRADA_INSUMO_PLANIF_CUMPLIDO;
+            case self::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF:
+                return self::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_CUMPLIDO;
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * @param int $tipo
+     * @return int
+     */
+    public static function incumplidoDe(int $tipo)
+    {
+        switch ($tipo){
+            case self::TIPO_MOV_CONSUMO_PLANIF :
+                return self::TIPO_MOV_CONSUMO_PLANIF_INCUMPLIDO;
+            case self::TIPO_MOV_ENTRADA_INSUMO_PLANIF:
+                return self::TIPO_MOV_ENTRADA_INSUMO_PLANIF_INCUMPLIDO;
+            case self::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF:
+                return self::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO;
+            default:
+                return null;
+        }
+    }
 }

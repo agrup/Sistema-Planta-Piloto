@@ -252,7 +252,19 @@ class Movimiento
 
     }
 
+    /**
+     * @param int $tipo
+     */
+    public function setTipo(int $tipo)
+    {
+    }
 
+    /**
+     * @return int
+     */
+    public function getTipo()
+    {
+    }
 
 
 }
