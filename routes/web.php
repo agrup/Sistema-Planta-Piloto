@@ -1,16 +1,37 @@
-<?php
+<?php 
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Lote;
 
 Route::get('/', function () {
-    return view('welcome');
+
+	$name = 'Planta Piloto';
+	$branch ='branch Agu';
+
+    return view('welcome' ,
+    	compact('name','branch')
+
+    	);
+});
+
+
+Route::get('/lotes', function () {
+
+	$lotes = Lote::all();
+
+	#$lotes= DB::table('lotes')->get();
+	#$Lotes = Lote::all();
+
+    return view('lotes.index',compact('lotes'));
+	
+});
+
+Route::get('/lotes/{id}', function ($id) {
+
+
+
+	$lotes= Lote::find($id);
+	#$Lotes = Lote::all();
+	#dd($lotes);
+   return view('lotes.show',compact('lotes'));
+	
 });

@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Schema;Laravel Helper Completions
+
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
