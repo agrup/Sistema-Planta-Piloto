@@ -16,8 +16,10 @@ class CreateFormulacionesTable extends Migration
         Schema::create('formulaciones', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('idFormulacion');
-            $table->integer('idProducto');
-            $table->integer('idIngrediente');
+            $table->integer('id_producto')->unsigned();
+            $table->foreign('id_producto')->references('id')->on('productos');
+            $table->integer('idIngrediente')->unsigned();
+            $table->foreign('idIngrediente')->references('id')->on('productos');
             $table->integer('cantidadIngrediete');
             $table->boolean('estado');
             $table->timestamps();
