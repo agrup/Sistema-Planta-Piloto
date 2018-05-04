@@ -13,7 +13,20 @@ class TrabajadorController extends Controller
     }
     public function store() 
     {
-    	dd(request()->all());
+    	$trabajador = new Trabajador;
+
+        $trabajador->sector = request('sector');
+
+        $trabajador->puesto = request('puesto');
+
+        $trabajador->legajo = request('legajo');
+
+        $trabajador->seudonimo = request('seudonimo');
+
+        $trabajador->save();
+
+        return redirect('/');
+
     }
        
     public function create() 

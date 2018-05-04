@@ -20,4 +20,4 @@ Route::get('/lotes/{id}', 'LotesController@show') ;
 
 Route::get('/trabajador', 'TrabajadorController@index');
 Route::get('/trabajador/create', 'TrabajadorController@create');
-Route::post('/trabajador', 'TrabajadorController@create');
+Route::post('/trabajador', 'TrabajadorController@store');

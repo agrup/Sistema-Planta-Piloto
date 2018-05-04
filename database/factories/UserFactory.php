@@ -21,3 +21,17 @@ $factory->define(App\User::class, function (Faker $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+
+$factory->define(App\Producto::class, function (Faker $faker) {
+    return [
+        'nombre' => $faker->name,
+        'descripcion' => $faker->sentence,
+        'codigo' => str_random(5),
+        'alarmaActiva' => $faker->boolean,
+        'alarmaAmarilla'=>21,
+        'tipoUnidad'=> str_random(2)
+
+
+    ];
+});

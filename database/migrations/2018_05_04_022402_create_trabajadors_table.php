@@ -16,11 +16,11 @@ class CreateTrabajadorsTable extends Migration
         Schema::create('trabajadors', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('legajo');
-            $table->integer('idPersona');
-            $table->text('sector');
-            $table->text('puesto');
-            $table->text('seudonimo');
-            $table->boolean('estado');
+            $table->integer('idPersona')->nullable($value = true);
+            $table->text('sector')->nullable($value = true);
+            $table->text('puesto')->nullable($value = true);
+            $table->text('seudonimo')->nullable($value = true);
+            $table->boolean('estado')->nullable($value = true);
             $table->timestamps();
         });
 

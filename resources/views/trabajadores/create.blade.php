@@ -5,7 +5,8 @@
 	<title>Create Trabajador</title>
 </head>
 <body>
-<form method="get" action="/trabajador">
+<form method="POST" action="/trabajador">
+@csrf
  name:<br>
   <input type="text" name="name" value="Agustin">
   <br>
