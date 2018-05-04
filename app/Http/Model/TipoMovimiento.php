@@ -5,7 +5,6 @@
  * Date: 1/5/2018
  * Time: 12:01 AM
  */
-
 class TipoMovimiento extends SplEnum
 {
     const __default = self::SIN_TIPO;
@@ -26,7 +25,6 @@ class TipoMovimiento extends SplEnum
     const TIPO_MOV_ENTRADA_INSUMO_PLANIF_INCUMPLIDO=13;
     const TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO=14;
     const TIPO_MOV_CONSUMO_PLANIF_INCUMPLIDO=15;
-
 
     /**
      * @param int $tipo
@@ -63,4 +61,6 @@ class TipoMovimiento extends SplEnum
                 return null;
         }
     }
+
 }
+
