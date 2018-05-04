@@ -8,7 +8,6 @@
 <h1>
 Vencimiento de lote: {{ $lotes->id  }}</h1>
 	<p>
-		
 		{{ $lotes->fechaVencimiento}}
 	</p>
 </body>

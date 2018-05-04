@@ -14,24 +14,10 @@ Route::get('/', function () {
 });
 
 
-Route::get('/lotes', function () {
+Route::get('/planificacion', 'Planificacioncontroller@verCalendario($id)' );
+Route::get('/lotes', 'LotesController@index') ;
+Route::get('/lotes/{id}', 'LotesController@show') ;
 
-	$lotes = Lote::all();
-
-	#$lotes= DB::table('lotes')->get();
-	#$Lotes = Lote::all();
-
-    return view('lotes.index',compact('lotes'));
-	
-});
-
-Route::get('/lotes/{id}', function ($id) {
-
-
-
-	$lotes= Lote::find($id);
-	#$Lotes = Lote::all();
-	#dd($lotes);
-   return view('lotes.show',compact('lotes'));
-	
-});
+Route::get('/trabajador', 'TrabajadorController@index');
+Route::get('/trabajador/create', 'TrabajadorController@create');
+Route::post('/trabajador', 'TrabajadorController@create');

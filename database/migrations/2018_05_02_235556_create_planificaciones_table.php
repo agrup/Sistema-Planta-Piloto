@@ -15,10 +15,10 @@ class CreatePlanificacionesTable extends Migration
     {
         Schema::create('planificaciones', function (Blueprint $table) {
             $table->increments('id');
+
             $table->date('fecha');
             $table->text('diaSemana');
             $table->text('descripcion');
-            $table->text('detalle');
             $table->timestamps();
         });
     }
