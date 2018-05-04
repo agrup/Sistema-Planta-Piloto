@@ -8,6 +8,7 @@
 class TipoMovimiento extends SplEnum
 {
     const __default = self::SIN_TIPO;
+
     const SIN_TIPO=-1;
     const TIPO_MOV_ENTRADA_INSUMO=1;
     const TIPO_MOV_SALIDA_VENTAS=2;
@@ -24,6 +25,7 @@ class TipoMovimiento extends SplEnum
     const TIPO_MOV_ENTRADA_INSUMO_PLANIF_INCUMPLIDO=13;
     const TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO=14;
     const TIPO_MOV_CONSUMO_PLANIF_INCUMPLIDO=15;
+
     /**
      * @param int $tipo
      * @return int
@@ -41,6 +43,7 @@ class TipoMovimiento extends SplEnum
                 return null;
         }
     }
+
     /**
      * @param int $tipo
      * @return int
@@ -58,4 +61,6 @@ class TipoMovimiento extends SplEnum
                 return null;
         }
     }
+
 }
+

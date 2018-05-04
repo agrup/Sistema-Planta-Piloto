@@ -506,6 +506,7 @@ class GestorStock
             $planificacionesProd = Movimiento::getPlanificadosProd($producto,$fechaHasta);
             //itero para todas las planificaciones de este producto
             foreach ($planificacionesProd as $planif){
+
                 //si la planificacion es anterior al ultimo mov debo darla como Incumplido
                 if($planif->getFecha()<$movAnteriorProd->getFecha()) {
                     $planif->setTipo(TipoMovimiento::incumplidoDe($planif->getTipo()));

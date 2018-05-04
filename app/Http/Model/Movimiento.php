@@ -199,16 +199,18 @@ class Movimiento
      */
     public function getLoteIng(){
     }
+
     /**
      * @param int $tipo
      */
     public function setTipo(int $tipo)
     {
     }
+
     /**
      * @return int
      */
     public function getTipo()
     {
     }
-}
+
