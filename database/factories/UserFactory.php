@@ -2,6 +2,7 @@
 
 use Faker\Generator as Faker;
 
+
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -30,7 +31,7 @@ $factory->define(App\Producto::class, function (Faker $faker) {
         'codigo' => str_random(5),
         'alarmaActiva' => $faker->boolean,
         'alarmaAmarilla'=>21,
-        
+
         'tipoUnidad'=> str_random(2)
 
 
@@ -40,11 +41,11 @@ $factory->define(App\Producto::class, function (Faker $faker) {
 $factory->define(App\Lote::class, function (Faker $faker) {
     return [
 
-        'id_producto'=>mt_rand(1,50),
-        'fechaInicio'=>dateTimeThisYear(),
-        'fechaInicioMaduracion'=>dateTimeThisYear(),
-        'fechaFinalizacion'=>dateTimeThisYear(),
-        'fechaVencimiento'=>dateTimeThisYear(),
+        'producto_id'=>mt_rand(1,50),
+        'fechaInicio'=>$faker->dateTimeBetween('this week', '+6 days'),
+        'fechaInicioMaduracion'=>$faker->dateTimeBetween('this week', '+6 days'),
+        'fechaFinalizacion'=>$faker->dateTimeBetween('this week', '+6 days'),
+        'fechaVencimiento'=>$faker->dateTimeBetween('this week', '+6 days'),
         'cantidadElavorada'=>mt_rand(100,500),
         'cantidadFinal'=>mt_rand(10,100),
         'tipoTP'=> $faker->boolean,
@@ -54,11 +55,29 @@ $factory->define(App\Lote::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Formulacion::class, function (Faker $faker) {
-    return [
 
+
+$factory->define(App\Movimiento::class, function (Faker $faker) {
+    return [
+        'idLoteConsumidor'=>mt_rand(1,50),
+        'idLoteIngrediente'=>mt_rand(1,50),
+        'fecha'=>$faker->dateTimeBetween('this week', '+6 days'),
+        'codigo'=> mt_rand(1,50),
+        'debe'=>mt_rand(1,50),
+        'haber'=>mt_rand(1,50),
+        'saldoglobal'=>mt_rand(1,50),
+        'saldoLote'=>mt_rand(1,50),
+        'tipo'=>1
+        
     ];
 });
 
+  
 
-
+$factory->define(App\Planificacion::class, function (Faker $faker) {
+    return [
+        'fecha'=>$faker->dateTimeBetween('this week', '+6 days'),
+        'diaSemana'=>'Lunes',
+        'descripcion'=>$faker->sentence
+    ];
+});

@@ -1,6 +1,7 @@
 <?php 
 
 use App\Lote;
+use App\Producto;
 
 Route::get('/', function () {
 
@@ -21,3 +22,9 @@ Route::get('/lotes/{id}', 'LotesController@show') ;
 Route::get('/trabajador', 'TrabajadorController@index');
 Route::get('/trabajador/create', 'TrabajadorController@create');
 Route::post('/trabajador', 'TrabajadorController@store');
+
+Route::get('/test', function() {
+  	$producto = Producto::find(1)->formulacion;
+  	echo ("$producto");
+	
+});
