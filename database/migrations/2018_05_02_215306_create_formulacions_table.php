@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTrabajadorsTable extends Migration
+class CreateFormulacionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,17 @@ class CreateTrabajadorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('trabajadors', function (Blueprint $table) {
+        Schema::create('formulacions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('legajo');
-            $table->integer('idPersona')->nullable($value = true);
-            $table->text('sector')->nullable($value = true);
-            $table->text('puesto')->nullable($value = true);
-            $table->text('seudonimo')->nullable($value = true);
+            $table->integer('idFormulacion');
+            $table->integer('id_producto')->nullable($value = true);
+            $table->integer('idIngrediente')->nullable($value = true);
+            $table->integer('cantidadIngrediete')->nullable($value = true);
             $table->boolean('estado')->nullable($value = true);
             $table->timestamps();
         });
-
-
     }
+
     /**
      * Reverse the migrations.
      *
@@ -33,6 +31,6 @@ class CreateTrabajadorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trabajadors');
+        Schema::dropIfExists('formulacions');
     }
 }

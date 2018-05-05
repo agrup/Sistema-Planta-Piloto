@@ -10,4 +10,13 @@ class Producto extends Model
     {
     	return $query->where('id','>=',2);
     }
+
+
+
+    public function formulacion (){
+    	  return $this->belongsToMany('Producto', 'producto_productoi', 'producto_id', 'ingrediente_id');
+
+    }
+
+
 }

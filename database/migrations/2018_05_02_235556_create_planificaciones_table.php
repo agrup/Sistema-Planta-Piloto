@@ -16,9 +16,9 @@ class CreatePlanificacionesTable extends Migration
         Schema::create('planificaciones', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->date('fecha');
-            $table->text('diaSemana');
-            $table->text('descripcion');
+            $table->date('fecha')->nullable($value = true);
+            $table->text('diaSemana')->nullable($value = true);
+            $table->text('descripcion')->nullable($value = true);
             $table->timestamps();
         });
     }

@@ -15,17 +15,16 @@ class CreateLotesTable extends Migration
     {
         Schema::create('lotes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_producto')->unsigned();
-            $table->foreign('id_producto')->references('id')->on('productos');
-            $table->date('fechaInicio');
-            $table->date('fechaInicioMaduracion');
-            $table->date('fechaFinalizacion');
-            $table->date('fechaVencimiento');
-            $table->float('cantidadElavorada');
-            $table->float('cantidadFinal');
-            $table->boolean('tipoTP');
-            $table->text('asignatura');
-            $table->double('costounitario');
+            $table->integer('producto_id');
+            $table->date('fechaInicio')->nullable($value = true);
+            $table->date('fechaInicioMaduracion')->nullable($value = true);
+            $table->date('fechaFinalizacion')->nullable($value = true);
+            $table->date('fechaVencimiento')->nullable($value = true);
+            $table->double('cantidadElavorada')->nullable($value = true);
+            $table->double('cantidadFinal')->nullable($value = true);
+            $table->boolean('tipoTP')->nullable($value = true);
+            $table->text('asignatura')->nullable($value = true);
+            $table->double('costounitario')->nullable($value = true);
 
             $table->timestamps();
         });

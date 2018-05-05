@@ -8,7 +8,10 @@
 
 class Movimiento
 {
-
+    public function planificacion(){
+        return $this->belongsTo('App\Planificacion', 'planificacion_id');
+    }
+    
     private $campos=['id','fecha','tipo','loteconsumidor',
         'loteingrediente','debe','haber','salgoglobal','saldolote', 'estado'
     ];

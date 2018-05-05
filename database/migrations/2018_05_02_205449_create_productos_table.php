@@ -26,7 +26,22 @@ class CreateProductosTable extends Migration
             $table->boolean('estado')->nullable($value = true);
             $table->timestamps();
         });
+
+        Schema::create('producto_productoi', function (Blueprint $table) {
+  
+            $table->integer('producto_id');
+            $table->integer('ingrediente_id');
+            $table->primary(['producto_id','ingrediente_id']);
+            $table->double('cantidad');
+            $table->double('cantidadProducto');
+        });
+
+
+
+
     }
+
+
 
     /**
      * Reverse the migrations.

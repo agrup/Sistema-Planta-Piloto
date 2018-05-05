@@ -30,8 +30,35 @@ $factory->define(App\Producto::class, function (Faker $faker) {
         'codigo' => str_random(5),
         'alarmaActiva' => $faker->boolean,
         'alarmaAmarilla'=>21,
+        
         'tipoUnidad'=> str_random(2)
 
 
     ];
 });
+
+$factory->define(App\Lote::class, function (Faker $faker) {
+    return [
+
+        'id_producto'=>mt_rand(1,50),
+        'fechaInicio'=>dateTimeThisYear(),
+        'fechaInicioMaduracion'=>dateTimeThisYear(),
+        'fechaFinalizacion'=>dateTimeThisYear(),
+        'fechaVencimiento'=>dateTimeThisYear(),
+        'cantidadElavorada'=>mt_rand(100,500),
+        'cantidadFinal'=>mt_rand(10,100),
+        'tipoTP'=> $faker->boolean,
+        'asignatura'=>str_random(5),
+        'costounitario'=>mt_rand(100,120)
+
+    ];
+});
+
+$factory->define(App\Formulacion::class, function (Faker $faker) {
+    return [
+
+    ];
+});
+
+
+
