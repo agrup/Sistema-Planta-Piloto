@@ -30,5 +30,4 @@
 //});
 
 Route::get('/','PagesController@index');
-Route::get('/produccion','PagesController@produccion');
 Route::get('/calendario','PagesController@calendario');
