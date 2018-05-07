@@ -32,3 +32,5 @@
 Route::get('/','PagesController@index');
 Route::get('/produccion','PagesController@produccion');
 Route::get('/calendario','PagesController@calendario');
+//Route::get('/sumarizacion','PagesController@sumarizacion');
+Route::post('/sumarizacion','PagesController@sumarizacion');
