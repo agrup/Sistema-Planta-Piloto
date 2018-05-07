@@ -1,7 +1,7 @@
 <?php
 
 require_once('TipoMovimiento.php');
-require_once ('Movimiento.php');
+require_once('Movimiento.php');
 require_once('DetalleSalida.php');
 
 /**
