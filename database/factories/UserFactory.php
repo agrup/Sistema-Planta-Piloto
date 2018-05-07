@@ -31,7 +31,7 @@ $factory->define(App\Producto::class, function (Faker $faker) {
         'codigo' => str_random(5),
         'alarmaActiva' => $faker->boolean,
         'alarmaAmarilla'=>21,
-
+        'estado'=>$faker->boolean,
         'tipoUnidad'=> str_random(2)
 
 
