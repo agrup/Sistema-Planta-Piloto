@@ -19,4 +19,7 @@ Vue.component('example', require('./components/Example.vue'));
 
 const app = new Vue({
     el: '#app'
+
+    //axios.get('/stock').then(function (response){console.log(response.data)});
+
 });

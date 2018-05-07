@@ -31,3 +31,6 @@
 
 Route::get('/','PagesController@index');
 Route::get('/calendario','PagesController@calendario');
+Route::get('/stock', 'PagesController@stock');
+Route::get('/stockHasta', 'PagesController@stockHasta');
+Route::get('/verLotes', 'PagesController@stock');
