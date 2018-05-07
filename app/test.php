@@ -1,8 +1,4 @@
 <?php 
-	namespace App;
-	use App\Producto;
+require_once \App\Producto::class;
 
-	$producto = App\Producto::find(1);
-foreach($producto->formulacion as $ing){
-echo $ing->pivot->cantidad;
-}
+echo \App\Producto::find(1);

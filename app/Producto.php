@@ -15,11 +15,11 @@ class Producto extends Model
 
 
 #addformulacion agrega las ttablas pivot al producto que le paso
-    public function addformulacion ()
+    public function formulacion ()
     {
     	 # return $this->belongsToMany('Producto', 'producto_productoi', 'producto_id', 'ingrediente_id');
     	 return $this->belongsToMany('App\Producto','producto_productoi')
-    	 	->withPivot('producto_id','ingrediente_id','cantidad','cantidadProducto')->get()
+    	 	->withPivot('producto_id','ingrediente_id','cantidad','cantidadProducto')
     	 	#->withTimestamps()
     	 ;
 
@@ -42,6 +42,13 @@ class Producto extends Model
     		;
     	}
 
+    	public function ingredientes(){
+           $ingredientes = $this->formulacion()->get();
+           $arrayResult = [];
+           foreach ($this->ingredientes() as $ing){
+               array_push($arrayResult, $ing->id);
+           }
+        }
     	
 
     
