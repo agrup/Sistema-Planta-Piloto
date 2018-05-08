@@ -50,11 +50,11 @@ class Movimiento extends Model
         // movimientos de tipo consumo real
     }
     /**
-     * @param string $idProducto
+     * @param string $producto_id
      * @param string $fechaHasta
      * @return Movimiento[]
      */
-    public static function getPlanificadosProd(string $idProducto, string $fechaHasta)
+    public static function getPlanificadosProd(string $producto_id, string $fechaHasta)
     {
         //Recuperar los movimientos planificados de ese producto hata la fecha indicada
         //IMPORTANTE: solo los que no sean de tipo CUMPLIDO o INCUMPLIDO ver TipoMovimiento
@@ -63,25 +63,23 @@ class Movimiento extends Model
         //devolver el array de movimientos Ordenado cronológicamente
     }
     /**
-     * @param string $idProducto
+     * @param string $producto_id
      * @param string $fecha
      * @return Movimiento
      */
 
     //Ultimo movimiento real del id producto anterior a una fecha
-    public static function getAnteriorProd(string $idProducto, string $fecha)
+    public static function getAnteriorProd(string $producto_id, string $fecha)
     {
-<<<<<<< HEAD:app/Movimiento.php
+
         
-    	return(self::where('idLoteConsumidor','=',$idProducto)
+    	return(self::where('idLoteConsumidor','=',$producto_id)
 			    		->where('fecha','<',$fecha)
 			    		->orderBy('fecha', 'desc')
 			    		->first()
 			    		);
 
-=======
-        //real
->>>>>>> 3fa6f1695a39d83c0a5ce9fa74230e435f01ae00:app/Http/Model/Movimiento.php
+
     }
     /**
      * @param string $idLoteIngrediente
@@ -93,21 +91,21 @@ class Movimiento extends Model
         
     }
     /**
-     * @param $idProducto
+     * @param $producto_id
      * @param $fechaCambio
      * @return Movimiento[] $movimientos
      */
-    public static function getMovimientosProdDespuesDe($idProducto, $fechaCambio)
+    public static function getMovimientosProdDespuesDe($producto_id, $fechaCambio)
     {
         //real
         //Ordenados por favooor
     }
     /**
-     * @param string $idProducto
+     * @param string $producto_id
      * @param string $fecha
      *
      */
-    public static function eliminarEntradaInsumoPlanif($idProducto, $fecha)
+    public static function eliminarEntradaInsumoPlanif($producto_id, $fecha)
     {
     }
     /**
@@ -254,8 +252,6 @@ class Movimiento extends Model
     public function getTipo()
     {
     }
-<<<<<<< HEAD:app/Movimiento.php
-}
-=======
 
->>>>>>> 3fa6f1695a39d83c0a5ce9fa74230e435f01ae00:app/Http/Model/Movimiento.php
+}
+
