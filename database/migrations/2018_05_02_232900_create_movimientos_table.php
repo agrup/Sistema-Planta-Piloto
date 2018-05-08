@@ -19,7 +19,7 @@ class CreateMovimientosTable extends Migration
             $table->integer('idLoteConsumidor')->nullable($value = true);
             $table->integer('idLoteIngrediente')->nullable($value = true);
             $table->timestamp('fecha')->nullable($value = true);
-            $table->integer('codigoProducto')->nullable($value = true);
+            $table->string('codigoProducto')->nullable($value = true);
             $table->double('debe')->nullable($value = true);
             $table->double('haber')->nullable($value = true);
             $table->float('saldoglobal')->nullable($value = true);

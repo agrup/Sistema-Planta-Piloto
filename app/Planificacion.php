@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\TipoMovimiento;
+use App\Producto;
 
 class Planificacion extends Model
 {
@@ -15,18 +16,75 @@ class Planificacion extends Model
     public function movimientos(){
         return $this->hasMany('App\Movimiento', 'planificacion_id');
     }
+
+    //retorna array [['codigo'=> ,'nombre'=> , 'cantidad'=>], .. ]
+
+    /**
+     * @return array retorna array [['codigo'=> ,'nombre'=> , 'cantidad'=>, 'tipoUnidad'=>, 'color'=>], .. ]
+     */
     public function productos(){
-        return $this->movimientos()->whereRaw(
+        $arrayResult = [];
+        $movs= $this->movimientos()->whereRaw(
         									'tipo =' . TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF .
                                             'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_CUMPLIDO .
-                                            'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO);
+                                            'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO)->get();
+        foreach ($movs as $mov){
+            $arrProd=[];
+            $color = 'normal';
+            $producto=Producto::where('codigoProducto','=',$mov->codigoProducto)->first();
+            $arrProd['nombre']=$producto->nombre;
+            $arrProd['codigo']=$mov->codigoProducto;
+            $arrProd['cantidad']=$mov->haber;
+            $arrProd['tipoUnidad']=$producto->tipoUnidad;
+            if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_CUMPLIDO){
+                $color = 'verde';
+            }
+            if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO){
+                $color = 'rojo';
+            }
+            $arrProd['color']=$color;
+            array_push($arrayResult,$arrProd);
+            print_r($arrProd);
+        }
+
+        return $arrayResult;
+
     }
 
+
+    /**
+     * @return array retorna array [['codigo'=> ,'nombre'=> , 'cantidad'=>, 'tipoUnidad'=>, 'color'=>], .. ]
+     */
     public function insumos(){
-        return $this->movimientos()->whereRaw(
+        $arrayResult = [];
+        $movs= $this->movimientos()->whereRaw(
         	'tipo =' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF .
             'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_CUMPLIDO .
-            'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_INCUMPLIDO);
+            'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_INCUMPLIDO)->get();
+
+        foreach ($movs as $mov){
+            $arrProd=[];
+            $color = 'normal';
+            $producto=Producto::where('codigoProducto','=',$mov->codigoProducto)->first();
+            $arrProd['nombre']=$producto->nombre;
+            $arrProd['codigo']=$mov->codigoProducto;
+            $arrProd['cantidad']=$mov->haber;
+            $arrProd['tipoUnidad']=$producto->tipoUnidad;
+            if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_CUMPLIDO){
+                $color = 'verde';
+            }
+            if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_INCUMPLIDO){
+                $color = 'rojo';
+            }
+            $arrProd['color']=$color;
+            array_push($arrayResult,$arrProd);
+            print_r($arrProd);
+        }
+
+        return $arrayResult;
+
     }
     //
+
+
 }
