@@ -25,29 +25,17 @@ class Producto extends Model
 
     }
 
-#ListaFormulacion devuelce una lista de los id de ingredientes para un prosucto
-    public function scopeListaFormulacion ($query)
-    	{
-    		//@TODO
-    		#no se como reccorrer la query que recivo
-    		$data = [];
+#getIngredientesById devuelce una lista de los id de ingredientes para un prosucto
+ 
+    	
 
-    		foreach ($query as $ingrediente)
-    		{
-    			$data[] = $ingrediente->pivot->ingrediente_id
-    			;
-    		}
-
-    		return $data
-    		;
-    	}
-
-    	public function ingredientes(){
+    	public function getIngredientes(){
            $ingredientes = $this->formulacion()->get();
            $arrayResult = [];
-           foreach ($this->ingredientes() as $ing){
-               array_push($arrayResult, $ing->id);
+           foreach ($ingredientes as $ing){
+               array_push($arrayResult,['id'=>$ing->pivot->ingrediente_id,'cantidad'=>$ing->pivot->cantidad]);
            }
+           return $arrayResult;
         }
     	
 
