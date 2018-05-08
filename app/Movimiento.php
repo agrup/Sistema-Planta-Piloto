@@ -14,11 +14,12 @@ class Movimiento extends Model
         'loteingrediente','debe','haber','salgoglobal','saldolote', 'estado'
     ];
     // TODO hacer geters y seters
+    /*
     public function __construct($datos)
     {
 
     }
-
+*/
 
     /**
      * @param $producto string
@@ -70,9 +71,16 @@ class Movimiento extends Model
      * @param string $fecha
      * @return Movimiento
      */
+
+    //Ultimo movimiento real del id producto anterior a una fecha
     public static function getAnteriorProd(string $idProducto, string $fecha)
     {
-        //real
+        
+    	return(self::where('idLoteConsumidor','=',$idProducto)
+			    		->where('fecha','<',$fecha)
+			    		->orderBy('fecha', 'desc')
+			    		->first()
+			    		);
 
     }
 
@@ -83,7 +91,7 @@ class Movimiento extends Model
      */
     public static function getAnteriorLote($idLoteIngrediente, $fecha)
     {
-        //real
+        
     }
 
     /**
@@ -112,6 +120,7 @@ class Movimiento extends Model
      */
     public static function eliminarEntradaProductoPlanif($idLote, $fecha)
     {
+
     }
 
     /**
@@ -136,8 +145,23 @@ class Movimiento extends Model
      * @param string $fechaHasta
      * @return Movimiento[]
      */
-    public static function ultimoStockProdTodos(string $fechaHasta)
+    public static function ultimoStockProdTodos(
+    											string $fechaHasta
+    											)
     {
+        
+    	$productosid= self::distinct()->select('idLoteConsumidor')->get();
+
+    	$result=[];
+    	foreach ($productosid as $producto) {
+    		$result[]=(self::getAnteriorProd($producto->idLoteConsumidor,$fechaHasta)	)
+    	#array_push($result,self::getAnteriorProd($producto,$fechaHasta))	
+    	;
+
+    	}
+		
+		return $result;
+
         //devolver los ultimos movimientos hasta la fecha para cada producto.
         //incluir planificados
     }
