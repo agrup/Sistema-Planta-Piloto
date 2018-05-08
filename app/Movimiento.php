@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,7 @@ class Movimiento extends Model
     	return $this->belongsTo('App\Planificacion');
     }
 
+
     private $campos=['id','fecha','tipo','loteconsumidor',
         'loteingrediente','debe','haber','salgoglobal','saldolote', 'estado'
     ];
@@ -17,8 +19,8 @@ class Movimiento extends Model
     /*
     public function __construct($datos)
     {
-
     }
+
 */
 
     /**
@@ -30,7 +32,6 @@ class Movimiento extends Model
         //TODO
         return null;
     }
-
     /**
      * @param string $idLote
      * @return Movimiento $mov
@@ -39,19 +40,15 @@ class Movimiento extends Model
     {
         //TODO
     }
-
-
     /**
      * @param string $idLote
      * @return Movimiento[]
      */
     public static function getTrazabilidadLote($idLote)
     {
-
         //recuperar todos los movientos que poseean a ese lote como consumidor y tengan id de lote ingrediente diferente
         // movimientos de tipo consumo real
     }
-
     /**
      * @param string $idProducto
      * @param string $fechaHasta
@@ -65,7 +62,6 @@ class Movimiento extends Model
         //TIPO_MOV_ENTRADA_INSUMO_PLANIF o TIPO_MOV_ENTRADA_PRODUCTO_PLANIF o TIPO_MOV_CONSUMO_PLANIF
         //devolver el array de movimientos Ordenado cronológicamente
     }
-
     /**
      * @param string $idProducto
      * @param string $fecha
@@ -75,6 +71,7 @@ class Movimiento extends Model
     //Ultimo movimiento real del id producto anterior a una fecha
     public static function getAnteriorProd(string $idProducto, string $fecha)
     {
+<<<<<<< HEAD:app/Movimiento.php
         
     	return(self::where('idLoteConsumidor','=',$idProducto)
 			    		->where('fecha','<',$fecha)
@@ -82,8 +79,10 @@ class Movimiento extends Model
 			    		->first()
 			    		);
 
+=======
+        //real
+>>>>>>> 3fa6f1695a39d83c0a5ce9fa74230e435f01ae00:app/Http/Model/Movimiento.php
     }
-
     /**
      * @param string $idLoteIngrediente
      * @param string $fecha
@@ -93,7 +92,6 @@ class Movimiento extends Model
     {
         
     }
-
     /**
      * @param $idProducto
      * @param $fechaCambio
@@ -104,7 +102,6 @@ class Movimiento extends Model
         //real
         //Ordenados por favooor
     }
-
     /**
      * @param string $idProducto
      * @param string $fecha
@@ -113,7 +110,6 @@ class Movimiento extends Model
     public static function eliminarEntradaInsumoPlanif($idProducto, $fecha)
     {
     }
-
     /**
      * @param string $idLote
      * @param string $fecha
@@ -122,7 +118,6 @@ class Movimiento extends Model
     {
 
     }
-
     /**
      * @param string $idLoteConsumidor
      * @param string $fecha
@@ -131,7 +126,6 @@ class Movimiento extends Model
     {
         //eliminar todos los insumos planificados de tipo consumo con ese lote como consumidor
     }
-
     /**
      * @param string $fechaDesde
      * @param string $fechaHasta
@@ -140,7 +134,6 @@ class Movimiento extends Model
     public static function getSalidasVenta(string $fechaDesde, string $fechaHasta)
     {
     }
-
     /**
      * @param string $fechaHasta
      * @return Movimiento[]
@@ -169,14 +162,10 @@ class Movimiento extends Model
         //devolver los ultimos movimientos hasta la fecha para cada producto.
         //incluir planificados
     }
-
-
     public function persist()
     {
         // guardar el ID en el atributo del objeto. $this->id = $pdo->lastInsertId();
     }
-
-
     /**
      * @return int
      */
@@ -184,88 +173,61 @@ class Movimiento extends Model
     {
         //return this->$id;
     }
-
     /**
      * @return string
      */
     public function getIDLoteIngrediente()
     {
     }
-
     /**
      * @return int
      */
     public function getDebe()
     {
-
     }
-
-
     /**
      * @return int $saldoLote
      */
-
     /**
      * @return int
      */
     public function getHaber()
     {
-
     }
-
-
-
     /**
      * @return int
      */
     public function getSaldoGlobal()
     {
-
     }
-
     /**
      * @return int
      */
     public function getSaldoLote()
     {
-
     }
-
-
-
-
-
-
-
     /**
      * @return string $fecha
      */
     public function getFecha()
     {
     }
-
-
     /**
      * @param int $nuevoSaldo
      */
     public function setSaldoGlobal($nuevoSaldo)
     {
-
     }
-
     /**
      * @param int $nuevoSaldo
      */
     public function setSaldoLote($nuevoSaldo)
     {
-
     }
-
     public function persistChanges()
     {
         //hacer un update con todos los campos
     }
-
     /**
      * @return string $producto
      */
@@ -273,12 +235,10 @@ class Movimiento extends Model
     {
         //return this->producto;
     }
-
     /**
      * @return string
      */
     public function getLoteIng(){
-
     }
 
     /**
@@ -294,4 +254,8 @@ class Movimiento extends Model
     public function getTipo()
     {
     }
+<<<<<<< HEAD:app/Movimiento.php
 }
+=======
+
+>>>>>>> 3fa6f1695a39d83c0a5ce9fa74230e435f01ae00:app/Http/Model/Movimiento.php

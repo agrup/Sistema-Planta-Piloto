@@ -3,6 +3,7 @@
 use App\Lote;
 use App\Producto;
 
+
 Route::get('/', function () {
 
 	$name = 'Planta Piloto';
@@ -28,3 +29,4 @@ Route::get('/test', function() {
   	echo ("$producto");
 	
 });
+
