@@ -3,19 +3,19 @@ require_once \App\Producto::class;
 
 $planificaciones = [
      [
-    'diaSemana'=>'lunes',
-    'fecha'=> '2018-05-07',
-    'productos'=> [
-        ['codigo'=>'pl001', 'nombre'=>'Queso Sardo', 'cantidad'=> 10, 'tipoUnidad'=> 'kg' ],
-        ['codigo'=>'pl021', 'nombre'=>'Ricota', 'cantidad'=> 3, 'tipoUnidad'=> 'kg' ]
-    ],
+        'diaSemana'=>'lunes',
+        'fecha'=> '2018-05-07',
+        'productos'=> [
+            ['codigo'=>'pl001', 'nombre'=>'Queso Sardo', 'cantidad'=> 10, 'tipoUnidad'=> 'kg' ],
+            ['codigo'=>'pl021', 'nombre'=>'Ricota', 'cantidad'=> 3, 'tipoUnidad'=> 'kg' ]
+        ],
 
-    'insumos'=> [
-        ['codigo'=>'i001', 'nombre'=>'Sal', 'cantidad'=> 10000, 'tipoUnidad'=> 'gr' ],
-        ['codigo'=>'i002', 'nombre'=>'Fermento', 'cantidad'=> 5000, 'tipoUnidad'=> 'gr' ]
-    ],
+        'insumos'=> [
+            ['codigo'=>'i001', 'nombre'=>'Sal', 'cantidad'=> 10000, 'tipoUnidad'=> 'gr' ],
+            ['codigo'=>'i002', 'nombre'=>'Fermento', 'cantidad'=> 5000, 'tipoUnidad'=> 'gr' ]
+        ],
 
-    'trabajadores' => [ 'Tito', 'Darío']
+        'trabajadores' => [ 'Tito', 'Darío']
 
     ],
 
