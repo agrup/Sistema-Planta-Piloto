@@ -340,6 +340,7 @@ class ComposerStaticInit788d1a1a882594dece2483eb58e89855
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Stock' => __DIR__ . '/../..' . '/app/Stock.php',
         'App\\TipoMovimiento' => __DIR__ . '/../..' . '/app/TipoMovimiento.php',
         'App\\Trabajador' => __DIR__ . '/../..' . '/app/Trabajador.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',

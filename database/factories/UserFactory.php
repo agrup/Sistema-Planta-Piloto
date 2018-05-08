@@ -35,7 +35,7 @@ $factory->define(App\Producto::class, function (Faker $faker) {
         'tipoUnidad'=> str_random(2)
 
 
-    ];
+    ];  
 });
 
 $factory->define(App\Lote::class, function (Faker $faker) {
@@ -59,7 +59,7 @@ $factory->define(App\Lote::class, function (Faker $faker) {
 
 $factory->define(App\Movimiento::class, function (Faker $faker) {
     return [
-        'idLoteConsumidor'=>mt_rand(1,50),
+        'idLoteConsumidor'=>6,
         'idLoteIngrediente'=>mt_rand(1,50),
         'fecha'=>$faker->dateTimeBetween('this week', '+6 days'),
         'codigoProducto'=> mt_rand(1,50),
