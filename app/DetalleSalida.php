@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * @author brujua
  * @version 1.0
@@ -11,8 +9,6 @@ namespace App;
 
 class DetalleSalida
 {
-
-
     const MOTIVO_DECOMISO = 'decomiso';
     const MOTIVO_VENTAS = 'ventas';
     private $idMov;
@@ -22,15 +18,12 @@ class DetalleSalida
     private $idLote;
     private $motivo;
     public $campos=['idMov', 'idLote', 'cantidad', 'fecha','motivo','detalle'];
-
     /**
      * SalidaExcep constructor.
      * @param array $datos
      */function __construct($datos)
 {
-
 }
-
     /**
      * @param string $fechaDesde
      * @param string $fechaHasta
@@ -40,44 +33,32 @@ class DetalleSalida
     {
         //TODO
     }
-
     function __destruct()
     {
-
     }
-
     public function persist()
     {
-
     }
-
-
-
     public function getcantidad()
     {
         return $this->cantidad;
     }
-
     public function getdetalle()
     {
         return $this->detalle;
     }
-
     public function getfecha()
     {
         return $this->fecha;
     }
-
     public function getidLote()
     {
         return $this->idLote;
     }
-
     public function getMotivo()
     {
         return $this->motivo;
     }
-
     /**
      *
      */
@@ -85,5 +66,4 @@ class DetalleSalida
     {
         return $this->idMov;
     }
-
 }
