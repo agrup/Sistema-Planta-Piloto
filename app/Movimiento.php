@@ -153,8 +153,12 @@ class Movimiento extends Model
     	$productosid= self::distinct()->select('idLoteConsumidor')->get();
 
     	$result=[];
+
     	foreach ($productosid as $producto) {
-    		$result[]=(self::getAnteriorProd($producto->idLoteConsumidor,$fechaHasta)	)
+    		
+    		$result[]=self::getAnteriorProd($producto->idLoteConsumidor,$fechaHasta);
+
+    	
     	#array_push($result,self::getAnteriorProd($producto,$fechaHasta))	
     	;
 
