@@ -530,7 +530,7 @@ class GestorStock
 
     /**
      * @param string $fechaHasta
-     * @return int[] hashmap key: idProducto, value: cantidad
+     * @return array [['nombre'=>,'codigo'=>, 'tipoUnidad'=>, 'color'=>, 'stock'=>]...] hashmap key: idProducto, value: cantidad
      * Hay que evaluar si con esta funcion no alcanza ya para desde afuera calcular getNecesidadInsumos y otras por el estilo
      */
     public static function getStockPorProd(string $fechaHasta)
