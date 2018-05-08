@@ -6,6 +6,9 @@
  * @version 1.0
  * @created 22-abr.-2018 3:19:32 a. m.
  */
+
+namespace App;
+
 class DetalleSalida
 {
 
