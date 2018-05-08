@@ -21,6 +21,11 @@ class CreatePlanificacionsTable extends Migration
             $table->text('descripcion')->nullable($value = true);
             $table->timestamps();
         });
+
+        Schema::create('planificacion_trabajador', function (Blueprint $table) {
+            $table->integer('planificacion_id');
+            $table->integer('trabajador_id');
+        });
     }
 
     /**
