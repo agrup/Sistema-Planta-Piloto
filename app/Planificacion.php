@@ -12,6 +12,14 @@ class Planificacion extends Model
         return $this->belongsToMany('App\Trabajador');
     }
 
+    public function arrayTrabjadors(){
+        $arrResult = [];
+        $trabajadores = $this->trabajadors()->get();
+        foreach ($trabajadores as $trabajador){
+            $arrResult[]=$trabajador->seudonimo;
+        }
+        return $arrResult;
+    }
 
     public function movimientos(){
         return $this->hasMany('App\Movimiento', 'planificacion_id');
@@ -87,4 +95,17 @@ class Planificacion extends Model
     //
 
 
+    public function toArray()
+    {
+        $arrResult=[];
+        $arrResult['fecha']=$this->fecha;
+        $arrResult['diaSemana']= $this->diaSemana;
+        $arrResult['trabajadores']= $this->arrayTrabjadors();
+        $arrResult['productos']= $this->productos();
+        $arrResult['insumos']=$this->insumos();
+
+        return $arrResult;
+
+
+    }
 }
