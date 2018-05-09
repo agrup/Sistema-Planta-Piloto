@@ -10,6 +10,8 @@ class PlanificacionController extends Controller
 {
     public function index()
     {
+        $planificaciones = Planificacion::getSemana(Carbon::now()->format('Y-m-d'));
+        return view('',$planificaciones);
     	
     }
 
@@ -31,14 +33,6 @@ class PlanificacionController extends Controller
         $fecha = $fechaC->format('Y-m-d');
 
         $planificaciones = Planificacion::getSemana($fecha);
-
-        /*// si no hay planificaciones creadas, se crean
-        if(Planificacion::where('fecha','=',$fecha)->count()==0){
-            $planificaciones=Planificacion::crearSemana($fecha);
-        } else {
-            $planificaciones=Planificacion::getSemana($fecha);
-
-        }*/
 
         return  view('', $planificaciones);
 
