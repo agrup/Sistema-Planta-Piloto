@@ -10,6 +10,7 @@ use App\Producto;
 class Planificacion extends Model
 {
 
+    const DIAS_SEMANA_LABORABLES = 5;
     protected $guarded=[];
 
     /**
@@ -19,29 +20,55 @@ class Planificacion extends Model
     public static function crearSemana($fecha)
     {
         $arrResult=[];
-        $arrFechas=[]; //[['fecha'=>, 'diaSemana'=>], [..],..]
+
         setlocale(LC_TIME, 'spanish');
         Carbon::setUtf8(true);
 
-        for ($i=0; $i<5;$i++){
+        for ($i=0; $i<self::DIAS_SEMANA_LABORABLES;$i++){
             //la paso a carbon para preguntar el dia y poderle sumar un dia
             $fechaC = Carbon::createFromFormat('Y-m-d',$fecha);
-            $diaSemana = $fechaC->format('l');
+            $diaSemana = $fechaC->formatLocalized('%A'); //devuelve lunes o miércoles, etc
             //creo la planificacion y la agrego al array resultado
             array_push($arrResult,self::create(['fecha'=>$fecha, 'diaSemana'=>$diaSemana]));
             //agrego un dia y vuelvo al formato normal para la proxima iteracion
             $fechaC = $fechaC->addDay();
             $fecha= $fechaC->format('Y-m-d');
-
         }
+        return $arrResult;
 
+
+    }
+
+    /**
+     * @param string $fecha
+     * @return
+     */
+    public static function getSemana($fecha)
+    {
+        $arrayResult=[];
+
+        //la paso a carbon para ir al principio de la semana y determinar el tope
+        $fechaC = Carbon::createFromFormat('Y-m-d',$fecha);
+        $fechaC = $fechaC->startOfWeek();
+        $fecha = $fechaC->format('Y-m-d');
+        $fechaTope = $fechaC->addDays((self::DIAS_SEMANA_LABORABLES - 1))->format('Y-m-d');
+       $planificaciones = Planificacion::where('fecha','>=',$fecha)
+            ->where('fecha','<=',$fechaTope)->get();
+       //si no estan creadas las creo
+       if($planificaciones->isEmpty()){
+           $planificaciones = self::crearSemana($fecha);
+       }
+       foreach ($planificaciones as $planificacion){
+           array_push($arrayResult,$planificacion->toArray());
+       }
+       return $arrayResult;
     }
 
     public function trabajadors(){
         return $this->belongsToMany('App\Trabajador');
     }
 
-    public function arrayTrabjadors(){
+    public function arrayTrabajadors(){
         $arrResult = [];
         $trabajadores = $this->trabajadors()->get();
         foreach ($trabajadores as $trabajador){
@@ -130,7 +157,7 @@ class Planificacion extends Model
         $arrResult=[];
         $arrResult['fecha']=$this->fecha;
         $arrResult['diaSemana']= $this->diaSemana;
-        $arrResult['trabajadores']= $this->arrayTrabjadors();
+        $arrResult['trabajadores']= $this->arrayTrabajadors();
         $arrResult['productos']= $this->productos();
         $arrResult['insumos']=$this->insumos();
 
