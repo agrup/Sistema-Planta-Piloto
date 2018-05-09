@@ -38,10 +38,7 @@ class Producto extends Model
                array_push($arrayResult,['id'=>$ing->pivot->ingrediente_id,'cantidad'=>$ing->pivot->cantidad]);
            }
            return $arrayResult;
-        }
-    	
-
-    
+        }   
 }
 # consulta en tinker
 

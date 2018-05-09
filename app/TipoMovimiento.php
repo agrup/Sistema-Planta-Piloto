@@ -7,7 +7,9 @@ namespace App;
  * Time: 12:01 AM
  */
 
+
 class TipoMovimiento
+
 {
     const __default = self::SIN_TIPO;
 
@@ -27,7 +29,6 @@ class TipoMovimiento
     const TIPO_MOV_ENTRADA_INSUMO_PLANIF_INCUMPLIDO=13;
     const TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO=14;
     const TIPO_MOV_CONSUMO_PLANIF_INCUMPLIDO=15;
-
 
     /**
      * @param int $tipo
@@ -64,4 +65,6 @@ class TipoMovimiento
                 return null;
         }
     }
+
 }
+

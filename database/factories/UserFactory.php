@@ -28,7 +28,7 @@ $factory->define(App\Producto::class, function (Faker $faker) {
     return [
         'nombre' => $faker->name,
         'descripcion' => $faker->sentence,
-        'codigo' => str_random(5),
+        'producto_id' => str_random(5),
         'alarmaActiva' => $faker->boolean,
         'alarmaAmarilla'=>21,
         'estado'=>$faker->boolean,
@@ -59,10 +59,10 @@ $factory->define(App\Lote::class, function (Faker $faker) {
 
 $factory->define(App\Movimiento::class, function (Faker $faker) {
     return [
-        'idLoteConsumidor'=>6,
+        'idLoteConsumidor'=>9,
         'idLoteIngrediente'=>mt_rand(1,50),
         'fecha'=>$faker->dateTimeBetween('this week', '+6 days'),
-        'codigoProducto'=> mt_rand(1,50),
+        'producto_id'=> mt_rand(1,50),
         'debe'=>mt_rand(1,50),
         'haber'=>mt_rand(1,50),
         'saldoglobal'=>mt_rand(1,50),
@@ -70,8 +70,8 @@ $factory->define(App\Movimiento::class, function (Faker $faker) {
         'planificacion_id'=>5,
         'tipo'=>function() {
             if(mt_rand(1,2)>1){
-                return 7;//tipo Entrada Insumos
-            } else { return 8;} // tipo entrada producto
+                return 11;//tipo Entrada Insumos
+            } else { return 5;} // tipo entrada producto
         }
         
     ];

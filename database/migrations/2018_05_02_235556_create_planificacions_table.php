@@ -35,6 +35,7 @@ class CreatePlanificacionsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('planificacion_trabajador');
         Schema::dropIfExists('planificacions');
     }
 }
