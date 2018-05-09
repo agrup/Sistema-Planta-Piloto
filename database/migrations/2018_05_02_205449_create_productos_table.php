@@ -18,7 +18,7 @@ class CreateProductosTable extends Migration
             $table->text('nombre')->nullable($value = true);
             $table->text('descripcion')->nullable($value = true);
             $table->text('tipoUnidad')->nullable($value = true);
-            $table->text('codigo')->nullable($value = true);
+            $table->string('codigoProducto')->nullable($value = true);
             $table->boolean('alarmaActiva')->nullable($value = true);
             $table->double('alarmaAmarilla')->nullable($value = true);
             $table->double('alarmaRoja')->nullable($value = true);
