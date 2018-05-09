@@ -33,7 +33,7 @@ class GestorStock
         $ultimoMovReal=Movimiento::ultimoRealProd($idProducto);
         $movAnterior = $ultimoMovReal;
         //Compruebo si estoy insertando antes del ultimo mov de ese producto
-        if($ultimoMovReal->fecha>$fecha){
+        if($ultimoMovReal->fecha > $fecha){
             //si es asi, recupero el mov anterior a este y deberé recalcular
             $movAnterior = Movimiento::getAnteriorProd($idProducto,$fecha);
             $banderaRecalcular=true;
@@ -432,7 +432,10 @@ class GestorStock
         $arrayReturn = [];
         $movimientos= Movimiento::getTrazabilidadLote($idLote);
         foreach ($movimientos as $mov){
-            $arrayReturn[$mov->idLoteIngrediente] = $mov->debe;
+            $arrayAux=[];
+            $arrayAux['idLote']=$mov->idLoteIngrediente;
+            $arrayAux['cantidad']=$mov->debe;
+            array_push($arrayReturn,$arrayAux);
         }
         return $arrayReturn;
     }
