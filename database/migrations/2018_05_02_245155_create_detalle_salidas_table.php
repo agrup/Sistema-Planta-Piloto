@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Schema;
+
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTrabajadoresTable extends Migration
+class CreateDetalleSalidasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +14,11 @@ class CreateTrabajadoresTable extends Migration
      */
     public function up()
     {
-        Schema::create('trabajadores', function (Blueprint $table) {
+        Schema::create('detalle_salidas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('legajo');
-            $table->integer('idPersona');
-            $table->text('sector');
-            $table->text('puesto');
-            $table->text('seudonimo');
-            $table->boolean('estado');
+            $table->text('tipo')->nullable($value = true);
+            $table->integer('id_movimiento')->nullable($value = true);
+            $table->text('detalle')->nullable($value = true);
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class CreateTrabajadoresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trabajadores');
+        Schema::dropIfExists('detalle_salidas');
     }
 }
