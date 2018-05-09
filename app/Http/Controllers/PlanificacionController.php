@@ -29,15 +29,16 @@ class PlanificacionController extends Controller
         }
         // la paso a formato yyyy-mm-dd
         $fecha = $fechaC->format('Y-m-d');
-        // si no hay planificaciones creadas, se crean
+
+        $planificaciones = Planificacion::getSemana($fecha);
+
+        /*// si no hay planificaciones creadas, se crean
         if(Planificacion::where('fecha','=',$fecha)->count()==0){
             $planificaciones=Planificacion::crearSemana($fecha);
         } else {
             $planificaciones=Planificacion::getSemana($fecha);
-           /*$planificaciones=Planificacion::whereRaw('fecha>=' . $fecha .
-               'and fecha<=' .
-               $fechaC->addDays(4)->format('Y-m-d'));*/
-        }
+
+        }*/
 
         return  view('', $planificaciones);
 
