@@ -8,7 +8,7 @@ class Trabajador extends Model
 {
     public function planificacions()
     {
-    	$this->belongsToMany(Planificacion::class);
+    	$this->belongsToMany('App\Planificacion');
 
     }
 

@@ -62,12 +62,17 @@ $factory->define(App\Movimiento::class, function (Faker $faker) {
         'idLoteConsumidor'=>6,
         'idLoteIngrediente'=>mt_rand(1,50),
         'fecha'=>$faker->dateTimeBetween('this week', '+6 days'),
-        'codigo'=> mt_rand(1,50),
+        'codigoProducto'=> mt_rand(1,50),
         'debe'=>mt_rand(1,50),
         'haber'=>mt_rand(1,50),
         'saldoglobal'=>mt_rand(1,50),
         'saldoLote'=>mt_rand(1,50),
-        'tipo'=>1
+        'planificacion_id'=>5,
+        'tipo'=>function() {
+            if(mt_rand(1,2)>1){
+                return 7;//tipo Entrada Insumos
+            } else { return 8;} // tipo entrada producto
+        }
         
     ];
 });
