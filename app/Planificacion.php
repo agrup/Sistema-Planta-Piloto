@@ -19,21 +19,22 @@ class Planificacion extends Model
     public static function crearSemana($fecha)
     {
         $arrResult=[];
-        $arrFechas=[]; //[['fecha'=>, 'diaSemana'=>], [..],..]
+
         setlocale(LC_TIME, 'spanish');
         Carbon::setUtf8(true);
 
         for ($i=0; $i<5;$i++){
             //la paso a carbon para preguntar el dia y poderle sumar un dia
             $fechaC = Carbon::createFromFormat('Y-m-d',$fecha);
-            $diaSemana = $fechaC->format('l');
+            $diaSemana = $fechaC->formatLocalized('%A'); //devuelve lunes o miércoles, etc
             //creo la planificacion y la agrego al array resultado
             array_push($arrResult,self::create(['fecha'=>$fecha, 'diaSemana'=>$diaSemana]));
             //agrego un dia y vuelvo al formato normal para la proxima iteracion
             $fechaC = $fechaC->addDay();
             $fecha= $fechaC->format('Y-m-d');
-
         }
+        return $arrResult;
+
 
     }
 
