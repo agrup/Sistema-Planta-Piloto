@@ -551,12 +551,15 @@ class GestorStock
             $arrAux['codigo']=$producto->codigoProducto;
             $arrAux['tu']=$producto->tipoUnidad;
             $arrAux['stock']=$stock;
-            if($stock<$producto->alarmaAmarilla){
-                $arrAux['alarma']='amarilla';
+            if($producto->alarmaActiva){
+                if($stock<$producto->alarmaAmarilla){
+                    $arrAux['alarma']='amarilla';
+                }
+                if($stock<$producto->alarmaRoja){
+                    $arrAux['alarma']='roja';
+                }
             }
-            if($stock<$producto->alarmaRoja){
-                $arrAux['alarma']='roja';
-            }
+
             array_push($result, $arrAux);
 
         }
