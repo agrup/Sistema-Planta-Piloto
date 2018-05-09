@@ -3,6 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\GestorStock;
+use App\Lote;
+use App\Producto;
 
 class GestorLote extends Model
 {
@@ -12,14 +15,26 @@ class GestorLote extends Model
    */
     //
    
-    public static function getLotes(int[] $ingredientes)
+    public static function getTrazabilidadLote(int $idLote)
     {
-    	$lote=[];
+        $ingredientes = GestorStock::Trazabilidad($idLote);
+        $lotes=[];
+    	
     	foreach ($ingredientes as $ingrediente) {
-    		$lote=[$ingrediente->
+            $lote=Lote::find($ingrediente->idLote);
+            array_push($lotes,[
+                    'numeroLote'=>$ingrediente->idLote,
+                    'cantidad'=>$ingrediente->cantidad, 
+                    'vencimiento'=>$lote->fechaVencimiento, 
+                    'fechaInicio'=>$lote->fechaInicio,
+                    'producto'=>$lote->getNameProdByIdLote(),
+                    'tu'=>$lote->getTUProdByIdLote()
+                    ]);
     	}
-
-
-    	return 
+    return $lotes;
     }
+
+
+
+
 }
