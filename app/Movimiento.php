@@ -46,7 +46,12 @@ class Movimiento extends Model
      */
     public static function getTrazabilidadLote($idLote)
     {
-        //recuperar todos los movientos que poseean a ese lote como consumidor y tengan id de lote ingrediente diferente
+    	return self::where('idLoteConsumidor','=',$idLote)
+    				->where('idLoteIngrediente','<>',$idLote)
+    				->where('tipo','=',TipoMovimiento::TIPO_MOV_CONSUMO)
+    				->get();
+
+        //recuperar todos los movientos que poseean $idLote como consumidor y tengan id de lote ingrediente diferente
         // movimientos de tipo consumo real
     }
     /**
@@ -54,8 +59,17 @@ class Movimiento extends Model
      * @param string $fechaHasta
      * @return Movimiento[]
      */
-    public static function getPlanificadosProd(string $producto_id, string $fechaHasta)
+    public static function getPlanificadosProd(int $producto_id, string $fechaHasta)
     {
+	return self::whereRaw(
+						'producto_id= '.$producto_id.
+						'and (tipo =' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF .
+                        'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF .
+                        'or tipo=' . TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF.')'
+                        )
+				->where('fecha','<',$fechaHasta)
+				->orderBy('fecha','asc')
+				->get();
         //Recuperar los movimientos planificados de ese producto hata la fecha indicada
         //IMPORTANTE: solo los que no sean de tipo CUMPLIDO o INCUMPLIDO ver TipoMovimiento
         //Es decir los que posean el tipo:
@@ -73,9 +87,9 @@ class Movimiento extends Model
     {
 
         
-    	return(self::where('idLoteConsumidor','=',$producto_id)
+    	return(self::where('producto_id','=',$producto_id)
 			    		->where('fecha','<',$fecha)
-			    		->orderBy('fecha', 'desc')
+			    		->orderBy('fecha')
 			    		->first()
 			    		);
 
@@ -105,6 +119,10 @@ class Movimiento extends Model
      * @param string $fecha
      *
      */
+
+
+
+
     public static function eliminarEntradaInsumoPlanif($producto_id, $fecha)
     {
     }
@@ -141,13 +159,13 @@ class Movimiento extends Model
     											)
     {
         
-    	$productosid= self::distinct()->select('idLoteConsumidor')->get();
+    	$productosid= self::distinct()->select('producto_id')->get();
 
     	$result=[];
 
     	foreach ($productosid as $producto) {
     		
-    		$result[]=self::getAnteriorProd($producto->idLoteConsumidor,$fechaHasta);
+    		$result[]=self::getAnteriorProd($producto->producto_id,$fechaHasta);
 
     	
     	#array_push($result,self::getAnteriorProd($producto,$fechaHasta))	
