@@ -28,7 +28,7 @@ $factory->define(App\Producto::class, function (Faker $faker) {
     return [
         'nombre' => $faker->name,
         'descripcion' => $faker->sentence,
-        'codigo' => str_random(5),
+        'producto_id' => str_random(5),
         'alarmaActiva' => $faker->boolean,
         'alarmaAmarilla'=>21,
         'estado'=>$faker->boolean,

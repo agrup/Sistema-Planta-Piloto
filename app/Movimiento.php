@@ -73,7 +73,7 @@ class Movimiento extends Model
     {
 
         
-    	return(self::where('idLoteConsumidor','=',$producto_id)
+    	return(self::where('producto_id','=',$producto_id)
 			    		->where('fecha','<',$fecha)
 			    		->orderBy('fecha', 'desc')
 			    		->first()
@@ -141,13 +141,13 @@ class Movimiento extends Model
     											)
     {
         
-    	$productosid= self::distinct()->select('idLoteConsumidor')->get();
+    	$productosid= self::distinct()->select('producto_id')->get();
 
     	$result=[];
 
     	foreach ($productosid as $producto) {
     		
-    		$result[]=self::getAnteriorProd($producto->idLoteConsumidor,$fechaHasta);
+    		$result[]=self::getAnteriorProd($producto->producto_id,$fechaHasta);
 
     	
     	#array_push($result,self::getAnteriorProd($producto,$fechaHasta))	
