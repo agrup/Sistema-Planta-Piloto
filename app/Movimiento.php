@@ -1,19 +1,30 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: brujua
- * Date: 30/4/2018
- * Time: 8:47 PM
- */
-class Movimiento
+
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Movimiento extends Model
 {
+
+    protected $guarded=[];
+    public function planificacion(){
+    	return $this->belongsTo('App\Planificacion');
+    }
+
+
     private $campos=['id','fecha','tipo','loteconsumidor',
         'loteingrediente','debe','haber','salgoglobal','saldolote', 'estado'
     ];
     // TODO hacer geters y seters
+    /*
     public function __construct($datos)
     {
     }
+
+*/
+
     /**
      * @param $producto string
      * @return Movimiento
@@ -37,16 +48,30 @@ class Movimiento
      */
     public static function getTrazabilidadLote($idLote)
     {
-        //recuperar todos los movientos que poseean a ese lote como consumidor y tengan id de lote ingrediente diferente
+    	return self::where('idLoteConsumidor','=',$idLote)
+    				->where('idLoteIngrediente','<>',$idLote)
+    				->where('tipo','=',TipoMovimiento::TIPO_MOV_CONSUMO)
+    				->get();
+
+        //recuperar todos los movientos que poseean $idLote como consumidor y tengan id de lote ingrediente diferente
         // movimientos de tipo consumo real
     }
     /**
-     * @param string $idProducto
+     * @param string $producto_id
      * @param string $fechaHasta
      * @return Movimiento[]
      */
-    public static function getPlanificadosProd(string $idProducto, string $fechaHasta)
+    public static function getPlanificadosProd(int $producto_id, string $fechaHasta)
     {
+	return self::whereRaw(
+						'producto_id= '.$producto_id.
+						'and (tipo =' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF .
+                        'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF .
+                        'or tipo=' . TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF.')'
+                        )
+				->where('fecha','<',$fechaHasta)
+				->orderBy('fecha','asc')
+				->get();
         //Recuperar los movimientos planificados de ese producto hata la fecha indicada
         //IMPORTANTE: solo los que no sean de tipo CUMPLIDO o INCUMPLIDO ver TipoMovimiento
         //Es decir los que posean el tipo:
@@ -54,13 +79,23 @@ class Movimiento
         //devolver el array de movimientos Ordenado cronológicamente
     }
     /**
-     * @param string $idProducto
+     * @param string $producto_id
      * @param string $fecha
      * @return Movimiento
      */
-    public static function getAnteriorProd(string $idProducto, string $fecha)
+
+    //Ultimo movimiento real del id producto anterior a una fecha
+    public static function getAnteriorProd(string $producto_id, string $fecha)
     {
-        //real
+
+        
+    	return(self::where('producto_id','=',$producto_id)
+			    		->where('fecha','<',$fecha)
+			    		->orderBy('fecha')
+			    		->first()
+			    		);
+
+
     }
     /**
      * @param string $idLoteIngrediente
@@ -69,24 +104,28 @@ class Movimiento
      */
     public static function getAnteriorLote($idLoteIngrediente, $fecha)
     {
-        //real
+        
     }
     /**
-     * @param $idProducto
+     * @param $producto_id
      * @param $fechaCambio
      * @return Movimiento[] $movimientos
      */
-    public static function getMovimientosProdDespuesDe($idProducto, $fechaCambio)
+    public static function getMovimientosProdDespuesDe($producto_id, $fechaCambio)
     {
         //real
         //Ordenados por favooor
     }
     /**
-     * @param string $idProducto
+     * @param string $producto_id
      * @param string $fecha
      *
      */
-    public static function eliminarEntradaInsumoPlanif($idProducto, $fecha)
+
+
+
+
+    public static function eliminarEntradaInsumoPlanif($producto_id, $fecha)
     {
     }
     /**
@@ -95,6 +134,7 @@ class Movimiento
      */
     public static function eliminarEntradaProductoPlanif($idLote, $fecha)
     {
+
     }
     /**
      * @param string $idLoteConsumidor
@@ -116,8 +156,27 @@ class Movimiento
      * @param string $fechaHasta
      * @return Movimiento[]
      */
-    public static function ultimoStockProdTodos(string $fechaHasta)
+    public static function ultimoStockProdTodos(
+    											string $fechaHasta
+    											)
     {
+        
+    	$productosid= self::distinct()->select('producto_id')->get();
+
+    	$result=[];
+
+    	foreach ($productosid as $producto) {
+    		
+    		$result[]=self::getAnteriorProd($producto->producto_id,$fechaHasta);
+
+    	
+    	#array_push($result,self::getAnteriorProd($producto,$fechaHasta))	
+    	;
+
+    	}
+		
+		return $result;
+
         //devolver los ultimos movimientos hasta la fecha para cada producto.
         //incluir planificados
     }
@@ -213,4 +272,6 @@ class Movimiento
     public function getTipo()
     {
     }
+
+}
 

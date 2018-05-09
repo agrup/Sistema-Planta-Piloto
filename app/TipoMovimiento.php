@@ -1,11 +1,15 @@
 <?php
+namespace App;
 /**
  * Created by PhpStorm.
  * User: brujua
  * Date: 1/5/2018
  * Time: 12:01 AM
  */
-class TipoMovimiento extends SplEnum
+
+
+class TipoMovimiento
+
 {
     const __default = self::SIN_TIPO;
 

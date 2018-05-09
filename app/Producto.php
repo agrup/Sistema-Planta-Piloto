@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Producto extends Model
 {
 
+
+    protected $guarded=[];
+
 #prueba de concatenar query	
        public function scopeincomplete($query)
     {
