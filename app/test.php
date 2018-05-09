@@ -1,12 +1,7 @@
 <?php 
 
-namespace App;
+require 'Planificacion.php';
+var_dump(Planificacion::getSemana('2018-05-14'));
 
 
 
-
-use Carbon\Carbon;
-
-$lunes = Carbon::now()->startOfWeek();
-
-echo $lunes;
