@@ -2,12 +2,41 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\TipoMovimiento;
 use App\Producto;
 
 class Planificacion extends Model
 {
+
+    protected $guarded=[];
+
+    /**
+     * @param string $fecha
+     * @return Planificacion[]
+     */
+    public static function crearSemana($fecha)
+    {
+        $arrResult=[];
+        $arrFechas=[]; //[['fecha'=>, 'diaSemana'=>], [..],..]
+        setlocale(LC_TIME, 'spanish');
+        Carbon::setUtf8(true);
+
+        for ($i=0; $i<5;$i++){
+            //la paso a carbon para preguntar el dia y poderle sumar un dia
+            $fechaC = Carbon::createFromFormat('Y-m-d',$fecha);
+            $diaSemana = $fechaC->format('l');
+            //creo la planificacion y la agrego al array resultado
+            array_push($arrResult,self::create(['fecha'=>$fecha, 'diaSemana'=>$diaSemana]));
+            //agrego un dia y vuelvo al formato normal para la proxima iteracion
+            $fechaC = $fechaC->addDay();
+            $fecha= $fechaC->format('Y-m-d');
+
+        }
+
+    }
+
     public function trabajadors(){
         return $this->belongsToMany('App\Trabajador');
     }
@@ -20,6 +49,7 @@ class Planificacion extends Model
         }
         return $arrResult;
     }
+
 
     public function movimientos(){
         return $this->hasMany('App\Movimiento', 'planificacion_id');
