@@ -9,6 +9,10 @@ namespace App;
 
 class DetalleSalida
 {
+
+    protected $guarded=[];
+
+
     const MOTIVO_DECOMISO = 'decomiso';
     const MOTIVO_VENTAS = 'ventas';
     private $idMov;

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Movimiento extends Model
 {
+
+    protected $guarded=[];
     public function planificacion(){
     	return $this->belongsTo('App\Planificacion');
     }
