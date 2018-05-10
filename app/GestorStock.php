@@ -464,7 +464,7 @@ class GestorStock
     }
     /**
      * @param string $fechaHasta
-     * @return array [['nombre'=>,'codigo'=>, 'tipoUnidad'=>, 'alarma'=>, 'stock'=>]...] hashmap key: idProducto, value: cantidad
+     * @return array [['nombre'=>,'codigo'=>, 'tu'=>, 'alarma'=>, 'stock'=>, 'producto_id'=>, ]...] hashmap key: idProducto, value: cantidad
      * Hay que evaluar si con esta funcion no alcanza ya para desde afuera calcular getNecesidadInsumos y otras por el estilo
      */
     public static function getStockPorProd(string $fechaHasta)
@@ -481,6 +481,7 @@ class GestorStock
             $arrAux['codigo']=$producto->codigoProducto;
             $arrAux['tu']=$producto->tipoUnidad;
             $arrAux['stock']=$stock;
+            $arrAux['producto_id']=$movimiento->producto_id;
             if($producto->alarmaActiva){
                 if($stock<$producto->alarmaAmarilla){
                     $arrAux['alarma']='amarilla';
@@ -494,6 +495,31 @@ class GestorStock
 
         }
         return $result;
+    }
+
+    /**
+     * @param $fechaHasta
+     * @return array   de la forma
+     * [
+     *  'fecha'=>,
+     * 'necesidades'=>[
+     *      ['codigo'=>,'insumo'=>, 'NecesidadFinal'=>, 'fechaAgotamiento'=> ],
+     *      [...]
+     *  ],
+     * 'alarmas'=>[
+     *      ['codigo'=>,'insumo'=>,'cantidad'=>, 'color'=>],
+     *      [...]
+     *  ],
+     * ]
+     */
+    public static function getNecesidadInsumos($fechaHasta){
+        $arrResult=[];
+        $necesidades = [];
+        $alarmas =[];
+        //TODO
+
+
+
     }
     //PRIVADOS
     /**
