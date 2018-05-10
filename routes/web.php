@@ -1,20 +1,42 @@
-<?php 
 
-use App\Lote;
-use App\Producto;
+<?php
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 
-Route::get('/', function () {
+//Route::get('/', function () {
+  //  return view('welcome');
+//});
+//un Ejemplo
 
-	$name = 'Planta Piloto';
-	$branch ='branch Agu';
+//
+//Route::get('/hola', function () {
+  //  return 'HOLA';
+//});
+//Route::get('/planta',function(){
+//	return view('pages.Produccion');
+//});
 
-    return view('welcome' ,
-    	compact('name','branch')
+//devolver el id del 
+//Route::get('/users/{id}',function($id){
+//	return 'este es el user '.$id;
+//});
 
-    	);
-});
-
+Route::get('/','PagesController@index');
+Route::get('/produccion','PagesController@produccion');
+Route::post('/calendarioSig','PagesController@calendarioSig'); //flechita << >>
+Route::post('/calendarioAnt','PagesController@calendarioAnt');
+//Route::get('/sumarizacion','PagesController@sumarizacion');
+Route::post('/sumarizacion','PagesController@sumarizacion');
+Route::post('/calendarioDia','PagesController@calendarioDia');
 
 Route::get('/planificacion', 'Planificacioncontroller@verCalendario($id)' );
 Route::get('/lotes', 'LotesController@index') ;
@@ -29,4 +51,5 @@ Route::get('/test', function() {
   	echo ("$producto");
 	
 });
+
 
