@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -36,3 +37,19 @@ Route::post('/calendarioAnt','PagesController@calendarioAnt');
 //Route::get('/sumarizacion','PagesController@sumarizacion');
 Route::post('/sumarizacion','PagesController@sumarizacion');
 Route::post('/calendarioDia','PagesController@calendarioDia');
+
+Route::get('/planificacion', 'Planificacioncontroller@verCalendario($id)' );
+Route::get('/lotes', 'LotesController@index') ;
+Route::get('/lotes/{id}', 'LotesController@show') ;
+
+Route::get('/trabajador', 'TrabajadorController@index');
+Route::get('/trabajador/create', 'TrabajadorController@create');
+Route::post('/trabajador', 'TrabajadorController@store');
+
+Route::get('/test', function() {
+  	$producto = Producto::find(1)->formulacion;
+  	echo ("$producto");
+	
+});
+
+
