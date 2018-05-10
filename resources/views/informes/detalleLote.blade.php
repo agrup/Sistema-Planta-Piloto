@@ -3,29 +3,68 @@
 @section('section') 
 
 	
-	@include('elementosComunes.aperturaTitulo')
-			{{-- <h3 style="float: right; ">{{ $detalle['numeroLote'] }}</h3> --}}
+	@include('elementosComunes.aperturaTitulo')			
 			Detalles de Lote:  {{ $detalle['numeroLote'] }}
 	@include('elementosComunes.cierreTitulo')
 
 	
-		@include('elementosComunes.aperturaTabla')    
-			{{-- $v = [];
-			$v = array('numeroLote', 'vencimiento', 'cantidad', 'tu', 'cantidadElaborada', 'costoUnitario', 'inicioMaduracion', 'finalización', 'cantidadFinal', 'proveedor', 'tipoTp', 'asignatura'); --}}
-
+		@include('elementosComunes.aperturaTabla')    			
+			
 			<thead>
-				<tr><th>Código: {{ $detalle['cantidad'] }}</th> 
-					<th>Producto: {{ $detalle['cantidad'] }}</th>
-					<th>Fecha Inicio: {{ $detalle['numeroLote'] }}</th> 
+				<tr><th>Código: {{ $detalle['codigo'] }}</th> 
+					<th>Producto: {{ $detalle['nombreProducto'] }}</th>
+					<th>Fecha Inicio: {{ $detalle['fechaInicio'] }}</th> 
+					
+				</tr>
+				<tr><th></th><th></th><th></th></tr>
+				<tr>
+					<th>Cantidad en Stock: {{ $detalle['cantidad'] }} {{ $detalle['tu'] }}</th>			
+					<th>Costo Unitario: {{ $detalle['costoUnitario'] }}</th>
 					<th>Vencimiento: {{ $detalle['vencimiento'] }}</th>
 				</tr>
+				<tr><th><h5><b>Detalles de Elaboración:</b></h5></th><th></th><th></th></tr>
 				<tr>
-					<th>Cantida en Stock: {{ $detalle['cantidad'] }}</th>
-					<th>Cantidad Elaborada: {{ $detalle['cantidadElaborada'] }}</th>
-					<th>Tipo Unidad: {{ $detalle['tu'] }}</th>
-					<th>Costo Unitario: {{ $detalle['costoUnitario'] }}</th>
+					@if ($detalle['cantidadElaborada'] != null)						
+						<th>Cantidad Elaborada: {{ $detalle['cantidadElaborada'] }}</th>
+					@endif
+
+					@if ($detalle['inicioMaduracion']!= null)						
+						<th>Inicio Maduración: {{ $detalle['inicioMaduracion'] }}</th>
+					@endif
+
+					@if ($detalle['finalizacion']!= null)						
+						<th>Fecha Finalización: {{ $detalle['finalizacion'] }}</th>
+					@endif
 				</tr>
-			
+				<tr>
+
+					@if ($detalle['cantidadFinal']!= null)						
+						<th>Cantidad Final: {{ $detalle['cantidadFinal'] }}</th>
+					@endif
+					
+					@if ($detalle['proveedor']!= null)						
+						<th>Proveedor: {{ $detalle['proveedor'] }}</th>
+					@endif
+				<tr>
+					@if ($detalle['tipoTp']!= null)						
+						<th>Tipo TP: {{ $detalle['tipoTp'] }}</th>
+					@endif
+					@if ($detalle['asignatura']!= null)						
+						<th>Asignatura: {{ $detalle['asignatura'] }}</th>
+					@endif
+				</tr>
+
+					{{-- 
+					@for ($i = 0; $i < 7; $i++)						
+						@if ($detalle[$v[$i]] != null)
+							<th> {{ $v1[$i] }} :   {{ $detalle[$v[$i]]}}  </th>
+						@endif
+						
+					@endfor
+					 --}}
+
+					
+				</tr>
 			</thead>
 
 
@@ -33,9 +72,16 @@
 
 
 		@include('elementosComunes.aperturaTabla')    
-			<h4><b>Ingredientes de Elaboración</b></h4>
-			<thead><tr><th>Numero Lote</th> <th>Insumo</th> <th>Cantidad en Stock</th> <th>Tipo de Unidad</th> </tr></thead>
-			
+			<h5><b>Ingredientes de Elaboración:</b></h5>			
+			<thead><tr> <th>Numero Lote</th> 
+						<th>Insumo</th> 
+						<th>Cantidad en Stock</th>  
+					</tr>
+			</thead>
+			@foreach ($detalle['detalleElaboracion'] as $element)
+				<tr><td>{{ $element['numeroLote'] }}</td><td>{{ $element['insumo'] }}</td><td>{{ $element['cantidadStock'] }} {{ $detalle['tu'] }}</td></tr>
+
+			@endforeach
 		@include('elementosComunes.cierreTabla')    		
 		
 	

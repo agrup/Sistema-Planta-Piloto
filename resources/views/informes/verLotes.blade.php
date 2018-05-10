@@ -9,7 +9,7 @@
 		
 		@include('elementosComunes.aperturaTabla')    
 		<h4><b>Nombre Producto: {{ $lote['producto'] }}</b></h4>  
-			<thead ><tr><th>Nro Lote</th> 
+			<thead ><tr><th>Nro Lote </th> 
 						<th>Fecha de Inicio</th> 
 						<th>Vencimiento</th> 
 						<th>Cantidad en Stock</th> 

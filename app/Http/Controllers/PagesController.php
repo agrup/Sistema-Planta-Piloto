@@ -71,20 +71,26 @@ class PagesController extends Controller
         $detalle = [];        
         $detalle['detalleElaboracion'] = [];
 
+        //ULTIMOS AGREGADOS NO ACORDADOS
+        $detalle['codigo'] = 'PL_1234';
+        $detalle['nombreProducto'] = 'Leche';
+        $detalle['fechaInicio'] = '12/05/2018';
+
+        //
         $detalle['numeroLote'] = '12122018';
         $detalle['vencimiento'] = '12122018';
         $detalle['cantidad'] = '10000';
         $detalle['tu'] = 'Kg';
         $detalle['cantidadElaborada'] = '20000';
         $detalle['costoUnitario'] = '120';
-        $detalle['inicionMaduracion'] = '12122018';
+        $detalle['inicioMaduracion'] = '12122018';
         $detalle['finalizacion'] = '12122018';
         $detalle['cantidadFinal'] = '20000';
-        $detalle['proveedor'] = '';
-        $detalle['tipoTp'] = '';
-        $detalle['asignatura'] = '';
+        $detalle['proveedor'] = 'ffffff';
+        $detalle['tipoTp'] = 'rffffff';
+        $detalle['asignatura'] = 'ffffff';
 
-
+        //ARREGLO DE INGREDIENTES DEL LOTE    
         for ($i=0; $i <10; $i++) { 
             $detalle['detalleElaboracion'][$i]['numeroLote'] = '11111111111111111';
             $detalle['detalleElaboracion'][$i]['insumo'] = '2222222222222222';
