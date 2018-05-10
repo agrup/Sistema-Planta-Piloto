@@ -5,22 +5,7 @@
             <b>Sumatoria de necesidades de Insumos</b>
           </h2>
      @include('elementosComunes.cierreTitulo') 
- 	  <div class="py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h5 class="">Fecha Hasta</h5>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-2">
-          <input type="text" class="form-control"> </div>
-      </div>
-    </div>
-  </div>
-  @include('elementosComunes.aperturaBoton') 
-          <a class="btn btn-primary" href="#">Generar</a>
-     @include('elementosComunes.cierreBoton') 
+ 	
 	@include('elementosComunes.aperturaTitulo')
           <h4 class="">En necesidad</h4>
      @include('elementosComunes.cierreTitulo') 
@@ -29,7 +14,8 @@
               <tr>
                 <th>Código</th>
                 <th>Insumo</th>
-                <th>Cantidad Necesaria</th>
+                <th>Necesidad Final</th>
+                <th>Fecha Agotamiento</th>
               </tr>
             </thead>
             <tbody>
@@ -63,4 +49,22 @@
               <tr></tr>
             </tbody>
    @include('elementosComunes.cierreTabla')
+
+  <div class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h5 class="">Revisar Planificacion Hasta:</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <input type="date" class="form-control"> </div>
+      </div>
+    </div>
+  </div>
+  @include('elementosComunes.aperturaBoton') 
+          <a class="btn btn-primary" href="#">Ir a la Fecha</a>
+     @include('elementosComunes.cierreBoton') 
+
 @endsection

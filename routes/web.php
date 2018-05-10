@@ -31,6 +31,8 @@
 
 Route::get('/','PagesController@index');
 Route::get('/produccion','PagesController@produccion');
-Route::get('/calendario','PagesController@calendario');
+Route::post('/calendarioSig','PagesController@calendarioSig'); //flechita << >>
+Route::post('/calendarioAnt','PagesController@calendarioAnt');
 //Route::get('/sumarizacion','PagesController@sumarizacion');
 Route::post('/sumarizacion','PagesController@sumarizacion');
+Route::post('/calendarioDia','PagesController@calendarioDia');
