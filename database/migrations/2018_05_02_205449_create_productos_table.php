@@ -15,18 +15,33 @@ class CreateProductosTable extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('nombre');
-            $table->text('descripcion');
-            $table->text('tipoUnidad');
-            $table->text('codigo');
-            $table->boolean('alarmaActiva');
-            $table->integer('alarmaAmarilla');
-            $table->integer('alarmaRoja');
-            $table->text('categoria');
-            $table->boolean('estado');
+            $table->text('nombre')->nullable($value = true);
+            $table->text('descripcion')->nullable($value = true);
+            $table->text('tipoUnidad')->nullable($value = true);
+            $table->string('codigo')->nullable($value = true);
+            $table->boolean('alarmaActiva')->nullable($value = true);
+            $table->double('alarmaAmarilla')->nullable($value = true);
+            $table->double('alarmaRoja')->nullable($value = true);
+            $table->text('categoria')->nullable($value = true);
+            $table->boolean('estado')->nullable($value = true);
             $table->timestamps();
         });
+
+        Schema::create('producto_productoi', function (Blueprint $table) {
+  
+            $table->integer('producto_id');
+            $table->integer('ingrediente_id');
+            $table->primary(['producto_id','ingrediente_id']);
+            $table->double('cantidad');
+            $table->double('cantidadProducto');
+        });
+
+
+
+
     }
+
+
 
     /**
      * Reverse the migrations.
@@ -35,6 +50,9 @@ class CreateProductosTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('producto_productoi');
         Schema::dropIfExists('productos');
+
+
     }
 }

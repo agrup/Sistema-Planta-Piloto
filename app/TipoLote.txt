@@ -1,0 +1,4 @@
+1- Iniciado
+2- maduracion
+3- finalizado
+4- planificado

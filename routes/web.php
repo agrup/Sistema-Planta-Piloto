@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 /*
@@ -37,3 +38,4 @@ Route::get('/stock', 'PagesController@stock');
 Route::post('/stock', 'PagesController@stock');
 Route::get('/verLotes', 'PagesController@verLotes');
 Route::get('/detalleLote', 'PagesController@detalleLote');
+

@@ -3,19 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\GestorStocl;
 
 class PagesController extends Controller
 {
     public function index(){
         return view('programaProduccionSemanal.programaProduccionSemanal');
+
+    }
+    public function produccion(){    	
+        return view('Produccion');	
+
     }
     
     public function calendario(){
     	return view('programaProduccionSemanal.programaProduccionSemanal');
     }
 
-    public function stock(){    	
-    	$stock = [];
+    public function stock()
+    	/*
+    {       
+        $stock = [];
 
         if(isset($_POST['inputDate'])){
 
@@ -46,7 +54,7 @@ class PagesController extends Controller
             
         }
     	return view('informes.stock', compact('stock'));	
-    }
+    }*/
 
     public function verLotes(){
         $lote = [];
