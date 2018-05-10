@@ -42,6 +42,16 @@ class Movimiento extends Model
     {
         //TODO
     }
+
+
+    public static function getFechaUltimoReal()
+    {
+        return Self::first();
+    }
+
+
+
+
     /**
      * @param string $idLote
      * @return Movimiento[]
