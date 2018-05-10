@@ -10,11 +10,7 @@ class Producto extends Model
 
     protected $guarded=[];
 
-#prueba de concatenar query	
-       public function scopeincomplete($query)
-    {
-    	return $query->where('id','>=',2);
-    }
+
 
 
 #addformulacion agrega las ttablas pivot al producto que le paso
@@ -40,6 +36,38 @@ class Producto extends Model
            }
            return $arrayResult;
         }   
+
+
+    public static function getNameProdByIdLote(int $idLote)
+    {
+        return Producto::find(Lote::find($idLote)->producto_id)->nombre;
+    }
+
+        public static function getTUProdByIdLote(int $idLote)
+    {
+        return Producto::find(Lote::find($idLote)->producto_id)->tipoUnidad;
+    }
+
+     public function lotes ()
+     {
+        return $this->hasMany('App\Lote')->get();
+     } 
+
+     public function getArrayLotes()
+     {
+
+      return ['producto'=>$this->nombre,'tu'=>$this->tipoUnidad,'codigo'=>$this->codigo,'lotes'=>$this->lotes()];
+      /*
+        $arrayResult = [];
+        $lotes = $this->lotes();
+        foreach ($lotes as $lote) {
+          array_push($arrayResult,$lote->toArray());
+        }
+        return $arrayResult;*/
+     }
+
+
+
 }
 # consulta en tinker
 
