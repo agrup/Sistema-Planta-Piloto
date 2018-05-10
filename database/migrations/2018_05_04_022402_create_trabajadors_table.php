@@ -19,8 +19,8 @@ class CreateTrabajadorsTable extends Migration
             $table->integer('idPersona')->nullable($value = true);
             $table->text('sector')->nullable($value = true);
             $table->text('puesto')->nullable($value = true);
-            $table->text('seudonimo')->nullable($value = true);
-            $table->boolean('estado')->nullable($value = true);
+            $table->text('seudonimo');
+            $table->boolean('estado')->default(true);
             $table->timestamps();
         });
 

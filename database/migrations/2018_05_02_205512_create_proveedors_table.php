@@ -15,7 +15,7 @@ class CreateProveedorsTable extends Migration
     {
         Schema::create('proveedors', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('nombre')->nullable($value = true);
+            $table->text('nombre');
             $table->text('telefono')->nullable($value = true);
             $table->text('rubro')->nullable($value = true);;
             $table->text('localidad')->nullable($value = true);
@@ -25,7 +25,7 @@ class CreateProveedorsTable extends Migration
             $table->integer('cp')->nullable($value = true);
             $table->text('direccion')->nullable($value = true);
             $table->text('nombreContacto')->nullable($value = true);
-            $table->boolean('estado')->nullable($value = true);
+            $table->boolean('estado')->default(true);
             $table->timestamps();
         });
     }

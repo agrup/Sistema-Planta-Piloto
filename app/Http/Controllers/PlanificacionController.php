@@ -8,14 +8,14 @@ use App\Planificacion;
 
 class PlanificacionController extends Controller
 {
-    public function index()
+    public static function index()
     {
         $planificaciones = Planificacion::getSemana(Carbon::now()->format('Y-m-d'));
         return view('',$planificaciones);
     	
     }
 
-    public function show(){
+    public static function show(){
         $planificaciones = [];
         setlocale(LC_TIME, 'spanish');
         Carbon::setUtf8(true);
@@ -35,6 +35,11 @@ class PlanificacionController extends Controller
         $planificaciones = Planificacion::getSemana($fecha);
 
         return  view('', $planificaciones);
+
+    }
+
+    public static function verNecesidadInsumos($fechaHasta){
+
 
     }
 
