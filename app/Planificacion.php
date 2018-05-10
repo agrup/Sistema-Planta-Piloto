@@ -96,9 +96,9 @@ class Planificacion extends Model
         foreach ($movs as $mov){
             $arrProd=[];
             $color = 'normal';
-            $producto=Producto::where('codigoProducto','=',$mov->codigoProducto)->first();
+            $producto=Producto::find($mov->producto_id);
             $arrProd['nombre']=$producto->nombre;
-            $arrProd['codigo']=$mov->codigoProducto;
+            $arrProd['codigo']=$mov->codigo;
             $arrProd['cantidad']=$mov->haber;
             $arrProd['tipoUnidad']=$producto->tipoUnidad;
             if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_CUMPLIDO){
@@ -130,9 +130,9 @@ class Planificacion extends Model
         foreach ($movs as $mov){
             $arrProd=[];
             $color = 'normal';
-            $producto=Producto::where('codigoProducto','=',$mov->codigoProducto)->first();
+            $producto=Producto::find($mov->producto_id);
             $arrProd['nombre']=$producto->nombre;
-            $arrProd['codigo']=$mov->codigoProducto;
+            $arrProd['codigo']=$mov->codigo;
             $arrProd['cantidad']=$mov->haber;
             $arrProd['tipoUnidad']=$producto->tipoUnidad;
             if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_CUMPLIDO){
