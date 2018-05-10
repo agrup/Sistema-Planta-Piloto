@@ -16,8 +16,11 @@ class CreateDetalleSalidasTable extends Migration
     {
         Schema::create('detalle_salidas', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('tipo')->nullable($value = true);
-            $table->integer('id_movimiento')->nullable($value = true);
+            $table->integer('movimiento_id');
+            $table->integer('lote_id');
+            $table->timestamp('fecha');
+            $table->string('motivo');
+            $table->double('cantidad');
             $table->text('detalle')->nullable($value = true);
             $table->timestamps();
         });
