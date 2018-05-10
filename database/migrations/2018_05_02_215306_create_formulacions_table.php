@@ -16,10 +16,10 @@ class CreateFormulacionsTable extends Migration
         Schema::create('formulacions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('idFormulacion');
-            $table->integer('id_producto')->nullable($value = true);
-            $table->integer('idIngrediente')->nullable($value = true);
-            $table->integer('cantidadIngrediete')->nullable($value = true);
-            $table->boolean('estado')->nullable($value = true);
+            $table->integer('producto_id');
+            $table->integer('idIngrediente');
+            $table->integer('cantidadIngrediete');
+            $table->boolean('estado')->default(true);
             $table->timestamps();
         });
     }

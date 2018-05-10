@@ -18,13 +18,13 @@ class CreateMovimientosTable extends Migration
 
             $table->integer('idLoteConsumidor')->nullable($value = true);
             $table->integer('idLoteIngrediente')->nullable($value = true);
-            $table->timestamp('fecha')->nullable($value = true);
+            $table->timestamp('fecha');
             $table->integer('producto_id')->nullable($value = true);
-            $table->double('debe')->nullable($value = true);
-            $table->double('haber')->nullable($value = true);
+            $table->double('debe')->default(0);
+            $table->double('haber')->default(0);
             $table->double('saldoGlobal')->nullable($value = true);
             $table->double('saldoLote')->nullable($value = true);
-            $table->integer('tipo')->nullable($value = true);
+            $table->integer('tipo');
             $table->integer('planificacion_id')->nullable($value = true);
             $table->timestamps();  
         });
