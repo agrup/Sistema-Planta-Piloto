@@ -17,7 +17,7 @@ Route::post('/planificacion','PlanificacionController@show');
 Route::get('/planificacionDia','PagesController@calendarioDia');
 Route::get('/calendarioSig','PlanificacionController@calendarioSig'); //flechita << >>
 Route::get('/calendarioAnt','PlanificacionController@calendarioAnt');
-Route::post('/sumarizacion','PagesController@verNecesidadInsumos');
+Route::get('/sumarizacion','PlanificacionController@verNecesidadInsumos');
 
 
 

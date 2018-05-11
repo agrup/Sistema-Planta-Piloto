@@ -220,11 +220,11 @@ VALUES ( '2018-05-18', 'viernes', '', now(), now());
 DELETE from public.trabajadors;
 
 INSERT INTO public.trabajadors(
-	 legajo, "idPersona", sector, puesto, seudonimo, estado, created_at, updated_at)
+	 legajo, persona_id, sector, puesto, seudonimo, estado, created_at, updated_at)
 	VALUES ( 1, 1, 'produccion', '', 'Jorge', true, now(), now());
 
 INSERT INTO public.trabajadors(
-	 legajo, "idPersona", sector, puesto, seudonimo, estado, created_at, updated_at)
+	 legajo, persona_id, sector, puesto, seudonimo, estado, created_at, updated_at)
 	VALUES ( 2, 2, 'produccion', '', 'Tito', true, now(), now());
 
 --Asigno los trabajadores a las planificaciones

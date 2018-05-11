@@ -16,16 +16,29 @@ class CreateProductosTable extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->increments('id');
             $table->text('nombre');
-            $table->text('descripcion');
+            $table->text('descripcion')->nullable($value = true);
             $table->text('tipoUnidad');
-            $table->text('codigo');
-            $table->boolean('alarmaActiva');
-            $table->integer('alarmaAmarilla');
-            $table->integer('alarmaRoja');
-            $table->text('categoria');
-            $table->boolean('estado');
+            $table->string('codigo');
+            $table->boolean('alarmaActiva')->default(false);
+            $table->double('alarmaAmarilla')->nullable($value = true);
+            $table->double('alarmaRoja')->nullable($value = true);
+            $table->text('categoria')->default('sin categoria');
+            $table->boolean('estado')->default(true);
             $table->timestamps();
         });
+
+        Schema::create('producto_productoi', function (Blueprint $table) {
+
+            $table->integer('producto_id');
+            $table->integer('ingrediente_id');
+            $table->primary(['producto_id','ingrediente_id']);
+            $table->double('cantidad');
+            $table->double('cantidadProducto');
+        });
+
+
+
+
     }
 
     /**

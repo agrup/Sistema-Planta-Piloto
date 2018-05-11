@@ -15,7 +15,13 @@ class CreateJornadasTable extends Migration
     {
         Schema::create('jornadas', function (Blueprint $table) {
             $table->increments('id');
-            
+            $table->float('cantHorasLunes')->default(0);
+            $table->float('cantHorasMartes')->default(0);
+            $table->float('cantHorasMiercoles')->default(0);
+            $table->float('cantHorasJueves')->default(0);
+            $table->float('cantHorasViernes')->default(0);
+            $table->float('cantHorasSabado')->default(0);
+            $table->float('cantHorasDomingo')->default(0);
             $table->timestamps();
         });
     }

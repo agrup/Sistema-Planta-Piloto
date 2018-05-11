@@ -521,7 +521,7 @@ class GestorStock
         $necesidades = [];
         $alarmas =[];
         self::recalcularPlanificados($fechaHasta);
-        $movimientosC = Movimiento::getMovsCritico($fechaHasta);
+        $movimientosC = Movimiento::getMovsCriticos($fechaHasta);
         foreach ($movimientosC as $movC){
             $arrAux=[];
             //recupero producto para guardar los datos
