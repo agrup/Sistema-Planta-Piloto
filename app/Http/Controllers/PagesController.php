@@ -20,8 +20,8 @@ class PagesController extends Controller
     	return view('programaProduccionSemanal.programaProduccionSemanal');
     }
 
-    public function stock()
     	/*
+    public function stock()
     {       
         $stock = [];
 

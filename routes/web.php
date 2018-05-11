@@ -29,12 +29,12 @@
 //	return 'este es el user '.$id;
 //});
 
-Route::get('/','PagesController@index');
+//Route::get('/','PagesController@index');
 Route::get('/calendario','PagesController@calendario');
 
 
-Route::get('/stock', 'PagesController@stock');
-Route::post('/stock', 'PagesController@stock');
+Route::get('/stock', 'StockController@show');
+Route::post('/stock', 'StockController@show');
 Route::get('/verLotes', 'PagesController@verLotes');
 Route::get('/detalleLote', 'PagesController@detalleLote');
 

@@ -480,14 +480,16 @@ class GestorStock
     {
         $result=[];
         self::recalcularPlanificados($fechaHasta);
-        $movimientos =Movimiento::ultimoStockProdTodos($fechaHasta);
+
+        if(!empty($movimientos =Movimiento::ultimoStockProdTodos($fechaHasta)))
+        {
         foreach ($movimientos as $movimiento){
             $arrAux=[];
-            $producto=Producto::find($movimiento->producto_id)->get();
-            $stock=$movimiento->salgoGlobal;
+            $producto=Producto::find($movimiento->producto_id);
+            $stock=$movimiento->saldoGlobal;
             $arrAux['alarma']='normal';
             $arrAux['nombre']=$producto->nombre;
-            $arrAux['codigo']=$producto->codigoProducto;
+            $arrAux['codigo']=$producto->codigo;
             $arrAux['tu']=$producto->tipoUnidad;
             $arrAux['stock']=$stock;
             if($producto->alarmaActiva){
@@ -500,7 +502,7 @@ class GestorStock
             }
 
             array_push($result, $arrAux);
-
+            }
         }
         return $result;
     }
