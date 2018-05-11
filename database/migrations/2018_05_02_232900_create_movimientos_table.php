@@ -16,19 +16,19 @@ class CreateMovimientosTable extends Migration
         Schema::create('movimientos', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('idLoteConsumidor')->unsigned();
-            $table->integer('idLoteConsumido')->unsigned();
-            $table->foreign('idLoteConsumidor')->references('id')->on('lotes');
-            $table->foreign('idLoteConsumido')->references('id')->on('lotes');
-            $table->date('fecha');
-            $table->integer('producto');
-            $table->float('debe');
-            $table->float('haber');
-            $table->float('saldoglobal');
-            $table->float('saldoLote');
+            $table->integer('idLoteConsumidor')->nullable($value = true);
+            $table->integer('idLoteIngrediente')->nullable($value = true);
+            $table->timestamp('fecha');
+            $table->integer('producto_id')->nullable($value = true);
+            $table->double('debe')->default(0);
+            $table->double('haber')->default(0);
+            $table->double('saldoGlobal')->nullable($value = true);
+            $table->double('saldoLote')->nullable($value = true);
             $table->integer('tipo');
+            $table->integer('planificacion_id')->nullable($value = true);
             $table->timestamps();  
         });
+
     }
 
     /**

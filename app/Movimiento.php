@@ -1,10 +1,11 @@
 <?php
 
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class movimiento extends Model
+class Movimiento extends Model
 {
 
 
@@ -44,7 +45,9 @@ class movimiento extends Model
     }
 
 
-    public static function gitultimoReal()
+
+    public static function getFechaUltimoReal()
+
     {
 
         
@@ -84,6 +87,7 @@ class movimiento extends Model
         return null;
 
         //TODO Retornar MOVIMIENTO[] con los primeros movimientos criticos(los mas viejos) que tienen su saldo global < 0 para cada producto despues de la fecha del ultimo real de ese año (o fecha tope)
+
 
     }
 
@@ -214,6 +218,7 @@ class movimiento extends Model
 
     	foreach ($productosid as $producto) {
     		
+
             if (($aux=(self::getAnteriorProd($producto->producto_id,$fechaHasta)))!=null)
             {
 
@@ -222,6 +227,7 @@ class movimiento extends Model
        
     	#array_push($result,self::getAnteriorProd($producto,$fechaHasta))	
     	
+
 
     	}
 		
@@ -323,5 +329,5 @@ class movimiento extends Model
     {
     }
 
-
 }
+
