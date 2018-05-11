@@ -12,7 +12,7 @@
       <div class="row">
         @foreach($planificaciones as $value  )
           @if($value['diaSemana']=="lunes")
-              <form action="calendarioAnt?fecha={{$value["fecha"]}}" method="POST" enctype="multipart/form-data" class="col-md-11"> {{csrf_field()}}
+              <form action="calendarioAnt?fecha={{$value["fecha"]}}" method="GET" enctype="multipart/form-data" class="col-md-11"> {{csrf_field()}}
 
               <input type="submit" class="btn btn-primary" value="<<">
         </form>
@@ -21,7 +21,7 @@
            
        @foreach($planificaciones as $value  )
           @if($value['diaSemana']=="lunes")
-        <form action="calendarioSig?fecha={{$value["fecha"]}}" method="POST" enctype="multipart/form-data"  class="col-md-1">
+        <form action="calendarioSig?fecha={{$value["fecha"]}}" method="GET" enctype="multipart/form-data"  class="col-md-1">
           {{csrf_field()}}
           <input type="submit" class="btn btn-primary" value=">>">
          
@@ -32,11 +32,14 @@
     </div>
   </div>
   @include('elementosComunes.aperturaTitulo')
-   <h5>
-            <b>Fecha</b>
-            <input type="date" value="Fecha">
-
-    </h5>
+  
+           
+            <form action="planificacion" method="POST" enctype="multipart/form-data"  class="col-md-5">
+              {{csrf_field()}}
+              <input type="date" value="Fecha" >
+              <input  class="btn btn-secondary"  type="submit" value="Ir a la fecha">
+            </form>
+    
   @include('elementosComunes.cierreTitulo') 
 
         
@@ -49,7 +52,7 @@
 
                                  @foreach($planificaciones as $value  )
                                     
-                                      <form action="calendarioDia?dia={{$value["fecha"]}}" method="POST" enctype="multipart/form-data" class="col-md-11"> {{csrf_field()}}
+                                      <form action="planificacionDia?dia={{$value["fecha"]}}" method="GET" enctype="multipart/form-data" class="col-md-11"> {{csrf_field()}}
                                       <th> <input type="submit" class="btn btn-primary" value={{$value["fecha"]}}></th>
                                        
                                       </form>
@@ -278,13 +281,13 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h5 class="">Fecha Hasta</h5>
+          <h4 class="">Fecha Hasta</h4  >
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-2">
-          <input type="text" value="fecha" class="form-control"> </div>
+          <input type="date" value="fecha" class="form-control"> </div>
           <form action="/laravel5.4/blog/public/sumarizacion" method="POST" enctype="multipart/form-data">
             {{csrf_field()}}
         <div class="col-md-8">
@@ -294,4 +297,6 @@
       </div>
     </div>
   </div>
+  <br>
+  <br>
 @endsection
