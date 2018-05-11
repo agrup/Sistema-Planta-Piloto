@@ -1,112 +1,100 @@
 <?php
-
-
-namespace App;
-use App\TipoMovimiento;
-use App\Movimiento;
-use App\DetalleSalida;
-use App\Producto;
-use Carbon\Carbon;
-use InvalidArgumentException;
-
+require_once('TipoMovimiento.php');
+require_once ('Movimiento.php');
+require_once('DetalleSalida.php');
 /**
  * @author brujua
  * @version 1.0
  * @created 22-abr.-2018 3:19:29 a. m.
  */
-
 class GestorStock
 {
-
+    function __construct()
+    {
+    }
+    function __destruct()
+    {
+    }
     // MOVIMIENTOS DE ENTRADA
     //REALES
     /**
      *
      * @param string $idLote
-     * @param int $idProducto
-     * @param double $cantidad
+     * @param string $idProducto
+     * @param int $cantidad
      * @param string $fecha
      *
      */
-    public static function entradaInsumoProducto(string $idLote, int $idProducto, double $cantidad, string $fecha)
+    public static function entradaInsumoProducto(string $idLote, string $idProducto, int $cantidad, string $fecha)
     {
         $banderaRecalcular = false;
         $ultimoMovReal=Movimiento::ultimoRealProd($idProducto);
         $movAnterior = $ultimoMovReal;
         //Compruebo si estoy insertando antes del ultimo mov de ese producto
-        if($ultimoMovReal->fecha > $fecha){
+        if($ultimoMovReal->getFecha()>$fecha){
             //si es asi, recupero el mov anterior a este y deberé recalcular
             $movAnterior = Movimiento::getAnteriorProd($idProducto,$fecha);
             $banderaRecalcular=true;
         }
         $datosNuevoMov = [
-            'producto_id'=>$idProducto,
+            'producto'=>$idProducto,
             'fecha'=>$fecha,
             'tipo'=>TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO,
-            'idLoteConsumidor'=>$idLote,
-            'idLoteIngrediente'=>$idLote,
+            'loteConsumidor'=>$idLote,
+            'loteIngrediente'=>$idLote,
             'debe'=>0,
             'haber'=>$cantidad,
-            'saldoGlobal'=>($movAnterior->saldoGlobal+$cantidad), // cantidad nueva es la anterior mas lo que agrega la llegada
+            'saldoGlobal'=>($movAnterior->getSaldoGlobal()+$cantidad), // cantidad nueva es la anterior mas lo que agrega la llegada
             'saldoLote'=>$cantidad
         ];
-
-        $nuevoMov = Movimiento::create($datosNuevoMov); //puede que no ande, que haya que hacer ->get();
-
+        $nuevoMov = new Movimiento($datosNuevoMov);
+        $nuevoMov->persist();
         if($banderaRecalcular){
             self::recalcularStockReal($nuevoMov);
         }
     }
     //PLANIFICADOS
-
-
-
-    public static function entradaInsumoPlanificado(int $idProducto, double $cantidad, string $fecha)
-
+    public static function entradaInsumoPlanificado(string $idProducto, int $cantidad, string $fecha)
     {
         //No deben existir mas de una entrada de insumo planificada para un mismo dia
         //debido a que los planificados se recalculan cada vez que se quiere saber algo de ellos,
         // simplemente inserto el mov sin calcular nada.
         $datosNuevoMov = [
-            'producto_id'=>$idProducto,
+            'producto'=>$idProducto,
             'fecha'=>$fecha,
             'tipo'=>TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF,
-            'idLoteConsumidor'=>null,
-            'idLoteIngrediente'=>null,
+            'loteConsumidor'=>null,
+            'loteIngrediente'=>null,
             'debe'=>0,
             'haber'=>$cantidad,
             'saldoGlobal'=>null, // cantidad nueva es la anterior mas lo que agrega la llegada
             'saldoLote'=>$cantidad
         ];
-        Movimiento::create($datosNuevoMov);
+        $nuevoMov = new Movimiento($datosNuevoMov);
+        $nuevoMov->persist();
     }
-
-
-    public static function eliminarEntradaInsumoPlanificado(int $idProducto, string $fecha)
-
+    public static function eliminarEntradaInsumoPlanificado(string $idProducto, string $fecha)
     {
         //No deben existir mas de una entrada de insumo planificada para un mismo dia
         Movimiento::eliminarEntradaInsumoPlanif($idProducto,$fecha);
     }
-
-
-    public static function entradaProductoPlanificado(string $idLote, int $idProducto, double $cantidad, string $fecha )
-
+    public static function entradaProductoPlanificado(string $idLote, string $idProducto, int $cantidad, string $fecha )
     {
         //debido a que los planificados se recalculan cada vez que se quiere saber algo de ellos,
         // simplemente inserto el mov sin calcular nada.
         $datosNuevoMov = [
-            'producto_id'=>$idProducto,
+            'producto'=>$idProducto,
             'fecha'=>$fecha,
             'tipo'=>TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF,
-            'idLoteConsumidor'=>$idLote,
-            'idLoteIngrediente'=>$idLote,
+            'loteConsumidor'=>$idLote,
+            'loteIngrediente'=>$idLote,
             'debe'=>0,
             'haber'=>$cantidad,
             'saldoGlobal'=>null, //
             'saldoLote'=>$cantidad
         ];
-       Movimiento::create($datosNuevoMov);
+        $nuevoMov = new Movimiento($datosNuevoMov);
+        $nuevoMov->persist();
     }
     public static function eliminarEntradaProductoPlanificado(string $idLote, string $fecha)
     {
@@ -115,29 +103,29 @@ class GestorStock
     /**
      *
      * @param string $idLote
-     * @param int $idProducto
-     * @param double $cantidadObsrv
+     * @param string $idProducto
+     * @param int $cantidadObsrv
      * @param string $fecha
      */
-    public static function controlarExistencia(string $idLote, int $idProducto, double $cantidadObsrv, string $fecha)
+    public static function controlarExistencia(string $idLote, string $idProducto, int $cantidadObsrv, string $fecha)
     {
         $banderaRecalcular = false;
         $ultimoMovReal=Movimiento::ultimoRealProd($idProducto);
         $ultiMovLote=Movimiento::ultimoRealLote($idLote);
         $movAnteriorProd = $ultimoMovReal;
         //Compruebo si estoy insertando antes del ultimo mov de ese producto
-        if($ultimoMovReal->fecha>$fecha){
+        if($ultimoMovReal->getFecha()>$fecha){
             //si es asi, recupero el mov anterior a este y deberé recalcular
             $movAnteriorProd = Movimiento::getAnteriorProd($idProducto,$fecha);
             $banderaRecalcular=true;
         }
         //Compruebo si estoy insertando antes del ultimo mov de ese lote
-        if($ultiMovLote->fecha>$fecha){
+        if($ultiMovLote->getFecha()>$fecha){
             //si es asi, deberé recalcular
             $banderaRecalcular=true;
         }
         // Ajusto el saldo global la diferencia entre la cantidad anterior y la observada
-        $diferencia = $cantidadObsrv - $ultiMovLote->saldoLote;
+        $diferencia = $cantidadObsrv - $ultiMovLote->getSaldoLote();
         //calculo debe y haber
         if($diferencia>0){
             $haber = $diferencia;
@@ -146,23 +134,20 @@ class GestorStock
             $debe = abs($diferencia);
             $haber = 0;
         }
-
-        $nuevoSaldoGlobal = $movAnteriorProd->saldoGlobal+ $debe - $haber;
-
-
-
+        $nuevoSaldoGlobal = $movAnteriorProd->getSaldoGlobal()+ $debe - $haber;
         $datosNuevoMov = [
-            'producto_id'=>$idProducto,
+            'producto'=>$idProducto,
             'fecha'=>$fecha,
             'tipo'=>TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS,
-            'idLoteConsumidor'=>$idLote,
-            'idLoteIngrediente'=>$idLote,
+            'loteConsumidor'=>$idLote,
+            'loteIngrediente'=>$idLote,
             'debe'=>$debe,
             'haber'=>$haber,
             'saldoGlobal'=>$nuevoSaldoGlobal,
             'saldoLote'=>$cantidadObsrv
         ];
-        $nuevoMov = Movimiento::create($datosNuevoMov);
+        $nuevoMov = new Movimiento($datosNuevoMov);
+        $nuevoMov->persist();
         if($banderaRecalcular){
             self::recalcularStockReal($nuevoMov);
         }
@@ -174,57 +159,57 @@ class GestorStock
      *
      * @param string $idLoteConsumidor
      * @param string $idLoteIngrediente
-     * @param int $idProductoIng
-     * @param double $cantidad
+     * @param string $idProductoIng
+     * @param int $cantidad
      * @param string $fecha
      */
-    public static function altaConsumo(string $idLoteConsumidor, string $idLoteIngrediente, int $idProductoIng, double $cantidad, string $fecha)
+    public static function altaConsumo(string $idLoteConsumidor, string $idLoteIngrediente, string $idProductoIng, int $cantidad, string $fecha)
     {
         $banderaRecalcular = false;
         $ultimoMovRealProd=Movimiento::ultimoRealProd($idProductoIng);
-        $ultimoMovRealLote = Movimiento::ultimoRealLote($idLoteIngrediente);
+        $ultimoMovRealLote = Movimiento::ultimoRealLote($idProductoIng);
         $movAnteriorProd = $ultimoMovRealProd;
         $movAnteriorLote = $ultimoMovRealLote;
         //Compruebo si estoy insertando antes del ultimo mov de ese producto
-        if($ultimoMovRealProd->fecha>$fecha){
+        if($ultimoMovRealProd->getFecha()>$fecha){
             //si es asi, recupero el mov anterior a este y deberé recalcular
             $movAnteriorProd = Movimiento::getAnteriorProd($idProductoIng,$fecha);
             $banderaRecalcular=true;
         }
         //Compruebo si estoy insertando antes del ultimo mov de ese lote
-        if($ultimoMovRealLote->fecha>$fecha){
+        if($ultimoMovRealLote->getFecha()>$fecha){
             //si es asi, recupero el mov anterior a este y deberé recalcular
             $movAnteriorLote = Movimiento::getAnteriorLote($idLoteIngrediente,$fecha);
             $banderaRecalcular=true;
         }
         $datosNuevoMov = [
-            'producto_id'=>$idProductoIng,
+            'producto'=>$idProductoIng,
             'fecha'=>$fecha,
             'tipo'=>TipoMovimiento::TIPO_MOV_CONSUMO,
-            'idLoteConsumidor'=>$idLoteConsumidor,
-            'idLoteIngrediente'=>$idLoteIngrediente,
+            'loteConsumidor'=>$idLoteConsumidor,
+            'loteIngrediente'=>$idLoteIngrediente,
             'debe'=>$cantidad,
             'haber'=>0,
-            'saldoGlobal'=>$movAnteriorProd->saldoGlobal - $cantidad, // cantidad nueva es la anterior menos consumo
-            'saldoLote'=>$movAnteriorLote->saldoLote - $cantidad
+            'saldoGlobal'=>$movAnteriorProd->getSaldoGlobal() - $cantidad, // cantidad nueva es la anterior menos consumo
+            'saldoLote'=>$movAnteriorLote->getSaldoLote() - $cantidad
         ];
-        $nuevoMov = Movimiento::create($datosNuevoMov);
+        $nuevoMov = new Movimiento($datosNuevoMov);
+        $nuevoMov->persist();
         if($banderaRecalcular){
             self::recalcularStockReal($nuevoMov);
         }
-
     }
     /**
      *
      * @param string $idLote
-     * @param int $idProducto
-     * @param double $cantidad
+     * @param string $idProducto
+     * @param int $cantidad
      * @param string $fecha
      * @param String $motivo
      * @param string $detalle
      * @parm string tipo
      */
-    public static function salidaExcepcional(string $idLote, int $idProducto, double $cantidad, string $fecha, String $motivo, String $detalle )
+    public static function salidaExcepcional(string $idLote, string $idProducto, int $cantidad, string $fecha, String $motivo, String $detalle )
     {
         $banderaRecalcular = false;
         $ultimoMovRealProd=Movimiento::ultimoRealProd($idProducto);
@@ -235,41 +220,43 @@ class GestorStock
         $movAnteriorProd = $ultimoMovRealProd;
         $movAnteriorLote = $ultimoMovRealLote;
         //Compruebo si estoy insertando antes del ultimo mov de ese producto
-        if($ultimoMovRealProd->fecha>$fecha){
+        if($ultimoMovRealProd->getFecha()>$fecha){
             //si es asi, recupero el mov anterior a este y deberé recalcular
             $movAnteriorProd = Movimiento::getAnteriorProd($idProducto,$fecha);
             $banderaRecalcular=true;
         }
         //Compruebo si estoy insertando antes del ultimo mov de ese lote
-        if($ultimoMovRealLote->fecha>$fecha){
+        if($ultimoMovRealLote->getFecha()>$fecha){
             //si es asi, recupero el mov anterior a este y deberé recalcular
             $movAnteriorLote = Movimiento::getAnteriorLote($idLote,$fecha);
             $banderaRecalcular=true;
         }
         $datosNuevoMov = [
-            'producto_id'=>$idProducto,
+            'producto'=>$idProducto,
             'fecha'=>$fecha,
             'tipo'=>TipoMovimiento::TIPO_MOV_SALIDA_EXCEP,
-            'idLoteConsumidor'=>$idLote,
-            'idLoteIngrediente'=>$idLote,
+            'loteconsumidor'=>$idLote,
+            'loteingrediente'=>$idLote,
             'debe'=>$cantidad,
             'haber'=>0,
             // cantidad nueva es la anterior menos la salida
-            'saldoglobal'=>($movAnteriorProd->saldoGlobal - $cantidad),
+            'saldoglobal'=>($movAnteriorProd->getSaldoGlobal() - $cantidad),
             // descuento el saldo del lote restando del saldo anterior
-            'saldolote'=>($movAnteriorLote->saldoLote - $cantidad)
+            'saldolote'=>($movAnteriorLote->getSaldoLote() - $cantidad)
         ];
-        $nuevoMov = Movimiento::create($datosNuevoMov);
+        $nuevoMov = new Movimiento($datosNuevoMov);
+        $nuevoMov->persist();
         //agrego la entrada en salida detalle
         $datosSalidaExcep=[
-            'movimiento_id'=>$nuevoMov->id,
-            'lote_id'=>$idLote,
+            'idMov'=>$nuevoMov->getIDMov(),
+            'idLote'=>$idLote,
             'fecha'=>$fecha,
             'motivo'=>$motivo,
             'detalle'=>$detalle,
             'cantidad'=>$cantidad
         ];
-        $salida = DetalleSalida::create($datosSalidaExcep);
+        $salida = new DetalleSalida($datosSalidaExcep);
+        $salida->persist();
         //De ser necesario recalculo.
         if($banderaRecalcular){
             self::recalcularStockReal($nuevoMov);
@@ -278,11 +265,11 @@ class GestorStock
     /**
      *
      * @param string $idLote
-     * @param int $idProducto
-     * @param double $cantidad
+     * @param string $idProducto
+     * @param int $cantidad
      * @param string $fecha
      */
-    public static function salidaVentas(string $idLote, int $idProducto, double $cantidad, string $fecha)
+    public static function salidaVentas(string $idLote, string $idProducto, int $cantidad, string $fecha)
     {
         $banderaRecalcular = false;
         $ultimoMovRealProd=Movimiento::ultimoRealProd($idProducto);
@@ -293,31 +280,32 @@ class GestorStock
         $movAnteriorProd = $ultimoMovRealProd;
         $movAnteriorLote = $ultimoMovRealLote;
         //Compruebo si estoy insertando antes del ultimo mov de ese producto
-        if($ultimoMovRealProd->fecha>$fecha){
+        if($ultimoMovRealProd->getFecha()>$fecha){
             //si es asi, recupero el mov anterior a este y deberé recalcular
             $movAnteriorProd = Movimiento::getAnteriorProd($idProducto,$fecha);
             $banderaRecalcular=true;
         }
         //Compruebo si estoy insertando antes del ultimo mov de ese lote
-        if($ultimoMovRealLote->fecha>$fecha){
+        if($ultimoMovRealLote->getFecha()>$fecha){
             //si es asi, recupero el mov anterior a este y deberé recalcular
             $movAnteriorLote = Movimiento::getAnteriorLote($idLote,$fecha);
             $banderaRecalcular=true;
         }
         $datosNuevoMov = [
-            'producto_id'=>$idProducto,
+            'producto'=>$idProducto,
             'fecha'=>$fecha,
             'tipo'=>TipoMovimiento::TIPO_MOV_SALIDA_VENTAS,
-            'idLoteConsumidor'=>$idLote,
-            'idLoteIngrediente'=>$idLote,
+            'loteconsumidor'=>$idLote,
+            'loteingrediente'=>$idLote,
             'debe'=>$cantidad,
             'haber'=>0,
             // cantidad nueva es la anterior menos la salida
-            'saldoglobal'=>($movAnteriorProd->saldoGlobal - $cantidad),
+            'saldoglobal'=>($movAnteriorProd->getSaldoGlobal() - $cantidad),
             // descuento el saldo del lote restando del saldo anterior
-            'saldolote'=>($movAnteriorLote->saldoLote - $cantidad)
+            'saldolote'=>($movAnteriorLote->getSaldoLote() - $cantidad)
         ];
-        $nuevoMov = Movimiento::create($datosNuevoMov);
+        $nuevoMov = new Movimiento($datosNuevoMov);
+        $nuevoMov->persist();
         //De ser necesario recalculo.
         if($banderaRecalcular){
             self::recalcularStockReal($nuevoMov);
@@ -326,13 +314,13 @@ class GestorStock
     /**
      *
      * @param string $idLote
-     * @param int $idProducto
-     * @param double $cantidad
+     * @param string $idProducto
+     * @param int $cantidad
      * @param String $detalle
      * @param string $fecha
      *
      */
-    public static function decomisar(string $idLote, int $idProducto, double $cantidad, String $detalle, string $fecha)
+    public static function decomisar(string $idLote, string $idProducto, int $cantidad, String $detalle, string $fecha)
     {
         $banderaRecalcular = false;
         $ultimoMovRealProd=Movimiento::ultimoRealProd($idProducto);
@@ -343,41 +331,43 @@ class GestorStock
         $movAnteriorProd = $ultimoMovRealProd;
         $movAnteriorLote = $ultimoMovRealLote;
         //Compruebo si estoy insertando antes del ultimo mov de ese producto
-        if($ultimoMovRealProd->fecha>$fecha){
+        if($ultimoMovRealProd->getFecha()>$fecha){
             //si es asi, recupero el mov anterior a este y deberé recalcular
             $movAnteriorProd = Movimiento::getAnteriorProd($idProducto,$fecha);
             $banderaRecalcular=true;
         }
         //Compruebo si estoy insertando antes del ultimo mov de ese lote
-        if($ultimoMovRealLote->fecha>$fecha){
+        if($ultimoMovRealLote->getFecha()>$fecha){
             //si es asi, recupero el mov anterior a este y deberé recalcular
             $movAnteriorLote = Movimiento::getAnteriorLote($idLote,$fecha);
             $banderaRecalcular=true;
         }
         $datosNuevoMov = [
-            'producto_id'=>$idProducto,
+            'producto'=>$idProducto,
             'fecha'=>$fecha,
             'tipo'=>TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO,
-            'idLoteConsumidor'=>$idLote,
-            'idLoteIngrediente'=>$idLote,
+            'loteconsumidor'=>$idLote,
+            'loteingrediente'=>$idLote,
             'debe'=>$cantidad,
             'haber'=>0,
             // cantidad nueva es la anterior menos la salida
-            'saldoglobal'=>($movAnteriorProd->saldoGlobal - $cantidad),
+            'saldoglobal'=>($movAnteriorProd->getSaldoGlobal() - $cantidad),
             // descuento el saldo del lote restando del saldo anterior
-            'saldolote'=>($movAnteriorLote->saldoLote - $cantidad)
+            'saldolote'=>($movAnteriorLote->getSaldoLote() - $cantidad)
         ];
-        $nuevoMov = Movimiento::create($datosNuevoMov);
+        $nuevoMov = new Movimiento($datosNuevoMov);
+        $nuevoMov->persist();
         //agrego la entrada en detalleSalida
         $datosSalidaExcep=[
-            'movimiento_id'=>$nuevoMov->id,
-            'lote_id'=>$idLote,
+            'idMov'=>$nuevoMov->getIDMov(),
+            'idLote'=>$idLote,
             'fecha'=>$fecha,
             'motivo'=>DetalleSalida::MOTIVO_DECOMISO,
             'detalle'=>$detalle,
             'cantidad'=>$cantidad
         ];
-        $salida = DetalleSalida::create($datosSalidaExcep);
+        $salida = new DetalleSalida($datosSalidaExcep);
+        $salida->persist();
         //De ser necesario recalculo.
         if($banderaRecalcular){
             self::recalcularStockReal($nuevoMov);
@@ -387,23 +377,24 @@ class GestorStock
     /**
      * @param string $idLoteConsumidor
      * @param string $idProdIng
-     * @param double $cantidad
+     * @param int $cantidad
      * @param string $fecha
      */
-    public static function altaConsumoPlanificado(string $idLoteConsumidor, string $idProdIng, double $cantidad, string $fecha)
+    public static function altaConsumoPlanificado(string $idLoteConsumidor, string $idProdIng, int $cantidad, string $fecha)
     {
         $datosNuevoMov = [
-            'producto_id'=>$idProdIng,
+            'producto'=>$idProdIng,
             'fecha'=>$fecha,
             'tipo'=>TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF,
-            'idLoteConsumidor'=>$idLoteConsumidor,
-            'idLoteIngrediente'=>null,
+            'loteConsumidor'=>$idLoteConsumidor,
+            'loteIngrediente'=>null,
             'debe'=>$cantidad,
             'haber'=>0,
             'saldoGlobal'=>null,
             'saldoLote'=>null
         ];
-        $nuevoMov = Movimiento::create($datosNuevoMov);
+        $nuevoMov = new Movimiento($datosNuevoMov);
+        $nuevoMov->persist();
     }
     public static function eliminarConsumosPlanificados(string $idLoteConsumidor, string $fecha)
     {
@@ -413,22 +404,19 @@ class GestorStock
     public static function getSaldoLote(string $idLote)
     {
         $ultMov = Movimiento::ultimoRealLote($idLote);
-        return $ultMov->saldoLote;
+        return $ultMov->getSaldoLote();
     }
     /**
      *
      * @param string $idLote
-     * @return int[] $idsLotesTrazabilidad // devolvera array asociativo  donde la key será el id de lote y el valor la cantidad usada
+     * @return int[] $idsLotesTrazabilidad // devolvera hashmap donde la key será el id de lote y el valor la cantidad usada
      */
     public static function Trazabilidad(string $idLote)
     {
         $arrayReturn = [];
         $movimientos= Movimiento::getTrazabilidadLote($idLote);
         foreach ($movimientos as $mov){
-            $arrayAux=[];
-            $arrayAux['idLote']=$mov->idLoteIngrediente;
-            $arrayAux['cantidad']=$mov->debe;
-            array_push($arrayReturn,$arrayAux);
+            $arrayReturn[$mov->getIDLoteIngrediente()] = $mov->getDebe();
         }
         return $arrayReturn;
     }
@@ -452,12 +440,12 @@ class GestorStock
         $movimientos= Movimiento::getSalidasVenta($fechaDesde, $fechaHasta);
         foreach ($movimientos as $movimiento){
             $datosSalida=[
-                'movimiento_id'=>$movimiento->id,
-                'lote_id'=>$movimiento->idLoteIngrediente,
-                'fecha'=>$movimiento->fecha,
+                'idMov'=>$movimiento->getIDMov(),
+                'idLote'=>$movimiento->getLoteIng(),
+                'fecha'=>$movimiento->getFecha(),
                 'motivo'=>DetalleSalida::MOTIVO_VENTAS,
                 'detalle'=>'Salida a ventas',
-                'cantidad'=>$movimiento->debe
+                'cantidad'=>$movimiento->getDebe()
             ];
             $salida = new DetalleSalida($datosSalida);
             array_push($result,$salida);
@@ -466,91 +454,18 @@ class GestorStock
     }
     /**
      * @param string $fechaHasta
-     * @return array [['nombre'=>,'codigo'=>, 'tu'=>, 'alarma'=>, 'stock'=>, 'producto_id'=>, ]...] hashmap key: idProducto, value: cantidad
+     * @return int[] hashmap key: idProducto, value: cantidad
      * Hay que evaluar si con esta funcion no alcanza ya para desde afuera calcular getNecesidadInsumos y otras por el estilo
      */
     public static function getStockPorProd(string $fechaHasta)
     {
         $result=[];
         self::recalcularPlanificados($fechaHasta);
-
-        if(!empty($movimientos =Movimiento::ultimoStockProdTodos($fechaHasta)))
-        {
+        $movimientos =Movimiento::ultimoStockProdTodos($fechaHasta);
         foreach ($movimientos as $movimiento){
-            $arrAux=[];
-            $producto=Producto::find($movimiento->producto_id);
-            $stock=$movimiento->saldoGlobal;
-            $arrAux['alarma']='normal';
-            $arrAux['nombre']=$producto->nombre;
-            $arrAux['codigo']=$producto->codigo;
-            $arrAux['tu']=$producto->tipoUnidad;
-            $arrAux['stock']=$stock;
-            $arrAux['producto_id']=$movimiento->producto_id;
-            if($producto->alarmaActiva){
-                if($stock<$producto->alarmaAmarilla){
-                    $arrAux['alarma']='amarilla';
-                }
-                if($stock<$producto->alarmaRoja){
-                    $arrAux['alarma']='roja';
-                }
-            }
-
-            array_push($result, $arrAux);
-            }
+            $result[$movimiento->getProducto()]=$movimiento->getSaldoGlobal();
         }
         return $result;
-    }
-
-    /**
-     * @param $fechaHasta
-     * @return array   de la forma
-     * [
-     *  'fecha'=>,
-     * 'necesidades'=>[
-     *      ['codigo'=>,'insumo'=>, 'necesidadFinal'=>, 'tipoUnidad'=>, 'fechaAgotamiento'=> ],
-     *      [...]
-     *  ],
-     * 'alarmas'=>[
-     *      ['codigo'=>,'insumo'=>,'cantidad'=>, 'color'=>],
-     *      [...]
-     *  ],
-     * ]
-     */
-
-    public static function getNecesidadInsumos($fechaHasta){
-
-
-        $necesidades = [];
-        $alarmas =[];
-        self::recalcularPlanificados($fechaHasta);
-        $movimientosC = Movimiento::getMovsCritico($fechaHasta);
-        foreach ($movimientosC as $movC){
-            $arrAux=[];
-            //recupero producto para guardar los datos
-            $producto = Producto::find($movC->producto_id)->get();
-            //y su stock final para ver la necesidad final
-            $stockFinal = getStockProd($movC->producto_id,$fechaHasta);
-            $fechaAgot = Carbon::createFromFormat('Y-m-d H:i:s',$movC->fecha);
-            //paso la fecha a yyyy/mm/dd
-            $fechaAgot = $fechaAgot->format('Y-m-d');
-            //armo el array
-            $arrAux['codigo']=$producto->codigo;
-            $arrAux['insumo']=$producto->nombre;
-            $arrAux['tipoUnidad']=$producto->tipoUnidad;
-            $arrAux['fechaAgotamiento']=$fechaAgot;
-            if($stockFinal>0){
-                $necesidad = 0;
-            } else {
-                $necesidad = abs($stockFinal);
-            }
-            $arrAux['necesidadFinal']=$necesidad;
-            array_push($necesidades,$arrAux);
-        }
-
-        //TODO
-
-
-
     }
     //PRIVADOS
     /**
@@ -558,33 +473,23 @@ class GestorStock
      */
     private static function recalcularStockReal(Movimiento $movimientoDesde)
     {
-
-        $movimientos = Movimiento::getMovimientosProdDespuesDe($movimientoDesde->producto_id,$movimientoDesde->fecha);
-
+        $movimientos = Movimiento::getMovimientosProdDespuesDe($movimientoDesde->getProducto(),$movimientoDesde->getFecha());
         $movAnteriorProd = $movimientoDesde;
         $movAnteriorLote= $movimientoDesde;
         foreach ($movimientos as $movimiento) {
-
-            $debe = $movimiento->debe;
-            $haber = $movimiento->haber;
-
-
+            $debe = $movimiento->getDebe();
+            $haber = $movimiento->getHaber();
             //si es movimiento del lote recalculo saldoLote
-            if ($movimiento->idLoteIngrediente == $movimientoDesde->idLoteIngrediente) {
-
-                $nuevoSaldoLote = $movAnteriorLote->saldoLote + $haber - $debe;
-
-                $movimiento->saldoLote = $nuevoSaldoLote;
+            if ($movimiento->getLoteIng() == $movimientoDesde->getLoteIng()) {
+                $nuevoSaldoLote = $movAnteriorLote->getSaldoLote() + $haber - $debe;
+                $movimiento->setSaldoLote($nuevoSaldoLote);
                 //actualizo para la próxima iteración
                 $movAnteriorLote = $movimiento;
             }
-
-
-            $nuevoSaldoGlobal = $movAnteriorProd->saldoGlobal + $haber - $debe;
-
-            $movimiento->saldoGlobal = $nuevoSaldoGlobal;
+            $nuevoSaldoGlobal = $movAnteriorProd->getSaldoGlobal() + $haber - $debe;
+            $movimiento->setSaldoGlobal($nuevoSaldoGlobal);
             //guardo
-            $movimiento->save();
+            $movimiento->persistChanges();
             //actualizo para la próxima iteración
             $movAnteriorProd = $movimiento;
         }
@@ -596,23 +501,23 @@ class GestorStock
         //Por cada producto
         foreach ($movimientosInicialesProducto as $ultMovRealProd){
             //Tomo el ultimo movimiento
-            $producto = $ultMovRealProd->producto_id;
+            $producto = $ultMovRealProd->getProducto();
             $movAnteriorProd =$ultMovRealProd;
             $planificacionesProd = Movimiento::getPlanificadosProd($producto,$fechaHasta);
             //itero para todas las planificaciones de este producto
             foreach ($planificacionesProd as $planif){
 
                 //si la planificacion es anterior al ultimo mov debo darla como Incumplido
-                if($planif->fecha<$movAnteriorProd->fecha) {
-                    $planif->tipo = TipoMovimiento::incumplidoDe($planif->tipo);
+                if($planif->getFecha()<$movAnteriorProd->getFecha()) {
+                    $planif->setTipo(TipoMovimiento::incumplidoDe($planif->getTipo()));
                 } else {
                     //sino recalculo
-                    $debe = $planif->debe;
-                    $haber = $planif->haber;
-                    $nuevoSaldoG = $movAnteriorProd->saldoGlobal + $haber - $debe;
-                    $planif->saldoGlobal = $nuevoSaldoG;
+                    $debe = $planif->getDebe();
+                    $haber = $planif->getHaber();
+                    $nuevoSaldoG = $movAnteriorProd->getSaldoGlobal() + $haber - $debe;
+                    $planif->setSaldoGlobal($nuevoSaldoG);
                 }
-                $planif->save();
+                $planif->persistChanges();
                 //actualizo para la proxima iteracion
                 $movAnteriorProd = $planif;
             }

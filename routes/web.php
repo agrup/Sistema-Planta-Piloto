@@ -38,3 +38,32 @@ Route::post('/stock', 'StockController@show');
 Route::get('/verLotes', 'PagesController@verLotes');
 Route::get('/detalleLote', 'PagesController@detalleLote');
 
+//Planificacion
+Route::get('/planificacion', 'PlanificacionController@index');
+Route::post('/planificacion','PlanificacionController@show');
+Route::get('/planificacionDia','PagesController@calendarioDia');
+Route::get('/calendarioSig','PlanificacionController@calendarioSig'); //flechita << >>
+Route::get('/calendarioAnt','PlanificacionController@calendarioAnt');
+Route::post('/sumarizacion','PagesController@verNecesidadInsumos');
+
+
+
+Route::get('/','PagesController@index');
+Route::get('/produccion','PagesController@produccion');
+
+
+
+Route::get('/lotes', 'LotesController@index') ;
+Route::get('/lotes/{id}', 'LotesController@show') ;
+
+Route::get('/trabajador', 'TrabajadorController@index');
+Route::get('/trabajador/create', 'TrabajadorController@create');
+Route::post('/trabajador', 'TrabajadorController@store');
+
+Route::get('/test', function() {
+  	$producto = Producto::find(1)->formulacion;
+  	echo ("$producto");
+	
+});
+
+

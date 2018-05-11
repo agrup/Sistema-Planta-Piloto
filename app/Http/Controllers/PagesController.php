@@ -8,6 +8,7 @@ use App\GestorStocl;
 class PagesController extends Controller
 {
     public function index(){
+
         return view('programaProduccionSemanal.programaProduccionSemanal');
 
     }
@@ -110,6 +111,7 @@ class PagesController extends Controller
 
 
         return view('informes.detalleLote', compact('detalle'));   
+
     }
 
 }

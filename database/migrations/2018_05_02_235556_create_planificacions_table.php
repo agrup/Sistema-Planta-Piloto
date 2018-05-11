@@ -16,7 +16,7 @@ class CreatePlanificacionsTable extends Migration
         Schema::create('planificacions', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->date('fecha')->nullable($value = true);
+            $table->date('fecha')->unique();
             $table->text('diaSemana')->nullable($value = true);
             $table->text('descripcion')->nullable($value = true);
             $table->timestamps();
@@ -25,6 +25,7 @@ class CreatePlanificacionsTable extends Migration
         Schema::create('planificacion_trabajador', function (Blueprint $table) {
             $table->integer('planificacion_id');
             $table->integer('trabajador_id');
+            $table->primary(['planificacion_id','trabajador_id']);
         });
     }
 

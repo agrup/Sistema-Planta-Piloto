@@ -98,7 +98,8 @@ class Planificacion extends Model
             $color = 'normal';
             $producto=Producto::find($mov->producto_id);
             $arrProd['nombre']=$producto->nombre;
-            $arrProd['codigo']=$mov->codigo;
+
+            $arrProd['codigo']=$producto->codigo;
             $arrProd['cantidad']=$mov->haber;
             $arrProd['tipoUnidad']=$producto->tipoUnidad;
             if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_CUMPLIDO){
@@ -132,7 +133,8 @@ class Planificacion extends Model
             $color = 'normal';
             $producto=Producto::find($mov->producto_id);
             $arrProd['nombre']=$producto->nombre;
-            $arrProd['codigo']=$mov->codigo;
+
+            $arrProd['codigo']=$producto->codigo;
             $arrProd['cantidad']=$mov->haber;
             $arrProd['tipoUnidad']=$producto->tipoUnidad;
             if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_CUMPLIDO){
