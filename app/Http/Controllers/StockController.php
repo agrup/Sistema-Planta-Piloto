@@ -11,12 +11,14 @@ class StockController extends Controller
 {
     public function show()
     {
-    	if ($fecha=(request(['fecha']))==null){
+    	if ((request(['fecha']))==null){
     		$fecha=Carbon::now()->format('Y-m-d');
 
     	}else
     	{
-    		return view('welcome',(['fecha'=>(request(['fecha']))]));
+
+    		$fecha=array_values(request(['fecha']))[0];
+    		
     	}
     	$fecha=Carbon::createFromFormat('Y-m-d',$fecha);
     	$fecha=$fecha->format('Y-m-d H:i:s');
