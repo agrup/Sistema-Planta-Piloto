@@ -11,28 +11,31 @@
 |
 */
 
-//Route::get('/', function () {
-  //  return view('welcome');
-//});
-//un Ejemplo
+//Planificacion
+Route::get('/planificacion', 'PlanificacionController@index');
+Route::post('/planificacion','PlanificacionController@show');
+Route::get('/planificacionDia','PagesController@calendarioDia');
+Route::get('/calendarioSig','PlanificacionController@calendarioSig'); //flechita << >>
+Route::get('/calendarioAnt','PlanificacionController@calendarioAnt');
+Route::post('/sumarizacion','PagesController@verNecesidadInsumos');
 
-//
-//Route::get('/hola', function () {
-  //  return 'HOLA';
-//});
-//Route::get('/planta',function(){
-//	return view('pages.Produccion');
-//});
 
-//devolver el id del 
-//Route::get('/users/{id}',function($id){
-//	return 'este es el user '.$id;
-//});
 
 Route::get('/','PagesController@index');
 Route::get('/produccion','PagesController@produccion');
-Route::get('/calendarioSig','PagesController@calendarioSig'); //flechita << >>
-Route::get('/calendarioAnt','PagesController@calendarioAnt');
-//Route::get('/sumarizacion','PagesController@sumarizacion');
-Route::get('/sumarizacion','PagesController@sumarizacion');
-Route::get('/planificacionDia','PagesController@planificacionDia');
+
+
+
+Route::get('/lotes', 'LotesController@index') ;
+Route::get('/lotes/{id}', 'LotesController@show') ;
+
+Route::get('/trabajador', 'TrabajadorController@index');
+Route::get('/trabajador/create', 'TrabajadorController@create');
+Route::post('/trabajador', 'TrabajadorController@store');
+
+Route::get('/test', function() {
+  	$producto = Producto::find(1)->formulacion;
+  	echo ("$producto");
+	
+});
+
