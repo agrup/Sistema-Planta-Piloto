@@ -5,6 +5,6 @@
     <title>Planta Piloto</title>
 </head>
 <body>
-    <h1>Hola  <?= $name;?>- ->><?= $branch;?> </h1>
+ <h1>Hola  <?= $fecha[0];?>- ->> </h1> 
 </body>
 </html>

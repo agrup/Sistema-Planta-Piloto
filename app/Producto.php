@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Lote;
 class Producto extends Model
 {
 
@@ -37,17 +37,17 @@ class Producto extends Model
            return $arrayResult;
         }   
 
-
+/*
     public static function getNameProdByIdLote(int $idLote)
     {
-        return Producto::find(Lote::find($idLote)->producto_id)->nombre;
+        return (Producto::find(Lote::find($idLote)->producto_id))->nombre;
     }
 
         public static function getTUProdByIdLote(int $idLote)
     {
         return Producto::find(Lote::find($idLote)->producto_id)->tipoUnidad;
     }
-
+*/
      public function lotes ()
      {
         return $this->hasMany('App\Lote')->get();
