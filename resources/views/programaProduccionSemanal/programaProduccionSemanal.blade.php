@@ -2,9 +2,9 @@
 @section('section')
   
   @include('elementosComunes.aperturaTitulo')
-   <h1 class="display-4">
+   <h2 class="display-4">
             <b>Programa de Producción Semanal</b>
-    </h1>
+    </h2>
   @include('elementosComunes.cierreTitulo') 
  
   <div class="py-5">
