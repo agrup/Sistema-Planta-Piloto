@@ -1,32 +1,41 @@
-<?php 
+<<<<<<< HEAD
+<?php
 
-use App\Lote;
-use App\Producto;
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+//Route::get('/', function () {
+  //  return view('welcome');
+//});
+//un Ejemplo
+
+//
+//Route::get('/hola', function () {
+  //  return 'HOLA';
+//});
+//Route::get('/planta',function(){
+//	return view('pages.Produccion');
+//});
+
+//devolver el id del 
+//Route::get('/users/{id}',function($id){
+//	return 'este es el user '.$id;
+//});
+
+Route::get('/','PagesController@index');
+Route::get('/calendario','PagesController@calendario');
 
 
-Route::get('/', function () {
-
-	$name = 'Planta Piloto';
-	$branch ='branch Agu';
-
-    return view('welcome' ,
-    	compact('name','branch')
-
-    	);
-});
-
-
-Route::get('/planificacion', 'Planificacioncontroller@verCalendario($id)' );
-Route::get('/lotes', 'LotesController@index') ;
-Route::get('/lotes/{id}', 'LotesController@show') ;
-
-Route::get('/trabajador', 'TrabajadorController@index');
-Route::get('/trabajador/create', 'TrabajadorController@create');
-Route::post('/trabajador', 'TrabajadorController@store');
-
-Route::get('/test', function() {
-  	$producto = Producto::find(1)->formulacion;
-  	echo ("$producto");
-	
-});
+Route::get('/stock', 'PagesController@stock');
+Route::post('/stock', 'PagesController@stock');
+Route::get('/verLotes', 'PagesController@verLotes');
+Route::get('/detalleLote', 'PagesController@detalleLote');
 
