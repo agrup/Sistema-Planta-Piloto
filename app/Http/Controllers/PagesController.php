@@ -120,7 +120,7 @@ class PagesController extends Controller
        
         return view('programaProduccionSemanal.programaProduccionSemanal',compact('fechasSemana','semana'));
     }
-    public function calendarioDia(){
+    public function planificacionDia(){
       $planificaciones = [
      [
     'diaSemana'=>'lunes',
