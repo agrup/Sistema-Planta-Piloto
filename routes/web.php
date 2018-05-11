@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -24,8 +25,6 @@ Route::post('/sumarizacion','PagesController@verNecesidadInsumos');
 Route::get('/','PagesController@index');
 Route::get('/produccion','PagesController@produccion');
 
-
-
 Route::get('/lotes', 'LotesController@index') ;
 Route::get('/lotes/{id}', 'LotesController@show') ;
 
@@ -38,4 +37,5 @@ Route::get('/test', function() {
   	echo ("$producto");
 	
 });
+
 
