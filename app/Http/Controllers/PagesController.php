@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 class PagesController extends Controller
 {
     public function index(){
-
     	$planificaciones = [
      [
     'diaSemana'=>'lunes',
@@ -106,7 +105,6 @@ class PagesController extends Controller
 
        
         return view('programaProduccionSemanal.programaProduccionSemanal',compact('fechasSemana','semana'));
-
     }
     public function calendarioSig(){
            $fechasSemana= array('27/7','28/7','29/7','30/7','31/7');
@@ -122,7 +120,7 @@ class PagesController extends Controller
        
         return view('programaProduccionSemanal.programaProduccionSemanal',compact('fechasSemana','semana'));
     }
-    public function calendarioDia(){
+    public function planificacionDia(){
       $planificaciones = [
      [
     'diaSemana'=>'lunes',
