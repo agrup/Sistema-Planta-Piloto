@@ -6,6 +6,7 @@ use App\TipoMovimiento;
 use App\Movimiento;
 use App\DetalleSalida;
 use App\Producto;
+use Carbon\Carbon;
 use InvalidArgumentException;
 
 /**
@@ -211,6 +212,7 @@ class GestorStock
         if($banderaRecalcular){
             self::recalcularStockReal($nuevoMov);
         }
+
     }
     /**
      *
@@ -503,7 +505,7 @@ class GestorStock
      * [
      *  'fecha'=>,
      * 'necesidades'=>[
-     *      ['codigo'=>,'insumo'=>, 'NecesidadFinal'=>, 'fechaAgotamiento'=> ],
+     *      ['codigo'=>,'insumo'=>, 'necesidadFinal'=>, 'tipoUnidad'=>, 'fechaAgotamiento'=> ],
      *      [...]
      *  ],
      * 'alarmas'=>[
@@ -512,10 +514,37 @@ class GestorStock
      *  ],
      * ]
      */
+
     public static function getNecesidadInsumos($fechaHasta){
-        $arrResult=[];
+
+
         $necesidades = [];
         $alarmas =[];
+        self::recalcularPlanificados($fechaHasta);
+        $movimientosC = Movimiento::getMovsCritico($fechaHasta);
+        foreach ($movimientosC as $movC){
+            $arrAux=[];
+            //recupero producto para guardar los datos
+            $producto = Producto::find($movC->producto_id)->get();
+            //y su stock final para ver la necesidad final
+            $stockFinal = getStockProd($movC->producto_id,$fechaHasta);
+            $fechaAgot = Carbon::createFromFormat('Y-m-d H:i:s',$movC->fecha);
+            //paso la fecha a yyyy/mm/dd
+            $fechaAgot = $fechaAgot->format('Y-m-d');
+            //armo el array
+            $arrAux['codigo']=$producto->codigo;
+            $arrAux['insumo']=$producto->nombre;
+            $arrAux['tipoUnidad']=$producto->tipoUnidad;
+            $arrAux['fechaAgotamiento']=$fechaAgot;
+            if($stockFinal>0){
+                $necesidad = 0;
+            } else {
+                $necesidad = abs($stockFinal);
+            }
+            $arrAux['necesidadFinal']=$necesidad;
+            array_push($necesidades,$arrAux);
+        }
+
         //TODO
 
 
