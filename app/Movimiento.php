@@ -42,6 +42,53 @@ class Movimiento extends Model
     {
         //TODO
     }
+
+
+    public static function gitultimoReal()
+    {
+
+        
+        return self::whereRaw('tipo='.TipoMovimiento::SIN_TIPO.
+                            'or tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
+                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
+                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_EXCEP.
+                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO.
+                            'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
+                            )
+                        ->orderBy('fecha','desc')
+                        ->first()
+                        ->fecha
+                        ;
+
+
+    }
+    
+/*
+    const SIN_TIPO=-1;
+    const TIPO_MOV_ENTRADA_INSUMO=1;
+    const TIPO_MOV_SALIDA_VENTAS=2;
+    const TIPO_MOV_SALIDA_EXCEP=3;
+    const TIPO_MOV_SALIDA_DECOMISO = 4;
+    const TIPO_MOV_CONSUMO=5;
+    const TIPO_MOV_CONTROL_EXISTENCIAS = 6;
+*/
+
+
+   /**
+     * @param int $productoId id del producto a buscar el movimiento mas viejo donde se vuelve 0
+     * @return 
+     */
+
+    public static function getMovsCritico (string $fechaTope)
+    {
+        return null;
+
+        //TODO Retornar MOVIMIENTO[] con los primeros movimientos criticos(los mas viejos) que tienen su saldo global < 0 para cada producto despues de la fecha del ultimo real de ese año (o fecha tope)
+
+    }
+
+
+
     /**
      * @param string $idLote
      * @return Movimiento[]
