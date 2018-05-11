@@ -12,33 +12,19 @@
 |
 */
 
-//Route::get('/', function () {
-  //  return view('welcome');
-//});
-//un Ejemplo
+//Planificacion
+Route::get('/planificacion', 'PlanificacionController@index');
+Route::post('/planificacion','PlanificacionController@show');
+Route::get('/planificacionDia','PagesController@calendarioDia');
+Route::get('/calendarioSig','PlanificacionController@calendarioSig'); //flechita << >>
+Route::get('/calendarioAnt','PlanificacionController@calendarioAnt');
+Route::post('/sumarizacion','PagesController@verNecesidadInsumos');
 
-//
-//Route::get('/hola', function () {
-  //  return 'HOLA';
-//});
-//Route::get('/planta',function(){
-//	return view('pages.Produccion');
-//});
 
-//devolver el id del 
-//Route::get('/users/{id}',function($id){
-//	return 'este es el user '.$id;
-//});
 
 Route::get('/','PagesController@index');
 Route::get('/produccion','PagesController@produccion');
-Route::post('/calendarioSig','PagesController@calendarioSig'); //flechita << >>
-Route::post('/calendarioAnt','PagesController@calendarioAnt');
-//Route::get('/sumarizacion','PagesController@sumarizacion');
-Route::post('/sumarizacion','PagesController@sumarizacion');
-Route::post('/calendarioDia','PagesController@calendarioDia');
 
-Route::get('/planificacion', 'Planificacioncontroller@verCalendario($id)' );
 Route::get('/lotes', 'LotesController@index') ;
 Route::get('/lotes/{id}', 'LotesController@show') ;
 
