@@ -27,19 +27,38 @@ class GestorLote extends Model
     	foreach ($ingredientes as $ingrediente) {
             $lote=(Lote::find($ingrediente['idLote']));
             $producto = Producto::find($lote->producto_id);
+
             array_push($lotes,[
                     'numeroLote'=>$ingrediente['idLote'],
                     'cantidad'=>$ingrediente['cantidad'], 
                     'vencimiento'=>$lote->fechaVencimiento, 
                     'fechaInicio'=>$lote->fechaInicio,
-                    'producto'=>$producto->nombre,
+                    'nombreProducto'=>$producto->nombre,
                     'tu'=>$producto->tipoUnidad
+                    /*
+                    'cantidadElaborada'=>$lote->cantidadElaborada,
+                    'costoUnitario'=>$lote->costounitario,
+                    'inicioMaduracion'=>$lote->fechaInicioMaduracion,
+                    'finalizacion'=>$lote->fechaFinalizacion,
+                    'cantidadFinal'=>$lote->cantidadFinal,
+                    'proveedor'=>$lote->null,
+                    'tipoTp'=>$lote->tipoTP,
+                    'codigo'=>$producto->codigo,
+                    'asignatura'=>$lote->null
+
+*/
                     ]);
     	}
     return $lotes;
     }
 
+public static function getLotesPorProd (string $codigo)
+    {
 
+        return Producto::where('codigo','=',$codigo)->first()->lotes();
+        
+
+    }
 
 
 }
