@@ -28,7 +28,8 @@ class LotesController extends Controller
     public function showDetalle()
     {
         $lote=request()->input('lote');
-        $detalle=[Lote::find($lote),'detalleElaboracion'=>GestorLote::getTrazabilidadLote($lote)];
+        $detalle =Lote::find($lote)->toArray();
+        array_push($detalle,'detalleElaboracion'=>GestorLote::getTrazabilidadLote($lote)];
 
         //trar trazabilidad y guardalo en detalleElaboracion
         //y dettale del lote que muestro la trazabilidad

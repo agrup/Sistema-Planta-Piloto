@@ -6,7 +6,11 @@
 </head>
 <body>
 
+
+
  <h1>Hola  <?=  var_dump($fecha1['fecha']);?>- ->> </h1> 
+
+
 
 </body>
 </html>

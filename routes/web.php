@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -41,7 +42,7 @@ Route::get('/detalleLote', 'LotesController@showDetalle');
 //Planificacion
 Route::get('/planificacion', 'PlanificacionController@index');
 Route::post('/planificacion','PlanificacionController@show');
-Route::get('/planificacionDia','PagesController@calendarioDia');
+Route::get('/planificacionDia','PlanificacionController@PlanificacionDia');
 Route::get('/calendarioSig','PlanificacionController@calendarioSig'); //flechita << >>
 Route::get('/calendarioAnt','PlanificacionController@calendarioAnt');
 Route::get('/sumarizacion','PlanificacionController@verNecesidadInsumos');
@@ -50,8 +51,6 @@ Route::get('/sumarizacion','PlanificacionController@verNecesidadInsumos');
 
 Route::get('/','PagesController@index');
 Route::get('/produccion','PagesController@produccion');
-
-
 
 Route::get('/lotes', 'LotesController@index') ;
 Route::get('/lotes/{id}', 'LotesController@show') ;

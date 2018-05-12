@@ -12,16 +12,20 @@
       <div class="row">
         @foreach($planificaciones as $value  )
           @if($value['diaSemana']=="lunes")
+
               <form action="calendarioAnt{{--?fecha={{$value["fecha"]}}--}}" method="GET" enctype="multipart/form-data" class="col-md-11"> {{csrf_field()}}
                   <input   type="hidden" name="fecha" value="{{$value["fecha"]}}">
               <input type="submit" class="btn btn-primary"  value="<<">
+
         </form>
         @endif
         @endforeach
            
        @foreach($planificaciones as $value  )
           @if($value['diaSemana']=="lunes")
+
         <form action="calendarioSig" method="GET" enctype="multipart/form-data"  class="col-md-1">
+
           {{csrf_field()}}
             <input   type="hidden" name="fecha" value="{{$value["fecha"]}}">
             <input type="submit" class="btn btn-primary" value=">>">
@@ -33,6 +37,7 @@
     </div>
   </div>
   @include('elementosComunes.aperturaTitulo')
+
   
            
             <form action="planificacion" method="POST" enctype="multipart/form-data"  class="col-md-5">
@@ -41,6 +46,7 @@
               <input  class="btn btn-secondary"  type="submit" value="Ir a la fecha">
             </form>
     
+
   @include('elementosComunes.cierreTitulo') 
 
         
@@ -53,11 +59,14 @@
 
                                  @foreach($planificaciones as $value  )
                                     
-                                    <form action="planificacionDia" method="get" enctype="multipart/form-data" class="col-md-11"> @csrf
+
+                                    <form action="planificacionDia" method="get" enctype="multipart/form-data" class="col-md-11">
+                                        {{csrf_field()}}
                                       <th> <input type="submit" class="btn btn-primary" name="fecha" value={{$value["fecha"]}}></th>
                                       </form> 
 
                                       
+
                                 @endforeach
 
                               </tr>
@@ -75,35 +84,28 @@
                                       @foreach($value["productos"] as $v)
 
                                             @if ($dia=="lunes")
-                                              <?php $lunes[]=$v["nombre"];                                       ?>
+                                              <?php $lunes[]=$v["nombre"];?>
+                                           
                                             @endif 
                                             @if ($dia=="martes")
-                                              <?php $martes[]=$v["nombre"];
-                                                   
-                                              ?>
+                                              <?php $martes[]=$v["nombre"];?>
                                           
                                             @endif  
                                             @if ($dia=="miercoles")
-                                              <?php $miercoles[]=$v["nombre"];
-                                                   
-                                              ?>
+                                              <?php $miercoles[]=$v["nombre"];?>
                                            
                                             @endif  
                                             @if ($dia=="jueves")
-                                              <?php $jueves[]=$v["nombre"];
-                                                   
-                                              ?>
+                                              <?php $jueves[]=$v["nombre"];?>
                                             
                                             @endif  
                                             @if ($dia=="viernes")
-                                              <?php $viernes[]=$v["nombre"];
-                                                  
-                                              ?>
+                                              <?php $viernes[]=$v["nombre"];?>
                                             
                                             @endif                    
                                         @endforeach
                                 @endforeach
-                                <?php 
+                                <?php
                                 //script para reducir rows al pedo
                                 if (isset($lunes)) {
                                     if(count($lunes)>$mayor){
@@ -129,7 +131,7 @@
                                       $mayor=count($viernes);
                                     }
                                 }
-                             
+
 
                                   ?>
                                 @for($k=0;$k<$mayor ; $k++)
@@ -212,7 +214,7 @@
                                             @endif                    
                                         @endforeach
                                 @endforeach
-                                   <?php 
+                                   <?php
                                 //script para reducir rows al pedo
                                 if (isset($lunes)) {
                                     if(count($lunes)>$mayor){
@@ -238,7 +240,7 @@
                                       $mayor=count($viernes);
                                     }
                                 }
-                             
+
 
                                   ?>
                                   @for($k=0;$k<$mayor ; $k++)
@@ -311,7 +313,7 @@
                                             @endif                    
                                         @endforeach
                                 @endforeach
-                                    <?php 
+                                    <?php
                                 //script para reducir rows al pedo
                                 if (isset($lunes)) {
                                     if(count($lunes)>$mayor){
@@ -337,7 +339,7 @@
                                       $mayor=count($viernes);
                                     }
                                 }
-                             
+
 
                                   ?>
                                   @for($k=0;$k<$mayor ; $k++)
@@ -380,17 +382,22 @@
       </div>
 
       <div class="row">
-        <div class="col-md-2">
+
+
 
 
           <form action="sumarizacion" method="get" enctype="multipart/form-data">
+              <div class="col-md-2">
             {{csrf_field()}}
               <input type="date" name='fecha' class="form-control"></div>
+
             <div class="col-md-8">
               <input type="submit" value="Ver necesidad de Insumos" class="btn btn-primary" >
-
             </div>
+
           </form>
+
+        </div>
       </div>
     </div>
   </div>

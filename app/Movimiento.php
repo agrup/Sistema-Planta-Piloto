@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -9,10 +10,12 @@ class Movimiento extends Model
 
 
 
+
     protected $guarded=[];
     public function planificacion(){
     	return $this->belongsTo('App\Planificacion');
     }
+
 
 
 
@@ -31,10 +34,14 @@ class Movimiento extends Model
      * @param $producto string
      * @return Movimiento
      */
-    public static function ultimoRealProd($producto)
+    public static function ultimoRealProd($producto_id)
     {
-        //TODO
-        return null;
+       return self::where('producto_id','=',$producto_id)
+           ->whereRaw('tipo =' . TipoMovimiento::TIPO_MOV_CONSUMO .
+               'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO .
+               'or tipo=' . TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS)
+           ->orderBy('fecha','desc')
+           ->first();
     }
     /**
      * @param string $idLote
@@ -42,15 +49,27 @@ class Movimiento extends Model
      */
     public static function ultimoRealLote($idLote)
     {
-        //TODO
+
+        return self::where('idLoteIngrediente','=',$idLote)
+            ->whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
+                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
+                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_EXCEP.
+                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO.
+                            'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
+                            )
+            ->orderBy('fecha','desc')
+            ->first();
+
     }
 
 
 
+
     public static function getFechaUltimoReal()
+
     {
 
-
+        
 
         return self::whereRaw('tipo='.TipoMovimiento::SIN_TIPO.
                             'or tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
@@ -81,22 +100,28 @@ class Movimiento extends Model
    /**
      * @param int $productoId id del producto a buscar el movimiento mas viejo donde se vuelve 0
 
-     * @return 
-     */
 
-    public static function getMovsCritico (string $fechaTope)
-    {
-        return null;
-
-        //TODO Retornar MOVIMIENTO[] con los primeros movimientos criticos(los mas viejos) que tienen su saldo global < 0 para cada producto despues de la fecha del ultimo real de ese año (o fecha tope)
-    }
-/*
      * @return
      */
 
     public static function getMovsCriticos (string $fechaTope)
     {
-        return [];
+        $arrayResult=[];
+        $fechaInicio = self::getFechaUltimoReal();
+        $movimientosProd= self::distinct()->select('producto_id')->get();
+        foreach ($movimientosProd as $movProd){
+            $mov = self::where('producto_id','=',$movProd->producto_id)
+                ->where('fecha','>',$fechaInicio)
+                ->where('fecha','<',$fechaTope)
+                ->where('saldoGlobal','<','0')
+                ->orderBy('fecha','asc')->first();
+            if($mov!=null){
+                array_push($arrayResult,$mov);
+            }
+
+        }
+
+        return $arrayResult;
 
         //TODO Retornar MOVIMIENTO[] con los primeros movimientos criticos(los mas viejos) que tienen su saldo global < 0 para cada producto despues de la fecha del ultimo real de ese año (o fecha tope)
 
@@ -155,7 +180,13 @@ class Movimiento extends Model
 
     	return(self::where('producto_id','=',$producto_id)
 			    		->where('fecha','<',$fecha)
-			    		->orderBy('fecha')
+                        ->whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
+                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
+                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_EXCEP.
+                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO.
+                            'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
+                        )
+			    		->orderBy('fecha','desc')
 			    		->first()
 			    		);
 
@@ -168,6 +199,18 @@ class Movimiento extends Model
      */
     public static function getAnteriorLote($idLoteIngrediente, $fecha)
     {
+
+        return(self::where('idLoteIngrediente','=',$idLoteIngrediente)
+            ->where('fecha','<',$fecha)
+            ->whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
+                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
+                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_EXCEP.
+                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO.
+                'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
+            )
+            ->orderBy('fecha','desc')
+            ->first()
+        );
 
     }
     /**
@@ -193,7 +236,7 @@ class Movimiento extends Model
     {
     }
     /**
-     * @param string $idLote
+     * @param string $idLote/
      * @param string $fecha
      */
     public static function eliminarEntradaProductoPlanif($idLote, $fecha)
@@ -226,110 +269,30 @@ class Movimiento extends Model
      */
     public static function ultimoStockProdTodos(string $fechaHasta)
     {
-        $result=[];
-    	$productosid= self::distinct()->select('producto_id')->get();
-    	foreach ($productosid as $producto) {
-            if(($aux=self::getAnteriorProd($producto->producto_id,$fechaHasta))!=null){
-                $result[]=$aux;
+        $result = [];
+        $productosid = self::distinct()->select('producto_id')->get();
+        foreach ($productosid as $producto) {
+            if (($aux = self::getAnteriorProd($producto->producto_id, $fechaHasta)) != null) {
+                $result[] = $aux;
             }
-    	}
-		return $result;
 
+        }
+        return $result;
 
+    }
+        public static function ultimoStockRealProdTodos($fechaHasta)
+    {
+        $result = [];
+        $movProductos = self::distinct()->select('producto_id')->get();
+        foreach ($movProductos as $movProducto) {
+            if (($aux = self::ultimoRealProd($movProducto->producto_id)) != null) {
+                $result[] = $aux;
+            }
+        }
+        return $result;
 
-    }
-    public function persist()
-    {
-        // guardar el ID en el atributo del objeto. $this->id = $pdo->lastInsertId();
-    }
-    /**
-     * @return int
-     */
-    public function getIDMov()
-    {
-        //return this->$id;
-    }
-    /**
-     * @return string
-     */
-    public function getIDLoteIngrediente()
-    {
-    }
-    /**
-     * @return int
-     */
-    public function getDebe()
-    {
-    }
-    /**
-     * @return int $saldoLote
-     */
-    /**
-     * @return int
-     */
-    public function getHaber()
-    {
-    }
-    /**
-     * @return int
-     */
-    public function getSaldoGlobal()
-    {
-    }
-    /**
-     * @return int
-     */
-    public function getSaldoLote()
-    {
-    }
-    /**
-     * @return string $fecha
-     */
-    public function getFecha()
-    {
-    }
-    /**
-     * @param int $nuevoSaldo
-     */
-    public function setSaldoGlobal($nuevoSaldo)
-    {
-    }
-    /**
-     * @param int $nuevoSaldo
-     */
-    public function setSaldoLote($nuevoSaldo)
-    {
-    }
-    public function persistChanges()
-    {
-        //hacer un update con todos los campos
-    }
-    /**
-     * @return string $producto
-     */
-    public function getProducto()
-    {
-        //return this->producto;
-    }
-    /**
-     * @return string
-     */
-    public function getLoteIng(){
     }
 
-    /**
-     * @param int $tipo
-     */
-    public function setTipo(int $tipo)
-    {
-    }
-
-    /**
-     * @return int
-     */
-    public function getTipo()
-    {
-    }
 
 
 }
