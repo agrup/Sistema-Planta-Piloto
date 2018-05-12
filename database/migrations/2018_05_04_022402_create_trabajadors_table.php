@@ -16,7 +16,7 @@ class CreateTrabajadorsTable extends Migration
         Schema::create('trabajadors', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('legajo');
-            $table->integer('idPersona')->nullable($value = true);
+            $table->integer('persona_id')->nullable($value = true);
             $table->text('sector')->nullable($value = true);
             $table->text('puesto')->nullable($value = true);
             $table->text('seudonimo');
