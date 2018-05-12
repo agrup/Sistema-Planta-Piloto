@@ -523,15 +523,19 @@ class GestorStock
 
     public static function getNecesidadInsumos($fechaHasta){
 
-        $arrResult=[];
+
         $necesidades = [];
         $alarmas =[];
+        $fechaVista = Carbon::createFromFormat('Y-m-d H:i:s',$fechaHasta);
+        $fechaVista = $fechaVista->format('Y-m-d');
+        //primero recalculo los planificados
         self::recalcularPlanificados($fechaHasta);
+        //Luego guardamos los movimientos criticos para ver la necesidad de insumos
         $movimientosC = Movimiento::getMovsCriticos($fechaHasta);
         foreach ($movimientosC as $movC){
             $arrAux=[];
             //recupero producto para guardar los datos
-            $producto = Producto::find($movC->producto_id)->get();
+            $producto = Producto::find($movC->producto_id);
             //y su stock final para ver la necesidad final
             $stockFinal = self::getStockProd($movC->producto_id,$fechaHasta);
             $fechaAgot = Carbon::createFromFormat('Y-m-d H:i:s',$movC->fecha);
@@ -540,8 +544,9 @@ class GestorStock
             //armo el array
             $arrAux['codigo']=$producto->codigo;
             $arrAux['insumo']=$producto->nombre;
-            $arrAux['tipoUnidad']=$producto->tipoUnidad;
+            $arrAux['tu']=$producto->tipoUnidad;
             $arrAux['fechaAgotamiento']=$fechaAgot;
+            //calculo la necesidad en funcion del stock final del producto a la fecha
             if($stockFinal>0){
                 $necesidad = 0;
             } else {
@@ -550,12 +555,15 @@ class GestorStock
             $arrAux['necesidadFinal']=$necesidad;
             array_push($necesidades,$arrAux);
         }
+        //calculo de las alarmas
 
 
-        return ['fecha'=>$fechaHasta,'necesidades'=>$necesidades,'alarmas'=>$alarmas];
 
 
-        //TODO
+        return ['fecha'=>$fechaVista,'necesidades'=>$necesidades,'alarmas'=>$alarmas];
+
+
+
 
 
 
@@ -632,7 +640,7 @@ class GestorStock
      * @param string $fechaHasta
      * @return $double
      */
-    private static function getStockProd($producto_id, $fechaHasta)
+    public static function getStockProd($producto_id, $fechaHasta)
     {
         $mov=Movimiento::getAnteriorProd($producto_id,$fechaHasta);
         return $mov->saldoGlobal;

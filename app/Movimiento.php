@@ -165,6 +165,21 @@ class Movimiento extends Model
         //TIPO_MOV_ENTRADA_INSUMO_PLANIF o TIPO_MOV_ENTRADA_PRODUCTO_PLANIF o TIPO_MOV_CONSUMO_PLANIF
         //devolver el array de movimientos Ordenado cronológicamente
     }
+
+
+    public static function getAnteriorRealProd(int $producto_id, string $fecha){
+        return(self::where('producto_id','=',$producto_id)
+            ->where('fecha','<',$fecha)
+            ->whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
+                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
+                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_EXCEP.
+                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO.
+                'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
+            )
+            ->orderBy('fecha','desc')
+            ->first()
+        );
+    }
     /**
      * @param string $producto_id
      * @param string $fecha
@@ -172,18 +187,12 @@ class Movimiento extends Model
      */
 
     //Ultimo movimiento real del id producto anterior a una fecha
-    public static function getAnteriorProd(string $producto_id, string $fecha)
+    public static function getAnteriorProd(int $producto_id, string $fecha)
     {
 
 
     	return(self::where('producto_id','=',$producto_id)
 			    		->where('fecha','<',$fecha)
-                        ->whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
-                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
-                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_EXCEP.
-                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO.
-                            'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
-                        )
 			    		->orderBy('fecha','desc')
 			    		->first()
 			    		);
