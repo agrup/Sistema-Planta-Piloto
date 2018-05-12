@@ -20,10 +20,4 @@ class Lote extends Model
 
 	}
 
-    public static function getNameProdByIdLote()
-    {
-        return (Producto::find($this->producto_id))->nombre;
-    }
-
-
 }
