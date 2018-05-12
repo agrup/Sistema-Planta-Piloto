@@ -35,7 +35,7 @@
 		        		<td>{{ $s['nombre'] }}</td> 
 		        		<td> {{ $s['stock'] }}</td> 
 		        		<td> {{ $s['tu'] }}</td>
-		        		<td> <a href="verLotes?codigo={{ $s['codigo'] }}">Ver Detalles</a></td>
+		        		<td> <a href="verLotes/{{ $s['codigo'] }}">Ver Detalles</a></td>
 		        	</tr> 
 	        	@endforeach
 	        </tbody>

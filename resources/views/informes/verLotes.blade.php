@@ -24,7 +24,7 @@
 		        		<td>{{ $l['vencimiento'] }}</td> 
 		        		<td> {{ $l['cantidad'] }}</td> 
 		        		<td> {{ $lote['tu'] }}</td>
-		        		<td> <a href="detalleLote?lote={{ $l['numeroLote'] }}">Ver Detalles de Lote</a></td>
+		        		<td> <a href="detalleLote/{{ $l['numeroLote'] }}">Ver Detalles de Lote</a></td>
 		        	</tr> 
 	        	@endforeach
 	        </tbody>
