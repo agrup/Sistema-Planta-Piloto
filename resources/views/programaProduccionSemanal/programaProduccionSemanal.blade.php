@@ -42,7 +42,7 @@
                 <form action="planificacion" method="POST" enctype="multipart/form-data"  class="col-md-5">
                     {{csrf_field()}}
                     <input type="date" name="fecha" value="{{$planificaciones[0]['fecha']}}" >
-                    <input  class="btn btn-secondary"  type="submit" value="Ir a la fecha">
+                    <input  class="btn btn-secondary"  type="submit" value="Ir a semana">
                 </form>
             </div>
         </div>
