@@ -3,7 +3,7 @@
 @section('section')
 
 		@include('elementosComunes.aperturaTitulo')
-			Stock <h6>Hasta el dia {{$fecha}}</h6>
+			Stock <h4>Hasta el dia {{$fecha}}</h4>
 		@include('elementosComunes.cierreTitulo')
 		
 		{{-- FORM PARA STOCK A FUTURO --}}
