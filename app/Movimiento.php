@@ -89,8 +89,8 @@ class Movimiento extends Model
         return null;
 
         //TODO Retornar MOVIMIENTO[] con los primeros movimientos criticos(los mas viejos) que tienen su saldo global < 0 para cada producto despues de la fecha del ultimo real de ese año (o fecha tope)
-
-
+    }
+/*
      * @return
      */
 

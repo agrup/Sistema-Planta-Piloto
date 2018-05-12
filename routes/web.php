@@ -35,8 +35,8 @@ Route::get('/calendario','PagesController@calendario');
 
 Route::get('/stock', 'StockController@show');
 Route::post('/stock', 'StockController@show');
-Route::get('/verLotes/{lote}', 'LotesController@show');
-Route::get('/detalleLote', 'PagesController@detalleLote');
+Route::get('/verLotes', 'LotesController@show');
+Route::get('/detalleLote', 'LotesController@showDetalle');
 
 //Planificacion
 Route::get('/planificacion', 'PlanificacionController@index');

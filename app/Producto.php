@@ -25,8 +25,22 @@ class Producto extends Model
     }
 
 #getIngredientesById devuelce una lista de los id de ingredientes para un prosucto
- 
-    	
+
+    	public static function showLotesByProd (string $codigo)
+      {
+        $lotesReturn=[];
+        $lotes = GestorLote::getLotesPorProd($codigo);
+        foreach ($lotes as $lote) {
+            array_push($lotesReturn,
+              [
+                  'numeroLote'=>$lote->id,
+                  'fechaInicio'=>$lote->fechaInicio,
+                  'vencimiento'=>$lote->fechaVencimiento,
+                  'cantidad'=>$lote->cantidadFinal
+              ]);
+        }
+        return $lotesReturn;
+      }
 
     	public function getIngredientes(){
            $ingredientes = $this->formulacion()->get();
@@ -50,7 +64,8 @@ class Producto extends Model
 */
      public function lotes ()
      {
-        return $this->hasMany('App\Lote')->get();
+        return $this->hasMany('App\Lote')->get()
+        ;
      } 
 
      public function getArrayLotes()
