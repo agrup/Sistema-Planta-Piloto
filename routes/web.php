@@ -49,6 +49,7 @@ Route::get('/sumarizacion','PlanificacionController@verNecesidadInsumos');
 
 //Produccion
 Route::get('/produccion','ProduccionController@index');
+Route::post('/produccion','ProduccionController@show');
 Route::get('/loteEnProduccion','ProduccionController@loteEnProduccion');
 Route::get('/','PagesController@index');
 

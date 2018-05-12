@@ -16,7 +16,7 @@ class GestorLote extends Model
     //
 
     public static function getLotesFecha(string $fecha){
-        return Lote::where('fechaInicio','=',$fecha);
+        return Lote::where('fechaInicio','=',$fecha)->get();
     }
    
     public static function getTrazabilidadLote(int $idLote)

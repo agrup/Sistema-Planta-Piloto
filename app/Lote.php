@@ -12,12 +12,8 @@ class Lote extends Model
     protected $guarded=[];
 
 	public function producto(){
-		return $this->belongsTo('App\Producto');
+		return $this->belongsTo('App\Producto','producto_id')->first();
 	}
 
-	public function toArray()
-	{
-
-	}
 
 }
