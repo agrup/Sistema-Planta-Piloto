@@ -5,9 +5,9 @@
     <?php $fecha=$planificaciones[0]['fecha'];?>
 
     @include('elementosComunes.aperturaTitulo')
-
-        Planificación Productos e Insumos
-    
+    <h1 class="display-4">
+        <b>Planificación Productos e Insumos</b>
+    </h1>
     @include('elementosComunes.cierreTitulo')
     <div class="py-5">
         <div class="container">

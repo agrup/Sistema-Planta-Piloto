@@ -1,13 +1,11 @@
 @extends('layouts.layoutPrincipal' )
 @section('section')
     @include('elementosComunes.aperturaTitulo')
-  
-        Sumatoria de necesidades de Insumos
-   
+    <h2 class="display-5">
+        <b>Sumatoria de necesidades de Insumos</b>
+    </h2>
     @include('elementosComunes.cierreTitulo')
-    @include('elementosComunes.aperturaTitulo')
-    <h4 class="">Sumarizacion hasta: <?= $_GET['fecha'];?></h4>
-    @include('elementosComunes.cierreTitulo')
+
     @include('elementosComunes.aperturaTitulo')
     <h4 class="">En necesidad</h4>
     @include('elementosComunes.cierreTitulo')
@@ -50,9 +48,8 @@
             <td> {{$v['codigo']}}</td>
             <td>{{$v['insumo']}}</td>
             @if($v['color']=="roja")
-                <td><font color="red" > {{$v['cantidad']}}  {{$v['tu']}}</td>
+                <td bgcolor="#ff3333"><b> {{$v['cantidad']}}  {{$v['tu']}}</b></td>
             @elseif($v['color']=="amarilla")
-                <td > {{$v['cantidad']}}  {{$v['tu']}}</td>
             @else    
                 <td>{{$v['cantidad']}}  {{$v['tu']}}</td>
             @endif
