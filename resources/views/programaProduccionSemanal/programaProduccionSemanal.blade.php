@@ -382,14 +382,15 @@
       </div>
 
       <div class="row">
-        <div class="col-md-2">
+
 
 
 
           <form action="sumarizacion" method="get" enctype="multipart/form-data">
-
+              <div class="col-md-2">
             {{csrf_field()}}
               <input type="date" name='fecha' class="form-control"></div>
+
             <div class="col-md-8">
               <input type="submit" value="Ver necesidad de Insumos" class="btn btn-primary" >
             </div>

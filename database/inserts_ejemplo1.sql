@@ -100,6 +100,10 @@ VALUES ( 6, 4, '2018-05-14' , NULL , '2018-05-14' , '2019-01-01', 10, 10, false,
 DELETE FROM  public.movimientos;
 INSERT INTO public.movimientos(
   "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
+VALUES ( NULL , NULL , '1900-01-01 00:00:01' , 5, 0, 0, 0, 0, 1, NULL , now(), now());
+
+INSERT INTO public.movimientos(
+  "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
 VALUES ( 1, 1, '2018-05-04 00:00:01' , 3, 0, 2500, 2500, 2500, 1, NULL , now(), now());
 
 INSERT INTO public.movimientos(
