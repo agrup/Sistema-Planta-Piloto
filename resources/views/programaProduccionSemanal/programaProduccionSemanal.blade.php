@@ -53,7 +53,8 @@
 
                                  @foreach($planificaciones as $value  )
                                     
-                                    <form action="planificacionDia" method="get" enctype="multipart/form-data" class="col-md-11"> @csrf
+                                    <form action="planificacionDia" method="get" enctype="multipart/form-data" class="col-md-11">
+                                        {{csrf_field()}}
                                       <th> <input type="submit" class="btn btn-primary" name="fecha" value={{$value["fecha"]}}></th>
                                       </form> 
 
@@ -388,9 +389,11 @@
               <input type="date" name='fecha' class="form-control"></div>
             <div class="col-md-8">
               <input type="submit" value="Ver necesidad de Insumos" class="btn btn-primary" >
-
             </div>
+
           </form>
+
+        </div>
       </div>
     </div>
   </div>

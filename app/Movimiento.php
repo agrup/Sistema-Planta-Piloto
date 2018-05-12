@@ -80,7 +80,22 @@ class Movimiento extends Model
 
     public static function getMovsCriticos (string $fechaTope)
     {
-        return [];
+        $arrayResult=[];
+        $fechaInicio = self::getFechaUltimoReal();
+        $movimientosProd= self::distinct()->select('producto_id')->get();
+        foreach ($movimientosProd as $movProd){
+            $mov = self::where('producto_id','=',$movProd->producto_id)
+                ->where('fecha','>',$fechaInicio)
+                ->where('fecha','<',$fechaTope)
+                ->where('saldoGlobal','<','0')
+                ->orderBy('fecha')->first();
+            if($mov!=null){
+                array_push($arrayResult,$mov);
+            }
+
+        }
+
+        return $arrayResult;
 
         //TODO Retornar MOVIMIENTO[] con los primeros movimientos criticos(los mas viejos) que tienen su saldo global < 0 para cada producto despues de la fecha del ultimo real de ese año (o fecha tope)
 
