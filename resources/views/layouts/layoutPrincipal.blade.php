@@ -22,7 +22,7 @@
 
 
 <main role="main">
-<body class="body">
+<body class="container jumbotron">
 
 
 	
