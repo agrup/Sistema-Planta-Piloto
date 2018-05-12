@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <p class="lead">
-                        <b><?= $fecha; ?> </b>
+                        <b>Fecha Actual: <?= $fecha; ?> </b>
                     </p>
                 </div>
             </div>
