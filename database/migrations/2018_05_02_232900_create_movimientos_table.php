@@ -26,7 +26,9 @@ class CreateMovimientosTable extends Migration
             $table->double('saldoLote')->nullable($value = true);
             $table->integer('tipo');
             $table->integer('planificacion_id')->nullable($value = true);
-            $table->timestamps();  
+
+            $table->timestamps();
+
         });
 
     }

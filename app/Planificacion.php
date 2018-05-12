@@ -110,7 +110,7 @@ class Planificacion extends Model
             }
             $arrProd['color']=$color;
             array_push($arrayResult,$arrProd);
-            print_r($arrProd);
+
         }
 
         return $arrayResult;
@@ -145,7 +145,7 @@ class Planificacion extends Model
             }
             $arrProd['color']=$color;
             array_push($arrayResult,$arrProd);
-            print_r($arrProd);
+
         }
 
         return $arrayResult;

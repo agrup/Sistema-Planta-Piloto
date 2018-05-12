@@ -28,7 +28,7 @@ class CreateProductosTable extends Migration
         });
 
         Schema::create('producto_productoi', function (Blueprint $table) {
-  
+
             $table->integer('producto_id');
             $table->integer('ingrediente_id');
             $table->primary(['producto_id','ingrediente_id']);

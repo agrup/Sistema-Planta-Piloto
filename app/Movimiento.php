@@ -12,7 +12,8 @@ class Movimiento extends Model
     protected $guarded=[];
     public function planificacion(){
     	return $this->belongsTo('App\Planificacion');
-    }
+}
+
 
 
     private $campos=['id','fecha','tipo','loteconsumidor',
@@ -46,11 +47,13 @@ class Movimiento extends Model
 
 
 
+
     public static function getFechaUltimoReal()
 
     {
 
         
+
         return self::whereRaw('tipo='.TipoMovimiento::SIN_TIPO.
                             'or tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
                             'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
@@ -65,7 +68,7 @@ class Movimiento extends Model
 
 
     }
-    
+
 /*
     const SIN_TIPO=-1;
     const TIPO_MOV_ENTRADA_INSUMO=1;
@@ -79,12 +82,28 @@ class Movimiento extends Model
 
    /**
      * @param int $productoId id del producto a buscar el movimiento mas viejo donde se vuelve 0
-     * @return 
+
+     * @return
      */
 
-    public static function getMovsCritico (string $fechaTope)
+    public static function getMovsCriticos (string $fechaTope)
     {
-        return null;
+        $arrayResult=[];
+        $fechaInicio = self::getFechaUltimoReal();
+        $movimientosProd= self::distinct()->select('producto_id')->get();
+        foreach ($movimientosProd as $movProd){
+            $mov = self::where('producto_id','=',$movProd->producto_id)
+                ->where('fecha','>',$fechaInicio)
+                ->where('fecha','<',$fechaTope)
+                ->where('saldoGlobal','<','0')
+                ->orderBy('fecha')->first();
+            if($mov!=null){
+                array_push($arrayResult,$mov);
+            }
+
+        }
+
+        return $arrayResult;
 
         //TODO Retornar MOVIMIENTO[] con los primeros movimientos criticos(los mas viejos) que tienen su saldo global < 0 para cada producto despues de la fecha del ultimo real de ese año (o fecha tope)
 
@@ -139,7 +158,7 @@ class Movimiento extends Model
     public static function getAnteriorProd(string $producto_id, string $fecha)
     {
 
-        
+
     	return(self::where('producto_id','=',$producto_id)
 			    		->where('fecha','<',$fecha)
 			    		->orderBy('fecha')
@@ -155,7 +174,7 @@ class Movimiento extends Model
      */
     public static function getAnteriorLote($idLoteIngrediente, $fecha)
     {
-        
+
     }
     /**
      * @param $producto_id
@@ -206,35 +225,24 @@ class Movimiento extends Model
     /**
      * @param string $fechaHasta
      * @return Movimiento[]
+
+     *
+     * devolver los ultimos movimientos hasta la fecha para cada producto.
+     *   incluir planificados
      */
-    public static function ultimoStockProdTodos(
-    											string $fechaHasta
-    											)
+    public static function ultimoStockProdTodos(string $fechaHasta)
     {
-        
+        $result=[];
     	$productosid= self::distinct()->select('producto_id')->get();
-
-    	$result=[];
-
     	foreach ($productosid as $producto) {
-    		
-
-            if (($aux=(self::getAnteriorProd($producto->producto_id,$fechaHasta)))!=null)
-            {
-
-            $result[]=$aux;
+            if(($aux=self::getAnteriorProd($producto->producto_id,$fechaHasta))!=null){
+                $result[]=$aux;
             }
-       
-    	#array_push($result,self::getAnteriorProd($producto,$fechaHasta))	
-    	
-
-
     	}
-		
 		return $result;
 
-        //devolver los ultimos movimientos hasta la fecha para cada producto.
-        //incluir planificados
+
+
     }
     public function persist()
     {
