@@ -20,6 +20,11 @@
       </div>
     </div>
   </div>
+  @include('elementosComunes.aperturaTitulo')
+          <h3>
+            <b>Productos</b>
+          </h3>
+  @include('elementosComunes.cierreTitulo')
    @include('elementosComunes.aperturaTabla')
             <thead>
              <tr>
@@ -56,15 +61,11 @@
             
             </tbody>
      @include('elementosComunes.cierreTabla')
-  <div class="py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <p class="lead">Llegada de Insumos</p>
-        </div>
-      </div>
-    </div>
-  </div>
+    @include('elementosComunes.aperturaTitulo')
+          <h3>
+            <b>Llegada de Insumos</b>
+          </h3>
+  @include('elementosComunes.cierreTitulo')
  @include('elementosComunes.aperturaTabla')
             <thead>
               <tr>

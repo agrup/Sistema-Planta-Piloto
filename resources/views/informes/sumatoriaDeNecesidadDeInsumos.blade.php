@@ -19,13 +19,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr></tr>
-              <tr></tr>
+              @foreach($necesidad as $value)
+                  <tr> {{$v['codigo'])}}</tr>
+                  <tr>{{$v['insumo']}}</tr> 
+                  <tr>{{$v['NecesidadFinal']}}</tr>
+                  <tr>{{$v['fechaAgotamiento']}}</tr>
+              @endforeach
+              <?php unset($value);?>
+              
             </tbody>
   @include('elementosComunes.cierreTabla')
   @include('elementosComunes.aperturaTitulo')
@@ -40,13 +41,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr></tr>
-              <tr></tr>
+             @foreach($necesidad as $value)
+                  <tr> {{$v['codigo'])}}</tr>
+                  <tr>{{$v['insumo']}}</tr> 
+                  <tr>{{$v['camtidad']}}</tr>
+               
+              @endforeach
             </tbody>
    @include('elementosComunes.cierreTabla')
 
