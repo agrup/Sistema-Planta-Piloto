@@ -1,3 +1,10 @@
+ALTER SEQUENCE planificacions_id_seq RESTART WITH 1;
+ALTER SEQUENCE productos_id_seq RESTART WITH 1;
+ALTER SEQUENCE trabajadors_id_seq RESTART WITH 1;
+ALTER SEQUENCE movimientos_id_seq RESTART WITH 1;
+ALTER SEQUENCE lotes_id_seq RESTART WITH 1;
+
+
 DELETE  from public.productos;
 
 -- Inserto Productos y la formulacion de queso sardo
