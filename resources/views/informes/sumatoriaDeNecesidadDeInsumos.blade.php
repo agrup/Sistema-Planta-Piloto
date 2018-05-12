@@ -47,7 +47,12 @@
         <tr>
             <td> {{$v['codigo']}}</td>
             <td>{{$v['insumo']}}</td>
-            <td>{{$v['cantidad']}}  {{$v['tu']}}</td>
+            @if($v['color']=="roja")
+                <td bgcolor="#ff3333"><b> {{$v['cantidad']}}  {{$v['tu']}}</b></td>
+            @elseif($v['color']=="amarilla")
+            @else    
+                <td>{{$v['cantidad']}}  {{$v['tu']}}</td>
+            @endif
         </tr>
     @endforeach
     </tbody>
