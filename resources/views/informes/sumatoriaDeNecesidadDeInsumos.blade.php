@@ -52,7 +52,8 @@
     @endforeach
     </tbody>
     @include('elementosComunes.cierreTabla')
-
+    <form action="/sumarizacion" method="get">
+        {{csrf_field()}}
     <div class="py-5">
         <div class="container">
             <div class="row">
@@ -60,14 +61,16 @@
                     <h5 class="">Revisar Planificacion Hasta:</h5>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-md-3">
-                    <input type="date" class="form-control"> </div>
+                    <input type="date" name="fecha" class="form-control"> </div>
             </div>
         </div>
+
     </div>
     @include('elementosComunes.aperturaBoton')
-    <a class="btn btn-primary" href="#">Ir a la Fecha</a>
+    <input type="submit" class="btn btn-primary" value="Ir a la Fecha">
     @include('elementosComunes.cierreBoton')
-
+    </form>
 @endsection
