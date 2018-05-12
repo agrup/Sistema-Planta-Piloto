@@ -49,7 +49,7 @@ Route::get('/sumarizacion','PlanificacionController@verNecesidadInsumos');
 
 
 
-Route::get('/','PagesController@index');
+Route::get('/','MainController@index');
 Route::get('/produccion','PagesController@produccion');
 
 Route::get('/lotes', 'LotesController@index') ;

@@ -11,48 +11,91 @@
 		@include('elementosComunes.aperturaTabla')    			
 			
 			<thead>
-				<tr><th>Código: {{ $detalle['codigo'] }}</th> 
-					<th>Producto: {{ $detalle['nombreProducto'] }}</th>
-					<th>Fecha Inicio: {{ $detalle['fechaInicio'] }}</th> 
-					
+				<tr><th>Código</th> 
+					<th>Producto </th>
+					<th>Fecha Inicio</th> 					
 				</tr>
-				<tr><th></th><th></th><th></th></tr>
+				<tr><td>{{ $detalle['codigo'] }}</td>
+					<td>{{ $detalle['nombreProducto'] }}</td>
+					<td>{{ $detalle['fechaInicio'] }}</td></tr>
 				<tr>
-					<th>Cantidad en Stock: {{ $detalle['cantidad'] }} {{ $detalle['tu'] }}</th>			
-					<th>Costo Unitario: {{ $detalle['costoUnitario'] }}</th>
-					<th>Vencimiento: {{ $detalle['vencimiento'] }}</th>
+					<th>Cantidad en Stock </th>			
+					<th>Costo Unitario</th>
+					<th>Vencimiento</th>
 				</tr>
+				<tr><td>{{ $detalle['cantidad'] }} {{ $detalle['tu'] }}</td>
+					<td>{{ $detalle['costoUnitario'] }}</td>
+					<td>{{ $detalle['vencimiento'] }}</td>
+				</tr>
+
 				<tr><th><h5><b>Detalles de Elaboración:</b></h5></th><th></th><th></th></tr>
 				<tr>
 					@if ($detalle['cantidadElaborada'] != null)						
-						<th>Cantidad Elaborada: {{ $detalle['cantidadElaborada'] }}</th>
+						<th>Cantidad Elaborada</th>
 					@endif
 
 					@if ($detalle['inicioMaduracion']!= null)						
-						<th>Inicio Maduración: {{ $detalle['inicioMaduracion'] }}</th>
+						<th>Inicio Maduración</th>
 					@endif
 
 					@if ($detalle['finalizacion']!= null)						
-						<th>Fecha Finalización: {{ $detalle['finalizacion'] }}</th>
+						<th>Fecha Finalización</th>
+					@endif
+				</tr>
+				<tr>
+					@if ($detalle['cantidadElaborada'] != null)						
+						<td>{{ $detalle['cantidadElaborada'] }}</td>
+					@endif
+
+					@if ($detalle['inicioMaduracion']!= null)						
+						<td>{{ $detalle['inicioMaduracion'] }}</td>
+					@endif
+
+					@if ($detalle['finalizacion']!= null)						
+						<td>{{ $detalle['finalizacion'] }}</td>
 					@endif
 				</tr>
 				<tr>
 
 					@if ($detalle['cantidadFinal']!= null)						
-						<th>Cantidad Final: {{ $detalle['cantidadFinal'] }}</th>
+						<th>Cantidad Final</th>
 					@endif
 					
 					@if ($detalle['proveedor']!= null)						
-						<th>Proveedor: {{ $detalle['proveedor'] }}</th>
+						<th>Proveedor</th>
 					@endif
+
+				</tr>	
 				<tr>
+
+					@if ($detalle['cantidadFinal']!= null)						
+						<td>{{ $detalle['cantidadFinal'] }}</td>
+					@endif
+					
+					@if ($detalle['proveedor']!= null)						
+						<td>{{ $detalle['proveedor'] }}</td>
+					@endif
+					
+				</tr>	
+				<tr>
+
 					@if ($detalle['tipoTp']!= null)						
-						<th>Tipo TP: {{ $detalle['tipoTp'] }}</th>
+						<th>Tipo TP</th>
 					@endif
 					@if ($detalle['asignatura']!= null)						
-						<th>Asignatura: {{ $detalle['asignatura'] }}</th>
+						<th>Asignatura</th>
 					@endif
 				</tr>
+				<tr>
+
+					@if ($detalle['tipoTp']!= null)						
+						<td>{{ $detalle['tipoTp'] }}</td>
+					@endif
+					@if ($detalle['asignatura']!= null)						
+						<td>{{ $detalle['asignatura'] }}</td>
+					@endif
+				</tr>
+
 
 					{{-- 
 					@for ($i = 0; $i < 7; $i++)						
