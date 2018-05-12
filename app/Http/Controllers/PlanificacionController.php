@@ -52,6 +52,8 @@ class PlanificacionController extends Controller
 
     }
 
+
+
     public static function verNecesidadInsumos(){
         $fechaHasta = request()->input('fecha');
         if($fechaHasta==null)

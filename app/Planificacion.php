@@ -92,7 +92,7 @@ class Planificacion extends Model
         $movs= $this->movimientos()->whereRaw(
         									'tipo =' . TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF .
                                             'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_CUMPLIDO .
-                                            'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO);
+                                            'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO)->get();
         foreach ($movs as $mov){
             $arrProd=[];
             $color = 'normal';
@@ -109,7 +109,7 @@ class Planificacion extends Model
             }
             $arrProd['color']=$color;
             array_push($arrayResult,$arrProd);
-            print_r($arrProd);
+
         }
 
         return $arrayResult;
@@ -125,7 +125,7 @@ class Planificacion extends Model
         $movs= $this->movimientos()->whereRaw(
         	'tipo =' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF .
             'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_CUMPLIDO .
-            'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_INCUMPLIDO);
+            'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_INCUMPLIDO)->get();
 
         foreach ($movs as $mov){
             $arrProd=[];
@@ -143,7 +143,7 @@ class Planificacion extends Model
             }
             $arrProd['color']=$color;
             array_push($arrayResult,$arrProd);
-            print_r($arrProd);
+
         }
 
         return $arrayResult;
