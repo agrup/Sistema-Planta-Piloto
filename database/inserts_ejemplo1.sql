@@ -17,7 +17,17 @@ INSERT INTO public.productos(
   nombre, descripcion, "tipoUnidad", codigo, "alarmaActiva", "alarmaAmarilla", "alarmaRoja", categoria, estado, created_at, updated_at)
 VALUES ( 'Fermento', 'insumo', 'gr', 'i02', 'false', NULL , NULL , 'insumo' , true, now(), now());
 
--- formulacion alta en la tabla intermedia
+--bondiola cruda kg
+INSERT INTO public.productos(
+  nombre, descripcion, "tipoUnidad", codigo, "alarmaActiva", "alarmaAmarilla", "alarmaRoja", categoria, estado, created_at, updated_at)
+VALUES ( 'Bondiola Cruda', 'producto cárnico', 'gr', 'ic01', 'true', 30 , 5 , 'insumo' , true, now(), now());
+
+--bondiola
+INSERT INTO public.productos(
+  nombre, descripcion, "tipoUnidad", codigo, "alarmaActiva", "alarmaAmarilla", "alarmaRoja", categoria, estado, created_at, updated_at)
+VALUES ( 'Bondiola', 'producto cárnico', 'gr', 'pc01', 'false', NULL , NULL , 'carnico' , true, now(), now());
+
+-- formulacion queso sardo alta en la tabla intermedia
 DELETE from public.producto_productoi;
 INSERT INTO public.producto_productoi(
   producto_id, ingrediente_id, cantidad, "cantidadProducto")
@@ -30,6 +40,15 @@ VALUES (1, 3, 250, 1);
 INSERT INTO public.producto_productoi(
   producto_id, ingrediente_id, cantidad, "cantidadProducto")
 VALUES (1, 4, 50, 1);
+
+--formualción bondiola
+INSERT INTO public.producto_productoi(
+  producto_id, ingrediente_id, cantidad, "cantidadProducto")
+VALUES (6, 5, 15, 10);
+
+INSERT INTO public.producto_productoi(
+  producto_id, ingrediente_id, cantidad, "cantidadProducto")
+VALUES (6, 3, 4000, 10);
 
 
 -- Creo lotes y sus movimientos
@@ -58,67 +77,72 @@ INSERT INTO public.lotes(
 INSERT INTO public.lotes(
 	 producto_id,"tipoLote", "fechaInicio", "fechaInicioMaduracion", "fechaFinalizacion", "fechaVencimiento", "cantidadElaborada", "cantidadFinal", "tipoTP", asignatura, costounitario, created_at, updated_at)
 	VALUES ( 4, 3, '2018-05-06', NULL , '2018-05-06', '2018-10-01', 1000, 1000, false, NULL , 0.1 , now(), now());
+
 --planificado de queso sardo
 INSERT INTO public.lotes(
 	 producto_id,"tipoLote", "fechaInicio", "fechaInicioMaduracion", "fechaFinalizacion", "fechaVencimiento", "cantidadElaborada", "cantidadFinal", "tipoTP", asignatura, costounitario, created_at, updated_at)
 	VALUES ( 1, 4, '2018-05-07' , NULL , '2018-05-06' , '2018-10-01', 10, 10, false, NULL , NULL , now(), now());
 
+--planificado de bondiola
+INSERT INTO public.lotes(
+  producto_id,"tipoLote", "fechaInicio", "fechaInicioMaduracion", "fechaFinalizacion", "fechaVencimiento", "cantidadElaborada", "cantidadFinal", "tipoTP", asignatura, costounitario, created_at, updated_at)
+VALUES ( 6, 4, '2018-05-14' , NULL , '2018-05-14' , '2019-01-01', 10, 10, false, NULL , NULL , now(), now());
 
 --movimientos
 --entrada insumos
 DELETE FROM  public.movimientos;
 INSERT INTO public.movimientos(
   "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
-VALUES ( 1, 1, '2018-05-04 00:00:01' , 3, 0, 2500, 2500, 2500, 1, 4, now(), now());
+VALUES ( 1, 1, '2018-05-04 00:00:01' , 3, 0, 2500, 2500, 2500, 1, NULL , now(), now());
 
 INSERT INTO public.movimientos(
   "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
-VALUES ( 2, 2, '2018-05-04 00:00:02', 4, 0, 1000, 1000, 1000, 1, 1 , now(), now());
+VALUES ( 2, 2, '2018-05-04 00:00:02', 4, 0, 1000, 1000, 1000, 1, NULL , now(), now());
 
 INSERT INTO public.movimientos(
   "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
-VALUES ( 3, 3, '2018-05-04 00:00:02', 2, 0, 100, 100, 100, 1, 5 , now(), now());
+VALUES ( 3, 3, '2018-05-04 00:00:02', 2, 0, 100, 100, 100, 1, NULL , now(), now());
 
 --consumos reales del queso sardo
 INSERT INTO public.movimientos(
   "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
-VALUES ( 4, 1, '2018-05-05 00:00:01' , 3, 2500, 0, 0, 0, 5, 4, now(), now());
+VALUES ( 4, 1, '2018-05-05 00:00:01' , 3, 2500, 0, 0, 0, 5, NULL , now(), now());
 
 INSERT INTO public.movimientos(
   "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
-VALUES ( 4, 2, '2018-05-05 00:00:02', 4, 500, 0, 500, 500, 5, 1 , now(), now());
+VALUES ( 4, 2, '2018-05-05 00:00:02', 4, 500, 0, 500, 500, 5, NULL , now(), now());
 
 INSERT INTO public.movimientos(
   "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
-VALUES ( 4, 3, '2018-05-05 00:00:03', 2, 20, 0, 80, 80, 5, 2 , now(), now());
+VALUES ( 4, 3, '2018-05-05 00:00:03', 2, 20, 0, 80, 80, 5, NULL , now(), now());
 --entrada queso sardo
 INSERT INTO public.movimientos(
   "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
-VALUES ( 4, 4, '2018-05-05 00:00:05', 1, 0, 10, 10, 10, 1, 3 , now(), now());
+VALUES ( 4, 4, '2018-05-05 00:00:05', 1, 0, 10, 10, 10, 1, NULL , now(), now());
 
 --entradas insumos
 INSERT INTO public.movimientos(
   "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
-VALUES ( 5, 5, '2018-05-06 00:00:01' , 3, 0, 2000, 2000, 2000, 1, 1 , now(), now());
+VALUES ( 5, 5, '2018-05-06 00:00:01' , 3, 0, 2000, 2000, 2000, 1, NULL , now(), now());
 
 INSERT INTO public.movimientos(
   "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
-VALUES ( 6, 6, '2018-05-06 00:00:02', 4, 0, 1000, 1500, 1000, 1, 5, now(), now());
+VALUES ( 6, 6, '2018-05-06 00:00:02', 4, 0, 1000, 1500, 1000, 1, NULL , now(), now());
 
 --consumo planif sal
 INSERT INTO public.movimientos(
   "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
-VALUES ( 7, NULL , '2018-05-07 00:00:01', 3, 1000, 0, 1000, NULL , 9, 4 , now(), now());
+VALUES ( 7, NULL , '2018-05-07 00:00:01', 3, 1000, 0, 1000, NULL , 9, NULL , now(), now());
 
 --consumo planif fermento
 INSERT INTO public.movimientos(
   "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
-VALUES ( 7, NULL , '2018-05-07 00:00:02', 4, 500, 0, 1000, NULL , 9, 3 , now(), now());
+VALUES ( 7, NULL , '2018-05-07 00:00:02', 4, 500, 0, 1000, NULL , 9, NULL , now(), now());
 
 --consumo planif leche
 INSERT INTO public.movimientos(
   "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
-VALUES ( 7, NULL , '2018-05-07 00:00:03', 2, 10, 0, 70, NULL , 9, 1 , now(), now());
+VALUES ( 7, NULL , '2018-05-07 00:00:03', 2, 10, 0, 70, NULL , 9, NULL , now(), now());
 
 --Entrada producto planif Queso sardo
 INSERT INTO public.movimientos(
@@ -133,6 +157,32 @@ INSERT INTO public.movimientos(
   "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
 VALUES ( NULL , NULL , '2018-05-10 00:00:00', 3, 0, 10000, 11000, NULL , 7, 4, now(), now());
 
+--Semana del 14 mayo
+INSERT INTO public.movimientos(
+  "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
+VALUES ( 8 , NULL , '2018-05-14 00:00:00', 3, 4000, 0, 7000, NULL , 9, 6, now(), now());
+
+INSERT INTO public.movimientos(
+  "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
+VALUES ( 8 , NULL , '2018-05-14 00:00:01', 5, 15000, 0, -15000, NULL , 9, 6, now(), now());
+
+INSERT INTO public.movimientos(
+  "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
+VALUES ( 8 , 8 , '2018-05-14 00:00:03', 6, 0, 10000, 10000, NULL , 8, 6, now(), now());
+
+
+-- Planificado extra
+INSERT INTO public.movimientos(
+  "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
+VALUES ( NULL , NULL , '2018-05-10 00:00:00', 3, 0, 10000, 11000, NULL , 7, 4, now(), now());
+
+INSERT INTO public.movimientos(
+  "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
+VALUES ( NULL , NULL , '2018-05-10 00:00:00', 4, 0, 10000, 11000, NULL , 7, 4, now(), now());
+
+INSERT INTO public.movimientos(
+  "idLoteConsumidor", "idLoteIngrediente", fecha, producto_id, debe, haber, "saldoGlobal", "saldoLote", tipo, planificacion_id, created_at, updated_at)
+VALUES ( NULL , NULL , '2018-05-10 00:00:00', 2, 0, 10000, 11000, NULL , 7, 4, now(), now());
 --Planificaciones
 DELETE from public.planificacions;
 
@@ -151,16 +201,30 @@ VALUES ( '2018-05-10', 'jueves', '', now(), now());
 INSERT INTO public.planificacions(
   fecha, "diaSemana", descripcion, created_at, updated_at)
 VALUES ( '2018-05-11', 'viernes', '', now(), now());
-
+INSERT INTO public.planificacions(
+  fecha, "diaSemana", descripcion, created_at, updated_at)
+VALUES ( '2018-05-14', 'lunes', '', now(), now());
+INSERT INTO public.planificacions(
+  fecha, "diaSemana", descripcion, created_at, updated_at)
+VALUES ( '2018-05-15', 'martes', '', now(), now());
+INSERT INTO public.planificacions(
+  fecha, "diaSemana", descripcion, created_at, updated_at)
+VALUES ( '2018-05-16', 'miercoles', '', now(), now());
+INSERT INTO public.planificacions(
+  fecha, "diaSemana", descripcion, created_at, updated_at)
+VALUES ( '2018-05-17', 'jueves', '', now(), now());
+INSERT INTO public.planificacions(
+  fecha, "diaSemana", descripcion, created_at, updated_at)
+VALUES ( '2018-05-18', 'viernes', '', now(), now());
 --Trabajadores
 DELETE from public.trabajadors;
 
 INSERT INTO public.trabajadors(
-	 legajo, "idPersona", sector, puesto, seudonimo, estado, created_at, updated_at)
+	 legajo, persona_id, sector, puesto, seudonimo, estado, created_at, updated_at)
 	VALUES ( 1, 1, 'produccion', '', 'Jorge', true, now(), now());
 
 INSERT INTO public.trabajadors(
-	 legajo, "idPersona", sector, puesto, seudonimo, estado, created_at, updated_at)
+	 legajo, persona_id, sector, puesto, seudonimo, estado, created_at, updated_at)
 	VALUES ( 2, 2, 'produccion', '', 'Tito', true, now(), now());
 
 --Asigno los trabajadores a las planificaciones

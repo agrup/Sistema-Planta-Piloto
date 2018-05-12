@@ -23,6 +23,6 @@ class StockController extends Controller
     	$fecha=Carbon::createFromFormat('Y-m-d',$fecha);
     	$fecha=$fecha->format('Y-m-d H:i:s');
     	$stock=GestorStock::getStockPorProd($fecha);
-    	return view('informes.stock', compact('stock'));	
+    	return view('informes.stock', compact('stock'))->with($fecha);	
     }
 }
