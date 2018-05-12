@@ -556,9 +556,19 @@ class GestorStock
             array_push($necesidades,$arrAux);
         }
         //calculo de las alarmas
+        $stocks = self::getStockPorProd($fechaHasta);
+        foreach ($stocks as $stock){
+            $arrAux = [];
+            if($stock['alarma']!='normal'){
+                $arrAux['codigo']=$stock['codigo'];
+                $arrAux['insumo']=$stock['nombre'];
+                $arrAux['cantidad']=$stock['stock'];
+                $arrAux['tu']=$stock['tu'];
+                $arrAux['color']=$stock['alarma'];
+                array_push($alarmas,$arrAux);
+            }
 
-
-
+        }
 
         return ['fecha'=>$fechaVista,'necesidades'=>$necesidades,'alarmas'=>$alarmas];
 
