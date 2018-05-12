@@ -2,7 +2,7 @@
 @section('section')
 
 <body>
-  <?php $fecha=$_GET['dia'];?>
+  <?php $fecha=$_GET['fecha'];?>
   
 @include('elementosComunes.aperturaTitulo')
           <h1 class="display-4">

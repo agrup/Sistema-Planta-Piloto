@@ -52,7 +52,13 @@ class PlanificacionController extends Controller
 
     }
 
-
+    public static function planificacionDia(){
+        $fecha =request()->input('fecha');
+        if($fecha==null){
+            throw new Exception('Fecha inválida');
+        }
+        $planificiones;
+    }
 
     public static function verNecesidadInsumos(){
         $fechaHasta = request()->input('fecha');
