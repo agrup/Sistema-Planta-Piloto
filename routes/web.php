@@ -47,10 +47,12 @@ Route::get('/calendarioSig','PlanificacionController@calendarioSig'); //flechita
 Route::get('/calendarioAnt','PlanificacionController@calendarioAnt');
 Route::get('/sumarizacion','PlanificacionController@verNecesidadInsumos');
 
-
-
+//Produccion
+Route::get('/produccion','ProduccionController@index');
+Route::post('/produccion','ProduccionController@show');
+Route::get('/loteEnProduccion','ProduccionController@loteEnProduccion');
 Route::get('/','PagesController@index');
-Route::get('/produccion','PagesController@produccion');
+
 
 Route::get('/lotes', 'LotesController@index') ;
 Route::get('/lotes/{id}', 'LotesController@show') ;

@@ -14,6 +14,10 @@ class GestorLote extends Model
     *@return $lote [] // array con los lotes de insumos para ese producto
    */
     //
+
+    public static function getLotesFecha(string $fecha){
+        return Lote::where('fechaInicio','=',$fecha)->get();
+    }
    
     public static function getTrazabilidadLote(int $idLote)
     {
