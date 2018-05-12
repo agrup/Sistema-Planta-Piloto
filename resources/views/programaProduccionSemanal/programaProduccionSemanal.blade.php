@@ -2,9 +2,9 @@
 @section('section')
 
     @include('elementosComunes.aperturaTitulo')
-  
-        Programa de Producción Semanal
-    
+    <h2 class="display-4">
+        <b>Programa de Producción Semanal</b>
+    </h2>
     @include('elementosComunes.cierreTitulo')
 
     <div class="py-5">
@@ -133,7 +133,7 @@
     ?>
     @for($k=0;$k<$mayor ; $k++)
         <tr>
-            <td><?=$k+1 ; ?></td>
+            <td><?=$k+1; ?></td>
             @if(isset($lunes[$k]))
                 <td><?= $lunes[$k];?> </td>
             @else
