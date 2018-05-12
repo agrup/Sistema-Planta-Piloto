@@ -15,13 +15,7 @@ class DetalleSalida
 
     const MOTIVO_DECOMISO = 'decomiso';
     const MOTIVO_VENTAS = 'ventas';
-    private $idMov;
-    private $cantidad;
-    private $detalle;
-    private $fecha;
-    private $idLote;
-    private $motivo;
-    public $campos=['idMov', 'idLote', 'cantidad', 'fecha','motivo','detalle'];
+
     /**
      * SalidaExcep constructor.
      * @param array $datos
