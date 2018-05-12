@@ -2,13 +2,13 @@
 
 @section('section')
 		@include('elementosComunes.aperturaTitulo')
-			Lotes de Producto/Insumo
+			Lotes de {{ $lote['producto'] }}
 		@include('elementosComunes.cierreTitulo')
 
 		
 		
 		@include('elementosComunes.aperturaTabla')    
-		<h4><b>Nombre Producto: {{ $lote['producto'] }}</b></h4>  
+		
 			<thead ><tr><th>Nro Lote </th> 
 						<th>Fecha de Inicio</th> 
 						<th>Vencimiento</th> 

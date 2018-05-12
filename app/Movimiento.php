@@ -9,13 +9,13 @@ class Movimiento extends Model
 {
 
 
+
+
     protected $guarded=[];
-
-
-
     public function planificacion(){
     	return $this->belongsTo('App\Planificacion');
-}
+    }
+
 
 
 
@@ -100,6 +100,7 @@ class Movimiento extends Model
    /**
      * @param int $productoId id del producto a buscar el movimiento mas viejo donde se vuelve 0
 
+
      * @return
      */
 
@@ -123,6 +124,7 @@ class Movimiento extends Model
         return $arrayResult;
 
         //TODO Retornar MOVIMIENTO[] con los primeros movimientos criticos(los mas viejos) que tienen su saldo global < 0 para cada producto despues de la fecha del ultimo real de ese año (o fecha tope)
+
 
 
     }
@@ -197,6 +199,7 @@ class Movimiento extends Model
      */
     public static function getAnteriorLote($idLoteIngrediente, $fecha)
     {
+
         return(self::where('idLoteIngrediente','=',$idLoteIngrediente)
             ->where('fecha','<',$fecha)
             ->whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
@@ -208,6 +211,7 @@ class Movimiento extends Model
             ->orderBy('fecha','desc')
             ->first()
         );
+
     }
     /**
      * @param $producto_id
@@ -271,8 +275,10 @@ class Movimiento extends Model
             if (($aux = self::getAnteriorProd($producto->producto_id, $fechaHasta)) != null) {
                 $result[] = $aux;
             }
+
         }
         return $result;
+
     }
         public static function ultimoStockRealProdTodos($fechaHasta)
     {
