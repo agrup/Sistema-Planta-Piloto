@@ -68,7 +68,9 @@ class PlanificacionController extends Controller
         $fechaHasta = request()->input('fecha');
         if($fechaHasta==null)
             throw new Exception('Fecha inválida');
-        return view('',GestorStock::getNecesidadInsumos($fechaHasta));
+        $fecha = Carbon::createFromFormat('Y-m-d',$fechaHasta);
+        $necesidad =GestorStock::getNecesidadInsumos($fecha->format('Y-m-d H:i:s'));
+        return view('informes.sumatoriaDeNecesidadDeInsumos',compact('necesidad'));
 
     }
 
