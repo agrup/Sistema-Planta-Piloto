@@ -55,10 +55,13 @@
                 <td><?=$codigo[$k];?></td>
                 <td><?=$nombre[$k];?></td>
                 <td><?=$cantidad[$k];?></td>
+                <td></td>
+                <td><a href="" ><img class="icono" src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;"   /></a></td>
+                <td><a href=""><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" /></a></td>
             </tr>
         @endforeach
     @endif
-
+     <tr><td><img src="{{asset('img/agregar.png') }}" width="40" height="40" style="cursor: pointer;"/></td></tr>
     </tbody>
     @include('elementosComunes.cierreTabla')
     @include('elementosComunes.aperturaTitulo')
@@ -72,6 +75,7 @@
         <th>Código</th>
         <th>Insumo</th>
         <th>Cantidad</th>
+        <th></th>
     </tr>
     <tr></tr>
     </thead>
@@ -97,9 +101,14 @@
                 <td><?=$codigo[$k];?></td>
                 <td><?=$nombre[$k];?></td>
                 <td><?=$cantidad[$k];?></td>
+                <td></td>
+                 <td><img src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;" /></td>
+                <td><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;"/></td>
             </tr>
+
         @endforeach
     @endif
+    <tr><td><img src="{{asset('img/agregar.png') }}" width="40" height="40" style="cursor: pointer;"/></td></tr>
     </tbody>
     @include('elementosComunes.cierreTabla')
 

@@ -3,7 +3,7 @@
 @section('section')
 
 		@include('elementosComunes.aperturaTitulo')
-			Stock 
+			<h2 class="display-4"><b>Stock</b></h2> <p>Hasta el dia {{$fecha}}</p>
 		@include('elementosComunes.cierreTitulo')
 		
 		{{-- FORM PARA STOCK A FUTURO --}}
@@ -13,7 +13,7 @@
 			<form class="form-inline" id="form" name="form" action="stock" method="POST" enctype="multipart/form-data">
 				@csrf
 	           <div class="input-group">
-					<input type="date" class="form-control" placeholder="Fecha" id='inputDate' name='fecha' required> 
+					<input type="date" class="form-control" placeholder="Fecha" value="{{$fecha}}" id='inputDate' name='fecha' required> 
 					<input  type="submit" class="btn btn-primary" value="Actualizar"> 
 				</div>
 			</form>
