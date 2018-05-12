@@ -57,7 +57,11 @@ class PlanificacionController extends Controller
         if($fecha==null){
             throw new Exception('Fecha inválida');
         }
-        $planificiones;
+        $planificacion=Planificacion::where('fecha','=',$fecha)->first();
+
+        $planificaciones = [];
+        array_push($planificaciones,$planificacion->toArray());
+        return view('programaProduccionSemanal.planificacionProductosEInsumos',compact('planificaciones'));
     }
 
     public static function verNecesidadInsumos(){
