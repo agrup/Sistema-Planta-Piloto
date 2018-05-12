@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -7,10 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Movimiento extends Model
 {
 
+
     protected $guarded=[];
     public function planificacion(){
     	return $this->belongsTo('App\Planificacion');
 }
+
 
 
     private $campos=['id','fecha','tipo','loteconsumidor',
@@ -43,9 +46,13 @@ class Movimiento extends Model
     }
 
 
+
+
     public static function getFechaUltimoReal()
+
     {
 
+        
 
         return self::whereRaw('tipo='.TipoMovimiento::SIN_TIPO.
                             'or tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
@@ -75,6 +82,7 @@ class Movimiento extends Model
 
    /**
      * @param int $productoId id del producto a buscar el movimiento mas viejo donde se vuelve 0
+
      * @return
      */
 
@@ -217,6 +225,7 @@ class Movimiento extends Model
     /**
      * @param string $fechaHasta
      * @return Movimiento[]
+
      *
      * devolver los ultimos movimientos hasta la fecha para cada producto.
      *   incluir planificados
@@ -231,6 +240,7 @@ class Movimiento extends Model
             }
     	}
 		return $result;
+
 
 
     }

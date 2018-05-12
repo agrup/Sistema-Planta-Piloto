@@ -1,4 +1,4 @@
-<?php
+t<?php
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -26,8 +26,11 @@ class CreateMovimientosTable extends Migration
             $table->double('saldoLote')->nullable($value = true);
             $table->integer('tipo');
             $table->integer('planificacion_id')->nullable($value = true);
+
             $table->timestamps();
+
         });
+
     }
 
     /**

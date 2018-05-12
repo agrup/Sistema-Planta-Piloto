@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\GestorStocl;
 
 class PagesController extends Controller
 {
     public function index(){
+
+
     	$planificaciones = [
      [
     'diaSemana'=>'lunes',
@@ -77,20 +80,13 @@ class PagesController extends Controller
             ['codigo'=>'pl001', 'nombre'=>'Queso Sardo', 'cantidad'=> 10, 'tipoUnidad'=> 'kg' ],
         ],
 
-        'insumos'=> [
 
-        ],
+        return view('programaProduccionSemanal.programaProduccionSemanal');
 
-        'trabajadores' => [ 'Tito', 'Darío']
-
-    ]//5
-
-
-];
-
-       
-    	return view('programaProduccionSemanal.programaProduccionSemanal',compact('planificaciones'));
     }
+    public function produccion(){    	
+        return view('Produccion');	
+
 
     public function calendarioAnt(){
     	   $fechasSemana= array('13/7','14/7','15/7','16/7','17/7');
@@ -105,108 +101,108 @@ class PagesController extends Controller
 
        
         return view('programaProduccionSemanal.programaProduccionSemanal',compact('fechasSemana','semana'));
+
+
     }
-    public function calendarioSig(){
-           $fechasSemana= array('27/7','28/7','29/7','30/7','31/7');
-        $semana=array();
-        for ($i=0; $i < 5 ; $i++) {             
-            $semana[$i]['lunes'] = 'Helado';
-            $semana[$i]['martes'] = 'Yogurt';
-            $semana[$i]['miercoles'] = 'Mascarpone';
-            $semana[$i]['jueves'] ='Yogurt';
-            $semana[$i]['viernes'] ='Helado';
-        } 
-
-       
-        return view('programaProduccionSemanal.programaProduccionSemanal',compact('fechasSemana','semana'));
+    
+    public function calendario(){
+    	return view('programaProduccionSemanal.programaProduccionSemanal');
     }
-    public function planificacionDia(){
-      $planificaciones = [
-     [
-    'diaSemana'=>'lunes',
-    'fecha'=> '2018-05-07',
-    'productos'=> [
-       [ 'codigo'=>'pl001', 'nombre'=>'Queso Sardo', 'cantidad'=> 10, 'tipoUnidad'=> 'kg'] ,
-       [ 'codigo'=>'pl021', 'nombre'=>'Ricota', 'cantidad'=> 3, 'tipoUnidad'=> 'kg' ]
-    ],
 
-    'insumos'=> [
-        ['codigo'=>'i001', 'nombre'=>'Sal', 'cantidad'=> 10000, 'tipoUnidad'=> 'gr' ],
-        ['codigo'=>'i002', 'nombre'=>'Fermento', 'cantidad'=> 5000, 'tipoUnidad'=> 'gr' ]
-    ],
 
-    'trabajadores' => [ 'Tito', 'Darío']
+    	/*
+    public function stock()
+    {       
+        $stock = [];
 
-    ], //1
+        if(isset($_POST['inputDate'])){
 
-    [
-        'diaSemana'=>'martes',
-        'fecha'=> '2018-05-08',
-        'productos'=> [
-            ['codigo'=>'pl001', 'nombre'=>'Queso Sardo', 'cantidad'=> 10, 'tipoUnidad'=> 'kg' ],
-        ],
+            //TODO LLAMAR A FUNCION DEL  MODELO CUANDO SE INGRESE UNA FECHA
+            //$stock = getStock($_POST['inputDate']);
 
-        'insumos'=> [
-            ['codigo'=>'i002', 'nombre'=>'Fermento', 'cantidad'=> 5000, 'tipoUnidad'=> 'gr' ]
-        ],
+            //TODO COMENTAR
+        	for ($i=0; $i < 30 ; $i++) {     		
+        		$stock[$i]['codigo'] = '1234';
+                $stock[$i]['nombre'] = 'Azucar';
+                $stock[$i]['cantidad'] = '10000';
+                $stock[$i]['unidad'] = $_POST['inputDate'];
+                $stock[$i]['alarma'] = 'roja';
+        	} 
+        }else{
 
-        'trabajadores' => [ 'Tito', 'Darío']
+            //TODO LLAMAR A FUNCION DEL MODELO CUNADO NO SE INGRESE UNA FECHA
+            //$stock = getStock();
 
-    ], //2
+            //TODO COMENTAR
+            for ($i=0; $i < 30 ; $i++) {            
+                $stock[$i]['codigo'] = '1234';
+                $stock[$i]['nombre'] = 'Azucar';
+                $stock[$i]['cantidad'] = '10000';
+                $stock[$i]['unidad'] = 'Kkkkkkk';
+                $stock[$i]['alarma'] = 'amarilla';
+            }     
 
-    [
-        'diaSemana'=>'miercoles',
-        'fecha'=> '2018-05-09',
-        'productos'=> [
             
-        ],
+        }
+    	return view('informes.stock', compact('stock'));	
+    }*/
 
-        'insumos'=> [
-        ],
-
-        'trabajadores' => [ 'Tito', 'Darío']
-
-    ], //3
-
-    [
-        'diaSemana'=>'jueves',
-        'fecha'=> '2018-05-10',
-        'productos'=> [ 
-            ['codigo'=>'pl001', 'nombre'=>'Queso Sardo', 'cantidad'=> 10, 'tipoUnidad'=> 'kg' ],
-        ],
-
-        'insumos'=> [
-            ['codigo'=>'pl002', 'nombre'=>'Leche', 'cantidad'=> 100, 'tipoUnidad'=> 'l' ],
-
-        ],
-
-        'trabajadores' => [ 'Tito', 'Darío']
-
-    ], //4
-
-    [
-        'diaSemana'=>'viernes',
-        'fecha'=> '2018-05-11',
-        'productos'=> [
-            ['codigo'=>'pl001', 'nombre'=>'Queso Sardo', 'cantidad'=> 10, 'tipoUnidad'=> 'kg' ],
-        ],
-
-        'insumos'=> [
-
-        ],
-
-        'trabajadores' => [ 'Tito', 'Darío']
-
-    ]//5
+    public function verLotes(){
+        $lote = [];
 
 
-];  
-       
-       
-        return view('programaProduccionSemanal.planificacionProductosEInsumos',compact('planificaciones'));
+        $lote['producto'] = "Leche";
+        $lote['tu'] = "Litros";
+        $lote['lotes'] = [];
+        for ($i=0; $i < 10 ; $i++){
+            $lote['lotes'][$i]['numeroLote'] = "1234";
+            $lote['lotes'][$i]['fechaInicio'] = "12/12/2018";
+            $lote['lotes'][$i]['vencimiento'] = "12/12/2019";
+            $lote['lotes'][$i]['cantidad'] = "10000";
+
+        }
+
+
+        return view('informes.verLotes', compact('lote'));   
     }
-    public function sumarizacion(){
-    	return view('informes.sumatoriaDeNecesidadDeInsumos');
+
+    public function detalleLote(){
+        $detalle = [];        
+        $detalle['detalleElaboracion'] = [];
+
+        //ULTIMOS AGREGADOS NO ACORDADOS
+        $detalle['codigo'] = 'PL_1234';
+        $detalle['nombreProducto'] = 'Leche';
+        $detalle['fechaInicio'] = '12/05/2018';
+
+        //
+        $detalle['numeroLote'] = '12122018';
+        $detalle['vencimiento'] = '12122018';
+        $detalle['cantidad'] = '10000';
+        $detalle['tu'] = 'Kg';
+        $detalle['cantidadElaborada'] = '20000';
+        $detalle['costoUnitario'] = '120';
+        $detalle['inicioMaduracion'] = '12122018';
+        $detalle['finalizacion'] = '12122018';
+        $detalle['cantidadFinal'] = '20000';
+        $detalle['proveedor'] = 'ffffff';
+        $detalle['tipoTp'] = 'rffffff';
+        $detalle['asignatura'] = 'ffffff';
+
+        //ARREGLO DE INGREDIENTES DEL LOTE    
+        for ($i=0; $i <10; $i++) { 
+            $detalle['detalleElaboracion'][$i]['numeroLote'] = '11111111111111111';
+            $detalle['detalleElaboracion'][$i]['insumo'] = '2222222222222222';
+            $detalle['detalleElaboracion'][$i]['cantidadStock'] = '333333333333333333';
+            $detalle['detalleElaboracion'][$i]['tu'] = '444444444444444444';
+
+        }
+
+
+
+        return view('informes.detalleLote', compact('detalle'));   
+
     }
 
 }
+
