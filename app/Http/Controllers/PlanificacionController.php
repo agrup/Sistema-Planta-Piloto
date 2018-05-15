@@ -19,29 +19,34 @@ class PlanificacionController extends Controller
     }
 
     public static function calendarioSig(){
+        //$fechaE =Carbon::createFromFormat('d-m-Y',request()->input('fecha'));
         $fechaC = Carbon::createFromFormat('Y-m-d',request()->input('fecha'));
+         $fechaE=$fechaC->format('d-m-y');
         $fechaC = $fechaC->startOfWeek();
         $fechaC = $fechaC->addWeek();
         $fecha = $fechaC->format('Y-m-d');
         $planificaciones = Planificacion::getSemana($fecha);
-        return view('programaProduccionSemanal.programaProduccionSemanal',['planificaciones'=>$planificaciones]);
+        return view('programaProduccionSemanal.programaProduccionSemanal',['planificaciones'=>$planificaciones])->with('fechaE',$fechaE);
     }
 
     public static function calendarioAnt(){
         /*$data = request()->input('fecha')
         return view()*/
+        //$fechaE = Carbon::createFromFormat('d-m-Y',request()->input('fecha'));
         $fechaC = Carbon::createFromFormat('Y-m-d',request()->input('fecha'));
+        $fechaE=$fechaC->format('d-m-y');
         $fechaC = $fechaC->startOfWeek();
         $fechaC = $fechaC->subWeek();
         $fecha = $fechaC->format('Y-m-d');
         $planificaciones = Planificacion::getSemana($fecha);
-        return view('programaProduccionSemanal.programaProduccionSemanal',['planificaciones'=>$planificaciones]);
+        return view('programaProduccionSemanal.programaProduccionSemanal',['planificaciones'=>$planificaciones])->with('fechaE',$fechaE);
     }
 
     public static function show(){
         $planificaciones = [];
         //agarro la fecha
         $fechaC = Carbon::createFromFormat('Y-m-d',request()->input('fecha'));
+        $fechaE=$fechaC->format('d-m-y');
         $fechaC = $fechaC->startOfWeek();
 
         // la paso a formato yyyy-mm-dd
@@ -49,7 +54,7 @@ class PlanificacionController extends Controller
 
         $planificaciones = Planificacion::getSemana($fecha);
 
-        return  view('programaProduccionSemanal.programaProduccionSemanal', ['planificaciones'=>$planificaciones]);
+        return  view('programaProduccionSemanal.programaProduccionSemanal', ['planificaciones'=>$planificaciones])->with('fechaE',$fechaE);
 
     }
 
