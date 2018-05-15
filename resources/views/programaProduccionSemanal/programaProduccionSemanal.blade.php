@@ -2,9 +2,9 @@
 @section('section')
 
     @include('elementosComunes.aperturaTitulo')
-    <h2 class="display-4">
-        <b>Programa de Producción Semanal</b>
-    </h2>
+  
+        Programa de Producción Semanal
+    
     @include('elementosComunes.cierreTitulo')
 
     <div class="py-5">
@@ -133,7 +133,7 @@
     ?>
     @for($k=0;$k<$mayor ; $k++)
         <tr>
-            <td><?=$k; ?></td>
+            <td><?=$k+1 ; ?></td>
             @if(isset($lunes[$k]))
                 <td><?= $lunes[$k];?> </td>
             @else
@@ -168,8 +168,8 @@
 
     </tbody>
 
-    @include('elementosComunes.cierreTabla')
-    @include('elementosComunes.aperturaTabla')
+    <tr><td></td></tr>
+
     <tr>
         <th>
             <b>Trabajadores</b>
@@ -240,7 +240,7 @@
     ?>
     @for($k=0;$k<$mayor ; $k++)
         <tr>
-            <td>{{$k}}</td>
+            <td>{{$k+1}}</td>
             @if(isset($lunes[$k]))
                 <td><?= $lunes[$k];?> </td>
 
@@ -266,9 +266,10 @@
     @endfor
     </tbody>
 
-    @include('elementosComunes.cierreTabla')
-    @include('elementosComunes.aperturaTabla')
+
     <thead>
+
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr>
         <th>
             <b>Llegada de Insumos</b>
@@ -337,7 +338,7 @@
     ?>
     @for($k=0;$k<$mayor ; $k++)
         <tr>
-            <td>{{$k}}</td>
+            <td>{{$k+1}}</td>
             @if(isset($lunes[$k]))
                 <td><?= $lunes[$k];?> </td>
 
