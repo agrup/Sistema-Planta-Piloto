@@ -24,7 +24,8 @@ class StockController extends Controller
     	$fechaString=$fecha->format('Y-m-d H:i:s');
     	$stock=GestorStock::getStockPorProd($fechaString);
     	return view('informes.stock')
-                                    ->with('fecha',$fecha->format('Y-m-d')) 
+                                    ->with('fecha',$fecha->format('d-m-y')) 
+                                    ->with('fechainput',$fecha->format('Y-m-d')) 
                                     ->with(compact('stock'));	
     }
 }

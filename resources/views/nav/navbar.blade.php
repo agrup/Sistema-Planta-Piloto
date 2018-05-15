@@ -3,10 +3,13 @@
 
     <title>PP</title>
 
-    <!-- Bootstrap core CSS -->
+    <!-- Bootstrap core CSS 
+    -->
     <link href="bootstrap.min.css" rel="stylesheet">
+    <!--
+     Custom styles for this template 
 
-    <!-- Custom styles for this template -->
+    -->
     <link href="topnav.css" rel="stylesheet">
 
 

@@ -13,7 +13,7 @@
 			<form class="form-inline" id="form" name="form" action="stock" method="POST" enctype="multipart/form-data">
 				@csrf
 	           <div class="input-group">
-					<input type="date" class="form-control" placeholder="Fecha" value="{{$fecha}}" id='inputDate' name='fecha' required> 
+					<input type="date" class="form-control" placeholder="Fecha" value="{{$fechainput}}" id='inputDate' name='fecha' required> 
 					<input  type="submit" class="btn btn-primary" value="Actualizar"> 
 				</div>
 			</form>

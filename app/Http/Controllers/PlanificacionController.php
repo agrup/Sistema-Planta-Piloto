@@ -12,8 +12,9 @@ class PlanificacionController extends Controller
 {
     public static function index()
     {
+        $fechaE=Carbon::now()->format('d-m-y');
         $planificaciones = Planificacion::getSemana(Carbon::now()->format('Y-m-d'));
-        return view('programaProduccionSemanal.programaProduccionSemanal',['planificaciones'=>$planificaciones]);
+        return view('programaProduccionSemanal.programaProduccionSemanal',['planificaciones'=>$planificaciones])->with('fechaE',$fechaE);
     	
     }
 
