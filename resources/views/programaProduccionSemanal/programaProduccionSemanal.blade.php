@@ -1,4 +1,4 @@
-@extends('layouts.layoutPrincipal' )
+    @extends('layouts.layoutPrincipal' )
 @section('section')
 
     @include('elementosComunes.aperturaTitulo')
@@ -61,7 +61,7 @@
 
             <form action="planificacionDia" method="get" enctype="multipart/form-data" class="col-md-11">
                 {{csrf_field()}}
-                <th> <input type="submit" class="btn btn-primary" name="fecha" value={{$value["fecha"]}}></th>
+                <th> <input type="submit" class="btn btn-primary" name="fecha" value={{date('d-m-Y',strtotime($value["fecha"]))}}></th>
             </form>
 
 
