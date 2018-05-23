@@ -16,7 +16,7 @@
 			<tbody>
 				<tr>
 					<td>{{ $lote['id'] }}</td>
-					<td>{{ $lote['nombre'] }}</td>
+					<td>{{ $lote['producto'][0] }}</td>
 					<td>{{ $lote['cantidad']}}{{ $lote['tipoUnidad'] }}</td>
 					<td>{{ $lote['estado'] }}</td>
 				</tr>		
