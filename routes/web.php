@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -11,19 +12,48 @@
 |
 */
 
+//Route::get('/', function () {
+  //  return view('welcome');
+//});
+//un Ejemplo
+
+//
+//Route::get('/hola', function () {
+  //  return 'HOLA';
+//});
+//Route::get('/planta',function(){
+//	return view('pages.Produccion');
+//});
+
+//devolver el id del 
+//Route::get('/users/{id}',function($id){
+//	return 'este es el user '.$id;
+//});
+
+//Route::get('/','PagesController@index');
+Route::get('/calendario','PagesController@calendario');
+
+
+Route::get('/stock', 'StockController@show');
+Route::post('/stock', 'StockController@show');
+Route::get('/verLotes', 'LotesController@show');
+Route::get('/detalleLote', 'LotesController@showDetalle');
+
 //Planificacion
 Route::get('/planificacion', 'PlanificacionController@index');
 Route::post('/planificacion','PlanificacionController@show');
-Route::get('/planificacionDia','PagesController@calendarioDia');
+Route::get('/planificacionDia','PlanificacionController@PlanificacionDia');
 Route::get('/calendarioSig','PlanificacionController@calendarioSig'); //flechita << >>
 Route::get('/calendarioAnt','PlanificacionController@calendarioAnt');
-Route::post('/sumarizacion','PagesController@verNecesidadInsumos');
+Route::get('/sumarizacion','PlanificacionController@verNecesidadInsumos');
 
 
+Route::get('/','MainController@index');
 
-Route::get('/','PagesController@index');
-Route::get('/produccion','PagesController@produccion');
-
+//Produccion
+Route::get('/produccion','ProduccionController@index');
+Route::post('/produccion','ProduccionController@show');
+Route::get('/loteEnProduccion','ProduccionController@loteEnProduccion');
 
 
 Route::get('/lotes', 'LotesController@index') ;
@@ -38,4 +68,5 @@ Route::get('/test', function() {
   	echo ("$producto");
 	
 });
+
 
