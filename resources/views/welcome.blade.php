@@ -18,7 +18,6 @@
                 <div class="title m-b-md">
                     Bienvenidos a la Planta Piloto
                 </div>
-
             </div>
         </div>
     </body>
