@@ -42,7 +42,7 @@
                 $codigo[]=$v['codigo'];
                 $nombre[]=$v['nombre'];
                 $cantidad[]=$v['cantidad'].$v['tipoUnidad'];
-
+                $id[]=$v["mov_id"];
                 ?>
             @endforeach
         @endif
@@ -88,7 +88,7 @@
                 $codigo[]=$v['codigo'];
                 $nombre[]=$v['nombre'];
                 $cantidad[]=$v['cantidad'].$v['tipoUnidad'];
-
+                $id[]=$v["mov_id"];
                 ?>
             @endforeach
         @endif
