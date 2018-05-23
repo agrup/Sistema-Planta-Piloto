@@ -18,7 +18,7 @@
 					<td>{{ $lote['id'] }}</td>
 					<td>{{ $lote['nombre'] }}</td>
 					<td>{{ $lote['cantidad']}}{{ $lote['tipoUnidad'] }}</td>
-					<td>{{ $lote['lote'] }}</td>
+					<td>{{ $lote['estado'] }}</td>
 				</tr>		
 			</tbody>		
 
@@ -34,15 +34,16 @@
 						<th>Cantidad</th> 
 					</tr>
 			</thead>
+			<tbody>
 			@foreach ($formulacion as $insumo)
-					
-				<tbody>
+									
 					<tr>
-						
+						<td>{{$insumo['nombre']}}</td>
+						<td>{{$insumo['cantidad']}}{{ $insumo['tipoUnidad'] }}</td>
 					</tr>
-				</tbody>
-
+				
 			@endforeach
+			</tbody>
 		@include('elementosComunes.cierreTabla')    
 
 @endsection
