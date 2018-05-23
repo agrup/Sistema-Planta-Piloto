@@ -14,6 +14,10 @@ class GestorLote extends Model
     *@return $lote [] // array con los lotes de insumos para ese producto
    */
     //
+
+    public static function getLotesFecha(string $fecha){
+        return Lote::where('fechaInicio','=',$fecha)->get();
+    }
    
     public static function getTrazabilidadLote(int $idLote)
     {
@@ -21,20 +25,40 @@ class GestorLote extends Model
         $lotes=[];
     	
     	foreach ($ingredientes as $ingrediente) {
-            $lote=Lote::find($ingrediente->idLote);
+            $lote=(Lote::find($ingrediente['idLote']));
+            $producto = Producto::find($lote->producto_id);
+
             array_push($lotes,[
-                    'numeroLote'=>$ingrediente->idLote,
-                    'cantidad'=>$ingrediente->cantidad, 
+                    'numeroLote'=>$ingrediente['idLote'],
+                    'cantidad'=>$ingrediente['cantidad'], 
                     'vencimiento'=>$lote->fechaVencimiento, 
                     'fechaInicio'=>$lote->fechaInicio,
-                    'producto'=>$lote->getNameProdByIdLote(),
-                    'tu'=>$lote->getTUProdByIdLote()
+                    'nombreProducto'=>$producto->nombre,
+                    'tu'=>$producto->tipoUnidad
+                    /*
+                    'cantidadElaborada'=>$lote->cantidadElaborada,
+                    'costoUnitario'=>$lote->costounitario,
+                    'inicioMaduracion'=>$lote->fechaInicioMaduracion,
+                    'finalizacion'=>$lote->fechaFinalizacion,
+                    'cantidadFinal'=>$lote->cantidadFinal,
+                    'proveedor'=>$lote->null,
+                    'tipoTp'=>$lote->tipoTP,
+                    'codigo'=>$producto->codigo,
+                    'asignatura'=>$lote->null
+
+*/
                     ]);
     	}
     return $lotes;
     }
 
+public static function getLotesPorProd (string $codigo)
+    {
 
+        return Producto::where('codigo','=',$codigo)->first()->lotes();
+        
+
+    }
 
 
 }
