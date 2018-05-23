@@ -3,13 +3,6 @@
 
     <title>PP</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="topnav.css" rel="stylesheet">
-
-
 
  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <a class="navbar-brand" href="/"> Planta Piloto</a>
