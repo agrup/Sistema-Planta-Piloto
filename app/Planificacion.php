@@ -98,6 +98,7 @@ class Planificacion extends Model
             $color = 'normal';
             $producto=Producto::find($mov->producto_id);
             $arrProd['nombre']=$producto->nombre;
+
             $arrProd['codigo']=$producto->codigo;
             $arrProd['cantidad']=$mov->haber;
             $arrProd['tipoUnidad']=$producto->tipoUnidad;
@@ -109,7 +110,7 @@ class Planificacion extends Model
             }
             $arrProd['color']=$color;
             array_push($arrayResult,$arrProd);
-            print_r($arrProd);
+
         }
 
         return $arrayResult;
@@ -132,6 +133,7 @@ class Planificacion extends Model
             $color = 'normal';
             $producto=Producto::find($mov->producto_id);
             $arrProd['nombre']=$producto->nombre;
+
             $arrProd['codigo']=$producto->codigo;
             $arrProd['cantidad']=$mov->haber;
             $arrProd['tipoUnidad']=$producto->tipoUnidad;
@@ -143,7 +145,7 @@ class Planificacion extends Model
             }
             $arrProd['color']=$color;
             array_push($arrayResult,$arrProd);
-            print_r($arrProd);
+
         }
 
         return $arrayResult;

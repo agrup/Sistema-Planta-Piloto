@@ -64,6 +64,7 @@ class GestorStock
     public static function entradaInsumoPlanificado(int $idProducto, double $cantidad, string $fecha)
 
     {
+        //TODO si no posee un stock real crearlo con 0 en una fecha que no moleste
         //No deben existir mas de una entrada de insumo planificada para un mismo dia
         //debido a que los planificados se recalculan cada vez que se quiere saber algo de ellos,
         // simplemente inserto el mov sin calcular nada.
@@ -93,6 +94,7 @@ class GestorStock
     public static function entradaProductoPlanificado(string $idLote, int $idProducto, double $cantidad, string $fecha )
 
     {
+        //TODO si no posee un stock real crearlo con 0 en una fecha que no moleste
         //debido a que los planificados se recalculan cada vez que se quiere saber algo de ellos,
         // simplemente inserto el mov sin calcular nada.
         $datosNuevoMov = [
@@ -392,6 +394,8 @@ class GestorStock
      */
     public static function altaConsumoPlanificado(string $idLoteConsumidor, string $idProdIng, double $cantidad, string $fecha)
     {
+
+        //TODO si no posee un stock real crearlo con 0 en una fecha que no moleste
         $datosNuevoMov = [
             'producto_id'=>$idProdIng,
             'fecha'=>$fecha,
@@ -473,14 +477,16 @@ class GestorStock
     {
         $result=[];
         self::recalcularPlanificados($fechaHasta);
-        $movimientos =Movimiento::ultimoStockProdTodos($fechaHasta);
+
+        if(!empty($movimientos =Movimiento::ultimoStockProdTodos($fechaHasta)))
+        {
         foreach ($movimientos as $movimiento){
             $arrAux=[];
-            $producto=Producto::find($movimiento->producto_id)->get();
-            $stock=$movimiento->salgoGlobal;
+            $producto=Producto::find($movimiento->producto_id);
+            $stock=$movimiento->saldoGlobal;
             $arrAux['alarma']='normal';
             $arrAux['nombre']=$producto->nombre;
-            $arrAux['codigo']=$producto->codigoProducto;
+            $arrAux['codigo']=$producto->codigo;
             $arrAux['tu']=$producto->tipoUnidad;
             $arrAux['stock']=$stock;
             $arrAux['producto_id']=$movimiento->producto_id;
@@ -494,7 +500,7 @@ class GestorStock
             }
 
             array_push($result, $arrAux);
-
+            }
         }
         return $result;
     }
@@ -520,22 +526,27 @@ class GestorStock
 
         $necesidades = [];
         $alarmas =[];
+        $fechaVista = Carbon::createFromFormat('Y-m-d H:i:s',$fechaHasta);
+        $fechaVista = $fechaVista->format('Y-m-d');
+        //primero recalculo los planificados
         self::recalcularPlanificados($fechaHasta);
-        $movimientosC = Movimiento::getMovsCritico($fechaHasta);
+        //Luego guardamos los movimientos criticos para ver la necesidad de insumos
+        $movimientosC = Movimiento::getMovsCriticos($fechaHasta);
         foreach ($movimientosC as $movC){
             $arrAux=[];
             //recupero producto para guardar los datos
-            $producto = Producto::find($movC->producto_id)->get();
+            $producto = Producto::find($movC->producto_id);
             //y su stock final para ver la necesidad final
-            $stockFinal = getStockProd($movC->producto_id,$fechaHasta);
+            $stockFinal = self::getStockProd($movC->producto_id,$fechaHasta);
             $fechaAgot = Carbon::createFromFormat('Y-m-d H:i:s',$movC->fecha);
             //paso la fecha a yyyy/mm/dd
             $fechaAgot = $fechaAgot->format('Y-m-d');
             //armo el array
             $arrAux['codigo']=$producto->codigo;
             $arrAux['insumo']=$producto->nombre;
-            $arrAux['tipoUnidad']=$producto->tipoUnidad;
+            $arrAux['tu']=$producto->tipoUnidad;
             $arrAux['fechaAgotamiento']=$fechaAgot;
+            //calculo la necesidad en funcion del stock final del producto a la fecha
             if($stockFinal>0){
                 $necesidad = 0;
             } else {
@@ -544,8 +555,25 @@ class GestorStock
             $arrAux['necesidadFinal']=$necesidad;
             array_push($necesidades,$arrAux);
         }
+        //calculo de las alarmas
+        $stocks = self::getStockPorProd($fechaHasta);
+        foreach ($stocks as $stock){
+            $arrAux = [];
+            if($stock['alarma']!='normal'){
+                $arrAux['codigo']=$stock['codigo'];
+                $arrAux['insumo']=$stock['nombre'];
+                $arrAux['cantidad']=$stock['stock'];
+                $arrAux['tu']=$stock['tu'];
+                $arrAux['color']=$stock['alarma'];
+                array_push($alarmas,$arrAux);
+            }
 
-        //TODO
+        }
+
+        return ['fecha'=>$fechaVista,'necesidades'=>$necesidades,'alarmas'=>$alarmas];
+
+
+
 
 
 
@@ -590,7 +618,7 @@ class GestorStock
     private static function recalcularPlanificados($fechaHasta)
     {
         //Guardo el ultimo mov de cada producto, ya que el recalculo se hará por cada producto
-        $movimientosInicialesProducto = Movimiento::ultimoStockProdTodos($fechaHasta);
+        $movimientosInicialesProducto = Movimiento::ultimoStockRealProdTodos($fechaHasta);
         //Por cada producto
         foreach ($movimientosInicialesProducto as $ultMovRealProd){
             //Tomo el ultimo movimiento
@@ -615,5 +643,16 @@ class GestorStock
                 $movAnteriorProd = $planif;
             }
         }
+    }
+
+    /**
+     * @param int $producto_id
+     * @param string $fechaHasta
+     * @return $double
+     */
+    public static function getStockProd($producto_id, $fechaHasta)
+    {
+        $mov=Movimiento::getAnteriorProd($producto_id,$fechaHasta);
+        return $mov->saldoGlobal;
     }
 }
