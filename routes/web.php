@@ -56,7 +56,10 @@ Route::post('/produccion','ProduccionController@show');
 Route::get('/loteEnProduccion','ProduccionController@loteEnProduccion');
 Route::get('/produccion/iniciarPlanificado/{id}','ProduccionController@iniciarPlanificado');
 
-//
+//Route fictisio
+Route::get();
+Route::get('/produccion/detalleLoteEnProduccion/{id}','PruebaController@detalleLoteEnProduccion');
+
 
 Route::get('/lotes', 'LotesController@index') ;
 Route::get('/lotes/{id}', 'LotesController@show') ;
