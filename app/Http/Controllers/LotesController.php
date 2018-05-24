@@ -31,9 +31,10 @@ class LotesController extends Controller
         $detalle =Lote::find($lote)->toArray();
         $aux=GestorLote::getTrazabilidadLote($lote);
         $detalle['detalleElaboracion']=$aux;
-
         //trar trazabilidad y guardalo en detalleElaboracion
         //y dettale del lote que muestro la trazabilidad
         return view('informes.detalleLote',compact('detalle'));
     }
+
+
 }
