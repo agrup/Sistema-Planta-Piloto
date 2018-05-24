@@ -73,7 +73,7 @@ Route::get('/produccion/loteEnProduccion/{id}' ,'ProduccionController@showLoteIn
 
 Route::get('/produccion/detalleLoteEnProduccion/{id}','PruebaController@detalleLoteEnProduccion');
 
-
+	
 Route::get('/lotes', 'LotesController@index') ;
 Route::get('/lotes/{id}', 'LotesController@show') ;
 

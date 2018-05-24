@@ -133,7 +133,7 @@ class ProduccionController extends Controller
             array_push($productos,$arrAux);
         }
 
-        return view('produccion.iniciarLoteNoPlanificado',compact($productos));
+        return view('produccion.iniciarLoteNoPlanificado',['productos'=>$productos]);
     }
 
     public function getFormulacion($nombre){

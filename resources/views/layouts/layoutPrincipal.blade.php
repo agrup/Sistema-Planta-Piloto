@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
+  <script type="text/javascript" src="{{asset('ajax/sendNombreProducto.js')}}"></script>
 
   <link href="{{ asset('css/programa.produccion.semanal.css') }}" rel="stylesheet" type="text/css">
 
