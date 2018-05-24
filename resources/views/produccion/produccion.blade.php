@@ -30,7 +30,7 @@
 		        		<td> {{ $lote['estado'] }}</td>
 		        		<td></td>
 		        		<td>@if ($lote['estado']=="planificacion")
-		        		  <a href="produccion/iniciar/{{ $lote['lote'] }}"><img src="img/iniciar.png" width="40" height="40"></a>
+		        		  <a href="produccion/iniciarPlanificado/2"><img src="img/iniciar.png" width="40" height="40"></a>
 		        		@endif</td>
 
 		        		<td>@if ($lote['asignatura']!= null)						

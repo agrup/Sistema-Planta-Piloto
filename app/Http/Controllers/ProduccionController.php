@@ -74,4 +74,8 @@ class ProduccionController extends Controller
     public static function loteEnProduccion(){
 
     }
+    public static function iniciarPlanificado($id){
+        return view('produccion.iniciarLotePlanificado');
+    }
+
 }

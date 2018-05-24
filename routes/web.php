@@ -54,7 +54,9 @@ Route::get('/','MainController@index');
 Route::get('/produccion','ProduccionController@index');
 Route::post('/produccion','ProduccionController@show');
 Route::get('/loteEnProduccion','ProduccionController@loteEnProduccion');
+Route::get('/produccion/iniciarPlanificado/{id}','ProduccionController@iniciarPlanificado');
 
+//
 
 Route::get('/lotes', 'LotesController@index') ;
 Route::get('/lotes/{id}', 'LotesController@show') ;
