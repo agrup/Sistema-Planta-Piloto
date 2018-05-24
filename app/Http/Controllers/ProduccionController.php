@@ -120,6 +120,21 @@ class ProduccionController extends Controller
         return view('produccion.iniciarLoteNoPlanificado',compact($productos));
     }
 
+    public function getFormulacion($nombre){
+        $formulacion=[];
+        if($productos=Producto::where('nombre','=',$nombre)){
+            $producto = $productos->first();
+            $ingredientes= $producto->getIngredientes();
+            foreach ($ingredientes as $ing){
+                $arrAux=[];
+                $productoAux = Producto::find($ing['id']);
+                $arrAux['nombre']=$productoAux->nombre;
+                $arrAux['tipoUnidad']=$productoAux->tipoUnidad;
+                array_push($formulacion,$arrAux);
+            }
+            return response()->json($formulacion);
+        }
+    }
 
 
 }

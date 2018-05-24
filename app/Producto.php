@@ -18,7 +18,7 @@ class Producto extends Model
     {
     	 # return $this->belongsToMany('Producto', 'producto_productoi', 'producto_id', 'ingrediente_id');
     	 return $this->belongsToMany('App\Producto','producto_productoi')
-    	 	->withPivot('producto_id','ingrediente_id','cantidad','cantidadProducto')
+    	 	->withPivot('producto_id','ingrediente_id','cantidad','cantidadProducto')->get();
     	 ;
 
     }

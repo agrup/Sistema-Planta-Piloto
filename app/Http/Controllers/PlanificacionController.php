@@ -79,7 +79,7 @@ class PlanificacionController extends Controller
     public static function agregarProducto ()
     {
         if(($fecha  = request()->input('fecha'))==null){
-            throw new Exception("Error: agregar prod movimiento_id null");
+            throw new Exception("Error: fecha igual a null");
         }
         $Planificacion = Planificacion::where('fecha','=',$fecha)->first();
         $movimiento_id = $Planificacion->agregarProducto(request()->all());
@@ -92,7 +92,16 @@ class PlanificacionController extends Controller
 
     public static function agregarInsumo()
     {
-
+        if(($fecha  = request()->input('fecha'))==null){
+            throw new Exception("Error: Error: fecha igual a null");
+        }
+        $Planificacion = Planificacion::where('fecha','=',$fecha)->first();
+        $movimiento_id = $Planificacion->agregarInsumo(request()->all());
+        if($movimiento_id==null){
+            return response()->json('error');
+        } else {
+            return response()->json($movimiento_id);
+        }
     }
 
     public static function eliminar()
