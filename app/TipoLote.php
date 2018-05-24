@@ -15,6 +15,7 @@ class TipoLote
     const MADURACION = 2;
     const FINALIZADO = 3;
     const PLANIFICACION = 4;
+    const INSUMO =5;
 
     public static function toString(int $tipo){
         switch ($tipo){
@@ -26,6 +27,8 @@ class TipoLote
                 return 'finalizado';
             case 4:
                 return 'planificacion';
+            case 5:
+                return 'insumo';
         }
     }
 

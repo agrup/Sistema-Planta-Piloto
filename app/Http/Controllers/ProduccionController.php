@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\GestorLote;
 use App\Movimiento;
+use App\Producto;
 use App\TipoLote;
 use Carbon\Carbon;
 use Exception;
@@ -120,8 +121,36 @@ class ProduccionController extends Controller
                                     ->with(compact('formulacion'))
                                     ->with(compact('lote'));
 
-}
+    }
 
+    public function loteNoPlanificado(){
+
+        $productosAux = Producto::all();
+        $productos =[];
+        foreach ($productosAux as $producto){
+            $arrAux=[];
+            $arrAux = $producto->toArray();
+            array_push($productos,$arrAux);
+        }
+
+        return view('produccion.iniciarLoteNoPlanificado',compact($productos));
+    }
+
+    public function getFormulacion($nombre){
+        $formulacion=[];
+        if($productos=Producto::where('nombre','=',$nombre)){
+            $producto = $productos->first();
+            $ingredientes= $producto->getIngredientes();
+            foreach ($ingredientes as $ing){
+                $arrAux=[];
+                $productoAux = Producto::find($ing['id']);
+                $arrAux['nombre']=$productoAux->nombre;
+                $arrAux['tipoUnidad']=$productoAux->tipoUnidad;
+                array_push($formulacion,$arrAux);
+            }
+            return response()->json($formulacion);
+        }
+    }
 
 
 }

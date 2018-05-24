@@ -49,16 +49,26 @@ Route::get('/calendarioSig','PlanificacionController@calendarioSig'); //flechita
 Route::get('/calendarioAnt','PlanificacionController@calendarioAnt');
 Route::get('/sumarizacion','PlanificacionController@verNecesidadInsumos');
 
+//Alta de planificacion
+Route::post('/planificacion/agregarProducto','PlanificacionController@agregarProducto');
+Route::post('/planificacion/agregarInsumo','PlanificacionController@agregarInsumo');
+Route::post('/planificacion/eliminar','PlanificacionController@eliminar');
+Route::post('/planificacion/modificar', 'PlanificacionController@modificar');
 
 Route::get('/','MainController@index');
 
 //Produccion
 Route::get('/produccion','ProduccionController@index');
 Route::post('/produccion','ProduccionController@show');
-Route::get('/loteEnProduccion/{id}' ,'ProduccionController@showLoteInProd');
-//Route::get('/loteEnProduccion','ProduccionController@loteEnProduccion');
-Route::get('/produccion/iniciarPlanificado/{id}','ProduccionController@iniciarPlanificado');
 
+Route::get('/produccion/loteEnProduccion/{id}','ProduccionController@loteEnProduccion');
+
+Route::get('/produccion/iniciarPlanificado/{id}','ProduccionController@iniciarPlanificado');
+Route::get('produccion/loteNoPlanificado', 'ProduccionController@loteNoPlanificado');
+Route::get('/produccion/formulacion/{nombre}','ProduccionController@getFormulacion');
+
+
+Route::get('/produccion/loteEnProduccion/{id}' ,'ProduccionController@showLoteInProd');
 //Route fictisio
 
 Route::get('/produccion/detalleLoteEnProduccion/{id}','PruebaController@detalleLoteEnProduccion');
