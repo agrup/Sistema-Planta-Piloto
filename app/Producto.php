@@ -41,11 +41,14 @@ class Producto extends Model
         return $lotesReturn;
       }
 
-    	public function getIngredientes(){
-           $ingredientes = $this->formulacion()->get();
+    /**
+     * @return array [ ['id'=>, 'cantidad'=> ] .. ]
+     */
+    public function getIngredientes(){
+           $ingredientes = $this->formulacion();
            $arrayResult = [];
            foreach ($ingredientes as $ing){
-               array_push($arrayResult,['id'=>$ing->pivot->ingrediente_id,'cantidad'=>$ing->pivot->cantidad]);
+               array_push($arrayResult,['id'=>$ing->pivot->ingrediente_id,'cantidad'=>$ing->pivot->cantidad, 'cantidadProducto'=>$ing->pivot->cantidadProducto]);
            }
            return $arrayResult;
         }   
@@ -80,9 +83,7 @@ class Producto extends Model
 
 
 
-}   
-
-
+}
 # consulta en tinker
 
 #>>> App\Producto::find(6)->formulacion()->attach(4,['cantidad'=>'4','cantidadProducto'=>'12','ingrediente_id'=>'2'])

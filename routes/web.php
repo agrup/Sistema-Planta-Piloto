@@ -49,6 +49,11 @@ Route::get('/calendarioSig','PlanificacionController@calendarioSig'); //flechita
 Route::get('/calendarioAnt','PlanificacionController@calendarioAnt');
 Route::get('/sumarizacion','PlanificacionController@verNecesidadInsumos');
 
+//Alta de planificacion
+Route::post('/planificacion/agregarProducto','PlanificacionController@agregarProducto');
+Route::post('/planificacion/agregarInsumo','PlanificacionController@agregarInsumo');
+Route::post('/planificacion/eliminar','PlanificacionController@eliminar');
+Route::post('planificacion/modificar', 'PlanificacionController@modificar');
 
 Route::get('/','MainController@index');
 
@@ -57,9 +62,10 @@ Route::get('/produccion','ProduccionController@index');
 Route::post('/produccion','ProduccionController@show');
 Route::get('/loteEnProduccion','ProduccionController@loteEnProduccion');
 Route::get('/produccion/iniciarPlanificado/{id}','ProduccionController@iniciarPlanificado');
+Route::get('produccion/loteNoPlanificado', 'ProduccionController@loteNoPlanificado');
 
 //Route fictisio
-Route::get();
+
 Route::get('/produccion/detalleLoteEnProduccion/{id}','PruebaController@detalleLoteEnProduccion');
 
 

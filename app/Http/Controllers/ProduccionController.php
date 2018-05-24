@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\GestorLote;
 use App\Movimiento;
+use App\Producto;
 use App\TipoLote;
 use Carbon\Carbon;
 use Exception;
@@ -104,7 +105,12 @@ class ProduccionController extends Controller
                                     ->with(compact('formulacion'))
                                     ->with(compact('lote'));
 
-}
+    }
+
+    public function loteNoPlanificado(){
+        $productos = Producto::all();
+        return view('prodccion.iniciarLoteNoPlanificado',compact($productos));
+    }
 
 
 
