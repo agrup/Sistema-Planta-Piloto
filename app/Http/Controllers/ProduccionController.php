@@ -81,21 +81,37 @@ class ProduccionController extends Controller
 
 
 
-    public function showLoteInProd (){
-        $loteId =request()->input('lote');
+    public function showLoteInProd ($id){
+        //$loteId =request()->input('id');
         //obtemgo el produco de ese lote
-        $productoObj = GestorLote::getProdPorLote($loteId);
+
+
+
+        $productoObj = GestorLote::getProdPorLote($id);
         //lo paso a arraay
-        $producto = $productoObj->productoToArray();
+        if ($productoObj!=null) {
+           
+            $producto = $productoObj->productoToArray();
+        }
         
-        $loteObj = GestorLote::getLoteById($loteId);
+        $loteObj = GestorLote::getLoteById($id);
+
+        if ($loteObj->tipoLote == TipoLote::FINALIZADO) {
+            $cantidad=$loteObj->cantidadFinal;    
+        }else{
+            $cantidad=$loteObj->cantidadElaborada;  
+        }
+        
+
+
         // creo el array del lote al que se le busca la formulacion
-        $lote= ['id'=>$loteObj->numeroLote,
-                'cantidad'->cantidad,
+        $lote= ['id'=>$loteObj->id,
+                'cantidad'=>$cantidad,
+                'tipoLote'=>TipoLote::toString($loteObj->tipoLote),
         ];
         
 
-        $formulacion = GestorLote::getTrazabilidadLote($lote);
+        $formulacion = GestorLote::getTrazabilidadLote($id);
 
 
 

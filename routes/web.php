@@ -55,7 +55,8 @@ Route::get('/','MainController@index');
 //Produccion
 Route::get('/produccion','ProduccionController@index');
 Route::post('/produccion','ProduccionController@show');
-Route::get('/loteEnProduccion','ProduccionController@loteEnProduccion');
+Route::get('/loteEnProduccion/{id}' ,'ProduccionController@showLoteInProd');
+//Route::get('/loteEnProduccion','ProduccionController@loteEnProduccion');
 Route::get('/produccion/iniciarPlanificado/{id}','ProduccionController@iniciarPlanificado');
 
 //Route fictisio
@@ -75,5 +76,5 @@ Route::get('/test', function() {
   	echo ("$producto");
 	
 });
-Route::get('/FormulacionDetalle/{id}' ,'ProduccionController@showLoteInProd');
+
 

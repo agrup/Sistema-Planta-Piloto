@@ -74,7 +74,6 @@ class Producto extends Model
         return ['nombre'=>$this->nombre,
               'tipoUnidad'=>$this->tipoUnidad,
               'codigo'=>$this->codigo,
-              'estado'=>TipoLote::toString($this->estado)
               ];
      }
 

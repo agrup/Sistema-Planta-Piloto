@@ -7,7 +7,7 @@
 
 		@include('elementosComunes.aperturaTabla')    
 			<thead><tr><th>Lote</th> 
-						<th>Producto</th> 
+						<th>Descripción</th> 
 						<th>Cantidad</th> 
 						<th>Estado</th> 						
 						<th></th>
@@ -16,9 +16,9 @@
 			<tbody>
 				<tr>
 					<td>{{ $lote['id'] }}</td>
-					<td>{{ $lote['producto'][0] }}</td>
-					<td>{{ $lote['cantidad']}}{{ $lote['tipoUnidad'] }}</td>
-					<td>{{ $lote['estado'] }}</td>
+					<td>{{ $producto['nombre'] }}</td>
+					<td>{{ $lote['cantidad']}}{{ $producto['tipoUnidad'] }}</td>
+					<td>{{ $lote['tipoLote'] }}</td>
 				</tr>		
 			</tbody>		
 
@@ -38,7 +38,7 @@
 			@foreach ($formulacion as $insumo)
 									
 					<tr>
-						<td>{{$insumo['nombre']}}</td>
+						<td>{{$insumo['nombreProducto']}}</td>
 						<td>{{$insumo['cantidad']}}{{ $insumo['tipoUnidad'] }}</td>
 					</tr>
 				
