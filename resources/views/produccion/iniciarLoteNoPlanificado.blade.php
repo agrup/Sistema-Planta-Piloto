@@ -1,7 +1,8 @@
 @extends('layouts.layoutPrincipal' )
+
 @section('section') 
 	@include("elementosComunes.aperturaTitulo")
-		Iniciar Producto No planificado
+		Iniciar Lote No Planificado
 	@include("elementosComunes.cierreTitulo")
 	<div class="p-0">
     <div class="container">
@@ -13,8 +14,11 @@
               <input type="text" class="form-control" > </div>
             <div class="form-group">
               <label>Producto</label>
-              <select class="form-control">
-                
+              <select  id="selectProducto" class="form-control" onchange="getFormulacion()">
+              	<option  selected="selected">--Seleccione un Producto--</option>
+                  @foreach($productos as $value)
+                	<option value={{$value['nombre']}}>{{$value['nombre']}}</option>
+                @endforeach
               </select>
             </div>
             <div class="form-group">
@@ -24,7 +28,7 @@
             <div class="form-group">
               <label for="exampleInputEmail1">Unidad</label>
               <select class="form-control">
-                
+              
               </select>
             </div>
           </div>
@@ -48,9 +52,12 @@
         <h4 class="">
           <b>Formulación:</b>
         </h4>
-        <div class="row">
-          <div class="col-md-12">
-            <table class="table">
+        
+       
+          
+          
+    
+        @include("elementosComunes.aperturaTabla")
               <thead>
                 <tr>
                   <th>Insumo</th>
@@ -61,36 +68,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>Leche</td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="12032018"> </td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="1000"> </td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="Litros"> </td>
-                </tr>
-                <tr>
-                  <td>Azucar</td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="12032018"> </td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="1000"> </td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="Litros"> </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="12032018"> </td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="1000"> </td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="Litros"> </td>
+               		<td></td><td></td><td></td><td>
+
                 </tr>
               </tbody>
-            </table>
-          </div>
-        </div>
+            @include("elementosComunes.cierreTabla")
         <button type="submit" class="btn btn-primary">Guardar</button>
       </form>
     </div>
