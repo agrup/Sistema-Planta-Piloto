@@ -30,7 +30,7 @@
 		        		<td>@if ($lote['asignatura']!= null)						
 								{{ $lote['asignatura'] }}
 							@endif</td>
-		        		<td> <a href="produccion?lote={{ $lote['lote'] }}">Detalles</a></td>
+		        		<td> <a href="produccion/detalle/{{ $lote['lote'] }}">Detalles</a></td>
 		        	</tr> 
 		        	
 				@endforeach
