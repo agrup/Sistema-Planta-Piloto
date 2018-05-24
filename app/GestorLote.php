@@ -65,9 +65,11 @@ public static function getLotesPorProd (string $codigo)
 
     }
 
-public static function getProdPorLote (string $lote)
+public static function getProdPorLote (int $lote)
     {
 
+        
+        
         return Producto::find(Lote::where('producto_id','=',$lote)->first()->producto_id);
         
 

@@ -18,7 +18,7 @@
 					<td>{{ $lote['id'] }}</td>
 					<td>{{ $producto['nombre'] }}</td>
 					<td>{{ $lote['cantidad']}}{{ $producto['tipoUnidad'] }}</td>
-					<td>{{ $producto['estado'] }}</td>
+					<td>{{ $lote['tipoLote'] }}</td>
 				</tr>		
 			</tbody>		
 
@@ -38,7 +38,7 @@
 			@foreach ($formulacion as $insumo)
 									
 					<tr>
-						<td>{{$insumo['nombre']}}</td>
+						<td>{{$insumo['nombreProducto']}}</td>
 						<td>{{$insumo['cantidad']}}{{ $insumo['tipoUnidad'] }}</td>
 					</tr>
 				

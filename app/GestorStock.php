@@ -79,7 +79,8 @@ class GestorStock
             'saldoGlobal'=>null, // cantidad nueva es la anterior mas lo que agrega la llegada
             'saldoLote'=>$cantidad
         ];
-        Movimiento::create($datosNuevoMov);
+        $mov=Movimiento::create($datosNuevoMov);
+        return $mov;
     }
 
 
@@ -108,7 +109,8 @@ class GestorStock
             'saldoGlobal'=>null, //
             'saldoLote'=>$cantidad
         ];
-       Movimiento::create($datosNuevoMov);
+       $mov=Movimiento::create($datosNuevoMov);
+       return $mov;
     }
     public static function eliminarEntradaProductoPlanificado(string $idLote, string $fecha)
     {
@@ -162,8 +164,9 @@ class GestorStock
             'debe'=>$debe,
             'haber'=>$haber,
             'saldoGlobal'=>$nuevoSaldoGlobal,
-            'saldoLote'=>$cantidadObsrv
+            'saldoLote'=>$cantidadObsrv,
         ];
+
         $nuevoMov = Movimiento::create($datosNuevoMov);
         if($banderaRecalcular){
             self::recalcularStockReal($nuevoMov);

@@ -13,6 +13,8 @@ class Planificacion extends Model
     const DIAS_SEMANA_LABORABLES = 5;
     protected $guarded=[];
 
+
+
     /**
      * @param string $fecha
      * @return Planificacion[]
@@ -109,6 +111,7 @@ class Planificacion extends Model
                 $color = 'rojo';
             }
             $arrProd['color']=$color;
+            $arrProd['movimiento_id']=$mov->id;
             array_push($arrayResult,$arrProd);
 
         }
@@ -144,6 +147,7 @@ class Planificacion extends Model
                 $color = 'rojo';
             }
             $arrProd['color']=$color;
+            $arrProd['movimiento_id']=$mov->id;
             array_push($arrayResult,$arrProd);
 
         }
@@ -167,4 +171,75 @@ class Planificacion extends Model
 
 
     }
+
+    /**
+     * agrega un producto a una planificacion
+     * @param int $codigo
+     * @param string $producto
+     * @param float $cantidad
+     * @param bool $tipoTP
+     * @param string $asignatura
+     * @param string $fecha
+     * @return int movimiento_id
+     */
+    public function agregarProducto (int $codigo, string $producto, double $cantidad, boolean $tipoTP, string $asignatura, string $fecha  )
+    {
+
+        $producto = Producto::where('codigo','=',$codigo)->first();
+        //crear el lote
+        $datosLote = [
+            'producto_id'=>$producto->id,
+            'tipoLote'=>TipoLote::PLANIFICACION,
+            'fechaInicio'=>$this->fecha,
+            'cantidadElaborada'=>$cantidad,
+        ];
+        $lote = Lote::create($datosLote);
+        // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
+        $H_i_s = date('H:i:s');
+        $fechaStamp = $fecha . " ". $H_i_s;
+        $ingredientes = $producto->getIngredientes();
+        //crear los movimientos consumo
+        foreach ($ingredientes as $ing){
+            //regla de 3 simple segun la formulación
+            $cantConsumo = $cantidad * $ing['cantidadProducto'] / $ing['cantidad'];
+            GestorStock::altaConsumoPlanificado($lote->id, $ing['id'], $cantConsumo, $fechaStamp );
+        }
+        //crear el movimiento entrada de producto planif asociado a la planificacion
+        $mov = GestorStock::entradaProductoPlanificado($lote->id,$producto->id,$cantidad,$fechaStamp);
+        return $mov->id;
+    }
+
+    /**
+     * agrega un insumo a una planificacion
+     */
+    public function agregarInsumo(int $codigo, string $producto, double $cantidad, string $fecha)
+    {
+        $producto = Producto::where('codigo','=',$codigo)->first();
+        // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
+        $H_i_s = date('H:i:s');
+        $fechaStamp = $fecha . " ". $H_i_s;
+
+        //crear el movimiento entrada de insumo planif asociado a la planificacion
+        $mov = GestorStock::entradaInsumoPlanificado($producto->id,$cantidad,$fechaStamp);
+        return $mov->id;
+    }
+
+    /**
+     * Elimina un insumo o producto planificado de la planificacion
+     * @param array $data
+     *
+     */
+    public static function eliminarInsPro(array $data)
+    {
+
+    }
+
+    /**Modifica un Insumo o Producto planificado de la planificacion
+     * @param array $data
+     */
+    public function modificarInsPro(array $data)
+    {
+
+    }
+
 }

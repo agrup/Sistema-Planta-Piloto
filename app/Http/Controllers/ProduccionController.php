@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\GestorLote;
 use App\Movimiento;
+use App\Producto;
 use App\TipoLote;
 use Carbon\Carbon;
 use Exception;
@@ -81,21 +82,37 @@ class ProduccionController extends Controller
 
 
 
-    public function showLoteInProd (){
-        $loteId =request()->input('id');
+    public function showLoteInProd ($id){
+        //$loteId =request()->input('id');
         //obtemgo el produco de ese lote
-        $productoObj = GestorLote::getProdPorLote($loteId);
+
+
+
+        $productoObj = GestorLote::getProdPorLote($id);
         //lo paso a arraay
-        $producto = $productoObj->productoToArray();
+        if ($productoObj!=null) {
+           
+            $producto = $productoObj->productoToArray();
+        }
         
-        $loteObj = GestorLote::getLoteById($loteId)->first();
+        $loteObj = GestorLote::getLoteById($id);
+
+        if ($loteObj->tipoLote == TipoLote::FINALIZADO) {
+            $cantidad=$loteObj->cantidadFinal;    
+        }else{
+            $cantidad=$loteObj->cantidadElaborada;  
+        }
+        
+
+
         // creo el array del lote al que se le busca la formulacion
-        $lote= ['id'=>$loteObj->numeroLote,
-                'cantidad'=>$loteObj->cantidad,
+        $lote= ['id'=>$loteObj->id,
+                'cantidad'=>$cantidad,
+                'tipoLote'=>TipoLote::toString($loteObj->tipoLote),
         ];
         
 
-        $formulacion = GestorLote::getTrazabilidadLote($lote);
+        $formulacion = GestorLote::getTrazabilidadLote($id);
 
 
 
@@ -104,8 +121,36 @@ class ProduccionController extends Controller
                                     ->with(compact('formulacion'))
                                     ->with(compact('lote'));
 
-}
+    }
 
+    public function loteNoPlanificado(){
+
+        $productosAux = Producto::all();
+        $productos =[];
+        foreach ($productosAux as $producto){
+            $arrAux=[];
+            $arrAux = $producto->toArray();
+            array_push($productos,$arrAux);
+        }
+
+        return view('produccion.iniciarLoteNoPlanificado',['productos'=>$productos]);
+    }
+
+    public function getFormulacion($nombre){
+        $formulacion=[];
+        if($productos=Producto::where('nombre','=',$nombre)){
+            $producto = $productos->first();
+            $ingredientes= $producto->getIngredientes();
+            foreach ($ingredientes as $ing){
+                $arrAux=[];
+                $productoAux = Producto::find($ing['id']);
+                $arrAux['nombre']=$productoAux->nombre;
+                $arrAux['tipoUnidad']=$productoAux->tipoUnidad;
+                array_push($formulacion,$arrAux);
+            }
+            return response()->json($formulacion);
+        }
+    }
 
 
 }
