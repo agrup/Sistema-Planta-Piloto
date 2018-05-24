@@ -17,7 +17,7 @@
               <select  id="selectProducto" class="form-control" onchange="getFormulacion()">
               	<option  selected="selected">--Seleccione un Producto--</option>
                   @foreach($productos as $value)
-                	<option value={{$value['nombre']}}>{{$value['nombre']}}</option>
+                	<option value="{{$value['nombre']}}">{{$value['nombre']}}</option>
                 @endforeach
               </select>
             </div>
@@ -66,11 +66,8 @@
                   <th>Tipo Unidad</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-               		<td></td><td></td><td></td><td>
-
-                </tr>
+              <tbody id="insumo">
+               
               </tbody>
             @include("elementosComunes.cierreTabla")
         <button type="submit" class="btn btn-primary">Guardar</button>
