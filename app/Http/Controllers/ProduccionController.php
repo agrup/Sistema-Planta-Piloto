@@ -83,16 +83,16 @@ class ProduccionController extends Controller
 
 
     public function showLoteInProd (){
-        $loteId =request()->input('lote');
+        $loteId =request()->input('id');
         //obtemgo el produco de ese lote
         $productoObj = GestorLote::getProdPorLote($loteId);
         //lo paso a arraay
         $producto = $productoObj->productoToArray();
         
-        $loteObj = GestorLote::getLoteById($loteId);
+        $loteObj = GestorLote::getLoteById($loteId)->first();
         // creo el array del lote al que se le busca la formulacion
         $lote= ['id'=>$loteObj->numeroLote,
-                'cantidad'->cantidad,
+                'cantidad'=>$loteObj->cantidad,
         ];
         
 

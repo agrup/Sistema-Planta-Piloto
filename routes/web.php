@@ -81,5 +81,5 @@ Route::get('/test', function() {
   	echo ("$producto");
 	
 });
-Route::get('/FormulacionDetalle/{id}' ,'ProduccionController@showLoteInProd');
+Route::get('/loteEnProduccion/{id}' ,'ProduccionController@showLoteInProd');
 
