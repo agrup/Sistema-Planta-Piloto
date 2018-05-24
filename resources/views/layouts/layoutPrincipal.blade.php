@@ -7,9 +7,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+
   <link href="{{ asset('css/programa.produccion.semanal.css') }}" rel="stylesheet" type="text/css">
 
+
   <!--
+    estilos para navBar
+  -->
+  
+
+  <!--
+
   -->
   <link rel="stylesheet" href="{{ asset('css/stock.css') }}" type="text/css">
 

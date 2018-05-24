@@ -33,9 +33,11 @@
 //Route::get('/','PagesController@index');
 Route::get('/calendario','PagesController@calendario');
 
-
+//informes stock
 Route::get('/stock', 'StockController@show');
 Route::post('/stock', 'StockController@show');
+
+//lotes 
 Route::get('/verLotes', 'LotesController@show');
 Route::get('/detalleLote', 'LotesController@showDetalle');
 
@@ -73,5 +75,5 @@ Route::get('/test', function() {
   	echo ("$producto");
 	
 });
-
+Route::get('/FormulacionDetalle/{id}' ,'ProduccionController@showLoteInProd');
 

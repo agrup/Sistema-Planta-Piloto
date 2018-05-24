@@ -52,6 +52,11 @@ class GestorLote extends Model
     return $lotes;
     }
 
+    public static function getLoteById($id){
+        return Lote::find($id);
+        ;
+    }
+
 public static function getLotesPorProd (string $codigo)
     {
 
@@ -59,6 +64,14 @@ public static function getLotesPorProd (string $codigo)
         
 
     }
+
+public static function getProdPorLote (string $lote)
+    {
+
+        return Producto::find(Lote::where('producto_id','=',$lote)->first()->producto_id);
+        
+
+    }    
 
 
 }
