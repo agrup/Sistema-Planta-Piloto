@@ -75,6 +75,11 @@ class ProduccionController extends Controller
 
     }
 
+    public static function iniciarPlanificado($id){
+        return view('produccion.iniciarLotePlanificado');
+    }
+
+
 
     public function showLoteInProd (){
         $loteId =request()->input('lote');
@@ -100,6 +105,7 @@ class ProduccionController extends Controller
                                     ->with(compact('lote'));
 
 }
+
 
 
 }
