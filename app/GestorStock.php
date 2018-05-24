@@ -79,7 +79,8 @@ class GestorStock
             'saldoGlobal'=>null, // cantidad nueva es la anterior mas lo que agrega la llegada
             'saldoLote'=>$cantidad
         ];
-        Movimiento::create($datosNuevoMov);
+        $mov=Movimiento::create($datosNuevoMov);
+        return $mov;
     }
 
 

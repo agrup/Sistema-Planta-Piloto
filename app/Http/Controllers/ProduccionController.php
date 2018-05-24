@@ -108,7 +108,15 @@ class ProduccionController extends Controller
     }
 
     public function loteNoPlanificado(){
-        $productos = Producto::all();
+
+        $productosAux = Producto::all();
+        $productos =[];
+        foreach ($productosAux as $producto){
+            $arrAux=[];
+            $arrAux = $producto->toArray();
+            array_push($productos,$arrAux);
+        }
+
         return view('produccion.iniciarLoteNoPlanificado',compact($productos));
     }
 
