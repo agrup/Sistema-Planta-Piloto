@@ -33,9 +33,11 @@
 //Route::get('/','PagesController@index');
 Route::get('/calendario','PagesController@calendario');
 
-
+//informes stock
 Route::get('/stock', 'StockController@show');
 Route::post('/stock', 'StockController@show');
+
+//lotes 
 Route::get('/verLotes', 'LotesController@show');
 Route::get('/detalleLote', 'LotesController@showDetalle');
 
@@ -54,6 +56,10 @@ Route::get('/','MainController@index');
 Route::get('/produccion','ProduccionController@index');
 Route::post('/produccion','ProduccionController@show');
 Route::get('/loteEnProduccion','ProduccionController@loteEnProduccion');
+Route::get('/produccion/iniciarPlanificado/{id}','ProduccionController@iniciarPlanificado');
+
+//Route fictisio
+Route::get('/produccion/detalleLoteEnProduccion/{id}','PruebaController@detalleLoteEnProduccion');
 
 
 Route::get('/lotes', 'LotesController@index') ;
@@ -68,5 +74,5 @@ Route::get('/test', function() {
   	echo ("$producto");
 	
 });
-
+Route::get('/loteEnProduccion/{id}' ,'ProduccionController@showLoteInProd');
 

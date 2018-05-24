@@ -18,6 +18,7 @@
 						<th>Cantidad</th> 
 						<th>Estado</th> 
 						<th>Asignatura</th>
+						<th>Iniciar</th>
 						<th></th></tr>
 			</thead>			
 			<tbody>
@@ -25,12 +26,17 @@
 					<tr>
 		        		<td>{{ $lote['lote'] }}</td> 
 		        		<td>{{ $lote['producto'] }}</td>
-		        		<td> {{ $lote['cantidad'] }} {{ $lote['tu'] }}</td>
-		        		<td> {{ $lote['estado'] }}</td>
+		        		<td>{{ $lote['cantidad'] }} {{ $lote['tu'] }}</td>
+		        		<td>{{ $lote['estado'] }}</td>
+		        		<td></td>
+		        		<td>@if ($lote['estado']=="planificacion")
+		        		  <a href="/iniciarPlanificado/2"><img src="img/iniciar.png" width="40" height="40"></a>
+		        		@endif</td>
+
 		        		<td>@if ($lote['asignatura']!= null)						
 								{{ $lote['asignatura'] }}
 							@endif</td>
-		        		<td> <a href="produccion?lote={{ $lote['lote'] }}">Detalles</a></td>
+		        		<td> <a href="/loteEnProduccion/{{ $lote['lote'] }}">Detalles</a></td>
 		        	</tr> 
 		        	
 				@endforeach

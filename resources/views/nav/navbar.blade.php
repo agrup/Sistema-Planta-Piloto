@@ -3,12 +3,6 @@
 
     <title>PP</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="topnav.css" rel="stylesheet">
-
 
 
  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -19,9 +13,7 @@
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/"><span class="glyphicon glyphicon-home">Home</span><span class="sr-only">(current)</span></a>
-          </li>
+         
 			<li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Informes</span></a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">

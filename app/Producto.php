@@ -19,7 +19,6 @@ class Producto extends Model
     	 # return $this->belongsToMany('Producto', 'producto_productoi', 'producto_id', 'ingrediente_id');
     	 return $this->belongsToMany('App\Producto','producto_productoi')
     	 	->withPivot('producto_id','ingrediente_id','cantidad','cantidadProducto')
-    	 	#->withTimestamps()
     	 ;
 
     }
@@ -51,17 +50,6 @@ class Producto extends Model
            return $arrayResult;
         }   
 
-/*
-    public static function getNameProdByIdLote(int $idLote)
-    {
-        return (Producto::find(Lote::find($idLote)->producto_id))->nombre;
-    }
-
-        public static function getTUProdByIdLote(int $idLote)
-    {
-        return Producto::find(Lote::find($idLote)->producto_id)->tipoUnidad;
-    }
-*/
      public function lotes ()
      {
         return $this->hasMany('App\Lote')->get()
@@ -81,9 +69,20 @@ class Producto extends Model
         return $arrayResult;*/
      }
 
+        public function productoToArray()
+     {
+        return ['nombre'=>$this->nombre,
+              'tipoUnidad'=>$this->tipoUnidad,
+              'codigo'=>$this->codigo,
+              'estado'=>TipoLote::toString($this->estado)
+              ];
+     }
 
 
-}
+
+}   
+
+
 # consulta en tinker
 
 #>>> App\Producto::find(6)->formulacion()->attach(4,['cantidad'=>'4','cantidadProducto'=>'12','ingrediente_id'=>'2'])

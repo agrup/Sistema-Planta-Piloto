@@ -1,4 +1,4 @@
-function pintarAlarmas(){
+/*function pintarAlarmas(){
 	tabla = document.getElementsByTagName("table")[0];
 	for (var i = 1; i < tabla.rows.length; i++){		
 		if(tabla.rows[i].getAttributeNode("data").value == "roja"){
@@ -16,7 +16,7 @@ function pintarAlarmas(){
 $(document).ready(function(evt){
 	pintarAlarmas();
 
-});
+});*/
 
 /*$(document).ready(function(evt){
 	//EVENTO DOBLE CLICK EN UNA FILA

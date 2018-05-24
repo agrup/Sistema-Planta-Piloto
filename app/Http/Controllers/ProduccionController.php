@@ -74,4 +74,38 @@ class ProduccionController extends Controller
     public static function loteEnProduccion(){
 
     }
+
+    public static function iniciarPlanificado($id){
+        return view('produccion.iniciarLotePlanificado');
+    }
+
+
+
+    public function showLoteInProd (){
+        $loteId =request()->input('id');
+        //obtemgo el produco de ese lote
+        $productoObj = GestorLote::getProdPorLote($loteId);
+        //lo paso a arraay
+        $producto = $productoObj->productoToArray();
+        
+        $loteObj = GestorLote::getLoteById($loteId)->first();
+        // creo el array del lote al que se le busca la formulacion
+        $lote= ['id'=>$loteObj->numeroLote,
+                'cantidad'=>$loteObj->cantidad,
+        ];
+        
+
+        $formulacion = GestorLote::getTrazabilidadLote($lote);
+
+
+
+        return view('produccion.loteEnProduccion')
+                                    ->with(compact('producto'))
+                                    ->with(compact('formulacion'))
+                                    ->with(compact('lote'));
+
+}
+
+
+
 }

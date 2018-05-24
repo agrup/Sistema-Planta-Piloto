@@ -1,7 +1,7 @@
 @extends('layouts.layoutPrincipal' )
 @section('section')
 
-    <body>
+    
     <?php $fecha=$planificaciones[0]['fecha'];?>
 
     @include('elementosComunes.aperturaTitulo')
@@ -12,7 +12,7 @@
     <div class="py-5">
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="classol-md-12">
                     <p class="lead">
                         <b>Fecha Actual: <?= $fecha; ?> </b>
                     </p>
@@ -42,7 +42,7 @@
                 $codigo[]=$v['codigo'];
                 $nombre[]=$v['nombre'];
                 $cantidad[]=$v['cantidad'].$v['tipoUnidad'];
-
+                $id[]=$v["mov_id"];
                 ?>
             @endforeach
         @endif
@@ -88,7 +88,7 @@
                 $codigo[]=$v['codigo'];
                 $nombre[]=$v['nombre'];
                 $cantidad[]=$v['cantidad'].$v['tipoUnidad'];
-
+                $id[]=$v["mov_id"];
                 ?>
             @endforeach
         @endif
