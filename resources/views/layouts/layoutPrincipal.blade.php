@@ -9,7 +9,15 @@
 
   <link rel="stylesheet" href="css/programa.produccion.semanal.css" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
   <!--
+    estilos para navBar
+  -->
+  
+
+  <!--
+
   -->
   <link rel="stylesheet" href="css/stock.css" type="text/css">
 

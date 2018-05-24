@@ -43,6 +43,9 @@ class Lote extends Model
         ]	;
 
 	}
+    
+
+
 
 
 }
