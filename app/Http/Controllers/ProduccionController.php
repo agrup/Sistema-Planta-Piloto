@@ -109,7 +109,7 @@ class ProduccionController extends Controller
 
     public function loteNoPlanificado(){
         $productos = Producto::all();
-        return view('prodccion.iniciarLoteNoPlanificado',compact($productos));
+        return view('produccion.iniciarLoteNoPlanificado',compact($productos));
     }
 
 
