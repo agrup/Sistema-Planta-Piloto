@@ -42,7 +42,7 @@ class Producto extends Model
       }
 
     /**
-     * @return array [ ['id'=>, 'cantidad'=> ] .. ]
+     * @return array [ ['id'=>, 'cantidad'=>, 'cantidadProducto'=> ] .. ]
      */
     public function getIngredientes(){
            $ingredientes = $this->formulacion();
@@ -78,6 +78,26 @@ class Producto extends Model
               'tipoUnidad'=>$this->tipoUnidad,
               'codigo'=>$this->codigo,
               ];
+     }
+
+    /**
+     * @param int $cantidad a realizar
+     * @return array =  [ ['codigo
+     */
+    public function getFormulacion(int $cantidad)
+     {
+         $formulacion = [];
+         $ingredientes = $this->getIngredientes();
+         foreach ($ingredientes as $ing){
+            $arrAux=[];
+            $productoAux = Producto::find($ing['id']);
+            $arrAux['codigo']=$productoAux->codigo;
+            $arrAux['nombre']=$productoAux->nombre;
+            $arrAux['tipoUnidad']=$productoAux->tipoUnidad;
+            $arrAux['cantidad'] = $cantidad * $ing['cantidad'] / $ing ['cantidadProducto'];
+            array_push($formulacion,$arrAux);
+        }
+        return $formulacion;
      }
 
 
