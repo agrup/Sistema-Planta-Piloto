@@ -16,12 +16,14 @@
               	<option  selected="selected">--Seleccione un Producto--</option>
                   @foreach($productos as $value)
                 	<option  id="producto" value="{{$value['id']}}">{{$value['nombre']}}</option>
+                	 <script type="text/javascript">console.log({{$value['id']}});</script>
                 @endforeach
+
               </select>
             </div>
             <div class="form-group">
               <label contenteditable="true" for="exampleInputEmail1">Cantidad Elaborada</label>
-              <input id="cantidad" type="text" class="form-control" id="inlineFormInput"> 
+              <input id="cantidad" type="text" class="form-control" "> 
           </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Unidad</label>
@@ -47,7 +49,7 @@
               <input type="text" class="form-control" id="inlineFormInput"> </div>
           </div>
         </div>
-        <button type="submit" id="btnformulacion" class="btn btn-primary">Ver Formulacion</button>
+        <button type="button" id="btnformulacion" class="btn btn-primary">Ver Formulacion</button>
         <div id="alert" class="alert alert-info"></div>
 
         <h4 class="">

@@ -159,11 +159,12 @@ class ProduccionController extends Controller
         return view('produccion.iniciarLoteNoPlanificado',['productos'=>$productos]);
     }
 
-    public static function getFormulacion(int $id){
+    public static function getFormulacion(){
+        $id=request()->input('id');
         $cantidad = request()->input('cantidad');
         $producto = Producto::find($id);
         return response()->json($producto->getFormulacion($cantidad));
-
+       // return response("ok");
 
     }
 
