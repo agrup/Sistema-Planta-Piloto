@@ -61,7 +61,7 @@ class GestorStock
 
 
 
-    public static function entradaInsumoPlanificado(int $idProducto, double $cantidad, string $fecha)
+    public static function entradaInsumoPlanificado(int $idProducto, double $cantidad, string $fecha, int $planificacion_id)
 
     {
         //TODO si no posee un stock real crearlo con 0 en una fecha que no moleste
@@ -77,7 +77,8 @@ class GestorStock
             'debe'=>0,
             'haber'=>$cantidad,
             'saldoGlobal'=>null, // cantidad nueva es la anterior mas lo que agrega la llegada
-            'saldoLote'=>$cantidad
+            'saldoLote'=>$cantidad,
+            'planificacion_id'=>$planificacion_id
         ];
         $mov=Movimiento::create($datosNuevoMov);
         return $mov;
@@ -92,7 +93,7 @@ class GestorStock
     }
 
 
-    public static function entradaProductoPlanificado(string $idLote, int $idProducto, double $cantidad, string $fecha )
+    public static function entradaProductoPlanificado(string $idLote, int $idProducto, double $cantidad, string $fecha, int $planificacion_id )
 
     {
         //TODO si no posee un stock real crearlo con 0 en una fecha que no moleste
@@ -107,14 +108,15 @@ class GestorStock
             'debe'=>0,
             'haber'=>$cantidad,
             'saldoGlobal'=>null, //
-            'saldoLote'=>$cantidad
+            'saldoLote'=>$cantidad,
+            'planificacion_id'=>$planificacion_id
         ];
        $mov=Movimiento::create($datosNuevoMov);
        return $mov;
     }
-    public static function eliminarEntradaProductoPlanificado(string $idLote, string $fecha)
+    public static function eliminarEntradaProductoPlanificado(int $movimiento_id)
     {
-        Movimiento::eliminarEntradaProductoPlanif($idLote,$fecha);
+        //Movimiento::eliminarEntradaProductoPlanif($idLote,$fecha);
     }
     /**
      *

@@ -18,7 +18,7 @@
 						<th>Cantidad</th> 
 						<th>Estado</th> 
 						<th>Asignatura</th>
-						<th>Iniciar</th>
+						
 						<th></th></tr>
 			</thead>			
 			<tbody>
@@ -29,9 +29,6 @@
 		        		<td>{{ $lote['cantidad'] }} {{ $lote['tu'] }}</td>
 		        		<td>{{ $lote['estado'] }}</td>
 		        		<td></td>
-		        		<td>@if ($lote['estado']=="planificacion")
-		        		  <a href="/produccion/iniciarPlanificado/2"><img src="img/iniciar.png" width="40" height="40"></a>
-		        		@endif</td>
 
 		        		<td>@if ($lote['asignatura']!= null)						
 								{{ $lote['asignatura'] }}
