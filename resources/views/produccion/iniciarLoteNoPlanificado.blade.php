@@ -1,5 +1,5 @@
 @extends('layouts.layoutPrincipal' )
-
+	
 @section('section') 
 	@include("elementosComunes.aperturaTitulo")
 		Iniciar Lote No Planificado
@@ -9,21 +9,19 @@
       <form class="form-group">
         <div class="row">
           <div class="col">
-            <div class="form-group">
-              <label>Lote Producto</label>
-              <input type="text" class="form-control" > </div>
+           
             <div class="form-group">
               <label>Producto</label>
-              <select  id="selectProducto" class="form-control" onchange="getFormulacion()">
+              <select  id="selectProducto" class="form-control" >
               	<option  selected="selected">--Seleccione un Producto--</option>
                   @foreach($productos as $value)
-                	<option value="{{$value['nombre']}}">{{$value['nombre']}}</option>
+                	<option  id="producto" value="{{$value['id']}}">{{$value['nombre']}}</option>
                 @endforeach
               </select>
             </div>
             <div class="form-group">
               <label contenteditable="true" for="exampleInputEmail1">Cantidad Elaborada</label>
-              <input type="text" class="form-control" id="inlineFormInput"> 
+              <input id="cantidad" type="text" class="form-control" id="inlineFormInput"> 
           </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Unidad</label>
@@ -49,6 +47,9 @@
               <input type="text" class="form-control" id="inlineFormInput"> </div>
           </div>
         </div>
+        <button type="submit" id="btnformulacion" class="btn btn-primary">Ver Formulacion</button>
+        <div id="alert" class="alert alert-info"></div>
+
         <h4 class="">
           <b>Formulación:</b>
         </h4>
@@ -74,4 +75,8 @@
       </form>
     </div>
   </div>
+
 @endsection
+ @section('script')
+ <script type="text/javascript" src="{{asset('js/getFormulacion.js')}}"></script>
+ @endsection
