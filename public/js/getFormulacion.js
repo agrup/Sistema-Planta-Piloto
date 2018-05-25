@@ -1,14 +1,17 @@
 $(document).ready(function(){
-	$('#alert').hide();
-	var id=$("#cantidad").attr('id');
-	var producto=$("#producto").attr('value');
+	
+	
 
 	$("#btnformulacion").click(function(){
-  		 $.get("/produccion/formulacion",{id,producto}, function(result){
+		var cantidad=$("#cantidad").val();
+		var id=$(":selected").attr('value');
+  		 $.getJSON("/produccion/formulacion",{id,cantidad},function(result){
+  		 	console.log(result);
   		 	$("#alert").show();
-            $("#alert").html(result);});
+
+            $("#alert").html(result[0].codigo);});
 
 		});
 
 		
-});
+}); post a /produccion/lotenoplanificado
