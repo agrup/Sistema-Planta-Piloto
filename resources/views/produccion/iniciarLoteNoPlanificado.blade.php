@@ -1,5 +1,5 @@
 @extends('layouts.layoutPrincipal' )
-
+<script type="text/javascript" src="{{asset('js/getFormulacion.js')}}"></script>
 @section('section') 
 	@include("elementosComunes.aperturaTitulo")
 		Iniciar Lote No Planificado
@@ -49,6 +49,9 @@
               <input type="text" class="form-control" id="inlineFormInput"> </div>
           </div>
         </div>
+        <button type="submit" class="btn btn-primary">Ver Formulacion</button>
+        <div id="alert" class="alert alert-info"></div>
+
         <h4 class="">
           <b>Formulación:</b>
         </h4>
@@ -74,4 +77,5 @@
       </form>
     </div>
   </div>
+  
 @endsection
