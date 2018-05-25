@@ -13,9 +13,9 @@
             <div class="form-group">
               <label>Producto</label>
               <select  id="selectProducto" class="form-control" >
-              	<option  id="producto" selected="selected">--Seleccione un Producto--</option>
+              	<option  selected="selected">--Seleccione un Producto--</option>
                   @foreach($productos as $value)
-                	<option value="{{$value['id']}}">{{$value['nombre']}}</option>
+                	<option  id="producto" value="{{$value['id']}}">{{$value['nombre']}}</option>
                 @endforeach
               </select>
             </div>
