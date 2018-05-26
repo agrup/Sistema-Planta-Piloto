@@ -52,7 +52,7 @@
         
 
         <h4 class="">
-          <b>Formulación:</b>
+          <b>Consumo:</b>
         </h4>
         
        

@@ -37,11 +37,11 @@ $(document).ready(function(){
             		var tr=document.createElement("tr");
             			tr.setAttribute("id","trformulacion");
             		var td1=document.createElement("td");
-            		$('<input>').attr({type:'hidden',value: item['id']}).appendTo(tr);//tiene el id
+            		$('<input>').attr({type:'hidden',value: item['id'],id:"idInsumo"}).appendTo(tr);//tiene el id
             		var td2=document.createElement("td");            	 	
-            		$('<input>').attr({type:'text'}).appendTo(td2);				
+            		$('<input>').attr({type:'text',id:"lote"}).appendTo(td2);				
             		var td3=document.createElement("td");
-            		$('<input>').attr({type:'text',placeholder:"Cantidad Teorica: "+item['cantidad']}).appendTo(td3);            		
+            		$('<input>').attr({type:'text',placeholder:"Cantidad Teorica: "+item['cantidad'],id:"cantidad"}).appendTo(td3);            		
             		var td4=document.createElement("td");            		
             		td1.setAttribute("id",item['codigo']);//producto
             		$(td2).attr("id",index+"l");//lote

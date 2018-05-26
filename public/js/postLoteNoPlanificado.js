@@ -10,7 +10,7 @@ $(document).ready(function() {
               "fecha":$('#fecha').val(),
               "tp":$('#tp').val(),
               "asignatura":$('#asignatura').val(),
-              "consumo":[]
+              "consumo":["id":$('#idInsumo').val(),"lote":$('#lote'),"cantidad":$('#cantidad')]
           })
           $('<input type="hidden" name="json"/>').val(data).appendTo('#myform');
           $("#myform").submit();
