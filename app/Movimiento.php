@@ -3,45 +3,40 @@
 
 namespace App;
 
+use Eloquent;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Movimiento
+ * @mixin Eloquent
+ *
+ * */
 class Movimiento extends Model
 {
 
 
-
-
+    const FECHA_FICTICIA = '1994-06-12 00:00:01';
     protected $guarded=[];
+
+
+
     public function planificacion(){
     	return $this->belongsTo('App\Planificacion');
     }
 
 
-
-
-    private $campos=['id','fecha','tipo','loteconsumidor',
-        'loteingrediente','debe','haber','salgoglobal','saldolote', 'estado'
-    ];
-    // TODO hacer geters y seters
-    /*
-    public function __construct($datos)
-    {
-    }
-
-*/
-
     /**
-     * @param $producto string
+     * @param int $producto_id
      * @return Movimiento
      */
     public static function ultimoRealProd($producto_id)
     {
-       return self::where('producto_id','=',$producto_id)
-           ->whereRaw('tipo =' . TipoMovimiento::TIPO_MOV_CONSUMO .
+       return self::whereRaw('producto_id=' . $producto_id  . 'and (tipo =' . TipoMovimiento::TIPO_MOV_CONSUMO .
                'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO .
-               'or tipo=' . TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS)
-           ->orderBy('fecha','desc')
-           ->first();
+               'or tipo=' . TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS . ')')
+           ->orderBy('fecha', 'desc')
+           ->limit(1);
     }
     /**
      * @param string $idLote
@@ -58,7 +53,7 @@ class Movimiento extends Model
                             'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
                             )
             ->orderBy('fecha','desc')
-            ->first();
+            ->limit(1);
 
     }
 
@@ -66,11 +61,7 @@ class Movimiento extends Model
 
 
     public static function getFechaUltimoReal()
-
     {
-
-        
-
         return self::whereRaw('tipo='.TipoMovimiento::SIN_TIPO.
                             'or tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
                             'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
@@ -80,28 +71,15 @@ class Movimiento extends Model
                             )
                         ->orderBy('fecha','desc')
                         ->first()
-                        ->fecha
-                        ;
-
-
+                        ->fecha;
     }
 
-/*
-    const SIN_TIPO=-1;
-    const TIPO_MOV_ENTRADA_INSUMO=1;
-    const TIPO_MOV_SALIDA_VENTAS=2;
-    const TIPO_MOV_SALIDA_EXCEP=3;
-    const TIPO_MOV_SALIDA_DECOMISO = 4;
-    const TIPO_MOV_CONSUMO=5;
-    const TIPO_MOV_CONTROL_EXISTENCIAS = 6;
-*/
 
-
-   /**
-     * @param int $productoId id del producto a buscar el movimiento mas viejo donde se vuelve 0
-
-
-     * @return
+    /**
+     * Devuelve los primeros movimientos criticos de cada producto limitandose a la fecha tope.
+     * Un Movimiento Critico es aquel que tiene su saldo global <0.
+     * @param string $fechaTope
+     * @return array
      */
 
     public static function getMovsCriticos (string $fechaTope)
@@ -114,19 +92,14 @@ class Movimiento extends Model
                 ->where('fecha','>',$fechaInicio)
                 ->where('fecha','<',$fechaTope)
                 ->where('saldoGlobal','<','0')
-                ->orderBy('fecha','asc')->first();
+                ->orderBy('fecha','asc')
+                ->limit(1);
             if($mov!=null){
                 array_push($arrayResult,$mov);
             }
 
         }
-
         return $arrayResult;
-
-        //TODO Retornar MOVIMIENTO[] con los primeros movimientos criticos(los mas viejos) que tienen su saldo global < 0 para cada producto despues de la fecha del ultimo real de ese año (o fecha tope)
-
-
-
     }
 
 
@@ -198,8 +171,6 @@ class Movimiento extends Model
 			    		->orderBy('fecha','desc')
 			    		->first()
 			    		);
-
-
     }
     /**
      * @param string $idLoteIngrediente
@@ -229,6 +200,7 @@ class Movimiento extends Model
      */
     public static function getMovimientosProdDespuesDe($producto_id, $fechaCambio)
     {
+        //TODO
         //real
         //Ordenados por favooor
     }
@@ -244,21 +216,21 @@ class Movimiento extends Model
     public static function eliminarEntradaInsumoPlanif($producto_id, $fecha)
     {
     }
-    /**
-     * @param string $idLote/
-     * @param string $fecha
-     */
-    public static function eliminarEntradaProductoPlanif($idLote, $fecha)
-    {
 
+    /**
+     * @param int $movimiento_id
+     */
+    public static function eliminarEntradaProductoPlanif(int $movimiento_id)
+    {
+        Movimiento::find($movimiento_id)->delete();
     }
     /**
-     * @param string $idLoteConsumidor
-     * @param string $fecha
+     * @param int $idLoteConsumidor
      */
-    public static function eliminarConsumosPlanificados($idLoteConsumidor, $fecha)
+    public static function eliminarConsumosPlanificados($idLoteConsumidor)
     {
-        //eliminar todos los insumos planificados de tipo consumo con ese lote como consumidor
+        Movimiento::where('idLoteConsumidor','=',$idLoteConsumidor)
+            ->where('tipo','=',TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF)->delete();
     }
     /**
      * @param string $fechaDesde
@@ -289,19 +261,55 @@ class Movimiento extends Model
         return $result;
 
     }
-        public static function ultimoStockRealProdTodos($fechaHasta)
+        public static function ultimoStockRealProdTodos()
     {
         $result = [];
         $movProductos = self::distinct()->select('producto_id')->get();
         foreach ($movProductos as $movProducto) {
             if (($aux = self::ultimoRealProd($movProducto->producto_id)) != null) {
-                $result[] = $aux;
+                $result[] = $aux->get();
             }
         }
         return $result;
 
     }
 
+    public static function crearUltimoRealFicticio($idProducto)
+    {
+        $datosMov = [
+        'producto_id'=>$idProducto,
+        'fecha'=>self::FECHA_FICTICIA,
+        'tipo'=>TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO,
+        'idLoteConsumidor'=>null,
+        'idLoteIngrediente'=>null,
+        'debe'=>0,
+        'haber'=>0,
+        'saldoGlobal'=>0, //
+        'saldoLote'=>null,
+        'planificacion_id'=>null
+        ];
+        self::create($datosMov);
+    }
+
+    /**
+     * Funcion que modifica un movimento de tipo Consumo planificado,
+     * no chekea que sea de tipo consumo_planificado
+     * @param int $idLoteConsumidor
+     * @param int $producto_id
+     * @param double $cantConsumo
+     * @throws Exception si no se encuentra el consumo
+     */
+    public static function modificarConsumoPlanificado(int $idLoteConsumidor, int $producto_id , double $cantConsumo)
+    {
+        $mov = Movimiento::where('idLoteConsumidor','=',$idLoteConsumidor)
+            ->where('producto_id','=',$producto_id)
+            ->limit(1);
+        if($mov == null || $mov->count()==0){
+            throw new Exception('Consumo no encontrado');
+        }
+        $mov->debe=$cantConsumo;
+        $mov->save();
+    }
 
 
 }

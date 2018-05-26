@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\GestorStock;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+
 use App\Planificacion;
 use Mockery\Exception;
 
@@ -37,7 +37,6 @@ class PlanificacionController extends Controller
     }
 
     public static function show(){
-        $planificaciones = [];
         //agarro la fecha
         $fechaC = Carbon::createFromFormat('Y-m-d',request()->input('fecha'));
         $fechaC = $fechaC->startOfWeek();
@@ -82,7 +81,11 @@ class PlanificacionController extends Controller
             throw new Exception("Error: fecha igual a null");
         }
         $Planificacion = Planificacion::where('fecha','=',$fecha)->first();
-        $movimiento_id = $Planificacion->agregarProducto(request()->all());
+        $movimiento_id = $Planificacion->agregarProducto(request()->input('codigo'),
+                                                        request()->input('cantidad'),
+                                                        request()->input('tipoTP'),
+                                                        request()->input('asignatura'),
+                                                        request('fecha'));
         if($movimiento_id==null){
             return response()->json('error');
         } else {
@@ -96,7 +99,9 @@ class PlanificacionController extends Controller
             throw new Exception("Error: Error: fecha igual a null");
         }
         $Planificacion = Planificacion::where('fecha','=',$fecha)->first();
-        $movimiento_id = $Planificacion->agregarInsumo(request()->all());
+        $movimiento_id = $Planificacion->agregarInsumo(request()->input('codigo'),
+                                                        request()->input('cantidad'),
+                                                        request('fecha'));
         if($movimiento_id==null){
             return response()->json('error');
         } else {
@@ -107,15 +112,12 @@ class PlanificacionController extends Controller
     public static function eliminar()
     {
         if(($fecha  = request()->input('fecha'))==null){
-            throw new Exception("Error: agregar prod movimiento_id null");
+            throw new Exception("Error: Error: fecha igual a null");
         }
-        $Planificacion = Planificacion::where('fecha','=',$fecha)->first();
-        $movimiento_id = $Planificacion->agregarProducto(request()->all());
-        if($movimiento_id==null){
-            return response()->json('error');
-        } else {
-            return response()->json($movimiento_id);
-        }
+        $planificacion = Planificacion::where('fecha','=',$fecha)->first();
+        $planificacion->eliminarInsPro(request()->input('movimiento_id'));
+        return response('OK');
+
     }
 
     public static function modificar()
@@ -124,7 +126,7 @@ class PlanificacionController extends Controller
             throw new Exception("Error: agregar prod movimiento_id null");
         }
         $Planificacion = Planificacion::where('fecha','=',$fecha)->first();
-        $movimiento_id = $Planificacion->agregarProducto(request()->all());
+        $movimiento_id = $Planificacion->modificarInsPro(request()->input('movimiento_id'), request()->input('cantidad'));
         if($movimiento_id==null){
             return response()->json('error');
         } else {
