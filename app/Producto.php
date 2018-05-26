@@ -2,8 +2,15 @@
 
 namespace App;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use App\Lote;
+
+/**
+ * Producto
+ * @mixin Eloquent
+ *
+ * */
 class Producto extends Model
 {
 
@@ -103,7 +110,5 @@ class Producto extends Model
 
 
 }
-# consulta en tinker
 
-#>>> App\Producto::find(6)->formulacion()->attach(4,['cantidad'=>'4','cantidadProducto'=>'12','ingrediente_id'=>'2'])
 

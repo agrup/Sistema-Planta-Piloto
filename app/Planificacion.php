@@ -3,10 +3,17 @@
 namespace App;
 
 use Carbon\Carbon;
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use App\TipoMovimiento;
 use App\Producto;
-use Mockery\Exception;
+use Exception;
+
+/**
+ * Planificacion
+ * @mixin Eloquent
+ *
+ * */
 
 class Planificacion extends Model
 {
@@ -182,7 +189,7 @@ class Planificacion extends Model
      * @param string $fecha
      * @return int movimiento_id
      */
-    public function agregarProducto (int $codigo, double $cantidad, boolean $tipoTP=false, string $asignatura=null, string $fecha  )
+    public function agregarProducto (int $codigo, double $cantidad, bool $tipoTP=false, string $asignatura=null, string $fecha  )
     {
 
         $producto = Producto::where('codigo','=',$codigo)->first();
@@ -199,14 +206,8 @@ class Planificacion extends Model
         // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
         $H_i_s = date('H:i:s');
         $fechaStamp = $fecha . " ". $H_i_s;
-        $ingredientes = $producto->getIngredientes();
-        //crear los movimientos consumo
-        foreach ($ingredientes as $ing){
-            //regla de 3 simple segun la formulación
-            $cantConsumo = $cantidad * $ing['cantidadProducto'] / $ing['cantidad'];
-            GestorStock::altaConsumoPlanificado($lote->id, $ing['id'], $cantConsumo, $fechaStamp );
-        }
-        //crear el movimiento entrada de producto planif asociado a la planificacion
+        //crear el movimiento entrada de producto planif asociado a la planificacion y se crearán subsecuentemente
+        // los consumos planificados correspondientes
         $mov = GestorStock::entradaProductoPlanificado($lote->id,$producto->id,$cantidad,$fechaStamp,$this->id);
         return $mov->id;
     }
@@ -241,7 +242,10 @@ class Planificacion extends Model
             $movimiento->delete();
         } else {
             if($movimiento->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF){
+                //Elimino los movimientos
                 GestorStock::eliminarEntradaProductoPlanificado($movimiento_id);
+                //Elimino el lote
+                Lote::eliminarLote($movimiento->idLoteConsumidor);
             } else {
                 return response()->json('ERROR: el movimiento no es de un tipo eliminable');
             }
