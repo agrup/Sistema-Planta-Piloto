@@ -7,6 +7,7 @@ use App\Movimiento;
 use App\DetalleSalida;
 use App\Producto;
 use Carbon\Carbon;
+use Exception;
 use InvalidArgumentException;
 
 /**
@@ -61,10 +62,13 @@ class GestorStock
 
 
 
-    public static function entradaInsumoPlanificado(int $idProducto, double $cantidad, string $fecha)
+    public static function entradaInsumoPlanificado(int $idProducto, double $cantidad, string $fecha, int $planificacion_id)
 
     {
-        //TODO si no posee un stock real crearlo con 0 en una fecha que no moleste
+        // si no posee un stock real crearlo con 0 en una fecha que no moleste debido a que se necesita para iniciar el recalculo de las planificaciones
+        if(Movimiento::ultimoRealProd($idProducto)->count()==0){
+            Movimiento::crearUltimoRealFicticio($idProducto);
+        }
         //No deben existir mas de una entrada de insumo planificada para un mismo dia
         //debido a que los planificados se recalculan cada vez que se quiere saber algo de ellos,
         // simplemente inserto el mov sin calcular nada.
@@ -77,12 +81,31 @@ class GestorStock
             'debe'=>0,
             'haber'=>$cantidad,
             'saldoGlobal'=>null, // cantidad nueva es la anterior mas lo que agrega la llegada
-            'saldoLote'=>$cantidad
+            'saldoLote'=>$cantidad,
+            'planificacion_id'=>$planificacion_id
         ];
         $mov=Movimiento::create($datosNuevoMov);
         return $mov;
     }
 
+    /**
+     * Modifica la cantidad de insumo que se planifica como entrada
+     * @param $movimiento_id
+     * @param $cantidad
+     * @throws Exception si el mov no existe o es del tipo incorrecto
+     */
+    public static function modificarEntradaInsumoPlanif($movimiento_id, $cantidad)
+    {
+        $mov = Movimiento::find($movimiento_id);
+        if($mov==null){
+            throw new Exception('Movimiento no encontrado');
+        }
+        if($mov->tipo != TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF){
+            throw new Exception('Movimiento de tipo incorrecto');
+        }
+        $mov->haber = $cantidad;
+        $mov->save();
+    }
 
     public static function eliminarEntradaInsumoPlanificado(int $idProducto, string $fecha)
 
@@ -92,10 +115,23 @@ class GestorStock
     }
 
 
-    public static function entradaProductoPlanificado(string $idLote, int $idProducto, double $cantidad, string $fecha )
+    public static function entradaProductoPlanificado(string $idLote, int $idProducto, double $cantidad, string $fecha, int $planificacion_id ){
 
-    {
-        //TODO si no posee un stock real crearlo con 0 en una fecha que no moleste
+        $producto = Producto::find($idProducto);
+        //Doy de alta los consumos
+        $ingredientes = $producto->getIngredientes();
+        foreach ($ingredientes as $ing){
+            //regla de 3 simple segun la formulación
+            $cantConsumo = $cantidad * $ing['cantidadProducto'] / $ing['cantidad'];
+            GestorStock::altaConsumoPlanificado($idLote, $ing['id'], $cantConsumo, $fecha );
+        }
+
+
+        // si no posee un stock real crearlo con 0 en una fecha que no moleste debido a que se necesita para iniciar el recalculo de las planificaciones
+        if(Movimiento::ultimoRealProd($idProducto)->count()==0){
+            Movimiento::crearUltimoRealFicticio($idProducto);
+        }
+
         //debido a que los planificados se recalculan cada vez que se quiere saber algo de ellos,
         // simplemente inserto el mov sin calcular nada.
         $datosNuevoMov = [
@@ -107,14 +143,44 @@ class GestorStock
             'debe'=>0,
             'haber'=>$cantidad,
             'saldoGlobal'=>null, //
-            'saldoLote'=>$cantidad
+            'saldoLote'=>$cantidad,
+            'planificacion_id'=>$planificacion_id
         ];
        $mov=Movimiento::create($datosNuevoMov);
        return $mov;
     }
-    public static function eliminarEntradaProductoPlanificado(string $idLote, string $fecha)
+
+    public static function modificarEntradaProductoPlanif($movimiento_id, $cantidad)
     {
-        Movimiento::eliminarEntradaProductoPlanif($idLote,$fecha);
+        //TODO
+        $movPadre = Movimiento::find($movimiento_id);
+        $producto = Producto::find($movPadre->producto_id);
+        //actualizo los consumos
+        $ingredientes = $producto->getIngredientes();
+        foreach ($ingredientes as $ing){
+            //regla de 3 simple segun la formulación
+            $cantConsumo = $cantidad * $ing['cantidadProducto'] / $ing['cantidad'];
+            Movimiento::modificarConsumoPlanificado();
+        }
+    }
+
+    /**
+     * Elimina todos los consumos planificados asociados a este movimiento y el movimiento mismo
+     *
+     * @param int $movimiento_id
+     * @throws Exception si no existe el movimiento o si el tipo es incorrecto.
+     */
+    public static function eliminarEntradaProductoPlanificado(int $movimiento_id)
+    {
+        $movPadre = Movimiento::find($movimiento_id);
+        if($movPadre==null){
+            throw new Exception('Movimiento no encontrado');
+        }
+        if($movPadre->tipo != TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF){
+            throw new Exception('Movimiento de tipo incorrecto');
+        }
+        Movimiento::eliminarConsumosPlanificados($movPadre->idLoteConsumidor);
+        Movimiento::eliminarEntradaProductoPlanif($movimiento_id);
     }
     /**
      *
@@ -390,15 +456,19 @@ class GestorStock
     }
     //PLANIFICADOS
     /**
-     * @param string $idLoteConsumidor
-     * @param string $idProdIng
+     * @param int $idLoteConsumidor
+     * @param int $idProdIng
      * @param double $cantidad
      * @param string $fecha
+     * @return \Illuminate\Database\Eloquent\Model|$this
      */
-    public static function altaConsumoPlanificado(string $idLoteConsumidor, string $idProdIng, double $cantidad, string $fecha)
+    public static function altaConsumoPlanificado(int $idLoteConsumidor, int $idProdIng, double $cantidad, string $fecha)
     {
 
-        //TODO si no posee un stock real crearlo con 0 en una fecha que no moleste
+        // si no posee un stock real crearlo con 0 en una fecha que no moleste debido a que se necesita para iniciar el recalculo de las planificaciones
+        if(Movimiento::ultimoRealProd($idProdIng)->count()==0){
+            Movimiento::crearUltimoRealFicticio($idProdIng);
+        }
         $datosNuevoMov = [
             'producto_id'=>$idProdIng,
             'fecha'=>$fecha,
@@ -411,11 +481,9 @@ class GestorStock
             'saldoLote'=>null
         ];
         $nuevoMov = Movimiento::create($datosNuevoMov);
+        return $nuevoMov;
     }
-    public static function eliminarConsumosPlanificados(string $idLoteConsumidor, string $fecha)
-    {
-        Movimiento::eliminarConsumosPlanificados($idLoteConsumidor, $fecha);
-    }
+
     //INFORMES
     public static function getSaldoLote(string $idLote)
     {
@@ -658,4 +726,8 @@ class GestorStock
         $mov=Movimiento::getAnteriorProd($producto_id,$fechaHasta);
         return $mov->saldoGlobal;
     }
+
+
+
+
 }

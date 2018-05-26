@@ -3,9 +3,17 @@
 namespace App;
 
 use Carbon\Carbon;
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use App\TipoMovimiento;
 use App\Producto;
+use Exception;
+
+/**
+ * Planificacion
+ * @mixin Eloquent
+ *
+ * */
 
 class Planificacion extends Model
 {
@@ -175,14 +183,13 @@ class Planificacion extends Model
     /**
      * agrega un producto a una planificacion
      * @param int $codigo
-     * @param string $producto
      * @param float $cantidad
      * @param bool $tipoTP
      * @param string $asignatura
      * @param string $fecha
      * @return int movimiento_id
      */
-    public function agregarProducto (int $codigo, string $producto, double $cantidad, boolean $tipoTP, string $asignatura, string $fecha  )
+    public function agregarProducto (int $codigo, double $cantidad, bool $tipoTP=false, string $asignatura=null, string $fecha  )
     {
 
         $producto = Producto::where('codigo','=',$codigo)->first();
@@ -192,27 +199,23 @@ class Planificacion extends Model
             'tipoLote'=>TipoLote::PLANIFICACION,
             'fechaInicio'=>$this->fecha,
             'cantidadElaborada'=>$cantidad,
+            'tipoTP'=>$tipoTP,
+            'asignatura'=>$asignatura
         ];
         $lote = Lote::create($datosLote);
         // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
         $H_i_s = date('H:i:s');
         $fechaStamp = $fecha . " ". $H_i_s;
-        $ingredientes = $producto->getIngredientes();
-        //crear los movimientos consumo
-        foreach ($ingredientes as $ing){
-            //regla de 3 simple segun la formulación
-            $cantConsumo = $cantidad * $ing['cantidadProducto'] / $ing['cantidad'];
-            GestorStock::altaConsumoPlanificado($lote->id, $ing['id'], $cantConsumo, $fechaStamp );
-        }
-        //crear el movimiento entrada de producto planif asociado a la planificacion
-        $mov = GestorStock::entradaProductoPlanificado($lote->id,$producto->id,$cantidad,$fechaStamp);
+        //crear el movimiento entrada de producto planif asociado a la planificacion y se crearán subsecuentemente
+        // los consumos planificados correspondientes
+        $mov = GestorStock::entradaProductoPlanificado($lote->id,$producto->id,$cantidad,$fechaStamp,$this->id);
         return $mov->id;
     }
 
     /**
      * agrega un insumo a una planificacion
      */
-    public function agregarInsumo(int $codigo, string $producto, double $cantidad, string $fecha)
+    public function agregarInsumo(int $codigo, double $cantidad, string $fecha)
     {
         $producto = Producto::where('codigo','=',$codigo)->first();
         // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
@@ -220,26 +223,54 @@ class Planificacion extends Model
         $fechaStamp = $fecha . " ". $H_i_s;
 
         //crear el movimiento entrada de insumo planif asociado a la planificacion
-        $mov = GestorStock::entradaInsumoPlanificado($producto->id,$cantidad,$fechaStamp);
+        $mov = GestorStock::entradaInsumoPlanificado($producto->id,$cantidad,$fechaStamp,$this->id);
         return $mov->id;
     }
 
     /**
      * Elimina un insumo o producto planificado de la planificacion
-     * @param array $data
-     *
+     * @param int $movimiento_id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public static function eliminarInsPro(array $data)
+    public  function eliminarInsPro(int $movimiento_id)
     {
-
+        $movimiento = Movimiento::find($movimiento_id);
+        if($movimiento==null){
+            throw new Exception('Movimiento NUll');
+        }
+        if($movimiento->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF){
+            $movimiento->delete();
+        } else {
+            if($movimiento->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF){
+                //Elimino los movimientos
+                GestorStock::eliminarEntradaProductoPlanificado($movimiento_id);
+                //Elimino el lote
+                Lote::eliminarLote($movimiento->idLoteConsumidor);
+            } else {
+                return response()->json('ERROR: el movimiento no es de un tipo eliminable');
+            }
+        }
+        return response()->json('OK');
     }
 
     /**Modifica un Insumo o Producto planificado de la planificacion
+     * Solo se puede editar la cantidad
      * @param array $data
      */
-    public function modificarInsPro(array $data)
+    public function modificarInsPro(int $movimiento_id, double $cantidad)
     {
-
+        $movimiento = Movimiento::find($movimiento_id);
+        if($movimiento==null){
+            throw new Exception('Movimiento NULL');
+        }
+        if($movimiento->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF){
+            GestorStock::modificarEntradaInsumoPlanif($movimiento_id,$cantidad);
+        } elseif ($movimiento->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF){
+            GestorStock::modificarEntradaProductoPlanif($movimiento_id,$cantidad);
+        } else {
+            return response()->json('ERROR: el movimiento no es de un tipo editable');
+        }
+        return response()->json('OK');
     }
 
 }
