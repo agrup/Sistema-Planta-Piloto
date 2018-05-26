@@ -38,7 +38,7 @@ class Lote extends Model
         'vencimiento'=>$this->fechaVencimiento, //
         'fechaInicio'=>$this->fechaInicio,//
         'nombreProducto'=>$producto->nombre,//
-        'tu'=>$producto->tipoUnidad,//
+        'tipoUnidad'=>$producto->tipoUnidad,//
         'cantidadElaborada'=>$this->cantidadElaborada,//
         'costoUnitario'=>$this->costoUnitario,//
         'inicioMaduracion'=>$this->fechaInicioMaduracion,//
