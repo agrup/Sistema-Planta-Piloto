@@ -2,8 +2,15 @@
 
 namespace App;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use App\Lote;
+
+/**
+ * Producto
+ * @mixin Eloquent
+ *
+ * */
 class Producto extends Model
 {
 
@@ -91,6 +98,7 @@ class Producto extends Model
          foreach ($ingredientes as $ing){
             $arrAux=[];
             $productoAux = Producto::find($ing['id']);
+            $arrAux['id']=$ing['id'];
             $arrAux['codigo']=$productoAux->codigo;
             $arrAux['nombre']=$productoAux->nombre;
             $arrAux['tipoUnidad']=$productoAux->tipoUnidad;
@@ -103,7 +111,5 @@ class Producto extends Model
 
 
 }
-# consulta en tinker
 
-#>>> App\Producto::find(6)->formulacion()->attach(4,['cantidad'=>'4','cantidadProducto'=>'12','ingrediente_id'=>'2'])
 

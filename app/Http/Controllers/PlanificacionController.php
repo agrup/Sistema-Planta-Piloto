@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\GestorStock;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+
 use App\Planificacion;
 use Mockery\Exception;
 
@@ -37,7 +37,6 @@ class PlanificacionController extends Controller
     }
 
     public static function show(){
-        $planificaciones = [];
         //agarro la fecha
         $fechaC = Carbon::createFromFormat('Y-m-d',request()->input('fecha'));
         $fechaC = $fechaC->startOfWeek();
@@ -116,7 +115,7 @@ class PlanificacionController extends Controller
             throw new Exception("Error: Error: fecha igual a null");
         }
         $planificacion = Planificacion::where('fecha','=',$fecha)->first();
-        $planificacion->eliminarInsPro(request()->all());
+        $planificacion->eliminarInsPro(request()->input('movimiento_id'));
         return response('OK');
 
     }
@@ -127,7 +126,7 @@ class PlanificacionController extends Controller
             throw new Exception("Error: agregar prod movimiento_id null");
         }
         $Planificacion = Planificacion::where('fecha','=',$fecha)->first();
-        $movimiento_id = $Planificacion->agregarProducto(request()->all());
+        $movimiento_id = $Planificacion->modificarInsPro(request()->input('movimiento_id'), request()->input('cantidad'));
         if($movimiento_id==null){
             return response()->json('error');
         } else {
