@@ -6,7 +6,7 @@
 	@include("elementosComunes.cierreTitulo")
 	<div class="p-0">
     <div class="container">
-      <form class="form-group" id="myform" >
+      <form class="form-group" id="myform" enctype='application/json' >
       	 {{ csrf_field() }}
         <div class="row">
           <div class="col">
@@ -78,4 +78,5 @@
 @endsection
  @section('script')
  <script type="text/javascript" src="{{asset('js/getFormulacion.js')}}"></script>
+ <script type="text/javascript" src="{{asset('js/postloteNoPlanificado.js')}}"></script>
  @endsection

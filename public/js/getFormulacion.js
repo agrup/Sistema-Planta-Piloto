@@ -20,7 +20,7 @@ $(document).ready(function(){
 		$("#thtu").show();
 		
 	if($("#trformulacion").length>0){
-		$("#trformulacion").remove();
+		$("#trformulacion").remove(); //saco la grilla
 		$("td").remove();
 	}
       

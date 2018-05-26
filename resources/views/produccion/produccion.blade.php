@@ -50,11 +50,11 @@
 			@include('elementosComunes.aperturaFormInline')
 			<div class="row">
 				
-					<form class="form-inline" id="form" name="form" action="./loteEnProduccion" method="GET" enctype="multipart/form-data">
-						{{csrf_field()}}
+					<form class="form-inline" id="form" name="form"  method="GET" enctype="multipart/form-data">
+						
 			          
 							<input type="text" class="form-control" placeholder="Número Lote" id='lote' name='lote' required> 
-							<input  type="submit" class="btn btn-primary" value="Buscar Lote"> 
+							<button  class="btn btn-primary" id="buscarLote">Buscar Lote</button>
 						
 					</form>				
 				
