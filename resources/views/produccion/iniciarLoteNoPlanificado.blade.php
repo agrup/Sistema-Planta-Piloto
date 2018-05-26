@@ -6,7 +6,7 @@
 	@include("elementosComunes.cierreTitulo")
 	<div class="p-0">
     <div class="container">
-      <form class="form-group" method="POST" action="/produccion/loteNoPlanificado">
+      <form class="form-group">
       	 {{ csrf_field() }}
         <div class="row">
           <div class="col">
@@ -70,7 +70,7 @@
                
               </tbody>
             @include("elementosComunes.cierreTabla")
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" id="guardar" class="btn btn-primary">Guardar</button>
       </form>
     </div>
   </div>
