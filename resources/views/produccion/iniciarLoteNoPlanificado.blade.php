@@ -6,7 +6,7 @@
 	@include("elementosComunes.cierreTitulo")
 	<div class="p-0">
     <div class="container">
-      <form class="form-group">
+      <form class="form-group" id="myform" >
       	 {{ csrf_field() }}
         <div class="row">
           <div class="col">
@@ -34,18 +34,18 @@
           <div class="col">
             <div class="form-group">
               <label for="exampleInputEmail1">Fecha Inicio</label>
-              <input type="date" class="form-control" id="inlineFormInput"> </div>
+              <input type="date" class="form-control" id="fecha"> </div>
             <div class="form-group">
               <label></label>
               <label for="exampleInputEmail1">Trabajo Práctico</label>
-              <select class="form-control">
+              <select class="form-control" id="tp">
                 <option value="1">Si</option>
                 <option value="2">No</option>
               </select>
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Asignatura</label>
-              <input type="text" class="form-control" id="inlineFormInput"> </div>
+              <input type="text" class="form-control" id="asignatura"> </div>
           </div>
         </div>
         <button type="button" id="btnformulacion" class="btn btn-primary">Ver Formulacion</button>
