@@ -39,9 +39,15 @@
 			@foreach ($formulacion as $insumo)
 									
 					<tr>
-						<td>{{$insumo['nombreProducto']}}</td>
+						<td>{{$insumo['nombre']}}</td>
 						<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
-						<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
+						@for ($i = 0; $i < count($trazabilidad); $i++)
+							@if ($trazabilidad[i]['nombreProducto']==$insumo['nombre'])
+								<td>{{ $trazabilidad[i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>		
+							@endif
+						@endfor
+						
+
 					</tr>
 				
 			@endforeach
@@ -79,4 +85,4 @@
 
 		@endswitch
 @endsection
-
+		
