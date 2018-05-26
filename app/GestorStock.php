@@ -548,7 +548,7 @@ class GestorStock
     public static function getStockPorProd(string $fechaHasta)
     {
         $result=[];
-        self::recalcularPlanificados($fechaHasta);
+        //self::recalcularPlanificados($fechaHasta);
 
         if(!empty($movimientos =Movimiento::ultimoStockProdTodos($fechaHasta)))
         {
@@ -559,7 +559,7 @@ class GestorStock
             $arrAux['alarma']='normal';
             $arrAux['nombre']=$producto->nombre;
             $arrAux['codigo']=$producto->codigo;
-            $arrAux['tu']=$producto->tipoUnidad;
+            $arrAux['tipoUnidad']=$producto->tipoUnidad;
             $arrAux['stock']=$stock;
             $arrAux['producto_id']=$movimiento->producto_id;
             if($producto->alarmaActiva){
@@ -616,7 +616,7 @@ class GestorStock
             //armo el array
             $arrAux['codigo']=$producto->codigo;
             $arrAux['insumo']=$producto->nombre;
-            $arrAux['tu']=$producto->tipoUnidad;
+            $arrAux['tipoUnidad']=$producto->tipoUnidad;
             $arrAux['fechaAgotamiento']=$fechaAgot;
             //calculo la necesidad en funcion del stock final del producto a la fecha
             if($stockFinal>0){
@@ -635,7 +635,7 @@ class GestorStock
                 $arrAux['codigo']=$stock['codigo'];
                 $arrAux['insumo']=$stock['nombre'];
                 $arrAux['cantidad']=$stock['stock'];
-                $arrAux['tu']=$stock['tu'];
+                $arrAux['tipoUnidad']=$stock['tipoUnidad'];
                 $arrAux['color']=$stock['alarma'];
                 array_push($alarmas,$arrAux);
             }

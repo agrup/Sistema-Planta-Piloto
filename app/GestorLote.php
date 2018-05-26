@@ -31,10 +31,10 @@ class GestorLote extends Model
             array_push($lotes,[
                     'numeroLote'=>$ingrediente['idLote'],
                     'cantidad'=>$ingrediente['cantidad'], 
-                    'vencimiento'=>$lote->fechaVencimiento, 
+                    'fechaVencimiento'=>$lote->fechaVencimiento, 
                     'fechaInicio'=>$lote->fechaInicio,
-                    'nombreProducto'=>$producto->nombre,
-                    'tu'=>$producto->tipoUnidad
+                    'nombre'=>$producto->nombre,
+                    'tipoUnidad'=>$producto->tipoUnidad
                     /*
                     'cantidadElaborada'=>$lote->cantidadElaborada,
                     'costoUnitario'=>$lote->costounitario,

@@ -53,7 +53,7 @@ class Movimiento extends Model
                             'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
                             )
             ->orderBy('fecha','desc')
-            ->limit(1);
+            ->first();
 
     }
 

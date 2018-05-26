@@ -48,7 +48,7 @@ class ProduccionController extends Controller
                 $arrAux=[];
                 $arrAux['lote']=$lote->id; //TODO Hay que hacer el codigo del lote, no esta en la migration
                 $arrAux['producto']=$producto->nombre;
-                $arrAux['tu']=$producto->tipoUnidad;
+                $arrAux['tipoUnidad']=$producto->tipoUnidad;
                 $arrAux['estado']=TipoLote::toString($lote->tipoLote);
                 switch ($lote->tipoLote){
                     case TipoLote::INICIADO:
