@@ -39,7 +39,7 @@
 			@foreach ($formulacion as $insumo)
 									
 					<tr>
-						<td>{{$insumo['nombreProducto']}}</td>
+						<td>{{$insumo['nombre']}}</td>
 						<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
 						<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
 					</tr>
