@@ -6,7 +6,8 @@
 	@include("elementosComunes.cierreTitulo")
 	<div class="p-0">
     <div class="container">
-      <form class="form-group" method="POST" action="iniciarLotePlanificado">
+      <form class="form-group" method="POST" action="/produccion/loteNoPlanificado">
+      	 {{ csrf_field() }}
         <div class="row">
           <div class="col">
            

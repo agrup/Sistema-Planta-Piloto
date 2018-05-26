@@ -168,7 +168,9 @@ class ProduccionController extends Controller
 
     }
     public static function newLoteNoPlanificado(){
-       
+
+        return view('produccion.produccion');
+
     }
 
 
