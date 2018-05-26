@@ -29,6 +29,7 @@ $(document).ready(function(){
 
 			
             	resultado=result;
+            	console.log(resultado);
             	resultado.forEach(function(item,index) {
             		
             		//creo la tabla
@@ -36,6 +37,7 @@ $(document).ready(function(){
             		var tr=document.createElement("tr");
             			tr.setAttribute("id","trformulacion");
             		var td1=document.createElement("td");
+            		$('<input>').attr({type:'hidden',value: item['id']}).appendTo(tr);//tiene el id
             		var td2=document.createElement("td");            	 	
             		$('<input>').attr({type:'text'}).appendTo(td2);				
             		var td3=document.createElement("td");

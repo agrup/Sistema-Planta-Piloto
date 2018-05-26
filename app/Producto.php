@@ -98,6 +98,7 @@ class Producto extends Model
          foreach ($ingredientes as $ing){
             $arrAux=[];
             $productoAux = Producto::find($ing['id']);
+            $arrAux['id']=$ing['id'];
             $arrAux['codigo']=$productoAux->codigo;
             $arrAux['nombre']=$productoAux->nombre;
             $arrAux['tipoUnidad']=$productoAux->tipoUnidad;
