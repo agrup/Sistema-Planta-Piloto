@@ -4,6 +4,7 @@
 namespace App;
 
 use Eloquent;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -290,6 +291,25 @@ class Movimiento extends Model
         self::create($datosMov);
     }
 
+    /**
+     * Funcion que modifica un movimento de tipo Consumo planificado,
+     * no chekea que sea de tipo consumo_planificado
+     * @param int $idLoteConsumidor
+     * @param int $producto_id
+     * @param double $cantConsumo
+     * @throws Exception si no se encuentra el consumo
+     */
+    public static function modificarConsumoPlanificado(int $idLoteConsumidor, int $producto_id , double $cantConsumo)
+    {
+        $mov = Movimiento::where('idLoteConsumidor','=',$idLoteConsumidor)
+            ->where('producto_id','=',$producto_id)
+            ->limit(1);
+        if($mov == null || $mov->count()==0){
+            throw new Exception('Consumo no encontrado');
+        }
+        $mov->debe=$cantConsumo;
+        $mov->save();
+    }
 
 
 }

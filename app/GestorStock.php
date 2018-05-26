@@ -152,7 +152,6 @@ class GestorStock
 
     public static function modificarEntradaProductoPlanif($movimiento_id, $cantidad)
     {
-        //TODO
         $movPadre = Movimiento::find($movimiento_id);
         $producto = Producto::find($movPadre->producto_id);
         //actualizo los consumos
@@ -160,8 +159,10 @@ class GestorStock
         foreach ($ingredientes as $ing){
             //regla de 3 simple segun la formulación
             $cantConsumo = $cantidad * $ing['cantidadProducto'] / $ing['cantidad'];
-            Movimiento::modificarConsumoPlanificado();
+            Movimiento::modificarConsumoPlanificado($movPadre->idLoteConsumidor, $ing['id'], $cantConsumo);
         }
+        $movPadre->haber = $cantidad;
+        $movPadre->save();
     }
 
     /**

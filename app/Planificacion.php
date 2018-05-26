@@ -5,8 +5,6 @@ namespace App;
 use Carbon\Carbon;
 use Eloquent;
 use Illuminate\Database\Eloquent\Model;
-use App\TipoMovimiento;
-use App\Producto;
 use Exception;
 
 /**
@@ -51,7 +49,7 @@ class Planificacion extends Model
 
     /**
      * @param string $fecha
-     * @return
+     * @return array
      */
     public static function getSemana($fecha)
     {
@@ -231,6 +229,7 @@ class Planificacion extends Model
      * Elimina un insumo o producto planificado de la planificacion
      * @param int $movimiento_id
      * @return \Illuminate\Http\JsonResponse
+     * @throws Exception
      */
     public  function eliminarInsPro(int $movimiento_id)
     {
@@ -255,7 +254,10 @@ class Planificacion extends Model
 
     /**Modifica un Insumo o Producto planificado de la planificacion
      * Solo se puede editar la cantidad
-     * @param array $data
+     * @param int $movimiento_id
+     * @param float $cantidad
+     * @return \Illuminate\Http\JsonResponse
+     * @throws Exception
      */
     public function modificarInsPro(int $movimiento_id, double $cantidad)
     {
