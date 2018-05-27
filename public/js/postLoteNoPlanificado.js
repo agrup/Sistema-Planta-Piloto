@@ -4,16 +4,7 @@ $(document).ready(function() {
           $('#myform').attr({'action': url,'method': 'POST','header':{'Content-Type': 'application/json'}});
 
           //armo un JSON con los datos que voy a enviar
-         var producto = JSON.stringify({
-              "producto": $('#producto').val(),
-              "cantidad":$('#cantidad').val(),
-              "fecha":$('#fecha').val(),
-              "tp":$('#tp').val(),
-              "asignatura":$('#asignatura').val(),
-             
 
-          })
-         
           var data = Array();
           $("tr").each(function(i, v){
                     data[i] = Array();
@@ -33,11 +24,21 @@ $(document).ready(function() {
                     }); 
 
                 })
-         var consumo=JSON.stringify(data);
+           var producto = JSON.stringify({
+              "producto": $('#producto').val(),
+              "cantidad":$('#cantidad').val(),
+              "fecha":$('#fecha').val(),
+              "tp":$('#tp').val(),
+              "asignatura":$('#asignatura').val(),
+              "consumo":JSON.stringify(data);
+              
+          })
+         
+         //var consumo=JSON.stringify(data);
 
 
           $('<input type="hidden" name="producto"/>').val(producto).appendTo('#myform');
-          $('<input type="hidden" name="consumo"/>').val(consumo).appendTo('#myform');
+         // $('<input type="hidden" name="consumo"/>').val(consumo).appendTo('#myform');
           $("#myform").submit();
           
     });
