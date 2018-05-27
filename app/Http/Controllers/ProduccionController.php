@@ -177,8 +177,10 @@ class ProduccionController extends Controller
             'tipoTP'=>$dataLote[3],
             'asignatura'=>$dataLote[4]
         ];
+        if(Lote::find(11)){
+            Lote::find(11)->delete();
+        }
 
-        Lote::find(11)->delete();
         $lote = Lote::crearLoteNoPlanificado($datosLote);
         //crear los consumos
         $consumosArr = explode(',',$consumos);
@@ -191,7 +193,7 @@ class ProduccionController extends Controller
             //Porlo que solo doy de alta los que correspondan
             if(isset($loteIngId) && trim($loteIngId)!==''){
                 $cantidad=$consumosArr[$i+2];
-                GestorStock::altaConsumo($loteIngId,$lote->id,$prodIngId,$cantidad,$fechaStamp);
+                GestorStock::altaConsumo($loteIngId,$lote->id,$prodIngId,floatval($cantidad),$fechaStamp);
             }
 
         }

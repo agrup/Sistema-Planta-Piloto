@@ -25,11 +25,11 @@ class GestorStock
      *
      * @param string $idLote
      * @param int $idProducto
-     * @param double $cantidad
+     * @param float $cantidad
      * @param string $fecha
      *
      */
-    public static function entradaInsumoProducto(string $idLote, int $idProducto, double $cantidad, string $fecha)
+    public static function entradaInsumoProducto(string $idLote, int $idProducto, float $cantidad, string $fecha)
     {
         $banderaRecalcular = false;
         $ultimoMovReal=Movimiento::ultimoRealProd($idProducto);
@@ -62,7 +62,7 @@ class GestorStock
 
 
 
-    public static function entradaInsumoPlanificado(int $idProducto, double $cantidad, string $fecha, int $planificacion_id)
+    public static function entradaInsumoPlanificado(int $idProducto, float $cantidad, string $fecha, int $planificacion_id)
 
     {
         // si no posee un stock real crearlo con 0 en una fecha que no moleste debido a que se necesita para iniciar el recalculo de las planificaciones
@@ -115,7 +115,7 @@ class GestorStock
     }
 
 
-    public static function entradaProductoPlanificado(string $idLote, int $idProducto, double $cantidad, string $fecha, int $planificacion_id ){
+    public static function entradaProductoPlanificado(string $idLote, int $idProducto, float $cantidad, string $fecha, int $planificacion_id ){
 
         $producto = Producto::find($idProducto);
         //Doy de alta los consumos
@@ -187,10 +187,10 @@ class GestorStock
      *
      * @param string $idLote
      * @param int $idProducto
-     * @param double $cantidadObsrv
+     * @param float $cantidadObsrv
      * @param string $fecha
      */
-    public static function controlarExistencia(string $idLote, int $idProducto, double $cantidadObsrv, string $fecha)
+    public static function controlarExistencia(string $idLote, int $idProducto, float $cantidadObsrv, string $fecha)
     {
         $banderaRecalcular = false;
         $ultimoMovReal=Movimiento::ultimoRealProd($idProducto);
@@ -244,13 +244,13 @@ class GestorStock
     //REALES
     /**
      *
-     * @param string $idLoteConsumidor
-     * @param string $idLoteIngrediente
+     * @param int $idLoteConsumidor
+     * @param int $idLoteIngrediente
      * @param int $idProductoIng
-     * @param double $cantidad
+     * @param float $cantidad
      * @param string $fecha
      */
-    public static function altaConsumo(string $idLoteConsumidor, string $idLoteIngrediente, int $idProductoIng, double $cantidad, string $fecha)
+    public static function altaConsumo(int $idLoteConsumidor, int $idLoteIngrediente, int $idProductoIng, float $cantidad, string $fecha)
     {
         $banderaRecalcular = false;
         $ultimoMovRealProd=Movimiento::ultimoRealProd($idProductoIng);
@@ -258,13 +258,13 @@ class GestorStock
         $movAnteriorProd = $ultimoMovRealProd;
         $movAnteriorLote = $ultimoMovRealLote;
         //Compruebo si estoy insertando antes del ultimo mov de ese producto
-        if($ultimoMovRealProd->fecha>$fecha){
+        if($ultimoMovRealProd->fecha > $fecha){
             //si es asi, recupero el mov anterior a este y deberé recalcular
             $movAnteriorProd = Movimiento::getAnteriorProd($idProductoIng,$fecha);
             $banderaRecalcular=true;
         }
         //Compruebo si estoy insertando antes del ultimo mov de ese lote
-        if($ultimoMovRealLote->fecha>$fecha){
+        if($ultimoMovRealLote->fecha > $fecha){
             //si es asi, recupero el mov anterior a este y deberé recalcular
             $movAnteriorLote = Movimiento::getAnteriorLote($idLoteIngrediente,$fecha);
             $banderaRecalcular=true;
@@ -290,13 +290,13 @@ class GestorStock
      *
      * @param string $idLote
      * @param int $idProducto
-     * @param double $cantidad
+     * @param float $cantidad
      * @param string $fecha
      * @param String $motivo
      * @param string $detalle
      * @parm string tipo
      */
-    public static function salidaExcepcional(string $idLote, int $idProducto, double $cantidad, string $fecha, String $motivo, String $detalle )
+    public static function salidaExcepcional(string $idLote, int $idProducto, float $cantidad, string $fecha, String $motivo, String $detalle )
     {
         $banderaRecalcular = false;
         $ultimoMovRealProd=Movimiento::ultimoRealProd($idProducto);
@@ -351,10 +351,10 @@ class GestorStock
      *
      * @param string $idLote
      * @param int $idProducto
-     * @param double $cantidad
+     * @param float $cantidad
      * @param string $fecha
      */
-    public static function salidaVentas(string $idLote, int $idProducto, double $cantidad, string $fecha)
+    public static function salidaVentas(string $idLote, int $idProducto, float $cantidad, string $fecha)
     {
         $banderaRecalcular = false;
         $ultimoMovRealProd=Movimiento::ultimoRealProd($idProducto);
@@ -399,12 +399,12 @@ class GestorStock
      *
      * @param string $idLote
      * @param int $idProducto
-     * @param double $cantidad
+     * @param float $cantidad
      * @param String $detalle
      * @param string $fecha
      *
      */
-    public static function decomisar(string $idLote, int $idProducto, double $cantidad, String $detalle, string $fecha)
+    public static function decomisar(string $idLote, int $idProducto, float $cantidad, String $detalle, string $fecha)
     {
         $banderaRecalcular = false;
         $ultimoMovRealProd=Movimiento::ultimoRealProd($idProducto);
@@ -459,11 +459,11 @@ class GestorStock
     /**
      * @param int $idLoteConsumidor
      * @param int $idProdIng
-     * @param double $cantidad
+     * @param float $cantidad
      * @param string $fecha
      * @return \Illuminate\Database\Eloquent\Model|$this
      */
-    public static function altaConsumoPlanificado(int $idLoteConsumidor, int $idProdIng, double $cantidad, string $fecha)
+    public static function altaConsumoPlanificado(int $idLoteConsumidor, int $idProdIng, float $cantidad, string $fecha)
     {
 
         // si no posee un stock real crearlo con 0 en una fecha que no moleste debido a que se necesita para iniciar el recalculo de las planificaciones
@@ -720,7 +720,7 @@ class GestorStock
     /**
      * @param int $producto_id
      * @param string $fechaHasta
-     * @return $double
+     * @return $float
      */
     public static function getStockProd($producto_id, $fechaHasta)
     {

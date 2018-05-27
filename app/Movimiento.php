@@ -36,7 +36,7 @@ class Movimiento extends Model
                'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO .
                'or tipo=' . TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS . ')')
            ->orderBy('fecha', 'desc')
-           ->limit(1);
+           ->first();
     }
     /**
      * @param string $idLote
@@ -45,13 +45,13 @@ class Movimiento extends Model
     public static function ultimoRealLote($idLote)
     {
 
-        return self::where('idLoteIngrediente','=',$idLote)
-            ->whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
+        return self::whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
                             'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
                             'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_EXCEP.
                             'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO.
                             'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
                             )
+            ->where('idLoteIngrediente','=',$idLote)
             ->orderBy('fecha','desc')
             ->first();
 
