@@ -55,21 +55,27 @@
 			</tbody>
 		@include('elementosComunes.cierreTabla')    
 
-		<form>
+		
 			@switch($lote['tipoLote'])
 				@case('planificacion')
-					<button class="btn btn-primary" formaction="/produccion/iniciarPlanificado/{{ $lote['id'] }}">Iniciar</button>
+					<form action="/produccion/iniciarPlanificado/{{$lote['id']}}" method="get">
+					<button type="submit"  class="btn btn-primary" >Iniciar</button>
+					</form>
 					@break
 				@endcase
 
 				@case('iniciado')
-					<button class="btn btn-primary">Modificar</button>
+				<form action="/produccion/modificarIniciado/{{$lote['id']}}" method="get">
+					<button type="submit" class="btn btn-primary">Modificar</button>
 					<button class="btn btn-primary">Maduración</button>
 					<button class="btn btn-primary">Finalizar</button>
+				</form>
+					
+
 					@break
 				@endcase
 
-				@case('maduracion')
+				@case('maduracion')$lote['id']
 					<button class="btn btn-primary">Modificar</button>
 					<button class="btn btn-primary">Finalizar</button>
 					@break
@@ -82,8 +88,7 @@
 
 				 @default
 	        		<span>Something went wrong, please try again</span>
-	       </form>
-
+	       
 
 
 		@endswitch

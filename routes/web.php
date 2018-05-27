@@ -37,6 +37,8 @@ Route::get('/produccion/loteNoPlanificado', 'ProduccionController@loteNoPlanific
 Route::post('/produccion/loteNoPlanificado', 'ProduccionController@newLoteNoPlanificado');
 Route::get('/produccion/formulacion','ProduccionController@getFormulacion');
 Route::get('/produccion/loteEnProduccion/{id}' ,'ProduccionController@showLoteInProd');
+Route::get('/produccion/modificarIniciado/{id}','ProduccionController@showModificarIniciado');
+
 
 //Producto
 Route::get('/productos/administracionProductos', 'ProductoController@search');
