@@ -19,7 +19,12 @@ $(document).ready(function() {
                   }
                 });
 
-          var producto=  [$('#producto').val(),$('#cantidad').val(),$('#fecha').val(),$('#asignatura').val()
+          var producto=  [
+              $('#producto').val(),
+              $('#cantidad').val(),
+              $('#fecha').val(),
+              $('#tp').val(),
+              $('#asignatura').val()
           ];
           
            /*var producto = JSON.stringify({

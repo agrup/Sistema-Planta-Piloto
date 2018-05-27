@@ -30,7 +30,7 @@ class Lote extends Model
             'cantidadElaborada'=>$datos['cantidadElaborada'],
             'tipoTP'=>$datos['tipoTP'],
         ];
-        if($datos['tipoTP']==true){
+        if($datos['tipoTP']){
             $datosLote['asignatura'] = $datos['asignatura'];
         }
         return Lote::create($datosLote);

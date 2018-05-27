@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\GestorLote;
+use App\GestorStock;
 use App\Lote;
 use App\Movimiento;
 use App\Producto;
@@ -96,22 +97,24 @@ class ProduccionController extends Controller
 
 
 
-    public function showLoteInProd ($id){
+    public function showLoteInProd ($id)
+    {
         //$loteId =request()->input('id');
         //obtemgo el produco de ese lote
 
         $loteObj = Lote::find($id);
-        if ($loteObj!=null) {
+        if ($loteObj != null) {
             $producto = Producto::find($loteObj->producto_id);
         }
         if ($loteObj->tipoLote == TipoLote::FINALIZADO) {
-            $cantidad=$loteObj->cantidadFinal;
-        }else{
-            $cantidad=$loteObj->cantidadElaborada;
+            $cantidad = $loteObj->cantidadFinal;
+        } else {
+            $cantidad = $loteObj->cantidadElaborada;
         }
-        $lote= ['id'=>$loteObj->id,
-            'cantidad'=>$cantidad,
-            'tipoLote'=>TipoLote::toString($loteObj->tipoLote),
+        $lote = ['id' => $loteObj->id,
+            'cantidad' => $cantidad,
+            'tipoLote' => TipoLote::toString($loteObj->tipoLote),
+
         ];
         $formulacion = $producto->getFormulacion($cantidad);
         $trazabilidad = GestorLote::getTrazabilidadLote($id);
@@ -120,44 +123,6 @@ class ProduccionController extends Controller
             ->with(compact('formulacion'))
             ->with(compact('lote'))
             ->with(compact('trazabilidad'));
-
-
-
-        /*$productoObj = GestorLote::getProdPorLote($id);
-        //lo paso a arraay
-        if ($productoObj!=null) {
-           
-            $producto = $productoObj->productoToArray();
-        }
-        
-        //$loteObj = GestorLote::getLoteById($id);
-
-        if ($loteObj->tipoLote == TipoLote::FINALIZADO) {
-            $cantidad=$loteObj->cantidadFinal;    
-        }else{
-            $cantidad=$loteObj->cantidadElaborada;  
-        }
-        
-
-
-        // creo el array del lote al que se le busca la formulacion
-        $lote= ['id'=>$loteObj->id,
-                'cantidad'=>$cantidad,
-                'tipoLote'=>TipoLote::toString($loteObj->tipoLote),
-        ];
-        
-
-        $trazabilidad = GestorLote::getTrazabilidadLote($id);
-        $formulacion = 
-
-        return view('produccion.loteEnProduccion')
-                                    ->with(compact('producto'))
-
-                                    ->with(compact('formulacion'))    
-                                    ->with(compact('lote'));
-                                    ->with(compact('trazabilidad'));*/
-
-
     }
 
     public static function loteNoPlanificado(){
@@ -190,23 +155,46 @@ class ProduccionController extends Controller
         var_dump($producto);
         $consumos = $request->input('consumo');
         var_dump($consumos);
-        return view('welcome');
+        $dataLote = explode(',',$producto);
+        var_dump($dataLote);
+       // return view('welcome');
 
+        for($i=0; $i<4;$i++){
+            if(!isset($dataLote[$i]) || trim($dataLote[$i])===''){
+                throw new Exception('Campo que no se permite vacio');
+            }
+        }
         $data =[];
-        $fecha = $request->input('json.fecha');
+        $fecha = $dataLote[2];
+        // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
+        $H_i_s = date('H:i:s');
+        $fechaStamp = $fecha . " ". $H_i_s;
         //crear el lote
         $datosLote=[
-            'producto_id'=>$request->input('json.producto'),
+            'producto_id'=>$dataLote[0],
+            'cantidadElaborada'=>$dataLote[1],
             'fechaInicio'=>$fecha,
-            'cantidadElaborada'=>$request->input('json.cantidad'),
-            'tipoTP'=>$request->input('json.tipoTP'),
-            'asignatura'=>$request->input('json.asignatura'),
+            'tipoTP'=>$dataLote[3],
+            'asignatura'=>$dataLote[4]
         ];
 
-
+        Lote::find(11)->delete();
         $lote = Lote::crearLoteNoPlanificado($datosLote);
         //crear los consumos
-        // TODO
+        $consumosArr = explode(',',$consumos);
+        var_dump($consumosArr);
+        $dataConsumo =[];
+        for($i=0;$i<count($consumosArr);$i+=3){
+            $prodIngId=$consumosArr[$i];
+            $loteIngId=$consumosArr[$i+1];
+            //La vista devuelve ',',',' para los insumos que no han sido cargados (no se cargo el consumo)
+            //Porlo que solo doy de alta los que correspondan
+            if(isset($loteIngId) && trim($loteIngId)!==''){
+                $cantidad=$consumosArr[$i+2];
+                GestorStock::altaConsumo($loteIngId,$lote->id,$prodIngId,$cantidad,$fechaStamp);
+            }
+
+        }
 
         $data['lotes']=self::getArrayLotes($fecha);
         $data['fecha']=$fecha;
