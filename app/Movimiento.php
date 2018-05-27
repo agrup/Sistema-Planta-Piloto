@@ -45,7 +45,7 @@ class Movimiento extends Model
     public static function ultimoRealLote($idLote)
     {
 
-        return self::whereRaw('(tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
+        return self::whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
                             'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
                             'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_EXCEP.
                             'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO.
