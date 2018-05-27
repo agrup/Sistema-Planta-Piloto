@@ -97,7 +97,9 @@ class ProduccionController extends Controller
         //obtemgo el produco de ese lote
 
         $loteObj = Lote::find($id);
-        $producto = Producto::find($loteObj->producto_id);
+        if ($loteObj!=null) {
+            $producto = Producto::find($loteObj->producto_id);
+        }
         if ($loteObj->tipoLote == TipoLote::FINALIZADO) {
             $cantidad=$loteObj->cantidadFinal;
         }else{
@@ -145,16 +147,9 @@ class ProduccionController extends Controller
 
         return view('produccion.loteEnProduccion')
                                     ->with(compact('producto'))
-<<<<<<< HEAD
-                                    ->with(compact('formulacion'))
-
-                                    ->with(compact('lote'));*/
-
-=======
                                     ->with(compact('formulacion'))    
                                     ->with(compact('lote'));
                                     ->with(compact('trazabilidad'));*/
->>>>>>> 20da0e85eb50751c819ef285d749b58c7a016f63
 
     }
 
