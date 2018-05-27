@@ -40,6 +40,7 @@
 									
 					<tr>
 						<td>{{$insumo['nombre']}}</td>
+
 						<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
 						@for ($i = 0; $i < count($trazabilidad); $i++)
 							@if ($trazabilidad[i]['nombreProducto']==$insumo['nombre'])

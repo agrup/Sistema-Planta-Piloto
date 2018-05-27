@@ -23,7 +23,7 @@
 					<th>Costo Unitario</th>
 					<th>Vencimiento</th>
 				</tr>
-				<tr><td>{{ $detalle['cantidad'] }} {{ $detalle['tu'] }}</td>
+				<tr><td>{{ $detalle['cantidad'] }} {{ $detalle['tipoUnidad'] }}</td>
 					<td>{{ $detalle['costoUnitario'] }}</td>
 					<td>{{ $detalle['vencimiento'] }}</td>
 				</tr>
@@ -122,7 +122,7 @@
 					</tr>
 			</thead>
 			@foreach ($detalle['detalleElaboracion'] as $element)
-				<tr><td>{{ $element['numeroLote'] }}</td><td>{{ $element['nombreProducto'] }}</td><td>{{ $element['cantidad'] }} {{ $detalle['tu'] }}</td></tr>
+				<tr><td>{{ $element['numeroLote'] }}</td><td>{{ $element['nombreProducto'] }}</td><td>{{ $element['cantidad'] }} {{ $detalle['tipoUnidad'] }}</td></tr>
 
 			@endforeach
 		@include('elementosComunes.cierreTabla')    		
