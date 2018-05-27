@@ -80,14 +80,18 @@ class ProduccionController extends Controller
 
     public static function iniciarPlanificado($id){
 
+
+
         $lote = Lote::find($id);
-        $formulacion = $lote->gerFormulacion($lote->cantidadElaborada);
+        $producto = Producto::find($lote->producto_id);
+        $formulacion = $producto->getFormulacion($lote->cantidadElaborada);
 
 
 
         return view('produccion.iniciarLotePlanificado')
                                     ->with(compact('lote'))
-                                    ->with(compact('formulacion'))                        ;
+                                    ->with(compact('formulacion'))
+                                    ->with(compact('producto'))                        ;
     }
 
 
