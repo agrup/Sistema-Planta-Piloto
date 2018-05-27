@@ -5,54 +5,67 @@
 			Iniciar Lote Planificado
 		@include('elementosComunes.cierreTitulo')
 
-		<div class="p-0">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <table class="table">
+		
+    @include('elementosComunes.aperturaTabla')
             <thead>
               <tr>
                 <th>Lote</th>
                 <th>Producto</th>
-                <th>Responsable</th>
+                <th>Cantidad a Elaborar</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>12032018</td>
-                <td>Dulce de Leche</td>
-                <td>Nombre Trabajador</td>
+                <td>{{ $lote['id'] }}</td>
+                <td>{{ $lote['nombre'] }}</td>
+                <td>{{ $lote['cantidadElaborada'] }}</td>
               </tr>
               <tr></tr>
               <tr></tr>
             </tbody>
-          </table>
-        </div>
-      </div>
+    @include('elementosComunes.cierreTabla')
+    @include('elementosComunes.aperturaTabla')
+      <thead>
+              <tr>
+                <th>Lote</th>
+                <th>Producto</th>
+                <th>Cantidad a Elaborar</th>
+              </tr>
+      </thead>
+            <tbody>
+              <tr>
+                <td>{{ $lote['id'] }}</td>
+                <td>{{ $lote['nombre'] }}</td>
+                <td>{{ $lote['cantidadElaborada'] }}</td>
+              </tr>
+              <tr></tr>
+              <tr></tr>
+            </tbody>
+    @include('elementosComunes.cierreTabla')
       <div class="row">
         <div class="col-md-6">
           <form class="formu" action="">
-            <div class="form-group">
-              <label>Fecha Inicio</label>
-              <input type="date" class="form-control" placeholder=""> </div>
-            <div class="row">
-              <div class="col">
-                <label>Cantidad Elaborada</label>
-                <input type="text" class="form-control" placeholder="100"> </div>
-              <div class="col">
-                <label for="exampleInputEmail1">Unidad</label>
-                <input type="text" class="form-control" placeholder="Kg" id="inlineFormInput"> </div>
+                <div class="form-group">
+                  <label>Fecha Inicio</label>
+                  <input type="date" class="form-control" placeholder=""> </div>
+                <div class="row">
+                  <div class="col">
+                    <label>Cantidad Elaborada</label>
+                    <input type="text" class="form-control" placeholder="100"> </div>
+                  <div class="col">
+                    <label for="exampleInputEmail1">Unidad</label>
+                    <input type="text" class="form-control" placeholder="Kg" id="inlineFormInput"> </div>
+                </div>
+              <!--</form>-->
             </div>
-          </form>
-        </div>
-        <div class="col-md-6">
-          <form class="formu" action="">
-            <div class="form-group">
-              <label>Trabajo Práctico</label>
-              <input type="email" class="form-control" placeholder="Si"> </div>
-            <div class="form-group">
-              <label>Asignatura</label>
-              <input type="text" class="form-control" placeholder=""> </div>
+            <div class="col-md-6">
+              <!--<form class="formu" action="">-->
+                <div class="form-group">
+                  <label>Trabajo Práctico</label>
+                  <input type="email" class="form-control" placeholder="Si"> </div>
+                <div class="form-group">
+                  <label>Asignatura</label>
+                  <input type="text" class="form-control" placeholder=""> </div>
           </form>
         </div>
       </div>
