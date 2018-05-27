@@ -8,11 +8,18 @@ class ProductoController extends Controller
 {
     
 
-	public function administracionInsumoProducto(){
+	public function administracionProducto(){
 		$insumoProducto = 'producto';
 		return view('administracion.buscarInsumoProducto')->with(compact('insumoProducto'));
 	}
-	public static function  search(array $busqueda)
+
+
+	public function administracionInsumo(){
+		$insumoProducto = 'insumo';
+		return view('administracion.buscarInsumoProducto')->with(compact('insumoProducto'));
+	}
+
+	public static function  search($busqueda)
 	{
 		 $isumoProducto = 'producto';	
 		 $codigo=request()->input('codigo');
@@ -20,7 +27,9 @@ class ProductoController extends Controller
 		 $categoria=request()->input('categoria');
 		 $alarma=request()->input('alarma');
 		 
-		return $productos= Producto::filterRAW($codigo,$nombre,$categoria,$alarma)->toArray();
+		$productos= (Producto::filterRAW($codigo,$nombre,$categoria,$alarma))->toArray();
+		var_dump($producto);
+		return  response()->json($productos);
 
 
 

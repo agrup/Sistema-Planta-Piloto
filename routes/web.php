@@ -39,9 +39,10 @@ Route::get('/produccion/formulacion','ProduccionController@getFormulacion');
 Route::get('/produccion/loteEnProduccion/{id}' ,'ProduccionController@showLoteInProd');
 
 //Producto
-Route::get('/productos/administracionProductos', 'ProductoController@search');
 Route::post('/Administracion/BuscarProducto','ProductoController@search');//busca nsumos y productos a partir de un array de caracteristicas
 
+Route::get('/productos/administracionProductos', 'ProductoController@administracionProducto');
+Route::get('/productos/administracionInsumo', 'ProductoController@administracionInsumo');
 
 //Route fictisio
 Route::get('/produccion/detalleLoteEnProduccion/{id}','PruebaController@detalleLoteEnProduccion');
@@ -57,7 +58,6 @@ Route::post('/trabajador', 'TrabajadorController@store');
 
 
 //Administracion de productoInsumos
-Route::get('/productos/administracionProductos', 'ProductoController@administracionInsumoProducto');
 //Route::get('/productos/altaProducto', 'ProductoController@altaProducto');
 //Route::get('/productos/altaInsumo', 'ProductoController@altaInsumo');
 

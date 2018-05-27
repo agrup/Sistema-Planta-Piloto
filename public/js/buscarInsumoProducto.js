@@ -1,16 +1,19 @@
 $(document).ready(function() {
 	$("#btnBuscar").click(function() {
-		
-		$.post("demo_test_post.asp",
+			console.log($("#codigo").val());
+		$.postJSON("/Administracion/BuscarProducto",
     	{
 	        codigo: $("#codigo").val(),
 	        nombre: $("#nombre").val(),
 	        categoria: $("#categoria").val(), 
 	        alarma: $("#alarma").val()
-
+    		  	
     	},
-		    function(data, status){
+
+		    function(data){
+		    	console.log(data);
 		    	var tbody =  $("#tbodyResultados");
+
 		    	tbody.empty();
 		    	for (var i = 0; i < data.lenght; i++) {
 	    			var tr=document.createElement("tr");
@@ -25,5 +28,5 @@ $(document).ready(function() {
 		        //alert("Data: " + data + "\nStatus: " + status);
 		});
 	});
-	
+			console.log($("#codigo").val());
 });
