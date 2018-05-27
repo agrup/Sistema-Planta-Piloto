@@ -52,7 +52,7 @@
 								<td>{{$trazabilidad[i]['numeroLote']}}</td>
 								@break		
 							@endif
-¿		
+	
 						@endfor
 						@if ($b==false)
 							<td>0 {{ $insumo['tipoUnidad'] }}</td>

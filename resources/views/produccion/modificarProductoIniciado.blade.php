@@ -1,7 +1,7 @@
 @extends('layouts.layoutPrincipal' )
 @section('section')
   @include('elementosComunes.aperturaTitulo')
-            Modificar Producto Finalizado
+            Modificar Producto Iniciado
 @include('elementosComunes.cierreTitulo')
 @include('elementosComunes.aperturaTabla')
              <thead>
@@ -27,10 +27,10 @@
             <div class="row">
               <div class="col">
                 <label>Cantidad Elaborada</label>
-                <input type="text" class="form-control" placeholder="100"> </div>
+                <input type="text" class="form-control" placeholder="Cantidad Actual: {{$lote['cantidad']}}"> </div>
               <div class="col">
                 <label for="exampleInputEmail1">Unidad</label>
-                <input type="text" class="form-control"  id="inlineFormInput"> </div>
+                <input type="text" class="form-control"  id="inlineFormInput" disabled="true" value="{{$producto['tipoUnidad']}}"> </div>
             </div>
           </form>
         </div>
@@ -42,21 +42,23 @@
                    @if($lote['tipoTp'])
                       <option value="true" selected>SI</option>
                       <option value="false" >NO</option>
+                      <div class="form-group">
+                    <label>Asignatura</label>
+                    <input type="text" class="form-control" placeholder="Asignatura Actual: {{$lote['asignatura']}}"> </div>
                    @else
                       <option value="true">SI</option>
                       <option value="false" selected>NO</option>
                    @endif
                 </select>
-            
-              
-            <div class="form-group">
-              <label>Asignatura</label>
-              <input type="text" class="form-control"> </div>
+
           </form>
         </div>
       </div>
-   @include('elementosComunes.aperturaTabla')
-          <form>
+
+      @include('elementosComunes.aperturaTabla')
+   <div class="row"></div>
+    <div class="col"></div>
+          <form >
             <h4 class="">
               <b>Formulación:</b>
             </h4>
@@ -70,10 +72,20 @@
                 </tr>
               </thead>
               <tbody>
-                
+                  @foreach($formulacion as $value)
+                    <tr>
+                      <td>{{$value['nombre']}}</td>
+                      <td><input type="text" name="" placeholder=""></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  @endforeach
               </tbody>
             </table>
             <button type="submit" class="btn btn-primary">Guardar</button>
           </form>
-   @include('elementosComunes.cierreTabla') 
+   </div>
+ </div>
+ @include('elementosComunes.cierreTabla')
+
 @endsection

@@ -230,7 +230,8 @@ class ProduccionController extends Controller
             'cantidad'=>$cantidad,
             'tipoLote'=>TipoLote::toString($loteObj->tipoLote),
             'fecha'=>$loteObj->fechaInicio,
-            'tipoTp'=>$loteObj->tipoTP
+            'tipoTp'=>$loteObj->tipoTP,
+            'asignatura'=>$loteObj->asignatura
         ];
         //$lote=$loteObj->toArray();
 
