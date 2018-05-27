@@ -75,7 +75,7 @@ class ProduccionController extends Controller
     }
 
     public static function loteEnProduccion(){
-        
+
     }
 
     public static function iniciarPlanificado($id){
@@ -119,47 +119,6 @@ class ProduccionController extends Controller
             ->with(compact('lote'))
             ->with(compact('trazabilidad'));
 
-
-        /*$productoObj = GestorLote::getProdPorLote($id);
-        //lo paso a arraay
-        if ($productoObj!=null) {
-           
-            $producto = $productoObj->productoToArray();
-        }
-        
-        //$loteObj = GestorLote::getLoteById($id);
-
-        if ($loteObj->tipoLote == TipoLote::FINALIZADO) {
-            $cantidad=$loteObj->cantidadFinal;    
-        }else{
-            $cantidad=$loteObj->cantidadElaborada;  
-        }
-        
-
-
-        // creo el array del lote al que se le busca la formulacion
-        $lote= ['id'=>$loteObj->id,
-                'cantidad'=>$cantidad,
-                'tipoLote'=>TipoLote::toString($loteObj->tipoLote),
-        ];
-        
-
-        $trazabilidad = GestorLote::getTrazabilidadLote($id);
-        $formulacion = 
-
-        return view('produccion.loteEnProduccion')
-                                    ->with(compact('producto'))
-<<<<<<< HEAD
-                                    ->with(compact('formulacion'))
-
-                                    ->with(compact('lote'));
-
-
-                                    ->with(compact('formulacion'))    
-                                    ->with(compact('lote'));
-                                    ->with(compact('trazabilidad'));*/
-
-
     }
 
     public static function loteNoPlanificado(){
@@ -186,9 +145,32 @@ class ProduccionController extends Controller
        // return response("ok");
 
     }
-    public static function newLoteNoPlanificado(){
+    public static function newLoteNoPlanificado(Request $request){
 
-        return view('produccion.produccion');
+        /*$json = $request->input('json');
+        var_dump($json);
+        return view('welcome');*/
+
+        $data =[];
+        $fecha = $request->input('json.fecha');
+        //crear el lote
+        $datosLote=[
+            'producto_id'=>$request->input('json.producto'),
+            'fechaInicio'=>$fecha,
+            'cantidadElaborada'=>$request->input('json.cantidad'),
+            'tipoTP'=>$request->input('json.tipoTP'),
+            'asignatura'=>$request->input('json.asignatura'),
+        ];
+
+
+        $lote = Lote::crearLoteNoPlanificado($datosLote);
+        //crear los consumos
+        // TODO
+
+        $data['lotes']=self::getArrayLotes($fecha);
+        $data['fecha']=$fecha;
+        return view('produccion.produccion',compact('data'));
+
 
     }
 

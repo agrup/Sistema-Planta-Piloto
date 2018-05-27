@@ -8,14 +8,10 @@ $(document).ready(function() {
           var data = Array();
           $("tr").each(function(i, v){
                     data[i] = Array();
-                    var a=$(this).attr("id");
-                   
-                    if( a !="trhformulacion"){
-                               
-                      $(this).children('td').each(function(ii, vv){
-                          
-                         
-                          if($(this).has(':input').length>0){
+                    var idTr = $(this).id;
+                    if(idTr !== "trhformulacion"){
+                        $(this).children('td').each(function(ii, vv){
+
 
                            data[i][ii] =$(this).children('input[type=text]').val();
                             //  alert(data);  
@@ -37,8 +33,9 @@ $(document).ready(function() {
               "cantidad":$('#cantidad').val(),
               "fecha":$('#fecha').val(),data
               "tp":$('#tp').val(),
+
               "asignatura":$('#asignatura').val(),
-              "consumo":JSON.stringify(data),
+              "consumo":JSON.stringify(data)
               
           });*/
          
@@ -46,9 +43,11 @@ $(document).ready(function() {
         
 
 
+
           $('<input type="hidden" name="producto" />').val(producto).appendTo('#myform');
           $('<input type="hidden" name="consumo" />').val(data).appendTo('#myform');
         //  $("#myform").submit();
+
           
     });
      
