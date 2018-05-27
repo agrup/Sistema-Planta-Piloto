@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\GestorLote;
+use App\GestorStock;
 use App\Lote;
 use App\Movimiento;
 use App\Producto;
@@ -48,7 +49,7 @@ class ProduccionController extends Controller
                 $arrAux=[];
                 $arrAux['lote']=$lote->id; //TODO Hay que hacer el codigo del lote, no esta en la migration
                 $arrAux['producto']=$producto->nombre;
-                $arrAux['tu']=$producto->tipoUnidad;
+                $arrAux['tipoUnidad']=$producto->tipoUnidad;
                 $arrAux['estado']=TipoLote::toString($lote->tipoLote);
                 switch ($lote->tipoLote){
                     case TipoLote::INICIADO:
@@ -79,25 +80,41 @@ class ProduccionController extends Controller
     }
 
     public static function iniciarPlanificado($id){
-        return view('produccion.iniciarLotePlanificado');
+
+
+
+        $lote = Lote::find($id);
+        $producto = Producto::find($lote->producto_id);
+        $formulacion = $producto->getFormulacion($lote->cantidadElaborada);
+
+
+
+        return view('produccion.iniciarLotePlanificado')
+                                    ->with(compact('lote'))
+                                    ->with(compact('formulacion'))
+                                    ->with(compact('producto'))                        ;
     }
 
 
 
-    public function showLoteInProd ($id){
+    public function showLoteInProd ($id)
+    {
         //$loteId =request()->input('id');
         //obtemgo el produco de ese lote
 
         $loteObj = Lote::find($id);
-        $producto = Producto::find($loteObj->producto_id);
-        if ($loteObj->tipoLote == TipoLote::FINALIZADO) {
-            $cantidad=$loteObj->cantidadFinal;
-        }else{
-            $cantidad=$loteObj->cantidadElaborada;
+        if ($loteObj != null) {
+            $producto = Producto::find($loteObj->producto_id);
         }
-        $lote= ['id'=>$loteObj->id,
-            'cantidad'=>$cantidad,
-            'tipoLote'=>TipoLote::toString($loteObj->tipoLote),
+        if ($loteObj->tipoLote == TipoLote::FINALIZADO) {
+            $cantidad = $loteObj->cantidadFinal;
+        } else {
+            $cantidad = $loteObj->cantidadElaborada;
+        }
+        $lote = ['id' => $loteObj->id,
+            'cantidad' => $cantidad,
+            'tipoLote' => TipoLote::toString($loteObj->tipoLote),
+
         ];
         $formulacion = $producto->getFormulacion($cantidad);
         $trazabilidad = GestorLote::getTrazabilidadLote($id);
@@ -106,41 +123,6 @@ class ProduccionController extends Controller
             ->with(compact('formulacion'))
             ->with(compact('lote'))
             ->with(compact('trazabilidad'));
-
-
-        /*$productoObj = GestorLote::getProdPorLote($id);
-        //lo paso a arraay
-        if ($productoObj!=null) {
-           
-            $producto = $productoObj->productoToArray();
-        }
-        
-        //$loteObj = GestorLote::getLoteById($id);
-
-        if ($loteObj->tipoLote == TipoLote::FINALIZADO) {
-            $cantidad=$loteObj->cantidadFinal;    
-        }else{
-            $cantidad=$loteObj->cantidadElaborada;  
-        }
-        
-
-
-        // creo el array del lote al que se le busca la formulacion
-        $lote= ['id'=>$loteObj->id,
-                'cantidad'=>$cantidad,
-                'tipoLote'=>TipoLote::toString($loteObj->tipoLote),
-        ];
-        
-
-        $trazabilidad = GestorLote::getTrazabilidadLote($id);
-        $formulacion = 
-
-        return view('produccion.loteEnProduccion')
-                                    ->with(compact('producto'))
-                                    ->with(compact('formulacion'))    
-                                    ->with(compact('lote'));
-                                    ->with(compact('trazabilidad'));*/
-
     }
 
     public static function loteNoPlanificado(){
@@ -167,10 +149,88 @@ class ProduccionController extends Controller
        // return response("ok");
 
     }
-    public static function newLoteNoPlanificado(){
+    public static function newLoteNoPlanificado(Request $request){
 
-        return view('produccion.produccion');
+        $producto = $request->input('producto');
+        var_dump($producto);
+        $consumos = $request->input('consumo');
+        var_dump($consumos);
+        $dataLote = explode(',',$producto);
+        var_dump($dataLote);
+       // return view('welcome');
 
+        for($i=0; $i<4;$i++){
+            if(!isset($dataLote[$i]) || trim($dataLote[$i])===''){
+                throw new Exception('Campo que no se permite vacio');
+            }
+        }
+        $data =[];
+        $fecha = $dataLote[2];
+        // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
+        $H_i_s = date('H:i:s');
+        $fechaStamp = $fecha . " ". $H_i_s;
+        //crear el lote
+        $datosLote=[
+            'producto_id'=>$dataLote[0],
+            'cantidadElaborada'=>$dataLote[1],
+            'fechaInicio'=>$fecha,
+            'tipoTP'=>$dataLote[3],
+            'asignatura'=>$dataLote[4]
+        ];
+
+        Lote::find(11)->delete();
+        $lote = Lote::crearLoteNoPlanificado($datosLote);
+        //crear los consumos
+        $consumosArr = explode(',',$consumos);
+        var_dump($consumosArr);
+        $dataConsumo =[];
+        for($i=0;$i<count($consumosArr);$i+=3){
+            $prodIngId=$consumosArr[$i];
+            $loteIngId=$consumosArr[$i+1];
+            //La vista devuelve ',',',' para los insumos que no han sido cargados (no se cargo el consumo)
+            //Porlo que solo doy de alta los que correspondan
+            if(isset($loteIngId) && trim($loteIngId)!==''){
+                $cantidad=$consumosArr[$i+2];
+                GestorStock::altaConsumo($loteIngId,$lote->id,$prodIngId,$cantidad,$fechaStamp);
+            }
+
+        }
+
+        $data['lotes']=self::getArrayLotes($fecha);
+        $data['fecha']=$fecha;
+        return view('produccion.produccion',compact('data'));
+
+
+    }
+    public static function showModificarIniciado(Request $request,$id){
+          $loteObj = Lote::find($id);
+        if ($loteObj!=null) {
+            $producto = Producto::find($loteObj->producto_id);
+        }
+        if ($loteObj->tipoLote == TipoLote::FINALIZADO) {
+            $cantidad=$loteObj->cantidadFinal;
+        }else{
+            $cantidad=$loteObj->cantidadElaborada;
+        }
+
+        $lote= ['id'=>$loteObj->id,
+            'cantidad'=>$cantidad,
+            'tipoLote'=>TipoLote::toString($loteObj->tipoLote),
+            'fecha'=>$loteObj->fechaInicio,
+            'tipoTp'=>$loteObj->tipoTP,
+            'asignatura'=>$loteObj->asignatura
+        ];
+        //$lote=$loteObj->toArray();
+
+        $formulacion = $producto->getFormulacion($cantidad);
+        $trazabilidad = GestorLote::getTrazabilidadLote($id);
+        return view('produccion.modificarProductoIniciado')
+            ->with(compact('producto'))
+            ->with(compact('formulacion'))
+            ->with(compact('lote'))
+            ->with(compact('trazabilidad'));
+
+        
     }
 
 

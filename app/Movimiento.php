@@ -53,7 +53,7 @@ class Movimiento extends Model
                             'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
                             )
             ->orderBy('fecha','desc')
-            ->limit(1);
+            ->first();
 
     }
 
@@ -200,8 +200,17 @@ class Movimiento extends Model
      */
     public static function getMovimientosProdDespuesDe($producto_id, $fechaCambio)
     {
-        //TODO
-        //real
+
+        return Movimiento::whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
+                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
+                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_EXCEP.
+                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO.
+                'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
+            )
+                            ->where('fecha','>=',$fechaCambio)
+                            ->where('producto_id','=',$producto_id);
+
+        //movimientos reales
         //Ordenados por favooor
     }
     /**

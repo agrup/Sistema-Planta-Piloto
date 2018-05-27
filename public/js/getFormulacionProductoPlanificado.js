@@ -1,46 +1,34 @@
 $(document).ready(function(){
-	var resultado;
-	$("#theadformulacion").hide();
-	$("#trhformulacion").hide();
-	$("#thinsumo").hide();
-	$("#thlote").hide();
-	$("#thcantidad").hide();
-	$("#thtu").hide();
 
 
 	$("#btnformulacion").click(function(){
 		
-		var cantidad=$("#cantidad").val();
-		var id=$(":selected").attr('value');
-		$("#theadformulacion").show();
-		$("#trhformulacion").show();
-		$("#thinsumo").show();
-		$("#thlote").show();
-		$("#thcantidad").show();
-		$("#thtu").show();
+		$("#tbodyformulacion").remove();
 		
-	if($("#trformulacion").length>0){
-		$("#trformulacion").remove(); //saco la grilla
-		$("td").remove();
-	}
-      alert(id+cantidad);
+	var id=$("#idlote").attr("value");
+	var cantidad=$("#cantidad").val();
+    alert(id+cantidad);
+    
 		//para pedir la formulacion
   		 $.getJSON("/produccion/formulacion",{id,cantidad},function(result){
 
 			
             	resultado=result;
             	console.log(resultado);
-            	resultado.forEach(function(item,index) {
+
+            	resultado.forEach(function(item,index) { //trato al json como un array enumerado por index
             		
             		//creo la tabla
-            	
+            		var tbody=document.createElement("tbody");
+-            			tbody.setAttribute("id","tbodyformulacion");
             		var tr=document.createElement("tr");
             			tr.setAttribute("id","trformulacion");
-					tr.setAttribute('class','trConsumo');
             		var td1=document.createElement("td");
+            		//tiene el id
             		var inputID= $('<input>').attr({type:'hidden',value: item['id'],id:"idInsumo"}).appendTo(tr);//tiene el id
 					inputID.addClass('interes');
-            		var td2=document.createElement("td");            	 	
+            		var td2=document.createElement("td");
+            		          	 	
             		var inputLote=$('<input>').attr({type:'text',id:"lote"}).appendTo(td2);
                     inputLote.addClass('interes');
             		var td3=document.createElement("td");
@@ -51,10 +39,12 @@ $(document).ready(function(){
             		$(td3).attr("id",index+"c");//cantidad
             		$(td3).attr("name","cantidad");
             		
-            		
             		td4.setAttribute("id",item['tipoUnidad']+index);//tu
-            		tr.append(td1,td2,td3,td4);
-
+            		tr.append(td1,td2,td3,td4);	
+-            		tbody.append(tr);
+            		
+            	
+					$("#tformulacion").append(tbody);
             		$("#tbodyformulacion").append(tr);
 		  			$("#"+item['codigo']).html(item['nombre']); 
 					$("#"+item['tipoUnidad']+index).html(item['tipoUnidad']); 

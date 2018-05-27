@@ -43,7 +43,9 @@
 *,
 *::before,
 *::after {
+
   box-sizing: border-box; }
+
 
 html {
   font-family: sans-serif;
@@ -1052,7 +1054,9 @@ pre {
   width: 100%;
   max-width: 100%;
   margin-bottom: 0.2rem;
-  background-color: transparent; }
+  background-color: transparent; 
+
+}
   .table th,
   .table td {
     font-size: 20px;
@@ -1063,7 +1067,9 @@ pre {
     vertical-align: bottom;
     border-bottom: 2px solid #dee2e6; }
   .table tbody + tbody {
-    border-top: 2px solid #dee2e6; }
+    border-top: 2px solid #dee2e6; 
+
+  }
   .table .table {
     background-color: white; }
 
@@ -6179,3 +6185,12 @@ html, body {
     height: 100%;
     content: ' ';
     background: linear-gradient(white, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)); }
+
+.modal{
+  background-color: #6c757d;
+  height: 500px;
+  width: 800px;
+  margin-left: 25vw;
+  margin-top: 5vw;
+
+}

@@ -6,40 +6,46 @@ $(document).ready(function() {
           //armo un JSON con los datos que voy a enviar
 
           var data = Array();
-          $("tr").each(function(i, v){
+          $("tr.trConsumo").each(function(i, v){
                     data[i] = Array();
-                    $(this).children('td').each(function(ii, vv){
-                        
-                        //alert(data);
-                        if($(this).has(':input').length>0){
+                    var idTr = $(this).id;
+                    if(idTr !== "trhformulacion"){
+                        $(this).find('.interes').each(function(ii, vv){
 
-                         data[i][ii] =$(this).children('input[type=text]').val();
-                          //  alert(data);
-                        }
-                        else{
-                          data[i][ii] = $(this).text();
-                         
-                        }
-                       // alert("ok");
+
+                           data[i][ii] =$(this).val();
+
                     }); 
+                  }
+                });
 
-                })
-           var producto = JSON.stringify({
+          var producto=  [
+              $('#producto').val(),
+              $('#cantidad').val(),
+              $('#fecha').val(),
+              $('#tp').val(),
+              $('#asignatura').val()
+          ];
+          
+           /*var producto = JSON.stringify({
               "producto": $('#producto').val(),
               "cantidad":$('#cantidad').val(),
-              "fecha":$('#fecha').val(),
+              "fecha":$('#fecha').val(),data
               "tp":$('#tp').val(),
+
               "asignatura":$('#asignatura').val(),
-              "consumo":JSON.stringify(data);
+              "consumo":JSON.stringify(data)
               
-          })
+          });*/
          
-         //var consumo=JSON.stringify(data);
 
 
-          $('<input type="hidden" name="producto"/>').val(producto).appendTo('#myform');
-         // $('<input type="hidden" name="consumo"/>').val(consumo).appendTo('#myform');
-          $("#myform").submit();
+
+
+          $('<input type="hidden" name="producto" />').val(producto).appendTo('#myform');
+          $('<input type="hidden" name="consumo" />').val(data).appendTo('#myform');
+        //  $("#myform").submit();
+
           
     });
      

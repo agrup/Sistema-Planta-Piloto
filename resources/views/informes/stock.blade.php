@@ -34,7 +34,7 @@
 		        		<td>{{ $s['codigo'] }}</td> 
 		        		<td>{{ $s['nombre'] }}</td> 
 		        		<td> {{ $s['stock'] }}</td> 
-		        		<td> {{ $s['tu'] }}</td>
+		        		<td> {{ $s['tipoUnidad'] }}</td>
 		        		<td> <a href="verLotes?codigo={{ $s['codigo'] }}">Ver Detalles</a></td>
 		        	</tr> 
 	        	@endforeach

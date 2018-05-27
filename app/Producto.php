@@ -110,6 +110,49 @@ class Producto extends Model
 
 
 
+
+     //filtro producto por codigo
+    public static function filterRAW($codigo ,$nombre, $categoria,$alarma){
+
+
+      $query=null;
+
+     if($codigo!=null){
+        $query = 'codigo='."'$codigo'";
+     }; 
+     
+     if($nombre!=null){
+        if ($query==null) {
+            $query='nombre='."'$nombre'";
+        }else{
+            $query=$query.'and nombre='."'$nombre'";
+        }
+     };
+
+     if($categoria!=null){
+      if ($query==null) {
+            $query='categoria='."'$categoria'";
+        }else{
+          $query=$query.'and categoria='."'$categoria'";
+        }
+     };
+
+     if($alarma!=null){
+       if ($query==null) {
+              $query=$query.'alarma='."'$alarma'";
+          }else{
+            $query=$query.'and alarma='."'$alarma'";
+          }
+     };
+     if ($query==null) {
+       return Producto::all();
+     }else{
+     return Producto::whereRAW($query)->get();
+     }
+                
+    }
+
+
 }
 
 
