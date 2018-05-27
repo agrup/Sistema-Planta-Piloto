@@ -6,7 +6,7 @@
 	@include("elementosComunes.cierreTitulo")
 	<div class="p-0">
     <div class="container">
-      <form class="form-group" id="myform" enctype='application/json' >
+      <form class="form-group" id="myform"  >
       	 {{ csrf_field() }}
         <div class="row">
           <div class="col">
