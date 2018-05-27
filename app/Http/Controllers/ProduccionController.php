@@ -225,10 +225,15 @@ class ProduccionController extends Controller
         }else{
             $cantidad=$loteObj->cantidadElaborada;
         }
+
         $lote= ['id'=>$loteObj->id,
             'cantidad'=>$cantidad,
             'tipoLote'=>TipoLote::toString($loteObj->tipoLote),
+            'fecha'=>$loteObj->fechaInicio,
+            'tipoTp'=>$loteObj->tipoTP
         ];
+        //$lote=$loteObj->toArray();
+
         $formulacion = $producto->getFormulacion($cantidad);
         $trazabilidad = GestorLote::getTrazabilidadLote($id);
         return view('produccion.modificarProductoIniciado')
