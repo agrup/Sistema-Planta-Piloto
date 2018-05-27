@@ -6179,3 +6179,12 @@ html, body {
     height: 100%;
     content: ' ';
     background: linear-gradient(white, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)); }
+
+.modal{
+  background-color: #6c757d;
+  height: 500px;
+  width: 800px;
+  margin-left: 25vw;
+  margin-top: 5vw;
+
+}
