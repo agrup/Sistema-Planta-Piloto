@@ -48,7 +48,7 @@ $(document).ready(function(){
             		$(td3).attr("id",index+"c");//cantidad
             		$(td3).attr("name","cantidad");
             		
-
+            		
             		td4.setAttribute("id",item['tipoUnidad']+index);//tu
             		tr.append(td1,td2,td3,td4);
 
