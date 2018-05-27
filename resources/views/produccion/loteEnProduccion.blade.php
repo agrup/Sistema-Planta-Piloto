@@ -7,7 +7,7 @@
 
 		@include('elementosComunes.aperturaTabla')    
 			<thead><tr><th>Lote</th> 
-						<th>Descripción</th> 
+						<th>Nombre</th> 
 						<th>Cantidad</th> 
 						<th>Estado</th> 						
 						<th></th>
@@ -33,20 +33,31 @@
 			<thead><tr><th>Insumo</th> 
 						<th>Cantidad Teórica</th> 
 						<th>Cantidad Utilizada</th> 
+						<th>Nro de Lote</th>
 					</tr>
 			</thead>
 			<tbody>
+		
 			@foreach ($formulacion as $insumo)
-									
+					<?php $b=false;?>				
 					<tr>
 						<td>{{$insumo['nombre']}}</td>
 
 						<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
 						@for ($i = 0; $i < count($trazabilidad); $i++)
+
 							@if ($trazabilidad[i]['nombreProducto']==$insumo['nombre'])
-								<td>{{ $trazabilidad[i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>		
+							<?php $b=true;?>
+								<td>{{ $trazabilidad[i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>	
+								<td>{{$trazabilidad[i]['numeroLote']}}</td>
+								@break		
 							@endif
+	
 						@endfor
+						@if ($b==false)
+							<td>0 {{ $insumo['tipoUnidad'] }}</td>
+							<td>-</td>
+						@endif 
 						
 
 					</tr>
@@ -55,21 +66,27 @@
 			</tbody>
 		@include('elementosComunes.cierreTabla')    
 
-		<form>
+		
 			@switch($lote['tipoLote'])
 				@case('planificacion')
-					<button class="btn btn-primary" formaction="/produccion/iniciarPlanificado/{{ $lote['id'] }}">Iniciar</button>
+					<form action="/produccion/iniciarPlanificado/{{$lote['id']}}" method="get">
+					<button type="submit"  class="btn btn-primary" >Iniciar</button>
+					</form>
 					@break
 				@endcase
 
 				@case('iniciado')
-					<button class="btn btn-primary">Modificar</button>
+				<form action="/produccion/modificarIniciado/{{$lote['id']}}" method="get">
+					<button type="submit" class="btn btn-primary">Modificar</button>
 					<button class="btn btn-primary">Maduración</button>
 					<button class="btn btn-primary">Finalizar</button>
+				</form>
+					
+
 					@break
 				@endcase
 
-				@case('maduracion')
+				@case('maduracion')$lote['id']
 					<button class="btn btn-primary">Modificar</button>
 					<button class="btn btn-primary">Finalizar</button>
 					@break
@@ -82,8 +99,7 @@
 
 				 @default
 	        		<span>Something went wrong, please try again</span>
-	       </form>
-
+	       
 
 
 		@endswitch
