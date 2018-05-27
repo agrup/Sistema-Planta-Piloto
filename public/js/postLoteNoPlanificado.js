@@ -6,24 +6,18 @@ $(document).ready(function() {
           //armo un JSON con los datos que voy a enviar
 
           var data = Array();
-          $("tr").each(function(i, v){
+          $("tr.trConsumo").each(function(i, v){
                     data[i] = Array();
                     var idTr = $(this).id;
                     if(idTr !== "trhformulacion"){
-                        $(this).children('td').each(function(ii, vv){
+                        $(this).find('.interes').each(function(ii, vv){
 
 
-                           data[i][ii] =$(this).children('input[type=text]').val();
-                            //  alert(data);  
-                          }
-                          else{
-                            data[i][ii] = $(this).text();
-                           
-                          }
-                         // alert("ok");
+                           data[i][ii] =$(this).val();
+
                     }); 
                   }
-                })
+                });
 
           var producto=  [$('#producto').val(),$('#cantidad').val(),$('#fecha').val(),$('#asignatura').val()
           ];
@@ -39,8 +33,7 @@ $(document).ready(function() {
               
           });*/
          
-         
-        
+
 
 
 
