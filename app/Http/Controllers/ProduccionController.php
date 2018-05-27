@@ -202,6 +202,36 @@ class ProduccionController extends Controller
 
 
     }
+    public static function showModificarIniciado(Request $request,$id){
+          $loteObj = Lote::find($id);
+        if ($loteObj!=null) {
+            $producto = Producto::find($loteObj->producto_id);
+        }
+        if ($loteObj->tipoLote == TipoLote::FINALIZADO) {
+            $cantidad=$loteObj->cantidadFinal;
+        }else{
+            $cantidad=$loteObj->cantidadElaborada;
+        }
+
+        $lote= ['id'=>$loteObj->id,
+            'cantidad'=>$cantidad,
+            'tipoLote'=>TipoLote::toString($loteObj->tipoLote),
+            'fecha'=>$loteObj->fechaInicio,
+            'tipoTp'=>$loteObj->tipoTP,
+            'asignatura'=>$loteObj->asignatura
+        ];
+        //$lote=$loteObj->toArray();
+
+        $formulacion = $producto->getFormulacion($cantidad);
+        $trazabilidad = GestorLote::getTrazabilidadLote($id);
+        return view('produccion.modificarProductoIniciado')
+            ->with(compact('producto'))
+            ->with(compact('formulacion'))
+            ->with(compact('lote'))
+            ->with(compact('trazabilidad'));
+
+        
+    }
 
 
 

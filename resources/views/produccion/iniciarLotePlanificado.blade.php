@@ -53,7 +53,7 @@
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Asignatura</label>
-              <input type="text" class="form-control" id="asignatura"> </div>
+              <input type="text" class="form-control" id="asignatura" > </div>
           </div>
         </div>
           </form>
@@ -80,8 +80,8 @@
                   
                     <td>{{$value['nombre']}}</td>
                     <td><input type="text"></td>
-                    <td><input type=""  placeholder="Cantidad Teorica: {{$value['tipoUnidad']}}"></td>
-                    <td>{{$value['cantidad']}}</td>
+                    <td><input type=""  placeholder="Cantidad Teorica:{{$value['cantidad']}}"></td>
+                    <td> {{$value['tipoUnidad']}}</td>
                   </tr>
                 @endforeach
               </tbody>
@@ -95,5 +95,5 @@
 @endsection
  @section('script')
  <script type="text/javascript" src="{{asset('js/getFormulacionProductoPlanificado.js')}}"></script>
-
- @endsection
+<script type="text/javascript" src="{{asset('js/postLoteNoPlanificado.js')}}"></script>
+ @endsection  
