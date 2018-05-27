@@ -238,7 +238,7 @@ class GestorStock
         if($banderaRecalcular){
             self::recalcularStockReal($nuevoMov);
         }
-        //TODO
+        
     }
     //MOVIMIENTOS DE SALIDA
     //REALES
