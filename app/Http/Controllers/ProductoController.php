@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Producto;
 class ProductoController extends Controller
 {
     
@@ -19,17 +19,23 @@ class ProductoController extends Controller
 		return view('administracion.buscarInsumoProducto')->with(compact('insumoProducto'));
 	}
 
-	public static function  search($busqueda)
+	public function  search()
 	{
+		
 		 $isumoProducto = 'producto';	
 		 $codigo=request()->input('codigo');
 		 $nombre=request()->input('nombre');
 		 $categoria=request()->input('categoria');
 		 $alarma=request()->input('alarma');
+		 if ($alarma == 'true') {
+		 	$alarma=true;
+		 }else{
+		 	$alarma=false;
+		 }
 		 
-		$productos= (Producto::filterRAW($codigo,$nombre,$categoria,$alarma))->toArray();
-		var_dump($producto);
-		return  response()->json($productos);
+		$productos= Producto::filterRAW($codigo,$nombre,$categoria,$alarma);
+
+		return  \Response::json($productos);
 
 
 

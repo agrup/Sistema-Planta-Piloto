@@ -1,6 +1,7 @@
 @extends('layouts.layoutPrincipal' )
 
 @section('section')
+
 		@include('elementosComunes.aperturaTitulo')
 			@if ($insumoProducto=='producto')			
 				Administración de Productos
@@ -28,8 +29,8 @@
 			        <div class="form-group">
 			            <label>Alarma</label>
 			            <select name="alarma" id="alarma">
-	  						<option value="activa">Activa</option>
-	  						<option value="inactiva">Inactiva</option>  						
+	  						<option value="True">Activa</option>
+	  						<option value="False">Inactiva</option>  						
 						</select>
 			        </div>
 		    	</div>
@@ -60,35 +61,36 @@
 					@include('elementosComunes.cierreTitulo')
 
 					    <form class="">
+
 					    	<div class="row">
 						    	<div class="col-md-6">
 						            <div class="form-group">
 						              <label>Nombre</label>
-						              <input type="email" class="form-control"> </div>
+						              <input type="email" class=""> </div>
 						            <div class="form-group">
 						              <label>Descripcion</label>
-						              <input type="password" class="form-control"> </div>
+						              <input type="password" class=""> </div>
 						            <div class="form-group">
 						              <label for="exampleInputEmail1">Categoría</label>
-						              <input type="text" class="form-control" id="inlineFormInput"> </div>
+						              <input type="text" class="" > </div>
 						            <div class="form-group">
 						              <label for="exampleInputEmail1">Estado</label>
-						              <input type="text" class="form-control" id="inlineFormInput"> </div>
+						              <input type="text" class=""> </div>
 						    
 						        </div>
 						        <div class="col-md-6">
 						            <div class="form-group">
 						              <label for="exampleInputEmail1">Tipo de Unidad</label>
-						              <input type="text" class="form-control" id="inlineFormInput"> </div>
+						              <input type="text" class="form-control" > </div>
 						            <div class="form-group">
 						              <label for="exampleInputEmail1">Alarma (Activa o Inactiva)</label>
-						              <input type="text" class="form-control" id="inlineFormInput"> </div>
+						              <input type="text" class="form-control" > </div>
 						            <div class="form-group">
 						              <label for="exampleInputEmail1"> Cantidad para aviso de falta de stock</label>
-						              <input type="text" class="form-control" id="inlineFormInput"> </div>
+						              <input type="text" class="form-control" > </div>
 						            <div class="form-group">
 						              <label for="exampleInputEmail1"> Cantidad para aviso de falta de stock crítica</label>
-						              <input type="text" class="form-control" id="inlineFormInput"> </div>
+						              <input type="text" class="form-control" > </div>
 						        </div>
 					        </div>
 
