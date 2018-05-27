@@ -101,7 +101,9 @@ class ProduccionController extends Controller
         //obtemgo el produco de ese lote
 
         $loteObj = Lote::find($id);
-        $producto = Producto::find($loteObj->producto_id);
+        if ($loteObj!=null) {
+            $producto = Producto::find($loteObj->producto_id);
+        }
         if ($loteObj->tipoLote == TipoLote::FINALIZADO) {
             $cantidad=$loteObj->cantidadFinal;
         }else{
@@ -118,6 +120,43 @@ class ProduccionController extends Controller
             ->with(compact('formulacion'))
             ->with(compact('lote'))
             ->with(compact('trazabilidad'));
+
+
+
+        /*$productoObj = GestorLote::getProdPorLote($id);
+        //lo paso a arraay
+        if ($productoObj!=null) {
+           
+            $producto = $productoObj->productoToArray();
+        }
+        
+        //$loteObj = GestorLote::getLoteById($id);
+
+        if ($loteObj->tipoLote == TipoLote::FINALIZADO) {
+            $cantidad=$loteObj->cantidadFinal;    
+        }else{
+            $cantidad=$loteObj->cantidadElaborada;  
+        }
+        
+
+
+        // creo el array del lote al que se le busca la formulacion
+        $lote= ['id'=>$loteObj->id,
+                'cantidad'=>$cantidad,
+                'tipoLote'=>TipoLote::toString($loteObj->tipoLote),
+        ];
+        
+
+        $trazabilidad = GestorLote::getTrazabilidadLote($id);
+        $formulacion = 
+
+        return view('produccion.loteEnProduccion')
+                                    ->with(compact('producto'))
+
+                                    ->with(compact('formulacion'))    
+                                    ->with(compact('lote'));
+                                    ->with(compact('trazabilidad'));*/
+
 
     }
 
