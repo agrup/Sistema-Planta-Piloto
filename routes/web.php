@@ -89,4 +89,8 @@ Route::get('/test', function() {
 	
 });
 
+//Administracion de productoInsumos
+Route::get('/productos/administracionProductos', 'ProductoController@administracionProductos');
+Route::get('/productos/altaProducto', 'ProductoController@altaProducto');
+Route::get('/productos/altaInsumo', 'ProductoController@altaInsumo');
 

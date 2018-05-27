@@ -50,8 +50,51 @@
         @include('elementosComunes.cierreTabla')
 
         @if ($insumoProducto=='producto')
-        	@include('elementosComunes.aperturaBoton')
-					<a href="">Agregar Producto</a>
+        	@include('elementosComunes.aperturaBoton')        		
+				<a href="#popAgregar" href="#myPopup" data-rel="popup">Agregar Producto</a>
+				<div data-role="popup" id="popAgregar" class="ui-content">
+					@include('elementosComunes.aperturaTitulo')
+					Agregar Producto
+					@include('elementosComunes.cierreTitulo')
+
+					    <form class="">
+					    	<div class="col-md-6">
+					            <div class="form-group">
+					              <label>Nombre</label>
+					              <input type="email" class="form-control"> </div>
+					            <div class="form-group">
+					              <label>Descripcion</label>
+					              <input type="password" class="form-control"> </div>
+					            <div class="form-group">
+					              <label for="exampleInputEmail1">Categoría</label>
+					              <input type="text" class="form-control" id="inlineFormInput"> </div>
+					            <div class="form-group">
+					              <label for="exampleInputEmail1">Estado</label>
+					              <input type="text" class="form-control" id="inlineFormInput"> </div>
+					    
+					        </div>
+					        <div class="col-md-6">
+					            <div class="form-group">
+					              <label for="exampleInputEmail1">Tipo de Unidad</label>
+					              <input type="text" class="form-control" id="inlineFormInput"> </div>
+					            <div class="form-group">
+					              <label for="exampleInputEmail1">Alarma (Activa o Inactiva)</label>
+					              <input type="text" class="form-control" id="inlineFormInput"> </div>
+					            <div class="form-group">
+					              <label for="exampleInputEmail1"> Cantidad para aviso de falta de stock</label>
+					              <input type="text" class="form-control" id="inlineFormInput"> </div>
+					            <div class="form-group">
+					              <label for="exampleInputEmail1"> Cantidad para aviso de falta de stock crítica</label>
+					              <input type="text" class="form-control" id="inlineFormInput"> </div>
+
+
+					        </div>
+						    @include('elementosComunes.aperturaBoton')
+							          <a class="btn btn-primary" href="#">Guardar</a>
+							@include('elementosComunes.cierreBoton')
+
+					              
+						</form>
 	        @include('elementosComunes.cierreBoton')
 	        @include('elementosComunes.aperturaBoton')
 					<a href="">Modificar Producto</a>

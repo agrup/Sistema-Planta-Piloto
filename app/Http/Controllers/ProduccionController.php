@@ -142,11 +142,6 @@ class ProduccionController extends Controller
 
                                     ->with(compact('lote'));*/
 
-=======
-                                    ->with(compact('formulacion'))    
-                                    ->with(compact('lote'));
-                                    ->with(compact('trazabilidad'));*/
->>>>>>> 20da0e85eb50751c819ef285d749b58c7a016f63
 
     }
 
