@@ -190,6 +190,7 @@ class ProduccionController extends Controller
         var_dump($producto);
         $consumos = $request->input('consumo');
         var_dump($consumos);
+
         return view('welcome');
 
         $data =[];

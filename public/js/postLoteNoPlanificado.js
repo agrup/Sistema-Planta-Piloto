@@ -8,6 +8,7 @@ $(document).ready(function() {
           var data = Array();
           $("tr.trConsumo").each(function(i, v){
                     data[i] = Array();
+
                     var idTr = $(this).id;
                     if(idTr !== "trhformulacion"){
                         $(this).find('.interes').each(function(ii, vv){
@@ -15,11 +16,12 @@ $(document).ready(function() {
 
                            data[i][ii] =$(this).val();
 
+
                     }); 
                   }
                 });
 
-          var producto=  [$('#producto').val(),$('#cantidad').val(),$('#fecha').val(),$('#asignatura').val()
+          var producto=  [$('#producto').val(),$('#cantidad').val(),$('#fecha').val(),$('#tp').val(),$('#asignatura').val(),
           ];
           
            /*var producto = JSON.stringify({
@@ -27,20 +29,17 @@ $(document).ready(function() {
               "cantidad":$('#cantidad').val(),
               "fecha":$('#fecha').val(),data
               "tp":$('#tp').val(),
-
               "asignatura":$('#asignatura').val(),
-              "consumo":JSON.stringify(data)
+              "consumo":JSON.stringify(data),
               
           });*/
          
 
 
 
-
           $('<input type="hidden" name="producto" />').val(producto).appendTo('#myform');
           $('<input type="hidden" name="consumo" />').val(data).appendTo('#myform');
         //  $("#myform").submit();
-
           
     });
      
