@@ -30,7 +30,8 @@ $(document).ready(function(){
 			
             	resultado=result;
             	console.log(resultado);
-            	resultado.forEach(function(item,index) {
+
+            	resultado.forEach(function(item,index) { //trato al json como un array enumerado por index
             		
             		//creo la tabla
             	

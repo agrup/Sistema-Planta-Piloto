@@ -7,7 +7,7 @@
 
 		@include('elementosComunes.aperturaTabla')    
 			<thead><tr><th>Lote</th> 
-						<th>Descripción</th> 
+						<th>Nombre</th> 
 						<th>Cantidad</th> 
 						<th>Estado</th> 						
 						<th></th>
@@ -33,20 +33,31 @@
 			<thead><tr><th>Insumo</th> 
 						<th>Cantidad Teórica</th> 
 						<th>Cantidad Utilizada</th> 
+						<th>Nro de Lote</th>
 					</tr>
 			</thead>
 			<tbody>
+		
 			@foreach ($formulacion as $insumo)
-									
+					<?php $b=false;?>				
 					<tr>
 						<td>{{$insumo['nombre']}}</td>
 
 						<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
 						@for ($i = 0; $i < count($trazabilidad); $i++)
+
 							@if ($trazabilidad[i]['nombreProducto']==$insumo['nombre'])
-								<td>{{ $trazabilidad[i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>		
+							<?php $b=true;?>
+								<td>{{ $trazabilidad[i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>	
+								<td>{{$trazabilidad[i]['numeroLote']}}</td>
+								@break		
 							@endif
+¿		
 						@endfor
+						@if ($b==false)
+							<td>0 {{ $insumo['tipoUnidad'] }}</td>
+							<td>-</td>
+						@endif 
 						
 
 					</tr>
