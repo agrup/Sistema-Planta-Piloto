@@ -2,8 +2,15 @@
 
 namespace App;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use App\Lote;
+
+/**
+ * Producto
+ * @mixin Eloquent
+ *
+ * */
 class Producto extends Model
 {
 
@@ -42,7 +49,7 @@ class Producto extends Model
       }
 
     /**
-     * @return array [ ['id'=>, 'cantidad'=> ] .. ]
+     * @return array [ ['id'=>, 'cantidad'=>, 'cantidadProducto'=> ] .. ]
      */
     public function getIngredientes(){
            $ingredientes = $this->formulacion();
@@ -80,10 +87,29 @@ class Producto extends Model
               ];
      }
 
+    /**
+     * @param int $cantidad a realizar
+     * @return array =  [ ['codigo
+     */
+    public function getFormulacion(int $cantidad)
+     {
+         $formulacion = [];
+         $ingredientes = $this->getIngredientes();
+         foreach ($ingredientes as $ing){
+            $arrAux=[];
+            $productoAux = Producto::find($ing['id']);
+            $arrAux['id']=$ing['id'];
+            $arrAux['codigo']=$productoAux->codigo;
+            $arrAux['nombre']=$productoAux->nombre;
+            $arrAux['tipoUnidad']=$productoAux->tipoUnidad;
+            $arrAux['cantidad'] = $cantidad * $ing['cantidad'] / $ing ['cantidadProducto'];
+            array_push($formulacion,$arrAux);
+        }
+        return $formulacion;
+     }
+
 
 
 }
-# consulta en tinker
 
-#>>> App\Producto::find(6)->formulacion()->attach(4,['cantidad'=>'4','cantidadProducto'=>'12','ingrediente_id'=>'2'])
 

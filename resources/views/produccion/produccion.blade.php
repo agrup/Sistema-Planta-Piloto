@@ -18,7 +18,7 @@
 						<th>Cantidad</th> 
 						<th>Estado</th> 
 						<th>Asignatura</th>
-						<th>Iniciar</th>
+						
 						<th></th></tr>
 			</thead>			
 			<tbody>
@@ -29,9 +29,6 @@
 		        		<td>{{ $lote['cantidad'] }} {{ $lote['tu'] }}</td>
 		        		<td>{{ $lote['estado'] }}</td>
 		        		<td></td>
-		        		<td>@if ($lote['estado']=="planificacion")
-		        		  <a href="/produccion/iniciarPlanificado/2"><img src="img/iniciar.png" width="40" height="40"></a>
-		        		@endif</td>
 
 		        		<td>@if ($lote['asignatura']!= null)						
 								{{ $lote['asignatura'] }}
@@ -53,13 +50,15 @@
 			@include('elementosComunes.aperturaFormInline')
 			<div class="row">
 				
-					<form class="form-inline" id="form" name="form" action="./loteEnProduccion" method="GET" enctype="multipart/form-data">
-						{{csrf_field()}}
+					<!--<form class="form-inline" id="formBuscarLote" name="form"  method="GET" enctype="multipart/form-data">
+						
 			          
 							<input type="text" class="form-control" placeholder="Número Lote" id='lote' name='lote' required> 
-							<input  type="submit" class="btn btn-primary" value="Buscar Lote"> 
+							<button  class="btn btn-primary" id="buscarLote">Buscar Lote</button>
 						
-					</form>				
+					</form>		-->
+					<input type="text" class="form-control" placeholder="Número Lote" id='lote' name='lote' required> 	
+					<button  class="btn btn-primary" id="buscarLote">Buscar Lote</button>	
 				
 				<div class="col">
 					<a href="/produccion/loteNoPlanificado" class="btn btn-primary">Nuevo Lote</a>
@@ -68,3 +67,6 @@
 
 		@include('elementosComunes.cierreFormInline')
 @endsection
+ @section('script')
+  <script type="text/javascript" src="{{asset('js/buscarLote.js')}}"></script>
+ @endsection

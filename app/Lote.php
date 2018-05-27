@@ -2,21 +2,29 @@
 
 namespace App;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use App\Producto;
 
+/**
+ * Lote
+ * @mixin Eloquent
+ *
+ * */
 
 class Lote extends Model
 {
 
     protected $guarded=[];
 
-	public function producto(){
+
+
+    public function producto(){
 		return $this->belongsTo('App\Producto','producto_id')->first();
 	}
 
 
-    public static function getNameProdByIdLote()
+    public function getNameProd()
     {
         return (Producto::find($this->producto_id))->nombre;
     }
@@ -43,9 +51,20 @@ class Lote extends Model
         ]	;
 
 	}
-    
 
 
+    /**
+     * Elimina un lote
+     * @param int $idLote
+     */
+    public static function eliminarLote(int $idLote)
+    {
+        $lote=null;
+        if(($lote=Lote::find($idLote))!=null){
+            $lote->delete();
+        }
+
+    }
 
 
 }

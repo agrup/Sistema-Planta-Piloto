@@ -31,20 +31,52 @@
 
 		@include('elementosComunes.aperturaTabla')    
 			<thead><tr><th>Insumo</th> 
-						<th>Cantidad</th> 
+						<th>Cantidad Teórica</th> 
+						<th>Cantidad Utilizada</th> 
 					</tr>
 			</thead>
 			<tbody>
 			@foreach ($formulacion as $insumo)
 									
 					<tr>
-						<td>{{$insumo['nombreProducto']}}</td>
-						<td>{{$insumo['cantidad']}}{{ $insumo['tipoUnidad'] }}</td>
+						<td>{{$insumo['nombre']}}</td>
+						<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
+						<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
 					</tr>
 				
 			@endforeach
 			</tbody>
 		@include('elementosComunes.cierreTabla')    
 
+		@switch($lote['tipoLote'])
+			@case('planificacion')
+				<button class="btn btn-primary">Iniciar</button>
+				@break
+			@endcase
+
+			@case('iniciado')
+				<button class="btn btn-primary">Modificar</button>
+				<button class="btn btn-primary">Maduración</button>
+				<button class="btn btn-primary">Finalizar</button>
+				@break
+			@endcase
+
+			@case('maduracion')
+				<button class="btn btn-primary">Modificar</button>
+				<button class="btn btn-primary">Finalizar</button>
+				@break
+			@endcase
+
+			@case('finalizado')
+				<button class="btn btn-primary">Modificar Finalizado</button>
+				@break
+			@endcase
+
+			 @default
+        		<span>Something went wrong, please try again</span>
+
+
+
+		@endswitch
 @endsection
 
