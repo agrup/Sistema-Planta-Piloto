@@ -134,29 +134,31 @@ class ProduccionController extends Controller
 
     }
     public static function newLoteNoPlanificado(Request $request){
-        $json = $request->input('producto');
+
+        /*$json = $request->input('json');
         var_dump($json);
-        print_r($json);
+        return view('welcome');*/
 
-
-        /*//crear el lote
+        $data =[];
+        $fecha = $request->input('json.fecha');
+        //crear el lote
         $datosLote=[
-            'producto_id'=>$request->input(),
-            'tipoLote'=>TipoLote::INICIADO,
-            'fechaInicio'=>'',
-            'cantidadElaborada'=>'',
-            'tipoTp'=>'',
-            'asignatura'=>'',
-
+            'producto_id'=>$request->input('json.producto'),
+            'fechaInicio'=>$fecha,
+            'cantidadElaborada'=>$request->input('json.cantidad'),
+            'tipoTP'=>$request->input('json.tipoTP'),
+            'asignatura'=>$request->input('json.asignatura'),
         ];
 
 
-        $lote = Lote::crearLoteNoPlanificado();*/
+        $lote = Lote::crearLoteNoPlanificado($datosLote);
         //crear los consumos
+        // TODO
 
+        $data['lotes']=self::getArrayLotes($fecha);
+        $data['fecha']=$fecha;
+        return view('produccion.produccion',compact('data'));
 
-
-        return view('welcome');
 
     }
 
