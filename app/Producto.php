@@ -111,7 +111,6 @@ class Producto extends Model
 
 
 
-
      //filtro producto por codigo
     public static function filterRAW($codigo ,$nombre, $categoria,$alarma){
 

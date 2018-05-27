@@ -1,39 +1,19 @@
-$(document).ready(function(){
-	var resultado;
-	$("#theadformulacion").hide();
-	$("#trhformulacion").hide();
-	$("#thinsumo").hide();
-	$("#thlote").hide();
-	$("#thcantidad").hide();
-	$("#thtu").hide();
-
-
+$(document).ready(function() {
 	$("#btnformulacion").click(function(){
-		
+		//alert("aSome")
+		$("#tbodyformulacion").remove();
 		var cantidad=$("#cantidad").val();
-		var id=$(":selected").attr('value');
-		$("#theadformulacion").show();
-		$("#trhformulacion").show();
-		$("#thinsumo").show();
-		$("#thlote").show();
-		$("#thcantidad").show();
-		$("#thtu").show();
-		
-	if($("#trformulacion").length>0){
-		$("#trformulacion").remove(); //saco la grilla
-		$("td").remove();
-	}
-      alert(id+cantidad);
-		//para pedir la formulacion
-  		 $.getJSON("/produccion/formulacion",{id,cantidad},function(result){
-
-			
+		var id=$("#idlote").attr("value");
+		alert(id+cantidad);
+		$.getJSON("/produccion/formulacion",{id,cantidad},function(result){
+					
             	resultado=result;
             	console.log(resultado);
             	resultado.forEach(function(item,index) {
             		
             		//creo la tabla
-            	
+            		var tbody=document.createElement("tbody");
+            			tbody.setAttribute("id","tbodyformulacion");
             		var tr=document.createElement("tr");
             			tr.setAttribute("id","trformulacion");
             		var td1=document.createElement("td");
@@ -50,26 +30,15 @@ $(document).ready(function(){
             		
             		
             		td4.setAttribute("id",item['tipoUnidad']+index);//tu
-            		tr.append(td1,td2,td3,td4);
+            		tr.append(td1,td2,td3,td4);	
+            		tbody.append(tr);
+            		
 
-            		$("#tbodyformulacion").append(tr);
+            		$("#tformulacion").append(tbody);
 		  			$("#"+item['codigo']).html(item['nombre']); 
 					$("#"+item['tipoUnidad']+index).html(item['tipoUnidad']); 
 		  			
-		  		});
-            	//$("#alert").html(insumo.codigo);
-            });
-  		 
-		  		
+		  		});	
 		});
-
-
-	$("#selectProducto").change(function(){   //cambiar el tipo de Unidad dependiendo el producto
-		$('option:selected', this).attr('mytag');
-		var tu=$('option:selected', this).attr("name");
-		console.log(tu);
-		$("#tipoUnidad").attr({value:tu});	
-
 	});
-		
-});// post a /produccion/lotenoplanificado
+});
