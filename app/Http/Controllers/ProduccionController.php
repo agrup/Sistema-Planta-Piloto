@@ -147,9 +147,11 @@ class ProduccionController extends Controller
     }
     public static function newLoteNoPlanificado(Request $request){
 
-        /*$json = $request->input('json');
+        $json = $request->input('producto');
         var_dump($json);
-        return view('welcome');*/
+        $json2 = $request->input('consumo');
+        var_dump($json2);
+        return view('welcome');
 
         $data =[];
         $fecha = $request->input('json.fecha');
