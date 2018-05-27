@@ -19,17 +19,24 @@ class ProductoController extends Controller
 		return view('administracion.buscarInsumoProducto')->with(compact('insumoProducto'));
 	}
 
-	public static function  search($busqueda)
+	public static function  search()
 	{
-		 $isumoProducto = 'producto';	
+		$response = array(
+			'c' => 'success',
+            'status' => 'success',
+            'msg' => 'Setting created successfully',
+        );
+        return \Response::json($response);
+		/* $isumoProducto = 'producto';	
 		 $codigo=request()->input('codigo');
 		 $nombre=request()->input('nombre');
 		 $categoria=request()->input('categoria');
 		 $alarma=request()->input('alarma');
 		 
 		$productos= (Producto::filterRAW($codigo,$nombre,$categoria,$alarma))->toArray();
-		var_dump($producto);
-		return  response()->json($productos);
+		//var_dump($productos);		
+
+		return $productos;*/
 
 
 
