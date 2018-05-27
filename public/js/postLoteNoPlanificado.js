@@ -28,6 +28,9 @@ $(document).ready(function() {
                     }); 
                   }
                 })
+
+          var producto=   Array();
+          
            var producto = JSON.stringify({
               "producto": $('#producto').val(),
               "cantidad":$('#cantidad').val(),

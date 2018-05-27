@@ -109,9 +109,7 @@ class Producto extends Model
      }
 
 
-     public function todos (){
-      return 
-     }
+    
 
 
      //filtro producto por codigo
