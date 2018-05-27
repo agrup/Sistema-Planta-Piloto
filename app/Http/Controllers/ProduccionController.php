@@ -107,40 +107,6 @@ class ProduccionController extends Controller
             ->with(compact('lote'))
             ->with(compact('trazabilidad'));
 
-
-        /*$productoObj = GestorLote::getProdPorLote($id);
-        //lo paso a arraay
-        if ($productoObj!=null) {
-           
-            $producto = $productoObj->productoToArray();
-        }
-        
-        //$loteObj = GestorLote::getLoteById($id);
-
-        if ($loteObj->tipoLote == TipoLote::FINALIZADO) {
-            $cantidad=$loteObj->cantidadFinal;    
-        }else{
-            $cantidad=$loteObj->cantidadElaborada;  
-        }
-        
-
-
-        // creo el array del lote al que se le busca la formulacion
-        $lote= ['id'=>$loteObj->id,
-                'cantidad'=>$cantidad,
-                'tipoLote'=>TipoLote::toString($loteObj->tipoLote),
-        ];
-        
-
-        $trazabilidad = GestorLote::getTrazabilidadLote($id);
-        $formulacion = 
-
-        return view('produccion.loteEnProduccion')
-                                    ->with(compact('producto'))
-                                    ->with(compact('formulacion'))    
-                                    ->with(compact('lote'));
-                                    ->with(compact('trazabilidad'));*/
-
     }
 
     public static function loteNoPlanificado(){
@@ -167,9 +133,30 @@ class ProduccionController extends Controller
        // return response("ok");
 
     }
-    public static function newLoteNoPlanificado(){
+    public static function newLoteNoPlanificado(Request $request){
+        $json = $request->input('producto');
+        var_dump($json);
+        print_r($json);
 
-        return view('produccion.produccion');
+
+        /*//crear el lote
+        $datosLote=[
+            'producto_id'=>$request->input(),
+            'tipoLote'=>TipoLote::INICIADO,
+            'fechaInicio'=>'',
+            'cantidadElaborada'=>'',
+            'tipoTp'=>'',
+            'asignatura'=>'',
+
+        ];
+
+
+        $lote = Lote::crearLoteNoPlanificado();*/
+        //crear los consumos
+
+
+
+        return view('welcome');
 
     }
 

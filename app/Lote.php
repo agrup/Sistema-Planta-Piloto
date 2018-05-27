@@ -17,6 +17,24 @@ class Lote extends Model
 
     protected $guarded=[];
 
+    /**
+     * @param array $datos
+     * @return $this|Model
+     */
+    public static function crearLoteNoPlanificado(array $datos)
+    {
+        $datosLote=[
+            'producto_id'=>$datos['producto_id'],
+            'tipoLote'=>TipoLote::INICIADO,
+            'fechaInicio'=>$datos['fechaInicio'],
+            'cantidadElaborada'=>$datos['cantidadElaborada'],
+            'tipoTP'=>$datos['tipoTP'],
+        ];
+        if($datos['tipoTP']==true){
+            $datosLote['asignatura'] = $datos['asignatura'];
+        }
+        return Lote::create($datosLote);
+    }
 
 
     public function producto(){
