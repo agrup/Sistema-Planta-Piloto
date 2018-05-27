@@ -79,7 +79,15 @@ class ProduccionController extends Controller
     }
 
     public static function iniciarPlanificado($id){
-        return view('produccion.iniciarLotePlanificado');
+
+        $lote = Lote::find($id);
+        $formulacion = $lote->gerFormulacion($lote->cantidadElaborada);
+
+
+
+        return view('produccion.iniciarLotePlanificado')
+                                    ->with(compact('lote'))
+                                    ->with(compact('formulacion'))                        ;
     }
 
 
@@ -169,9 +177,32 @@ class ProduccionController extends Controller
        // return response("ok");
 
     }
-    public static function newLoteNoPlanificado(){
+    public static function newLoteNoPlanificado(Request $request){
 
-        return view('produccion.produccion');
+        /*$json = $request->input('json');
+        var_dump($json);
+        return view('welcome');*/
+
+        $data =[];
+        $fecha = $request->input('json.fecha');
+        //crear el lote
+        $datosLote=[
+            'producto_id'=>$request->input('json.producto'),
+            'fechaInicio'=>$fecha,
+            'cantidadElaborada'=>$request->input('json.cantidad'),
+            'tipoTP'=>$request->input('json.tipoTP'),
+            'asignatura'=>$request->input('json.asignatura'),
+        ];
+
+
+        $lote = Lote::crearLoteNoPlanificado($datosLote);
+        //crear los consumos
+        // TODO
+
+        $data['lotes']=self::getArrayLotes($fecha);
+        $data['fecha']=$fecha;
+        return view('produccion.produccion',compact('data'));
+
 
     }
 

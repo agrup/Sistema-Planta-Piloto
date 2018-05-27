@@ -6,7 +6,7 @@
 	@include("elementosComunes.cierreTitulo")
 	<div class="p-0">
     <div class="container">
-      <form class="form-group" id="myform" enctype='application/json' >
+      <form class="form-group" id="myform"   >
       	 {{ csrf_field() }}
         <div class="row">
           <div class="col">
@@ -39,8 +39,8 @@
               <label></label>
               <label for="exampleInputEmail1">Trabajo Práctico</label>
               <select class="form-control" id="tp">
-                <option value="1">Si</option>
-                <option value="2">No</option>
+                <option value="true">Si</option>
+                <option value="false">No</option>
               </select>
             </div>
             <div class="form-group">

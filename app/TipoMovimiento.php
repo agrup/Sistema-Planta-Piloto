@@ -13,7 +13,7 @@ class TipoMovimiento
 {
     const __default = self::SIN_TIPO;
 
-    const SIN_TIPO=-1;
+    const SIN_TIPO= -1;
     const TIPO_MOV_ENTRADA_INSUMO=1;
     const TIPO_MOV_SALIDA_VENTAS=2;
     const TIPO_MOV_SALIDA_EXCEP=3;
