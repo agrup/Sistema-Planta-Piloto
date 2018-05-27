@@ -109,47 +109,48 @@ class Producto extends Model
      }
 
 
-     public function todos (){
-      return 
-     }
 
 
      //filtro producto por codigo
-     public function filterByCodigo (int $codigo)
-     {
-      if ($codigo != null) {
-        return $this->where('codigo','=',$codigo);
-      }else{
-        return $this;
-      }
+    public static function filterRAW($codigo ,$nombre, $categoria,$alarma){
+
+
+      $query=null;
+
+     if($codigo!=null){
+        $query = 'codigo='."'$codigo'";
+     }; 
+     
+     if($nombre!=null){
+        if ($query==null) {
+            $query='nombre='."'$nombre'";
+        }else{
+            $query=$query.'and nombre='."'$nombre'";
+        }
+     };
+
+     if($categoria!=null){
+      if ($query==null) {
+            $query='categoria='."'$categoria'";
+        }else{
+          $query=$query.'and categoria='."'$categoria'";
+        }
+     };
+
+     if($alarma!=null){
+       if ($query==null) {
+              $query=$query.'alarma='."'$alarma'";
+          }else{
+            $query=$query.'and alarma='."'$alarma'";
+          }
+     };
+     if ($query==null) {
+       return Producto::all();
+     }else{
+     return Producto::whereRAW($query)->get();
      }
-     //filtro producto por nombre
-     public function filterByName ($nombre)
-     {
-      if ($nombre != null) {
-        return $this->where('nombre','=',$nombre);
-      }else{
-        return $this;
-      }
-     }   
-     //filtro producto por categoria
-     public function filterByCategoria ($categoria)
-          {
-      if ($categoria != null) {
-        return $this->where('categoria','=',$categoria);
-      }else{
-        return $this;
-      }
-     }
-     //filtro producto por alarma
-     public function filterByAlarma ($alarma)
-          {
-      if ($alarma != null) {
-        return $this->where('alarmaActiva','=',$alarma);
-      }else{
-        return $this;
-      }
-     }
+                
+    }
 
 
 }

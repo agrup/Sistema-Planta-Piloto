@@ -80,14 +80,18 @@ class ProduccionController extends Controller
 
     public static function iniciarPlanificado($id){
 
+
+
         $lote = Lote::find($id);
-        $formulacion = $lote->gerFormulacion($lote->cantidadElaborada);
+        $producto = Producto::find($lote->producto_id);
+        $formulacion = $producto->getFormulacion($lote->cantidadElaborada);
 
 
 
         return view('produccion.iniciarLotePlanificado')
                                     ->with(compact('lote'))
-                                    ->with(compact('formulacion'))                        ;
+                                    ->with(compact('formulacion'))
+                                    ->with(compact('producto'))                        ;
     }
 
 
@@ -97,7 +101,9 @@ class ProduccionController extends Controller
         //obtemgo el produco de ese lote
 
         $loteObj = Lote::find($id);
-        $producto = Producto::find($loteObj->producto_id);
+        if ($loteObj!=null) {
+            $producto = Producto::find($loteObj->producto_id);
+        }
         if ($loteObj->tipoLote == TipoLote::FINALIZADO) {
             $cantidad=$loteObj->cantidadFinal;
         }else{
@@ -114,6 +120,7 @@ class ProduccionController extends Controller
             ->with(compact('formulacion'))
             ->with(compact('lote'))
             ->with(compact('trazabilidad'));
+
 
 
         /*$productoObj = GestorLote::getProdPorLote($id);
@@ -145,10 +152,10 @@ class ProduccionController extends Controller
 
         return view('produccion.loteEnProduccion')
                                     ->with(compact('producto'))
-<<<<<<< HEAD
-                                    ->with(compact('formulacion'))
 
-                                    ->with(compact('lote'));*/
+                                    ->with(compact('formulacion'))    
+                                    ->with(compact('lote'));
+                                    ->with(compact('trazabilidad'));*/
 
 
     }
