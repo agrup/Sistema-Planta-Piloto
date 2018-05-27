@@ -40,43 +40,52 @@
 									
 					<tr>
 						<td>{{$insumo['nombre']}}</td>
+
 						<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
-						<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
+						@for ($i = 0; $i < count($trazabilidad); $i++)
+							@if ($trazabilidad[i]['nombreProducto']==$insumo['nombre'])
+								<td>{{ $trazabilidad[i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>		
+							@endif
+						@endfor
+						
+
 					</tr>
 				
 			@endforeach
 			</tbody>
 		@include('elementosComunes.cierreTabla')    
 
-		@switch($lote['tipoLote'])
-			@case('planificacion')
-				<button class="btn btn-primary">Iniciar</button>
-				@break
-			@endcase
+		<form>
+			@switch($lote['tipoLote'])
+				@case('planificacion')
+					<button class="btn btn-primary" formaction="/produccion/iniciarPlanificado/{{ $lote['id'] }}">Iniciar</button>
+					@break
+				@endcase
 
-			@case('iniciado')
-				<button class="btn btn-primary">Modificar</button>
-				<button class="btn btn-primary">Maduración</button>
-				<button class="btn btn-primary">Finalizar</button>
-				@break
-			@endcase
+				@case('iniciado')
+					<button class="btn btn-primary">Modificar</button>
+					<button class="btn btn-primary">Maduración</button>
+					<button class="btn btn-primary">Finalizar</button>
+					@break
+				@endcase
 
-			@case('maduracion')
-				<button class="btn btn-primary">Modificar</button>
-				<button class="btn btn-primary">Finalizar</button>
-				@break
-			@endcase
+				@case('maduracion')
+					<button class="btn btn-primary">Modificar</button>
+					<button class="btn btn-primary">Finalizar</button>
+					@break
+				@endcase
 
-			@case('finalizado')
-				<button class="btn btn-primary">Modificar Finalizado</button>
-				@break
-			@endcase
+				@case('finalizado')
+					<button class="btn btn-primary">Modificar Finalizado</button>
+					@break
+				@endcase
 
-			 @default
-        		<span>Something went wrong, please try again</span>
+				 @default
+	        		<span>Something went wrong, please try again</span>
+	       </form>
 
 
 
 		@endswitch
 @endsection
-
+		
