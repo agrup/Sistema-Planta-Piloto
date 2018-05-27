@@ -29,23 +29,25 @@ $(document).ready(function() {
                   }
                 })
 
-          var producto=   Array();
+          var producto=  [$('#producto').val(),$('#cantidad').val(),$('#fecha').val(),$('#asignatura').val()
+          ];
           
-           var producto = JSON.stringify({
+           /*var producto = JSON.stringify({
               "producto": $('#producto').val(),
               "cantidad":$('#cantidad').val(),
-              "fecha":$('#fecha').val(),
+              "fecha":$('#fecha').val(),data
               "tp":$('#tp').val(),
               "asignatura":$('#asignatura').val(),
               "consumo":JSON.stringify(data),
               
-          });
+          });*/
          
-         //var consumo=JSON.stringify(data);
+         
+        
 
 
-          $('<input type="hidden" name="producto"/>').val(producto).appendTo('#myform');
-         // $('<input type="hidden" name="consumo"/>').val(consumo).appendTo('#myform');
+          $('<input type="hidden" name="producto" />').val(producto).appendTo('#myform');
+          $('<input type="hidden" name="consumo" />').val(data).appendTo('#myform');
         //  $("#myform").submit();
           
     });
