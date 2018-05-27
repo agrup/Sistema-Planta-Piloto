@@ -29,6 +29,7 @@
 		        		<td>{{ $lote['cantidad'] }} {{ $lote['tipoUnidad'] }}</td>
 		        		<td>{{ $lote['estado'] }}</td>
 
+
 		        		<td>@if ($lote['asignatura']!= null)						
 								{{ $lote['asignatura'] }}
 							@endif</td>

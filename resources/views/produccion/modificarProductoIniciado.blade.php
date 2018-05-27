@@ -72,14 +72,27 @@
                 </tr>
               </thead>
               <tbody>
-                  @foreach($formulacion as $value)
+                  @foreach($formulacion as $insumo)
+                  <?php $b=false;?>
                     <tr>
-                      <td>{{$value['nombre']}}</td>
-                      <td><input type="text" name="" placeholder=""></td>
-                      <td></td>
-                      <td></td>
+                      <td>{{$insumo['nombre']}}</td>
+                      @for ($i = 0; $i < count($trazabilidad); $i++)
+                          @if ($trazabilidad[i]['nombreProducto']==$insumo['nombre'])
+                          <?php $b=true;?>
+                            <td><input type="text" name="" value="{{$trazabilidad[i]['numeroLote']}}"></td>
+                            <td><input type="text" name="" value=" {{ $trazabilidad[i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}"></td> 
+
+                            @break    
+                          @endif
+                      @endfor
+                      @if ($b==false)
+                        <td><input type="" ></td>
+                        <td><input type="" placeholder={{$insumo['cantidad']}}></td>
+                      @endif 
+                    <td>{{ $insumo['tipoUnidad'] }}</td>      
                     </tr>
                   @endforeach
+
               </tbody>
             </table>
             <button type="submit" class="btn btn-primary">Guardar</button>
