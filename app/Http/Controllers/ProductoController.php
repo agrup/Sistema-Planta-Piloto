@@ -8,6 +8,10 @@ class ProductoController extends Controller
 {
     
 
+	public function administracionInsumoProducto(){
+		$insumoProducto = 'producto';
+		return view('administracion.buscarInsumoProducto')->with(compact('insumoProducto'));
+	}
 	public static function  search(array $busqueda)
 	{
 		 $isumoProducto = 'producto';	

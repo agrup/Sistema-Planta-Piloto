@@ -152,9 +152,11 @@ class ProduccionController extends Controller
 
         return view('produccion.loteEnProduccion')
                                     ->with(compact('producto'))
+
                                     ->with(compact('formulacion'))    
                                     ->with(compact('lote'));
                                     ->with(compact('trazabilidad'));*/
+
 
     }
 
