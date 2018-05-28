@@ -24,7 +24,7 @@
             </div>	
             <div class="form-group">
               <label contenteditable="true" for="exampleInputEmail1">Cantidad Elaborada</label>
-              <input id="cantidad" type="text" class="form-control" "> 
+              <input id="cantidad" type="text" class="form-control" >
           </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Unidad</label>
@@ -34,7 +34,7 @@
           <div class="col">
             <div class="form-group">
               <label for="exampleInputEmail1">Fecha Inicio</label>
-              <input type="date" class="form-control" id="fecha"> </div>
+              <input type="date" class="form-control" id="fecha" @if(isset($fecha)) value="{{$fecha}}" @endif> </div>
             <div class="form-group">
               <label></label>
               <label for="exampleInputEmail1">Trabajo Práctico</label>

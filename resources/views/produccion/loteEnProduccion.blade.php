@@ -46,10 +46,10 @@
 						<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
 						@for ($i = 0; $i < count($trazabilidad); $i++)
 
-							@if ($trazabilidad[i]['nombreProducto']==$insumo['nombre'])
+							@if ($trazabilidad[$i]['nombre']==$insumo['nombre'])
 							<?php $b=true;?>
-								<td>{{ $trazabilidad[i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>	
-								<td>{{$trazabilidad[i]['numeroLote']}}</td>
+								<td>{{ $trazabilidad[$i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>
+								<td>{{$trazabilidad[$i]['numeroLote']}}</td>
 								@break		
 							@endif
 	
