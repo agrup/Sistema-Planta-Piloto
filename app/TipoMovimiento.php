@@ -44,7 +44,7 @@ class TipoMovimiento
             case self::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF:
                 return self::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_CUMPLIDO;
             default:
-                return null;
+                return $tipo;
         }
     }
 
@@ -62,7 +62,7 @@ class TipoMovimiento
             case self::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF:
                 return self::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO;
             default:
-                return null;
+                return $tipo;
         }
     }
 

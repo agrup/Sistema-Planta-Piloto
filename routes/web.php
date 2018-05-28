@@ -33,10 +33,12 @@ Route::get('/produccion','ProduccionController@index');
 Route::post('/produccion','ProduccionController@show');
 Route::get('/produccion/loteEnProduccion/{id}','ProduccionController@loteEnProduccion');
 Route::get('/produccion/iniciarPlanificado/{id}','ProduccionController@iniciarPlanificado');
-Route::get('/produccion/loteNoPlanificado', 'ProduccionController@loteNoPlanificado');
+Route::get('/produccion/loteNoPlanificado', 'ProduccionController@indexLoteNoPlanificado');
 Route::post('/produccion/loteNoPlanificado', 'ProduccionController@newLoteNoPlanificado');
 Route::get('/produccion/formulacion','ProduccionController@getFormulacion');
 Route::get('/produccion/loteEnProduccion/{id}' ,'ProduccionController@showLoteInProd');
+Route::get('/produccion/modificarIniciado/{id}','ProduccionController@showModificarIniciado');
+
 
 //Producto
 Route::get('/Administracion/BuscarProducto','ProductoController@search');//busca nsumos y productos a partir de un array de caracteristicas

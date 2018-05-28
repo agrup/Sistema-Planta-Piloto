@@ -36,12 +36,15 @@ $(document).ready(function(){
             	
             		var tr=document.createElement("tr");
             			tr.setAttribute("id","trformulacion");
+					tr.setAttribute('class','trConsumo');
             		var td1=document.createElement("td");
-            		$('<input>').attr({type:'hidden',value: item['id'],id:"idInsumo"}).appendTo(tr);//tiene el id
+            		var inputID= $('<input>').attr({type:'hidden',value: item['id'],id:"idInsumo"}).appendTo(tr);//tiene el id
+					inputID.addClass('interes');
             		var td2=document.createElement("td");            	 	
-            		$('<input>').attr({type:'text',id:"lote"}).appendTo(td2);				
+            		var inputLote=$('<input>').attr({type:'text',id:"lote"}).appendTo(td2);
+                    inputLote.addClass('interes');
             		var td3=document.createElement("td");
-            		$('<input>').attr({type:'text',placeholder:"Cantidad Teorica: "+item['cantidad'],id:"cantidad"}).appendTo(td3);            		
+            		var inputCant =$('<input>').attr({type:'text',placeholder:"Cantidad Teorica: "+item['cantidad'],id:"cantidad"}).appendTo(td3);            	inputCant.addClass('interes');
             		var td4=document.createElement("td");            		
             		td1.setAttribute("id",item['codigo']);//producto
             		$(td2).attr("id",index+"l");//lote

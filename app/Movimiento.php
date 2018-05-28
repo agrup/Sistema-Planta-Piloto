@@ -36,7 +36,7 @@ class Movimiento extends Model
                'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO .
                'or tipo=' . TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS . ')')
            ->orderBy('fecha', 'desc')
-           ->limit(1);
+           ->first();
     }
     /**
      * @param string $idLote
@@ -45,13 +45,13 @@ class Movimiento extends Model
     public static function ultimoRealLote($idLote)
     {
 
-        return self::where('idLoteIngrediente','=',$idLote)
-            ->whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
+        return self::whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
                             'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
                             'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_EXCEP.
                             'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO.
                             'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
                             )
+            ->where('idLoteIngrediente','=',$idLote)
             ->orderBy('fecha','desc')
             ->first();
 
@@ -92,8 +92,9 @@ class Movimiento extends Model
                 ->where('fecha','>',$fechaInicio)
                 ->where('fecha','<',$fechaTope)
                 ->where('saldoGlobal','<','0')
+                ->where('tipo','=',9)
                 ->orderBy('fecha','asc')
-                ->limit(1);
+                ->first();
             if($mov!=null){
                 array_push($arrayResult,$mov);
             }
@@ -276,7 +277,7 @@ class Movimiento extends Model
         $movProductos = self::distinct()->select('producto_id')->get();
         foreach ($movProductos as $movProducto) {
             if (($aux = self::ultimoRealProd($movProducto->producto_id)) != null) {
-                $result[] = $aux->get();
+                array_push($result,$aux);
             }
         }
         return $result;
