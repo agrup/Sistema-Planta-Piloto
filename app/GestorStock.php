@@ -690,7 +690,7 @@ class GestorStock
     private static function recalcularPlanificados($fechaHasta)
     {
         //Guardo el ultimo mov de cada producto, ya que el recalculo se hará por cada producto
-        $movimientosInicialesProducto = Movimiento::ultimoStockRealProdTodos($fechaHasta);
+        $movimientosInicialesProducto = Movimiento::ultimoStockRealProdTodos();
         //Por cada producto
         foreach ($movimientosInicialesProducto as $ultMovRealProd){
             //Tomo el ultimo movimiento
@@ -701,7 +701,7 @@ class GestorStock
             foreach ($planificacionesProd as $planif){
 
                 //si la planificacion es anterior al ultimo mov debo darla como Incumplido
-                if($planif->fecha<$movAnteriorProd->fecha) {
+                if($planif->fecha < $movAnteriorProd->fecha) {
                     $planif->tipo = TipoMovimiento::incumplidoDe($planif->tipo);
                 } else {
                     //sino recalculo

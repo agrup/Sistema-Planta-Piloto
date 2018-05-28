@@ -92,8 +92,9 @@ class Movimiento extends Model
                 ->where('fecha','>',$fechaInicio)
                 ->where('fecha','<',$fechaTope)
                 ->where('saldoGlobal','<','0')
+                ->where('tipo','=',9)
                 ->orderBy('fecha','asc')
-                ->limit(1);
+                ->first();
             if($mov!=null){
                 array_push($arrayResult,$mov);
             }
@@ -276,7 +277,7 @@ class Movimiento extends Model
         $movProductos = self::distinct()->select('producto_id')->get();
         foreach ($movProductos as $movProducto) {
             if (($aux = self::ultimoRealProd($movProducto->producto_id)) != null) {
-                $result[] = $aux->get();
+                array_push($result,$aux);
             }
         }
         return $result;
