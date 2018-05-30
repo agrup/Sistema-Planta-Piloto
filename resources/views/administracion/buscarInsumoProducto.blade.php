@@ -10,6 +10,7 @@
 			@endif
 		@include('elementosComunes.cierreTitulo')
 			<form>
+				@csrf
 				<div class="row">
 				<div class="col-md-6">
 					<div class="form-group">
@@ -28,7 +29,7 @@
 			        </div>
 			        <div class="form-group">
 			            <label>Alarma</label>
-			            <select name="alarma" id="alarma">
+			            <select name="alarma" class="form-control" id="alarma">
 	  						<option value="True">Activa</option>
 	  						<option value="False">Inactiva</option>  						
 						</select>
@@ -37,7 +38,7 @@
 		    	</div>
 
 		    	@include('elementosComunes.aperturaBoton')
-		    		<a href="" class="btn btn-primary" id="btnBuscar">Buscar</a>
+		    		<a class="btn btn-primary" id="btnBuscar">Buscar</a>
 	          	@include('elementosComunes.cierreBoton')
 		    </form>
 	    @include('elementosComunes.aperturaTabla')
@@ -48,78 +49,28 @@
 	    			<th>Aviso Stock Crítico</th><th>Categoría</th><th>Estado</th>
 	    		</tr>
 	    	</thead>
-	    	<tbody id="tbodyResultados">	    		
+	    	<div id="divRes">
+	    	<tbody id="tbodyResultados">	    		</div>
+
 	    	</tbody>		
         @include('elementosComunes.cierreTabla')
 
         @if ($insumoProducto=='producto')
         	@include('elementosComunes.aperturaBoton')        		
-				<a data-toggle="modal" data-target="#popAgregar" class="btn btn-primary">Agregar Producto</a>
-				<div id="popAgregar" class="modal pop">
-					@include('elementosComunes.aperturaTitulo')
-					Agregar Producto
-					@include('elementosComunes.cierreTitulo')
-
-					    <form class="">
-
-					    	<div class="row">
-						    	<div class="col-md-6">
-						            <div class="form-group">
-						              <label>Nombre</label>
-						              <input type="email" class=""> </div>
-						            <div class="form-group">
-						              <label>Descripcion</label>
-						              <input type="password" class=""> </div>
-						            <div class="form-group">
-						              <label for="exampleInputEmail1">Categoría</label>
-						              <input type="text" class="" > </div>
-						            <div class="form-group">
-						              <label for="exampleInputEmail1">Estado</label>
-						              <input type="text" class=""> </div>
-						    
-						        </div>
-						        <div class="col-md-6">
-						            <div class="form-group">
-						              <label for="exampleInputEmail1">Tipo de Unidad</label>
-						              <input type="text" class="form-control" > </div>
-						            <div class="form-group">
-						              <label for="exampleInputEmail1">Alarma (Activa o Inactiva)</label>
-						              <input type="text" class="form-control" > </div>
-						            <div class="form-group">
-						              <label for="exampleInputEmail1"> Cantidad para aviso de falta de stock</label>
-						              <input type="text" class="form-control" > </div>
-						            <div class="form-group">
-						              <label for="exampleInputEmail1"> Cantidad para aviso de falta de stock crítica</label>
-						              <input type="text" class="form-control" > </div>
-						        </div>
-					        </div>
-
-						    @include('elementosComunes.aperturaBoton')
-							          <a class="btn btn-primary" href="#">Guardar</a>
-							          <a class="btn btn-primary" data-dismiss="modal" href="#">Cancelar</a>
-							@include('elementosComunes.cierreBoton')
-
-					              
-						</form>
-					</div>
-				</div>
-
-	        @include('elementosComunes.cierreBoton')
-	        @include('elementosComunes.aperturaBoton')
-					<a href="">Modificar Producto</a>
-	        @include('elementosComunes.cierreBoton')
-	        @include('elementosComunes.aperturaBoton')
-					<a href="">Eliminar Producto</a>
+				<a href="/productos/altaProducto" class="btn btn-primary">Agregar Producto</a>	        
+				<a class="btn btn-primary">Modificar Producto</a>
+	        
+				<a class="btn btn-primary">Eliminar Producto</a>
 	        @include('elementosComunes.cierreBoton')
 	    @elseif ($insumoProducto=='insumo')
 	    	@include('elementosComunes.aperturaBoton')
-					<a href="">Agregar Insumo</a>
-	        @include('elementosComunes.cierreBoton')
-	        @include('elementosComunes.aperturaBoton')
-					<a href="">Modificar Insumo</a>
-	        @include('elementosComunes.cierreBoton')
-	        @include('elementosComunes.aperturaBoton')
-					<a href="">Eliminar Insumo</a>
+					<a href="/productos/altaInsumo" class="btn btn-primary">Agregar Insumo</a>
+	        
+	        
+					<a href="" class="btn btn-primary">Modificar Insumo</a>
+	        
+					<a href="" class="btn btn-primary">Eliminar Insumo</a>
+
 	        @include('elementosComunes.cierreBoton')
         @endif
 
