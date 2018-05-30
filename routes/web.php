@@ -41,6 +41,7 @@ Route::get('/produccion/loteEnProduccion/{id}' ,'ProduccionController@showLoteIn
 //Producto
 Route::get('/Administracion/BuscarProducto','ProductoController@search');//busca nsumos y productos a partir de un array de caracteristicas
 
+
 Route::get('/productos/administracionProductos', 'ProductoController@administracionProducto');
 Route::get('/productos/administracionInsumo', 'ProductoController@administracionInsumo');
 

@@ -1,6 +1,7 @@
 @extends('layouts.layoutPrincipal' )
 
 @section('section')
+
 		@include('elementosComunes.aperturaTitulo')
 			@if ($insumoProducto=='producto')			
 				Administración de Productos
@@ -29,8 +30,8 @@
 			        <div class="form-group">
 			            <label>Alarma</label>
 			            <select name="alarma" id="alarma">
-	  						<option value="activa">Activa</option>
-	  						<option value="inactiva">Inactiva</option>  						
+	  						<option value="True">Activa</option>
+	  						<option value="False">Inactiva</option>  						
 						</select>
 			        </div>
 		    	</div>
@@ -61,10 +62,12 @@
 					@include('elementosComunes.cierreTitulo')
 
 					    <form class="">
+
 					    	<div class="row">
 						    	<div class="col-md-6">
 						            <div class="form-group">
 						              <label>Nombre</label>
+
 						              <input type="text" class="form-control"> </div>
 						            <div class="form-group">
 						              <label>Descripcion</label>
@@ -75,6 +78,7 @@
 						            <div class="form-group">
 						              <label for="exampleInputEmail1">Estado</label>
 						              <input type="text" class="form-control""> </div>
+
 						    
 						        </div>
 						        <div class="col-md-6">
