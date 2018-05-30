@@ -79,4 +79,10 @@
  @section('script')
  <script type="text/javascript" src="{{asset('js/getFormulacionProductoNoPlanificado.js')}}"></script>
  <script type="text/javascript" src="{{asset('js/postLote.js')}}"></script>
+ <script>
+     document.addEventListener("DOMContentLoaded", function() {
+         PostLote.init("/produccion/loteNoPlanificado");
+     });
+
+ </script>
  @endsection
