@@ -97,17 +97,69 @@ class Producto extends Model
          $ingredientes = $this->getIngredientes();
          foreach ($ingredientes as $ing){
             $arrAux=[];
+            $arrayLotes=[];
             $productoAux = Producto::find($ing['id']);
             $arrAux['id']=$ing['id'];
             $arrAux['codigo']=$productoAux->codigo;
             $arrAux['nombre']=$productoAux->nombre;
             $arrAux['tipoUnidad']=$productoAux->tipoUnidad;
             $arrAux['cantidad'] = $cantidad * $ing['cantidad'] / $ing ['cantidadProducto'];
+            //Agrego además los lotes, accion altamente cuestionable
+             $lotes = Lote::where('producto_id','=',$ing['id'])->get();
+             foreach($lotes as $lote){
+                 if(GestorStock::getSaldoLote($lote->id)>0){
+                     array_push($arrayLotes,$lote->id);
+                 }
+             }
+             $arrAux['lotes']=$arrayLotes;
             array_push($formulacion,$arrAux);
         }
         return $formulacion;
      }
 
+
+
+
+     //filtro producto por codigo
+    public static function filterRAW($codigo ,$nombre, $categoria,$alarma){
+
+
+      $query=null;
+
+     if($codigo!=null){
+        $query = 'codigo='."'$codigo'";
+     }; 
+     
+     if($nombre!=null){
+        if ($query==null) {
+            $query='nombre='."'$nombre'";
+        }else{
+            $query=$query.'and nombre='."'$nombre'";
+        }
+     };
+
+     if($categoria!=null){
+      if ($query==null) {
+            $query='categoria='."'$categoria'";
+        }else{
+          $query=$query.'and categoria='."'$categoria'";
+        }
+     };
+
+     if($alarma!=null){
+       if ($query==null) {
+              $query=$query.'alarma='."'$alarma'";
+          }else{
+            $query=$query.'and alarma='."'$alarma'";
+          }
+     };
+     if ($query==null) {
+       return Producto::all();
+     }else{
+     return Producto::whereRAW($query)->get();
+     }
+                
+    }
 
 
 }

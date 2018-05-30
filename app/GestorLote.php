@@ -25,16 +25,19 @@ class GestorLote extends Model
         $lotes=[];
     	
     	foreach ($ingredientes as $ingrediente) {
-            $lote=(Lote::find($ingrediente['idLote']));
+            $lote=(Lote::find($ingrediente['lote_id']));
             $producto = Producto::find($lote->producto_id);
 
             array_push($lotes,[
-                    'numeroLote'=>$ingrediente['idLote'],
+                    'lote_id'=>$ingrediente['lote_id'],
                     'cantidad'=>$ingrediente['cantidad'], 
-                    'vencimiento'=>$lote->fechaVencimiento, 
+                    'fechaVencimiento'=>$lote->fechaVencimiento, 
                     'fechaInicio'=>$lote->fechaInicio,
-                    'nombreProducto'=>$producto->nombre,
-                    'tu'=>$producto->tipoUnidad
+                    'nombre'=>$producto->nombre,
+                    'producto_id'=>$producto->id,
+                    'tipoUnidad'=>$producto->tipoUnidad,
+                //Las siguientes operaciones deben ser seguras ya que un lote solo puede consumir de otro finalizado
+                    'fechaFinalizacion'=>$lote->fechaFinalizacion
                     /*
                     'cantidadElaborada'=>$lote->cantidadElaborada,
                     'costoUnitario'=>$lote->costounitario,

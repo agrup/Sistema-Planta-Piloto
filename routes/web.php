@@ -1,37 +1,9 @@
 
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::get('/','MainController@index');
 
-//Route::get('/', function () {
-  //  return view('welcome');
-//});
-//un Ejemplo
 
-//
-//Route::get('/hola', function () {
-  //  return 'HOLA';
-//});
-//Route::get('/planta',function(){
-//	return view('pages.Produccion');
-//});
-
-//devolver el id del 
-//Route::get('/users/{id}',function($id){
-//	return 'este es el user '.$id;
-//});
-
-//Route::get('/','PagesController@index');
-Route::get('/calendario','PagesController@calendario');
 
 //informes stock
 Route::get('/stock', 'StockController@show');
@@ -55,24 +27,38 @@ Route::post('/planificacion/agregarInsumo','PlanificacionController@agregarInsum
 Route::post('/planificacion/eliminar','PlanificacionController@eliminar');
 Route::post('/planificacion/modificar', 'PlanificacionController@modificar');
 
-Route::get('/','MainController@index');
 
 //Produccion
 Route::get('/produccion','ProduccionController@index');
 Route::post('/produccion','ProduccionController@show');
-
 Route::get('/produccion/loteEnProduccion/{id}','ProduccionController@loteEnProduccion');
-
 Route::get('/produccion/iniciarPlanificado/{id}','ProduccionController@iniciarPlanificado');
-Route::get('produccion/loteNoPlanificado', 'ProduccionController@loteNoPlanificado');
+Route::post('/produccion/iniciarPlanificado/','ProduccionController@postIniciarPlanificado');
+Route::get('/produccion/loteNoPlanificado', 'ProduccionController@indexLoteNoPlanificado');
 Route::post('/produccion/loteNoPlanificado', 'ProduccionController@newLoteNoPlanificado');
 Route::get('/produccion/formulacion','ProduccionController@getFormulacion');
-
-
-
 Route::get('/produccion/loteEnProduccion/{id}' ,'ProduccionController@showLoteInProd');
-//Route fictisio
+Route::get('/produccion/modificarIniciado/{id}','ProduccionController@showModificarIniciado');
+Route::post('/produccion/modificarIniciado/{id}', 'ProduccionController@postModificarIniciado');
 
+
+//Producto
+Route::get('/Administracion/BuscarProducto','ProductoController@search');//busca nsumos y productos a partir de un array de caracteristicas
+
+
+
+Route::get('/productos/administracionProductos', 'ProductoController@administracionProducto');
+Route::get('/productos/administracionInsumos', 'ProductoController@administracionInsumo');
+Route::get('/productos/administracionInsumo', 'ProductoController@administracionInsumo');
+
+//Alta Producto
+Route::get('/productos/altaProducto', 'ProductoController@altaProducto');
+Route::post('/productos/altaProducto', 'ProductoController@addProducto');
+//Alta Insumo
+Route::get('/productos/altaInsumo', 'ProductoController@altaInsumo');
+Route::post('/productos/altaInsumo', 'ProductoController@addInsumo');
+
+//Route fictisio
 Route::get('/produccion/detalleLoteEnProduccion/{id}','PruebaController@detalleLoteEnProduccion');
 
 	
@@ -83,10 +69,9 @@ Route::get('/trabajador', 'TrabajadorController@index');
 Route::get('/trabajador/create', 'TrabajadorController@create');
 Route::post('/trabajador', 'TrabajadorController@store');
 
-Route::get('/test', function() {
-  	$producto = Producto::find(1)->formulacion;
-  	echo ("$producto");
-	
-});
 
+
+//Administracion de productoInsumos
+//Route::get('/productos/altaProducto', 'ProductoController@altaProducto');
+//Route::get('/productos/altaInsumo', 'ProductoController@altaInsumo');
 

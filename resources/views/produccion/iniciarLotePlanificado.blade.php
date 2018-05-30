@@ -5,64 +5,69 @@
 			Iniciar Lote Planificado
 		@include('elementosComunes.cierreTitulo')
 
-		<div class="p-0">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <table class="table">
+		
+    @include('elementosComunes.aperturaTabla')
             <thead>
               <tr>
                 <th>Lote</th>
                 <th>Producto</th>
-                <th>Responsable</th>
+                <th>Cantidad Planificada</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>12032018</td>
-                <td>Dulce de Leche</td>
-                <td>Nombre Trabajador</td>
+                <td id="idlote" value="{{$producto['id']}}">{{ $lote['id'] }}</td>
+                <td>{{ $producto['nombre'] }}</td>
+                <td>{{ $lote['cantidadElaborada'] }}</td>
               </tr>
               <tr></tr>
               <tr></tr>
             </tbody>
-          </table>
-        </div>
-      </div>
+    @include('elementosComunes.cierreTabla')
+  
       <div class="row">
         <div class="col-md-6">
-          <form class="formu" action="">
+
+          <form class="formu" id="myform" action="">
+            {{ csrf_field() }}
+
             <div class="form-group">
-              <label>Fecha Inicio</label>
-              <input type="date" class="form-control" placeholder=""> </div>
-            <div class="row">
-              <div class="col">
-                <label>Cantidad Elaborada</label>
-                <input type="text" class="form-control" placeholder="100"> </div>
-              <div class="col">
-                <label for="exampleInputEmail1">Unidad</label>
-                <input type="text" class="form-control" placeholder="Kg" id="inlineFormInput"> </div>
+              <label>Cantidad a Elaborar</label>
+              <input type="text" id="cantidad" class="form-control" >
+              <button type="button" id="btnformulacion" class="btn btn-primary">Actualizar Formulación</button>
+          </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Unidad</label>
+              <input type="text" id="tipoUnidad"  class="form-control" value="{{$producto['tipoUnidad']}}" disabled="true"> 
             </div>
-          </form>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Fecha Inicio</label>
+              <input type="date" class="form-control" id="fecha" value="{{$fecha}}"> </div>
+            <div class="form-group">
+              <label></label>
+              <label for="exampleInputEmail1">Trabajo Práctico</label>
+              <select class="form-control" id="tp">
+                <option value="true">Si</option>
+                <option value="false">No</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Asignatura</label>
+              <input type="text" class="form-control" id="asignatura" > </div>
+          </div>
         </div>
-        <div class="col-md-6">
-          <form class="formu" action="">
-            <div class="form-group">
-              <label>Trabajo Práctico</label>
-              <input type="email" class="form-control" placeholder="Si"> </div>
-            <div class="form-group">
-              <label>Asignatura</label>
-              <input type="text" class="form-control" placeholder=""> </div>
-          </form>
+         
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <form>
+        
             <h4 class="">
               <b>Formulación:</b>
             </h4>
-            <table class="table">
+            <table id="tformulacion" class="table">
               <thead>
                 <tr>
                   <th>Insumo</th>
@@ -71,40 +76,41 @@
                   <th>Tipo Unidad</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>Leche</td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="12032018"> </td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="1000"> </td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="Litros"> </td>
-                </tr>
-                <tr>
-                  <td>Azucar</td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="12032018"> </td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="1000"> </td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="Litros"> </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="12032018"> </td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="1000"> </td>
-                  <td>
-                    <input type="text" class="form-control" placeholder="Litros"> </td>
-                </tr>
+              <tbody id="tbodyformulacion">
+                @foreach($formulacion as $value)
+                  <tr>
+                  
+                    <td>{{$value['nombre']}}</td>
+                    
+                    <td><select class="interes">
+                      <option disabled="true" selected="true">--Seleccionar Lote--</option>
+                      @foreach($value['lotes'] as $nlote)
+                        <option value="{{$nlote}}">{{$nlote}}</option>
+                      @endforeach
+                    </select></td>
+                    <td><input type=""  placeholder="Cantidad Teorica:{{$value['cantidad']}}" class="interes"></td>
+                    <td> {{$value['tipoUnidad']}}</td>
+                    <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
+                  </tr>
+                @endforeach
               </tbody>
             </table>
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" id="guardar" class="btn btn-primary">Guardar</button>
           </form>
         </div>
       </div>
     </div>
   </div>
 @endsection
+ @section('script')
+ <script type="text/javascript" src="{{asset('js/produccion/getFormulacionProductoPlanificado.js')}}"></script>
+
+ <script type="text/javascript" src="{{asset('js/produccion/addRowLote.js')}}"></script>
+ <script src="{{asset('js/produccion/postLote.js')}}" type="text/javascript"></script>
+ <script>
+     document.addEventListener("DOMContentLoaded", function() {
+         PostLote.init('/produccion/iniciarPlanificado');
+     });
+
+ </script>
+ @endsection

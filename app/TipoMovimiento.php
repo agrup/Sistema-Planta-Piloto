@@ -13,7 +13,7 @@ class TipoMovimiento
 {
     const __default = self::SIN_TIPO;
 
-    const SIN_TIPO=-1;
+    const SIN_TIPO= -1;
     const TIPO_MOV_ENTRADA_INSUMO=1;
     const TIPO_MOV_SALIDA_VENTAS=2;
     const TIPO_MOV_SALIDA_EXCEP=3;
@@ -44,7 +44,7 @@ class TipoMovimiento
             case self::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF:
                 return self::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_CUMPLIDO;
             default:
-                return null;
+                return $tipo;
         }
     }
 
@@ -62,7 +62,7 @@ class TipoMovimiento
             case self::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF:
                 return self::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO;
             default:
-                return null;
+                return $tipo;
         }
     }
 

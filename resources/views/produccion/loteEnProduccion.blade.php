@@ -7,7 +7,7 @@
 
 		@include('elementosComunes.aperturaTabla')    
 			<thead><tr><th>Lote</th> 
-						<th>Descripción</th> 
+						<th>Nombre</th> 
 						<th>Cantidad</th> 
 						<th>Estado</th> 						
 						<th></th>
@@ -33,50 +33,76 @@
 			<thead><tr><th>Insumo</th> 
 						<th>Cantidad Teórica</th> 
 						<th>Cantidad Utilizada</th> 
+						<th>Nro de Lote</th>
 					</tr>
 			</thead>
 			<tbody>
+		
 			@foreach ($formulacion as $insumo)
-									
+					<?php $b=false;?>				
 					<tr>
 						<td>{{$insumo['nombre']}}</td>
+
 						<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
-						<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
+						@for ($i = 0; $i < count($trazabilidad); $i++)
+
+							@if ($trazabilidad[$i]['nombre']==$insumo['nombre'])
+							<?php $b=true;?>
+								<td>{{ $trazabilidad[$i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>
+								<td>{{$trazabilidad[$i]['lote_id']}}</td>
+								@break		
+							@endif
+	
+						@endfor
+						@if ($b==false)
+							<td>0 {{ $insumo['tipoUnidad'] }}</td>
+							<td>-</td>
+						@endif 
+						
+
 					</tr>
 				
 			@endforeach
 			</tbody>
 		@include('elementosComunes.cierreTabla')    
 
-		@switch($lote['tipoLote'])
-			@case('planificacion')
-				<button class="btn btn-primary">Iniciar</button>
-				@break
-			@endcase
+		
+			@switch($lote['tipoLote'])
+				@case('planificacion')
+					<form action="/produccion/iniciarPlanificado/{{$lote['id']}}" method="get">
+					<button type="submit"  class="btn btn-primary" >Iniciar</button>
+					</form>
+					@break
+				@endcase
 
-			@case('iniciado')
-				<button class="btn btn-primary">Modificar</button>
-				<button class="btn btn-primary">Maduración</button>
-				<button class="btn btn-primary">Finalizar</button>
-				@break
-			@endcase
+				@case('iniciado')
+				<form action="/produccion/modificarIniciado/{{$lote['id']}}" method="get">
+					<button type="submit" class="btn btn-primary">Modificar</button>
+					
+					@include('produccion.registrarMaduracion')
+					<button class="btn btn-primary">Finalizar</button>
+				</form>
+					
 
-			@case('maduracion')
-				<button class="btn btn-primary">Modificar</button>
-				<button class="btn btn-primary">Finalizar</button>
-				@break
-			@endcase
+					@break
+				@endcase
 
-			@case('finalizado')
-				<button class="btn btn-primary">Modificar Finalizado</button>
-				@break
-			@endcase
+				@case('maduracion')$lote['id']
+					<button class="btn btn-primary">Modificar</button>
+					<button class="btn btn-primary">Finalizar</button>
+					@break
+				@endcase
 
-			 @default
-        		<span>Something went wrong, please try again</span>
+				@case('finalizado')
+					<button class="btn btn-primary">Modificar Finalizado</button>
+					@break
+				@endcase
 
+				 @default
+	        		<span>Something went wrong, please try again</span>
+	       
 
 
 		@endswitch
 @endsection
-
+		
