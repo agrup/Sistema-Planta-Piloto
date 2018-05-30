@@ -259,12 +259,28 @@ class ProduccionController extends Controller
         return view('produccion.produccion',compact('data'));
 
     }
+
+    /**
+     * Registra la maduracion de un lote iniciado
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws Exception
+     */
     public static function postMaduracion($id){
-        //var_dump(request()->input('fechaMaduracion'));
+
+        $fechaInicioMaduracion = request()->input('fechaMaduracion');
+        if($fechaInicioMaduracion==null){
+            throw new Exception('Fecha inválida');
+        }
         $lote = Lote::find($id);
-        $fecha = $lote->fechaInicio;
-        $data['lotes']=self::getArrayLotes($fecha);
-        $data['fecha']=$fecha;
+        if($lote==null){
+            throw new Exception('Lote no econtrado');
+        }
+        $lote->registrarMaduracion($fechaInicioMaduracion);
+
+        //Retorno a la vista principal de produccion con la fecha de registro de la maduracion
+        $data['lotes']=self::getArrayLotes($fechaInicioMaduracion);
+        $data['fecha']=$fechaInicioMaduracion;
         return view('produccion.produccion',compact('data'));
     }
 

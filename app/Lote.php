@@ -5,6 +5,7 @@ namespace App;
 use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use App\Producto;
+use Exception;
 
 /**
  * Lote
@@ -127,6 +128,16 @@ class Lote extends Model
                 return null;
             }
         }
+    }
+
+    public function registrarMaduracion(string $fechaInicioMaduracion){
+        if($this->tipoLote !=TipoLote::INICIADO){
+            throw new Exception('Solo se puede pasar a maduracion un lote que este en estado INICIADO');
+        }
+        $this->tipoLote = TipoLote::MADURACION;
+        $this->fechaInicioMaduracion = $fechaInicioMaduracion;
+        $this->save();
+
     }
 
 
