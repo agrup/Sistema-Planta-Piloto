@@ -42,7 +42,7 @@
           <div class="col">
             <div class="form-group">
               <label for="exampleInputEmail1">Fecha Inicio</label>
-              <input type="date" class="form-control" id="fecha"> </div>
+              <input type="date" class="form-control" id="fecha" value="{{$fecha}}"> </div>
             <div class="form-group">
               <label></label>
               <label for="exampleInputEmail1">Trabajo Práctico</label>
@@ -82,6 +82,7 @@
                     <td><input type="text"></td>
                     <td><input type=""  placeholder="Cantidad Teorica:{{$value['cantidad']}}"></td>
                     <td> {{$value['tipoUnidad']}}</td>
+                    <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
                   </tr>
                 @endforeach
               </tbody>
@@ -94,6 +95,7 @@
   </div>
 @endsection
  @section('script')
- <script type="text/javascript" src="{{asset('js/getFormulacionProductoPlanificado.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/postLote.js')}}"></script>
+ <script type="text/javascript" src="{{asset('js/produccion/getFormulacionProductoPlanificado.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/produccion/postLote.js')}}"></script>
+ <script type="text/javascript" src="{{asset('js/produccion/addRowLote.js')}}"></script>
  @endsection  

@@ -12,9 +12,7 @@ $(document).ready(function() {
                     if(idTr !== "trhformulacion"){
                         $(this).find('.interes').each(function(ii, vv){
 
-
                            data[i][ii] =$(this).val();
-
                     }); 
                   }
                 });

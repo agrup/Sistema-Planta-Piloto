@@ -18,7 +18,7 @@
 				</div>
 				<input  type="submit" class="btn btn-primary" value="Actualizar"> 
 				<div class="input-group">
-				<input type="checkbox" name="mostarPlanificados" value="on">
+				<input type="checkbox" name="mostarPlanificados" checked="True">
 				<h6>Tener en cuenta productos planificados</h6>
 				</div>
 			</form>

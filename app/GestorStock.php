@@ -502,7 +502,7 @@ class GestorStock
         $movimientos= Movimiento::getTrazabilidadLote($idLote);
         foreach ($movimientos as $mov){
             $arrayAux=[];
-            $arrayAux['idLote']=$mov->idLoteIngrediente;
+            $arrayAux['lote_id']=$mov->idLoteIngrediente;
             $arrayAux['cantidad']=$mov->debe;
             array_push($arrayReturn,$arrayAux);
         }
@@ -552,6 +552,7 @@ class GestorStock
          if(!$planificados){
                 
             $movimientos =Movimiento::ultimoStockRealProdTodos($fechaHasta);
+
 
             }
         else

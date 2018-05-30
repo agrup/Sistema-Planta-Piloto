@@ -85,11 +85,13 @@ class ProduccionController extends Controller
         $lote = Lote::find($id);
         $producto = Producto::find($lote->producto_id);
         $formulacion = $producto->getFormulacion($lote->cantidadElaborada);
+        $fecha = $lote->fechaInicio;
 
         return view('produccion.iniciarLotePlanificado')
                                     ->with(compact('lote'))
                                     ->with(compact('formulacion'))
-                                    ->with(compact('producto'))                        ;
+                                    ->with(compact('producto'))
+                                    ->with(compact('fecha'));
     }
 
     public static function showLoteInProd ($id)
