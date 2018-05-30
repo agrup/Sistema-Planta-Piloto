@@ -29,8 +29,9 @@ $(document).ready(function(){
 					inputID.addClass('interes');
             		var td2=document.createElement("td");
             		          	 	
-            		var inputLote=$('<input>').attr({type:'text',id:"lote"}).appendTo(td2);
-                    inputLote.addClass('interes');
+            		var selectLote=$('<select></select>').attr({id:"lote"}).appendTo(td2);
+                    $('<option selected="selected"></option>').text("-Selecccione un Lote-").appendTo(selectLote);
+                    selectLote.addClass('interes');
             		var td3=document.createElement("td");
             		var inputCant =$('<input>').attr({type:'text',placeholder:"Cantidad Teorica: "+item['cantidad'],id:"cantidad"}).appendTo(td3);            	inputCant.addClass('interes');
             		var td4=document.createElement("td");            		
