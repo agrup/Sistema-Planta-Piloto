@@ -67,7 +67,10 @@ $(document).ready(function(){
 		  			$("#"+item['codigo']).html(item['nombre']); 
 					$("#"+item['tipoUnidad']+index).html(item['tipoUnidad']); 
 		  			
-
+					item['lotes'].forEach(function(nlote,index) {
+						var option=$('<option></option>').val(nlote);
+						selectLote.append(option);	
+					});
 
 		  		});
             	//$("#alert").html(insumo.codigo);
