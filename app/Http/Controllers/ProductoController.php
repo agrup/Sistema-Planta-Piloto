@@ -32,11 +32,8 @@ class ProductoController extends Controller
     else
         $alarma = false;
 
-    $estado = null;
-    if(request()->input('estado')=="true")
-        $estado = true;
-    else
-        $estado = false;
+    
+    
 
      $datosNuevoProd = [
             
@@ -48,7 +45,7 @@ class ProductoController extends Controller
             'alarmaAmarilla'=>request()->input('alarmaAmarilla'),
             'alarmaRoja'=>request()->input('alarmaRoja'),
             'categoria'=>request()->input('categoria'),
-            'estado'=>$estado
+            'estado'=>true
         ];
 
     $nuevoProd = Producto::create($datosNuevoProd);
