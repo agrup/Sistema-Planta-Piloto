@@ -78,7 +78,8 @@
 				@case('iniciado')
 				<form action="/produccion/modificarIniciado/{{$lote['id']}}" method="get">
 					<button type="submit" class="btn btn-primary">Modificar</button>
-					<button class="btn btn-primary">Maduración</button>
+					
+					@include('produccion.registrarMaduracion')
 					<button class="btn btn-primary">Finalizar</button>
 				</form>
 					
