@@ -1,3 +1,4 @@
+
 var PostLote= {
     init: function (url) {
         $("#guardar").click(function() {
@@ -39,5 +40,6 @@ var PostLote= {
         });
     }
 };
+
 
      
