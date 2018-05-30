@@ -271,6 +271,11 @@ class Movimiento extends Model
         return $result;
 
     }
+
+
+
+
+    
         public static function ultimoStockRealProdTodos()
     {
         $result = [];

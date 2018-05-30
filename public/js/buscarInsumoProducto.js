@@ -20,7 +20,17 @@ $(document).ready(function() {
 	  		function( data ) {
 					  console.log(data);
 				    	var tbody =  $("#tbodyResultados");
+				    	//alert(data[0].codigo);
+				    	data.forEach(function(item,index){
+				    		console.log(item );
+				    		var tr=document.createElement("tr");
+			        		tr.setAttribute("id","tr"+index);
+			        		console.log(item[1] );
+			        		
+			        		
 
+
+				    	});/*
 				    	tbody.empty();
 				    	for (var i = 0; i < data.lenght; i++) {
 			    			var tr=document.createElement("tr");
@@ -30,8 +40,9 @@ $(document).ready(function() {
 				    			td.innerHTML = data[i][j];
 				    			tr.appendChild(td);        			
 				    		}	
+
 				    		tbody.append(tr);
-				    	}
+				    	}*/
 			}
 	  	).fail(function(){
 	  		console.log('Error');

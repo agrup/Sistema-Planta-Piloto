@@ -3,7 +3,7 @@
 @section('section')
 
 		@include('elementosComunes.aperturaTitulo')
-			Stock <h4>Hasta el dia {{$fecha}}</h4>
+			Stock <h4>Hasta el dia {{date('d-m-Y',strtotime($fecha))}}</h4>
 		@include('elementosComunes.cierreTitulo')
 		
 		{{-- FORM PARA STOCK A FUTURO --}}
@@ -14,7 +14,12 @@
 				@csrf
 	           <div class="input-group">
 					<input type="date" class="form-control" placeholder="Fecha" value="{{$fecha}}" id='inputDate' name='fecha' required> 
-					<input  type="submit" class="btn btn-primary" value="Actualizar"> 
+					
+				</div>
+				<input  type="submit" class="btn btn-primary" value="Actualizar"> 
+				<div class="input-group">
+				<input type="checkbox" name="mostarPlanificados" value="on">
+				<h6>Tener en cuenta productos planificados</h6>
 				</div>
 			</form>
 

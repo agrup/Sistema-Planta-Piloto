@@ -545,35 +545,45 @@ class GestorStock
      * @return array [['nombre'=>,'codigo'=>, 'tu'=>, 'alarma'=>, 'stock'=>, 'producto_id'=>, ]...] hashmap key: idProducto, value: cantidad
      * Hay que evaluar si con esta funcion no alcanza ya para desde afuera calcular getNecesidadInsumos y otras por el estilo
      */
-    public static function getStockPorProd(string $fechaHasta)
+    public static function getStockPorProd(string $fechaHasta, bool $planificados)
     {
         $result=[];
         //self::recalcularPlanificados($fechaHasta);
+         if(!$planificados){
+                
+            $movimientos =Movimiento::ultimoStockRealProdTodos($fechaHasta);
 
-        if(!empty($movimientos =Movimiento::ultimoStockProdTodos($fechaHasta)))
-        {
-        foreach ($movimientos as $movimiento){
-            $arrAux=[];
-            $producto=Producto::find($movimiento->producto_id);
-            $stock=$movimiento->saldoGlobal;
-            $arrAux['alarma']='normal';
-            $arrAux['nombre']=$producto->nombre;
-            $arrAux['codigo']=$producto->codigo;
-            $arrAux['tipoUnidad']=$producto->tipoUnidad;
-            $arrAux['stock']=$stock;
-            $arrAux['producto_id']=$movimiento->producto_id;
-            if($producto->alarmaActiva){
-                if($stock<$producto->alarmaAmarilla){
-                    $arrAux['alarma']='amarilla';
-                }
-                if($stock<$producto->alarmaRoja){
-                    $arrAux['alarma']='roja';
-                }
             }
+        else
+            {
 
-            array_push($result, $arrAux);
+             $movimientos =Movimiento::ultimoStockProdTodos($fechaHasta);
+
             }
-        }
+        if(!empty($movimientos )){
+            foreach ($movimientos as $movimiento){
+                $arrAux=[];
+                $producto=Producto::find($movimiento->producto_id);
+                $stock=$movimiento->saldoGlobal;
+                $arrAux['alarma']='normal';
+                $arrAux['nombre']=$producto->nombre;
+                $arrAux['codigo']=$producto->codigo;
+                $arrAux['tipoUnidad']=$producto->tipoUnidad;
+                $arrAux['stock']=$stock;
+                $arrAux['producto_id']=$movimiento->producto_id;
+                if($producto->alarmaActiva){
+                    if($stock<$producto->alarmaAmarilla){
+                        $arrAux['alarma']='amarilla';
+                    }
+                    if($stock<$producto->alarmaRoja){
+                        $arrAux['alarma']='roja';
+                    }
+                }
+
+                    array_push($result, $arrAux);
+            }
+                
+       }
         return $result;
     }
 
