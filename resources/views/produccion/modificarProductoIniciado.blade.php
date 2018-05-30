@@ -38,13 +38,13 @@
           <form class="formu" action="">
             <div class="form-group">
               <label>Trabajo Práctico</label>
-                <select class="form-control">
+                <select class="form-control" id="selectTP">
                    @if($lote['tipoTp'])
                       <option value="true" selected>SI</option>
                       <option value="false" >NO</option>
                       <div class="form-group">
-                    <label>Asignatura</label>
-                    <input type="text" class="form-control" placeholder="Asignatura Actual: {{$lote['asignatura']}}"> </div>
+                    <label id="asignatura">Asignatura</label>
+                    <input id="inputasignatura" type="text" class="form-control" placeholder="Asignatura Actual: {{$lote['asignatura']}}"> </div>
                    @else
                       <option value="true">SI</option>
                       <option value="false" selected>NO</option>
@@ -101,4 +101,7 @@
  </div>
  @include('elementosComunes.cierreTabla')
 
+@endsection
+@section('script')
+   <script type="text/javascript" src="{{asset('js/produccion/addAsignatura.js')}}"></script>
 @endsection

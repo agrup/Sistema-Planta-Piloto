@@ -82,6 +82,7 @@
                     <td><input type="text"></td>
                     <td><input type=""  placeholder="Cantidad Teorica:{{$value['cantidad']}}"></td>
                     <td> {{$value['tipoUnidad']}}</td>
+                    <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
                   </tr>
                 @endforeach
               </tbody>
@@ -94,13 +95,14 @@
   </div>
 @endsection
  @section('script')
- <script type="text/javascript" src="{{asset('js/getFormulacionProductoPlanificado.js')}}"></script>
-{{--<script type="text/javascript" src="{{asset('js/postLote.js')}}"></script>--}}
- <script src="{{asset('js/postLote.js')}}" type="text/javascript"></script>
+ <script type="text/javascript" src="{{asset('js/produccion/getFormulacionProductoPlanificado.js')}}"></script>
+
+ <script type="text/javascript" src="{{asset('js/produccion/addRowLote.js')}}"></script>
+ <script src="{{asset('js/produccion/postLote.js')}}" type="text/javascript"></script>
  <script>
      document.addEventListener("DOMContentLoaded", function() {
          PostLote.init('/produccion/iniciarPlanificado');
      });
 
  </script>
- @endsection  
+ @endsection
