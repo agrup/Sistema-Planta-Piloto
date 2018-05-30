@@ -64,6 +64,7 @@
                   <th id="thlote">Lote&nbsp;</th>
                   <th id="thcantidad">Cantidad Utilizada</th>
                   <th id="thtu">Tipo Unidad</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody id="tbodyformulacion">
@@ -77,6 +78,7 @@
 
 @endsection
  @section('script')
- <script type="text/javascript" src="{{asset('js/getFormulacionProductoNoPlanificado.js')}}"></script>
- <script type="text/javascript" src="{{asset('js/postLote.js')}}"></script>
+ <script type="text/javascript" src="{{asset('js/produccion/getFormulacionProductoNoPlanificado.js')}}"></script>
+ <script type="text/javascript" src="{{asset('js/produccion/postLote.js')}}"></script>
+ <script type="text/javascript" src="{{asset('js/produccion/addRowLote.js')}}"></script>
  @endsection
