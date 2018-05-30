@@ -42,7 +42,7 @@
           <div class="col">
             <div class="form-group">
               <label for="exampleInputEmail1">Fecha Inicio</label>
-              <input type="date" class="form-control" id="fecha"> </div>
+              <input type="date" class="form-control" id="fecha" value="{{$fecha}}"> </div>
             <div class="form-group">
               <label></label>
               <label for="exampleInputEmail1">Trabajo Práctico</label>

@@ -79,7 +79,7 @@
                       @for ($i = 0; $i < count($trazabilidad); $i++)
                           @if ($trazabilidad[$i]['nombre']==$insumo['nombre'])
                           <?php $b=true;?>
-                            <td><input type="text" name="" value="{{$trazabilidad[$i]['numeroLote']}}"></td>
+                            <td><input type="text" name="" value="{{$trazabilidad[$i]['lote_id']}}"></td>
                             <td><input type="text" name="" value=" {{ $trazabilidad[$i]['cantidad'] }} "></td>
 
                             @break    
