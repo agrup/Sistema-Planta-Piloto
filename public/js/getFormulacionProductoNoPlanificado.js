@@ -23,7 +23,7 @@ $(document).ready(function(){
 		$("#trformulacion").remove(); //saco la grilla
 		$("td").remove();
 	}
-      alert(id+cantidad);
+      //alert(id+cantidad);
 		//para pedir la formulacion
   		 $.getJSON("/produccion/formulacion",{id,cantidad},function(result){
 
@@ -44,10 +44,10 @@ $(document).ready(function(){
             		var inputLote=$('<input>').attr({type:'text',id:"lote"}).appendTo(td2);
                     inputLote.addClass('interes');
             		var td3=document.createElement("td");
-            		var inputCant =$('<input>').attr({type:'text',placeholder:"Cantidad Teorica: "+item['cantidad'],id:"cantidad"}).appendTo(td3);            	inputCant.addClass('interes');
+            		var inputCant =$('<input>').attr({type:'text',placeholder:"Teorica Total: "+item['cantidad'],id:"cantidad"}).appendTo(td3);            	inputCant.addClass('interes');
             		var td4=document.createElement("td");
             		var td5=document.createElement("td");               		
-            		var agregarLote=$("<button>").attr({type:"button",id:"agregarLote"}).appendTo(td5);
+            		var agregarLote=$("<button>").attr({type:"button",value:"agregarLote"}).appendTo(td5);
             		agregarLote.addClass("btn btn-primary");
             		agregarLote.text("Agregar Lote");
             		  // $( '<button type="button" id="agregarLote">Agregar Lote</button>').appendTo( 

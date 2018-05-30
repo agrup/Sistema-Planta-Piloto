@@ -82,6 +82,7 @@
                     <td><input type="text"></td>
                     <td><input type=""  placeholder="Cantidad Teorica:{{$value['cantidad']}}"></td>
                     <td> {{$value['tipoUnidad']}}</td>
+                    <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
                   </tr>
                 @endforeach
               </tbody>
@@ -96,4 +97,5 @@
  @section('script')
  <script type="text/javascript" src="{{asset('js/getFormulacionProductoPlanificado.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/postLote.js')}}"></script>
+ <script type="text/javascript" src="{{asset('js/addRowLote.js')}}"></script>
  @endsection  

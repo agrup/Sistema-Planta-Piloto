@@ -35,12 +35,18 @@ $(document).ready(function(){
             		var inputCant =$('<input>').attr({type:'text',placeholder:"Cantidad Teorica: "+item['cantidad'],id:"cantidad"}).appendTo(td3);            	inputCant.addClass('interes');
             		var td4=document.createElement("td");            		
             		td1.setAttribute("id",item['codigo']);//producto
+                    var td5=document.createElement("td");                       
+                    var agregarLote=$("<button>").attr({type:"button",value:"agregarLote"}).appendTo(td5);
+                    agregarLote.addClass("btn btn-primary");
+                    agregarLote.text("Agregar Lote");
+
+
             		$(td2).attr("id",index+"l");//lote
             		$(td3).attr("id",index+"c");//cantidad
             		$(td3).attr("name","cantidad");
             		
             		td4.setAttribute("id",item['tipoUnidad']+index);//tu
-            		tr.append(td1,td2,td3,td4);	
+            		tr.append(td1,td2,td3,td4,td5);	
 -            		tbody.append(tr);
             		
             	
