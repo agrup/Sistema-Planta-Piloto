@@ -13,9 +13,9 @@ var PostLote= {
                 if(idTr !== "trhformulacion"){
                     $(this).find('.interes').each(function(ii, vv){
 
-
+                        
                         data[i][ii] =$(this).val();
-
+                        
                     });
                 }
             });
@@ -31,7 +31,7 @@ var PostLote= {
 
 
 
-
+            
             $('<input type="hidden" name="lote" />').val(lote).appendTo('#myform');
             $('<input type="hidden" name="consumo" />').val(data).appendTo('#myform');
             $("#myform").submit();
