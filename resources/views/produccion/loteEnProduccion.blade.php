@@ -76,9 +76,10 @@
 				@endcase
 
 				@case('iniciado')
-				<form action="/produccion/modificarIniciado/{{$lote['id']}}" method="get">
+				<form action="/produccion/modificarIniciado/{{$lote['id']}}" method="post">
+
 					<button type="submit" class="btn btn-primary">Modificar</button>
-					
+					{{ csrf_field() }}
 					@include('produccion.registrarMaduracion')
 					<button class="btn btn-primary">Finalizar</button>
 				</form>
