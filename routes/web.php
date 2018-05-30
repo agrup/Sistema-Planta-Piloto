@@ -40,7 +40,7 @@ Route::get('/produccion/formulacion','ProduccionController@getFormulacion');
 Route::get('/produccion/loteEnProduccion/{id}' ,'ProduccionController@showLoteInProd');
 Route::get('/produccion/modificarIniciado/{id}','ProduccionController@showModificarIniciado');
 Route::post('/produccion/modificarIniciado/{id}', 'ProduccionController@postModificarIniciado');
-
+Route::post('/produccion/postMaduracion/{id}','ProduccionController@postMaduracion');
 
 //Producto
 Route::get('/Administracion/BuscarProducto','ProductoController@search');//busca nsumos y productos a partir de un array de caracteristicas
