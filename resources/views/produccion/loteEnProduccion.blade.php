@@ -81,7 +81,8 @@
 					<button type="submit" class="btn btn-primary">Modificar</button>
 					{{ csrf_field() }}
 					@include('produccion.registrarMaduracion')
-					<button class="btn btn-primary">Finalizar</button>
+					
+					@include('produccion.finalizarLote')
 				</form>
 					
 
