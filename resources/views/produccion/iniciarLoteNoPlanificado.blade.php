@@ -77,6 +77,6 @@
 
 @endsection
  @section('script')
- <script type="text/javascript" src="{{asset('js/getFormulacion.js')}}"></script>
- <script type="text/javascript" src="{{asset('js/postloteNoPlanificado.js')}}"></script>
+ <script type="text/javascript" src="{{asset('js/getFormulacionProductoNoPlanificado.js')}}"></script>
+ <script type="text/javascript" src="{{asset('js/postLote.js')}}"></script>
  @endsection

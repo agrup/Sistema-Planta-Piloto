@@ -81,7 +81,7 @@
                           <?php $b=true;?>
                             <td><input type="text" name="" value="{{$trazabilidad[$i]['lote_id']}}"></td>
                             <td><input type="text" name="" value=" {{ $trazabilidad[$i]['cantidad'] }} "></td>
-
+                            
                             @break    
                           @endif
                       @endfor
