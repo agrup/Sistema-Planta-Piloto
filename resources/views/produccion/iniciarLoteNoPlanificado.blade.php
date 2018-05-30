@@ -78,7 +78,7 @@
 
 @endsection
  @section('script')
- <script type="text/javascript" src="{{asset('js/getFormulacionProductoNoPlanificado.js')}}"></script>
- <script type="text/javascript" src="{{asset('js/postLote.js')}}"></script>
- <script type="text/javascript" src="{{asset('js/addRowLote.js')}}"></script>
+ <script type="text/javascript" src="{{asset('js/produccion/getFormulacionProductoNoPlanificado.js')}}"></script>
+ <script type="text/javascript" src="{{asset('js/produccion/postLote.js')}}"></script>
+ <script type="text/javascript" src="{{asset('js/produccion/addRowLote.js')}}"></script>
  @endsection

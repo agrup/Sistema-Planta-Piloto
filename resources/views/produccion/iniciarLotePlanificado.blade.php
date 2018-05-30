@@ -95,7 +95,7 @@
   </div>
 @endsection
  @section('script')
- <script type="text/javascript" src="{{asset('js/getFormulacionProductoPlanificado.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/postLote.js')}}"></script>
- <script type="text/javascript" src="{{asset('js/addRowLote.js')}}"></script>
+ <script type="text/javascript" src="{{asset('js/produccion/getFormulacionProductoPlanificado.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/produccion/postLote.js')}}"></script>
+ <script type="text/javascript" src="{{asset('js/produccion/addRowLote.js')}}"></script>
  @endsection  

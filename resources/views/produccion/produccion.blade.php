@@ -68,5 +68,5 @@
 		@include('elementosComunes.cierreFormInline')
 @endsection
  @section('script')
-  <script type="text/javascript" src="{{asset('js/buscarLote.js')}}"></script>
+  <script type="text/javascript" src="{{asset('js/produccion/buscarLote.js')}}"></script>
  @endsection
