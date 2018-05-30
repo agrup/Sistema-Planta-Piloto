@@ -267,6 +267,16 @@ class ProduccionController extends Controller
         $data['fecha']=$fecha;
         return view('produccion.produccion',compact('data'));
     }
+    public static function postFinalizarLote($id){
+    var_dump(request()->input('fechaFinalizacion'));
+    var_dump(request()->input('fechaVencimiento'));
+        var_dump(request()->input('cantidad'));
+        $lote = Lote::find($id);
+        $fecha = $lote->fechaInicio;
+        $data['lotes']=self::getArrayLotes($fecha);
+        $data['fecha']=$fecha;
+        return view('produccion.produccion',compact('data'));
+    }
 
 
 }

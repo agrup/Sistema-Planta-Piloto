@@ -1,7 +1,7 @@
  
 
- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Maduracion</button>
-  <div class="modal"  id="myModal">
+ <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalFinalizar">Maduracion</button>
+  <div class="modal"  id="myModalFinalizar">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
