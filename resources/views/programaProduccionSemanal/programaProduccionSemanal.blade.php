@@ -72,9 +72,9 @@
 
     </tr>
     <tr>
-        <th>2018</th>
+        <th class="diassemana"></th>
         @foreach($planificaciones as $value )
-            <th>{{$value["diaSemana"]}}</th>
+            <th class="diassemana">{{$value["diaSemana"]}}</th>
         @endforeach
     </tr>
     </thead>
@@ -169,7 +169,7 @@
 
 
     </tbody>
-
+<thead>
     <tr><td></td></tr>
 
     <tr>
@@ -178,10 +178,10 @@
         </th>
 
         @foreach($planificaciones as $value )
-            <th>{{$value["diaSemana"]}}</th>
+        <th> </th>
         @endforeach
     </tr>
-    </thead>
+
 
     </thead>
     <tbody>
@@ -269,19 +269,21 @@
     </tbody>
 
 
-    <thead>
+  
 
     <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr>
+    <thead>
         <th>
             <b>Llegada de Insumos</b>
         </th>
 
         @foreach($planificaciones as $value )
-            <th>{{$value["diaSemana"]}}</th>
+          <th></th>
         @endforeach
     </tr>
     </thead>
+   
     <tbody>
     <?php unset($lunes);unset($martes);unset($miercoles);unset($jueves);unset($viernes);?>
 

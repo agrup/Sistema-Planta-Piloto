@@ -41,8 +41,9 @@ $(document).ready(function(){
             		var inputID= $('<input>').attr({type:'hidden',value: item['id'],id:"idInsumo"}).appendTo(tr);//tiene el id
 					inputID.addClass('interes');
             		var td2=document.createElement("td");            	 	
-            		var inputLote=$('<input>').attr({type:'text',id:"lote"}).appendTo(td2);
-                    inputLote.addClass('interes');
+            		var selectLote=$('<select></select>').attr({id:"lote"}).appendTo(td2);
+            		$('<option selected="selected" disabled></option>').text("-Selecccione un Lote-").appendTo(selectLote);
+                    selectLote.addClass('interes');
             		var td3=document.createElement("td");
             		var inputCant =$('<input>').attr({type:'text',placeholder:"Teorica Total: "+item['cantidad'],id:"cantidad"}).appendTo(td3);            	inputCant.addClass('interes');
             		var td4=document.createElement("td");
@@ -66,6 +67,12 @@ $(document).ready(function(){
 		  			$("#"+item['codigo']).html(item['nombre']); 
 					$("#"+item['tipoUnidad']+index).html(item['tipoUnidad']); 
 		  			
+					item['lotes'].forEach(function(nlote,index) {
+						var option=$('<option></option>').text(nlote);
+						option.attr("value",nlote);
+						selectLote.append(option);	
+					});
+
 		  		});
             	//$("#alert").html(insumo.codigo);
             });

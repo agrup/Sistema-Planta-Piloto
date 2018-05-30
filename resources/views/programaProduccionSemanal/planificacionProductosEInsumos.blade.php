@@ -60,6 +60,12 @@
                 <td><a href=""><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" /></a></td>
             </tr>
         @endforeach
+        <tr>
+            <td class="nuevaPlanificacion"><input type="text" name=""> </td>
+            <td class="nuevaPlanificacion"><input type="text" name="">  </td>
+            <td class="nuevaPlanificacion"> <input type="text" name=""> </td>
+            <td class="nuevaPlanificacion"><input type="text" name="">  </td>
+        </tr>
     @endif
      <tr><td><img src="{{asset('img/agregar.png') }}" width="40" height="40" style="cursor: pointer;"/></td></tr>
     </tbody>

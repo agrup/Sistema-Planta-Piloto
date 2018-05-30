@@ -27,7 +27,9 @@
   
       <div class="row">
         <div class="col-md-6">
-          <form class="formu" action="">
+
+          <form class="formu" id="myform" action="">
+            {{ csrf_field() }}
 
             <div class="form-group">
               <label>Cantidad a Elaborar</label>
@@ -36,7 +38,7 @@
           </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Unidad</label>
-              <input type="text" id="tipoUnidad"  class="form-control"> 
+              <input type="text" id="tipoUnidad"  class="form-control" value="{{$producto['tipoUnidad']}}" disabled="true"> 
             </div>
           </div>
           <div class="col">
@@ -56,12 +58,12 @@
               <input type="text" class="form-control" id="asignatura" > </div>
           </div>
         </div>
-          </form>
+         
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <form>
+        
             <h4 class="">
               <b>Formulación:</b>
             </h4>
@@ -79,15 +81,21 @@
                   <tr>
                   
                     <td>{{$value['nombre']}}</td>
-                    <td><input type="text"></td>
-                    <td><input type=""  placeholder="Cantidad Teorica:{{$value['cantidad']}}"></td>
+                    
+                    <td><select class="interes">
+                      <option disabled="true" selected="true">--Seleccionar Lote--</option>
+                      @foreach($value['lotes'] as $nlote)
+                        <option value="{{$nlote}}">{{$nlote}}</option>
+                      @endforeach
+                    </select></td>
+                    <td><input type=""  placeholder="Cantidad Teorica:{{$value['cantidad']}}" class="interes"></td>
                     <td> {{$value['tipoUnidad']}}</td>
                     <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
                   </tr>
                 @endforeach
               </tbody>
             </table>
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" id="guardar" class="btn btn-primary">Guardar</button>
           </form>
         </div>
       </div>
@@ -96,6 +104,13 @@
 @endsection
  @section('script')
  <script type="text/javascript" src="{{asset('js/produccion/getFormulacionProductoPlanificado.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/produccion/postLote.js')}}"></script>
+
  <script type="text/javascript" src="{{asset('js/produccion/addRowLote.js')}}"></script>
- @endsection  
+ <script src="{{asset('js/produccion/postLote.js')}}" type="text/javascript"></script>
+ <script>
+     document.addEventListener("DOMContentLoaded", function() {
+         PostLote.init('/produccion/iniciarPlanificado');
+     });
+
+ </script>
+ @endsection

@@ -1,13 +1,12 @@
 $(document).ready(function(){
 			
 			$("#selectTP").change(function(){
-				alert("dd");
+				
 				if($(this).val()=="true"){
-					$("#asignatura").show();
-					$("#inputasignatura").show();
+					$("#inputasignatura").prop('disabled',false);
 				}else{
-					$("#asignatura").hide();
-					$("#inputasignatura").hide();
+					//$("#asignatura").hide();
+					$("#inputasignatura").prop('disabled',true);
 				}
 			});
 });

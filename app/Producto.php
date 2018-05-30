@@ -97,12 +97,21 @@ class Producto extends Model
          $ingredientes = $this->getIngredientes();
          foreach ($ingredientes as $ing){
             $arrAux=[];
+            $arrayLotes=[];
             $productoAux = Producto::find($ing['id']);
             $arrAux['id']=$ing['id'];
             $arrAux['codigo']=$productoAux->codigo;
             $arrAux['nombre']=$productoAux->nombre;
             $arrAux['tipoUnidad']=$productoAux->tipoUnidad;
             $arrAux['cantidad'] = $cantidad * $ing['cantidad'] / $ing ['cantidadProducto'];
+            //Agrego además los lotes, accion altamente cuestionable
+             $lotes = Lote::where('producto_id','=',$ing['id'])->get();
+             foreach($lotes as $lote){
+                 if(GestorStock::getSaldoLote($lote->id)>0){
+                     array_push($arrayLotes,$lote->id);
+                 }
+             }
+             $arrAux['lotes']=$arrayLotes;
             array_push($formulacion,$arrAux);
         }
         return $formulacion;
