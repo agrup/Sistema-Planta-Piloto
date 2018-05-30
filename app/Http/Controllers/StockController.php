@@ -12,13 +12,13 @@ class StockController extends Controller
     public function show()
     {
 
-    	if ((request(['fecha']))==null){
+    	if ((request()->input('fecha'))==null){
     		$fecha=Carbon::now()->format('Y-m-d');
 
     	}else
     	{
 
-    		$fecha=array_values(request(['fecha']))[0];
+    		$fecha=(request()->input('fecha'));
     		
     	}
         $mostarPlanificados = (request()->input('mostarPlanificados'));
