@@ -41,6 +41,7 @@ Route::get('/produccion/loteEnProduccion/{id}' ,'ProduccionController@showLoteIn
 Route::get('/produccion/modificarIniciado/{id}','ProduccionController@showModificarIniciado');
 Route::post('/produccion/modificarIniciado/{id}', 'ProduccionController@postModificarIniciado');
 Route::post('/produccion/postMaduracion/{id}','ProduccionController@postMaduracion');
+Route::post('/produccion/postFinalizarLote/{id}','ProduccionController@postFinalizarLote');
 
 //Producto
 Route::get('/Administracion/BuscarProducto','ProductoController@search');//busca insumos y productos a partir de un array de caracteristicas
