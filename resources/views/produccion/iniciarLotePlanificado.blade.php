@@ -27,7 +27,9 @@
   
       <div class="row">
         <div class="col-md-6">
+
           <form class="formu" id="myform" action="">
+
 
             <div class="form-group">
               <label>Cantidad a Elaborar</label>
