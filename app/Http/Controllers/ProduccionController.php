@@ -94,6 +94,15 @@ class ProduccionController extends Controller
                                     ->with(compact('fecha'));
     }
 
+    public static function postIniciarPlanificado(){
+        var_dump(request());
+        $fecha = '2018-05-04';
+        $data['fecha']=$fecha;
+        $data['lotes']=self::getArrayLotes($fecha);
+        return view('produccion.produccion',compact('data'));
+
+    }
+
     public static function showLoteInProd ($id)
     {
         //obtemgo el produco de ese lote
@@ -152,13 +161,13 @@ class ProduccionController extends Controller
     //Alta de lote no planificado
     public static function newLoteNoPlanificado(Request $request){
 
-        $producto = $request->input('producto');       
+        $loteVista = $request->input('lote');
         $consumos = $request->input('consumo');  
         //Parseo los datos de la request
-        $dataLoteArr = explode(',',$producto);
+        $dataLoteArr = explode(',',$loteVista);
         $consumosArr = explode(',',$consumos);
         $data =[]; // variable utilizada para retornar a la nueva vista
-        /*var_dump($producto);
+        /*var_dump($loteVista);
         var_dump($consumos);
         var_dump($dataLoteArr);*/
 
