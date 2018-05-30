@@ -36,20 +36,28 @@
         </div>
         <div class="col-md-6">
           <form class="formu" action="">
-            <div class="form-group">
+            <div class="form-group" id="#divselect">
               <label>Trabajo Práctico</label>
-                <select class="form-control" id="selectTP">
+                
                    @if($lote['tipoTp'])
+                   <select class="form-control" id="selectTP">
                       <option value="true" selected>SI</option>
                       <option value="false" >NO</option>
                       <div class="form-group">
                     <label id="asignatura">Asignatura</label>
                     <input id="inputasignatura" type="text" class="form-control" placeholder="Asignatura Actual: {{$lote['asignatura']}}"> </div>
+                     </select>
                    @else
+                   <select class="form-control" id="selectTP">
                       <option value="true">SI</option>
                       <option value="false" selected>NO</option>
+                     </select>
+                      <label>Asignatura</label>
+                      <input id="inputasignatura" type="text" class="form-control" disabled="true" />
+
+                     
                    @endif
-                </select>
+                
 
           </form>
         </div>
@@ -72,26 +80,46 @@
                 </tr>
               </thead>
               <tbody>
+              <?php 
+                    $arrayTrazabilidad=array();
+                  ?>
                   @foreach($formulacion as $insumo)
-                  <?php $b=false;?>
-                    <tr>
-                      <td>{{$insumo['nombre']}}</td>
                       @for ($i = 0; $i < count($trazabilidad); $i++)
-                          @if ($trazabilidad[$i]['nombre']==$insumo['nombre'])
-                          <?php $b=true;?>
-                            <td><input type="text" name="" value="{{$trazabilidad[$i]['lote_id']}}"></td>
-                            <td><input type="text" name="" value=" {{ $trazabilidad[$i]['cantidad'] }} "></td>
-                            
-                            @break    
-                          @endif
+                        @if ($trazabilidad[$i]['nombre']==$insumo['nombre'])
+                              <?php   array_push($arrayTrazabilidad,$i); //guardo los i de las trazabilidades
+                              ?>   
+                        @endif
                       @endfor
-                      @if ($b==false)
-                        <td><input type="" ></td>
-                        <td><input type="" placeholder={{$insumo['cantidad']}}></td>
-                      @endif 
-                    <td>{{ $insumo['tipoUnidad'] }}</td>      
-                    </tr>
                   @endforeach
+                  @if(empty($arrayTrazabilidad))
+                  @foreach($formulacion as $insumo)
+                      <tr>
+                      <td>{{$insumo['nombre']}}</td> 
+                      <td><input type="" ></td>
+                      <td><input type="" placeholder="Teorica Total: {{$insumo['cantidad']}}"></td>
+                      <td>{{ $insumo['tipoUnidad'] }}</td> 
+                      <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
+                      </tr>
+                  @endforeach
+                  @else
+                    @foreach($formulacion as $insumo)
+                       @foreach($arrayTrazabilidad as $traza)
+                          <tr>
+                            <td>{{$insumo['nombre']}}</td>
+                            <td><input type="text" name="" value="{{$trazabilidad[$traza]['lote_id']}}"></td>
+                            <td><input type="text" name="" value=" {{ $trazabilidad[$traza]['cantidad'] }} "></td>
+                            <td>{{ $insumo['tipoUnidad'] }}</td> 
+                          @if($traza==$arrayTrazabilidad.length()-1)
+                            <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
+                          </tr>
+                          @else
+                            </tr>
+                          @endif        
+                        @endforeach
+                    @endforeach
+                  @endif
+             
+
 
               </tbody>
             </table>
@@ -104,4 +132,5 @@
 @endsection
 @section('script')
    <script type="text/javascript" src="{{asset('js/produccion/addAsignatura.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/produccion/addRowLote.js')}}"></script>
 @endsection

@@ -42,7 +42,7 @@ $(document).ready(function() {
 
           $('<input type="hidden" name="producto" />').val(producto).appendTo('#myform');
           $('<input type="hidden" name="consumo" />').val(data).appendTo('#myform');
-        //  $("#myform").submit();
+          $("#myform").submit();
 
           
     });
