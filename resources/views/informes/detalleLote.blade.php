@@ -122,7 +122,7 @@
 					</tr>
 			</thead>
 			@foreach ($detalle['detalleElaboracion'] as $element)
-				<tr><td>{{ $element['numeroLote'] }}</td><td>{{ $element['nombreProducto'] }}</td><td>{{ $element['cantidad'] }} {{ $detalle['tipoUnidad'] }}</td></tr>
+				<tr><td>{{ $element['numeroLote'] }}</td><td>{{ $element['nombre'] }}</td><td>{{ $element['cantidad'] }} {{ $detalle['tipoUnidad'] }}</td></tr>
 
 			@endforeach
 		@include('elementosComunes.cierreTabla')    		

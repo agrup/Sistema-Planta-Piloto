@@ -82,13 +82,9 @@ class ProduccionController extends Controller
 
     public static function iniciarPlanificado($id){
 
-
-
         $lote = Lote::find($id);
         $producto = Producto::find($lote->producto_id);
         $formulacion = $producto->getFormulacion($lote->cantidadElaborada);
-
-
 
         return view('produccion.iniciarLotePlanificado')
                                     ->with(compact('lote'))
@@ -98,7 +94,6 @@ class ProduccionController extends Controller
 
     public static function showLoteInProd ($id)
     {
-        //$loteId =request()->input('id');
         //obtemgo el produco de ese lote
 
         $loteObj = Lote::find($id);
@@ -236,6 +231,23 @@ class ProduccionController extends Controller
         
     }
 
+    public static function postModificarIniciado($id){
+        //Datos de la vista
+        $datosLote = [];
+        $consumos=[];
+        $lote = Lote::find($datosLote['lote_id']);
+        $fecha = $lote->fechaInicio;
+        //modifico el lote
+        $lote->modificarLote($consumos,$fecha);
+
+
+
+        //Retorno a la vista inicial de produccion en la fecha de este lote
+        $data['lotes']=self::getArrayLotes($fecha);
+        $data['fecha']=$fecha;
+        return view('produccion.produccion',compact('data'));
+
+    }
 
 
 }

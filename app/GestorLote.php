@@ -34,7 +34,10 @@ class GestorLote extends Model
                     'fechaVencimiento'=>$lote->fechaVencimiento, 
                     'fechaInicio'=>$lote->fechaInicio,
                     'nombre'=>$producto->nombre,
-                    'tipoUnidad'=>$producto->tipoUnidad
+                    'producto_id'=>$producto->id,
+                    'tipoUnidad'=>$producto->tipoUnidad,
+                //Las siguientes operaciones deben ser seguras ya que un lote solo puede consumir de otro finalizado
+                    'fechaFinalizacion'=>$lote->fechaFinalizacion
                     /*
                     'cantidadElaborada'=>$lote->cantidadElaborada,
                     'costoUnitario'=>$lote->costounitario,

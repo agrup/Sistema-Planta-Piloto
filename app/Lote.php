@@ -21,20 +21,7 @@ class Lote extends Model
      * @param array $datos
      * @return $this|Model
      */
-    public static function crearLoteNoPlanificado(array $datos)
-    {
-        $datosLote=[
-            'producto_id'=>$datos['producto_id'],
-            'tipoLote'=>TipoLote::INICIADO,
-            'fechaInicio'=>$datos['fechaInicio'],
-            'cantidadElaborada'=>$datos['cantidadElaborada'],
-            'tipoTP'=>$datos['tipoTP'],
-        ];
-        if($datos['tipoTP']){
-            $datosLote['asignatura'] = $datos['asignatura'];
-        }
-        return Lote::create($datosLote);
-    }
+
 
 
     public function producto(){
@@ -70,6 +57,20 @@ class Lote extends Model
 
 	}
 
+    public static function crearLoteNoPlanificado(array $datos)
+    {
+        $datosLote=[
+            'producto_id'=>$datos['producto_id'],
+            'tipoLote'=>TipoLote::INICIADO,
+            'fechaInicio'=>$datos['fechaInicio'],
+            'cantidadElaborada'=>$datos['cantidadElaborada'],
+            'tipoTP'=>$datos['tipoTP'],
+        ];
+        if($datos['tipoTP']){
+            $datosLote['asignatura'] = $datos['asignatura'];
+        }
+        return Lote::create($datosLote);
+    }
 
     /**
      * Elimina un lote
@@ -82,6 +83,50 @@ class Lote extends Model
             $lote->delete();
         }
 
+    }
+
+    public function modificarLote($consumos, $fecha){
+
+
+        switch ($this->tipoLote) {
+            case TipoLote::INICIADO: {
+                //actualizar datos del lote
+                //TODO
+                //actualizo los consumos
+                $producto=Producto::find($this->producto_id);
+                $trazabilidad = GestorLote::getTrazabilidadLote($this->id);
+                //por cada consumo de la modificacion
+                foreach ($consumos as $consumo){
+                    $banderaMatch = false;
+                    $consumoViejoMatched = null;
+                    //busco si ya fue cargado el consumo de ese producto
+                    foreach ($trazabilidad as $consumoViejo) {
+                        if ($consumo['producto_id'] === $consumoViejo['producto_id']) {
+                            $banderaMatch = true;
+                            $consumoViejoMatched = $consumoViejo;
+                            break;
+                        }
+                    }
+                    if($banderaMatch){ // si matcheo hay que actualizar, modificando lo que estaba previamente cargado
+                        //GestorStock::modificarConsumo($this->id,$);
+                        //TODO hay que resolver el problema de cargar consumos de n lotes diferentes de un mismo producto.
+                    } else { //sino se da de alta un nuevo consumo
+                        GestorStock::altaConsumo($this->id,$consumo['idLote'],$consumo['producto_id'],$consumo['cantidad'],$fecha);
+
+                    }
+
+                    //guardo los cambios
+                    $this->save();
+                }
+
+                break;
+            }
+
+            default : {
+
+                return null;
+            }
+        }
     }
 
 

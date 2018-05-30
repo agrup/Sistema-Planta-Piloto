@@ -494,8 +494,8 @@ class GestorStock
     /**
      *
      * @param string $idLote
-     * @return int[] $idsLotesTrazabilidad // devolvera array asociativo  donde la key será el id de lote y el valor la cantidad usada
-     */
+     * @return array de arrays de la forma ['idLote'=> , 'cantidad'=> ]
+     *     */
     public static function Trazabilidad(string $idLote)
     {
         $arrayReturn = [];
