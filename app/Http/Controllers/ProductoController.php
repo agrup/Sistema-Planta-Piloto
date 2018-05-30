@@ -21,6 +21,8 @@ class ProductoController extends Controller
     $insumoProducto = "producto";
     return view('administracion.altaInsumoProducto')->with(compact('insumoProducto'));
   }
+
+
   public function addProducto(){
     //Recibe por post los datos de un producto para alta
     //"codigo", "nombre", "descripcion", "unidad", "alarmaActiva", "alarmaAmarilla",  "alarmaRoja", "categoria"
@@ -81,11 +83,7 @@ class ProductoController extends Controller
 		 $nombre=request()->input('nombre');
 		 $categoria=request()->input('categoria');
 		 $alarma=request()->input('alarma');
-		 if ($alarma == 'true') {
-		 	$alarma=true;
-		 }else{
-		 	$alarma=false;
-		 }
+
 		 
 
 		$productos= (Producto::filterRAW($codigo,$nombre,$categoria,$alarma))->toArray();

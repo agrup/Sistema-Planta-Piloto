@@ -116,7 +116,7 @@ class Producto extends Model
 
 
       $query=null;
-
+      
      if($codigo!=null){
         $query = 'codigo='."'$codigo'";
      }; 
@@ -138,10 +138,11 @@ class Producto extends Model
      };
 
      if($alarma!=null){
+
        if ($query==null) {
-              $query=$query.'alarma='."'$alarma'";
+              $query=$query.'"alarmaActiva"='."'$alarma'";
           }else{
-            $query=$query.'and alarma='."'$alarma'";
+            $query=$query.'and "alarmaActiva"='."'$alarma'";
           }
      };
      if ($query==null) {

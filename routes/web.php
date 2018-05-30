@@ -43,7 +43,7 @@ Route::post('/produccion/modificarIniciado/{id}', 'ProduccionController@postModi
 
 
 //Producto
-Route::get('/Administracion/BuscarProducto','ProductoController@search');//busca nsumos y productos a partir de un array de caracteristicas
+Route::get('/Administracion/BuscarProducto','ProductoController@search');//busca insumos y productos a partir de un array de caracteristicas
 
 
 

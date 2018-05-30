@@ -16,6 +16,7 @@ $(document).ready(function() {
 	    var nom = $("#nombre").val();
 	    var cat = $("#categoria").val();
 		var al = $("#alarma").val();
+
 		$.ajax({
 	  		url: "/Administracion/BuscarProducto",
 	  		data: {
@@ -24,6 +25,7 @@ $(document).ready(function() {
 	        	categoria: cat, 
 	        	alarma: al
 	  		},
+	  		type:'get',
 	  		
 	  	}).done(
 
@@ -62,6 +64,7 @@ $(document).ready(function() {
 	  	);
 				    	*/
 
+	
 	 		function(data, i) {	  				
 	  			console.log("------------------------");
 				console.log(data);			    
