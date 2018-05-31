@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	
+
 	remove = function(div){
 		while (div.firstChild) {
  		   div.removeChild(div.firstChild);
@@ -16,7 +16,6 @@ $(document).ready(function() {
 	    var nom = $("#nombre").val();
 	    var cat = $("#categoria").val();
 		var al = $("#alarma").val();
-
 		$.ajax({
 	  		url: "/Administracion/BuscarProducto",
 	  		data: {
@@ -25,11 +24,9 @@ $(document).ready(function() {
 	        	categoria: cat, 
 	        	alarma: al
 	  		},
-	  		type:'get',
 	  		
 	  	}).done(
-	
-	 		function(data, i) {	  				
+	  		function(data, i) {	  				
 	  			console.log("------------------------");
 				console.log(data);			    
 			    var tbody = document.getElementById("tbodyResultados");

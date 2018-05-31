@@ -27,6 +27,7 @@ class Producto extends Model
     	 return $this->belongsToMany('App\Producto','producto_productoi')
     	 	->withPivot('producto_id','ingrediente_id','cantidad','cantidadProducto');
     	 ;
+        //App\Producto::find(1)->formulacion()->attach('6',['cantidad'=>2,'cantidadProducto'=>10,'ingrediente_id'=>6])
 
     }
 
@@ -118,6 +119,12 @@ class Producto extends Model
      }
 
 
+     public function agregarIngrediente($cantidad,$cantidadProducto,$ingrediente_id)
+     {
+
+       return $this->formulacion()->attach($ingrediente_id,['cantidad'=>$cantidad,'cantidadProducto'=>$cantidadProducto,'ingrediente_id'=>$ingrediente_id]);
+        //App\Producto::find(1)->formulacion()->attach('6',['cantidad'=>2,'cantidadProducto'=>10,'ingrediente_id'=>6])
+     }
 
 
      //filtro producto por codigo
