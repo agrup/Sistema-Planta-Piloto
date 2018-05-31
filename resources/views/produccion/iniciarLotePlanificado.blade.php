@@ -16,13 +16,15 @@
             </thead>
             <tbody>
               <tr>
-                <td id="idlote" value="{{$producto['id']}}">{{ $lote['id'] }}</td>
+                <td >{{ $lote['id'] }}</td>
                 <td>{{ $producto['nombre'] }}</td>
                 <td>{{ $lote['cantidadElaborada'] }}</td>
               </tr>
               <tr></tr>
               <tr></tr>
             </tbody>
+        <input type="hidden" id="producto" value="{{$producto['id']}}">
+
     @include('elementosComunes.cierreTabla')
   
       <div class="row">
@@ -49,8 +51,8 @@
               <label></label>
               <label for="exampleInputEmail1">Trabajo Práctico</label>
               <select class="form-control" id="tp">
-                <option value="true">Si</option>
-                <option value="false">No</option>
+                <option value="1">Si</option>
+                <option value="0">No</option>
               </select>
             </div>
             <div class="form-group">
