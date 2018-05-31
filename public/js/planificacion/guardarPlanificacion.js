@@ -12,7 +12,7 @@ $(document).ready(function(){
 			});
 
 		});
-	//borro el guardar y su padre y agrego el editar y borrar
+	//borro el guardar y su padre (el td que lo contiene) y agrego el editar y borrar
 		//console.log($(this));
 		$(this).parent('td').remove();
 		//$(this).find('img').remove();

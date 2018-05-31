@@ -31,8 +31,8 @@
                             </div>
                             
                       @endif
-                      
-                      <button type="submit" class="btn btn-primary" formaction="/produccion/postFinalizarLote/{{$lote['id']}}">Guardar</button>
+
+                      <button type="submit" class="btn btn-primary" >Guardar</button>
                     </form>
                   </div>
                 </div>
