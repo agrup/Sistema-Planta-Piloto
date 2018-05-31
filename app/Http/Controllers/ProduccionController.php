@@ -266,31 +266,53 @@ class ProduccionController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws Exception
      */
-    public static function postMaduracion($id){
+    public static function postMaduracion($id)
+    {
 
         $fechaInicioMaduracion = request()->input('fechaMaduracion');
-        if($fechaInicioMaduracion==null){
+        if ($fechaInicioMaduracion == null) {
             throw new Exception('Fecha inválida');
         }
         $lote = Lote::find($id);
-        if($lote==null){
+        if ($lote == null) {
             throw new Exception('Lote no econtrado');
         }
         $lote->registrarMaduracion($fechaInicioMaduracion);
 
         //Retorno a la vista principal de produccion con la fecha de registro de la maduracion
-        $data['lotes']=self::getArrayLotes($fechaInicioMaduracion);
-        $data['fecha']=$fechaInicioMaduracion;
-        return view('produccion.produccion',compact('data'));
+        $data['lotes'] = self::getArrayLotes($fechaInicioMaduracion);
+        $data['fecha'] = $fechaInicioMaduracion;
+        return view('produccion.produccion', compact('data'));
     }
+
+
+    /**
+     * Finaliza un lote, calculando su costo y dando de alta en stock para su consumo o salida a ventas
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws Exception
+     */
     public static function postFinalizarLote($id){
-    var_dump(request()->input('fechaFinalizacion'));
+   /* var_dump(request()->input('fechaFinalizacion'));
     var_dump(request()->input('fechaVencimiento'));
-        var_dump(request()->input('cantidad'));
+        var_dump(request()->input('cantidad'));*/
+        $fechaFinalizacion = request()->input('fechaFinalizacion');
+        $fechaVencimiento = request()->input('fechaVencimiento');
+        $cantidadAlFinalizar = request()->input('cantidad');
+
+        if($fechaFinalizacion==null || $fechaVencimiento ==null || $cantidadAlFinalizar ==null || $cantidadAlFinalizar <0 ) {
+            throw new Exception('datos inválidos');
+        }
+
         $lote = Lote::find($id);
-        $fecha = $lote->fechaInicio;
-        $data['lotes']=self::getArrayLotes($fecha);
-        $data['fecha']=$fecha;
+        if($lote==null){
+            throw new Exception('lote no encontrado');
+        }
+        $lote->finalizar($cantidadAlFinalizar,$fechaFinalizacion,$fechaVencimiento);
+
+        //Re3torno a la vista principal de produccion con la fecha de finalizacion
+        $data['lotes']=self::getArrayLotes($fechaFinalizacion);
+        $data['fecha']=$fechaFinalizacion;
         return view('produccion.produccion',compact('data'));
     }
 

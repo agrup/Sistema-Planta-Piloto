@@ -214,15 +214,12 @@ class Movimiento extends Model
         //movimientos reales
         //Ordenados por favooor
     }
+
     /**
      * @param string $producto_id
      * @param string $fecha
      *
      */
-
-
-
-
     public static function eliminarEntradaInsumoPlanif($producto_id, $fecha)
     {
     }
@@ -326,6 +323,12 @@ class Movimiento extends Model
         $mov->save();
     }
 
+    public static function getEntradaPlanificada($idLote)
+    {
+        return Movimiento::where('tipo','=',TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF)
+                    ->where('idLoteConsumidor')
+                    ->first();
+    }
 
 }
 
