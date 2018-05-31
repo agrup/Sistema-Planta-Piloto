@@ -2,7 +2,7 @@
 
 @section('section')
 		@include('elementosComunes.aperturaTitulo')
-			Lote en Producción
+			Lote en Producción {{ $lote['fecha']}}
 		@include('elementosComunes.cierreTitulo')
 
 		@include('elementosComunes.aperturaTabla')    

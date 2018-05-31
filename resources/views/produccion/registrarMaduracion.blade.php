@@ -20,6 +20,7 @@
               <small class="form-text text-muted"></small>
 
             </div>
+         
             <button type="submit" class="btn btn-primary" formaction="/produccion/postMaduracion/{{$lote['id']}}">Guardar</button>
         
         </div>
