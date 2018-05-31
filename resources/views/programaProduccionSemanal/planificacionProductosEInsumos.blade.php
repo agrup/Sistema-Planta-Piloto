@@ -32,9 +32,11 @@
         <th>Producto</th>
         <th>Cantidad</th>
         <th>TP</th>
+        <th></th>
+        <th></th>
     </tr>
     </thead>
-    <tbody>
+    <tbody class="tbodyPlanif">
     @foreach($planificaciones as $value)
         @if($value['fecha']==$fecha)
             @foreach($value["productos"] as $v)
@@ -60,14 +62,10 @@
                 <td><a href=""><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" /></a></td>
             </tr>
         @endforeach
-        <tr>
-            <td class="nuevaPlanificacion"><input type="text" name=""> </td>
-            <td class="nuevaPlanificacion"><input type="text" name="">  </td>
-            <td class="nuevaPlanificacion"> <input type="text" name=""> </td>
-            <td class="nuevaPlanificacion"><input type="text" name="">  </td>
-        </tr>
+        
     @endif
-     <tr><td><img src="{{asset('img/agregar.png') }}" width="40" height="40" style="cursor: pointer;"/></td></tr>
+    <tr class="nuevaLineaProducto"> </tr>
+     <tr><td><img src="{{asset('img/agregar.png') }}" width="30" height="30" style="cursor: pointer;"class="agregarProducto"/></td></tr>
     </tbody>
     @include('elementosComunes.cierreTabla')
     @include('elementosComunes.aperturaTitulo')
@@ -82,6 +80,8 @@
         <th>Insumo</th>
         <th>Cantidad</th>
         <th></th>
+        <th></th>
+
     </tr>
     <tr></tr>
     </thead>
@@ -107,17 +107,30 @@
                 <td><?=$codigo[$k];?></td>
                 <td><?=$nombre[$k];?></td>
                 <td><?=$cantidad[$k];?></td>
-                <td></td>
+               
                  <td><img src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;" /></td>
                 <td><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;"/></td>
             </tr>
 
         @endforeach
-    @endif
-    <tr><td><img src="{{asset('img/agregar.png') }}" width="40" height="40" style="cursor: pointer;"/></td></tr>
-    </tbody>
-    @include('elementosComunes.cierreTabla')
 
+    @endif
+    <tr><td><img  src="{{asset('img/agregar.png') }}" width="30" height="30" style="cursor: pointer;" class="agregarInsumo" /></td></tr>
+     <tr class="nuevaLineaInsumo">
+           
+        </tr>
+    </tbody>
+    @include('elementosComunes.cierreTabla')}
+    <div id="imgmodificar">
+    <img src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;" hidden="true"  />
+    </div>
+     <div id="imgborrar">
+    <img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" hidden="true" />
+    </div>
 
     </body>
+@endsection
+@section('script')
+      <script type="text/javascript" src="{{asset('js/planificacion/addPlanificacion.js')}}"></script>
+      <script type="text/javascript" src="{{asset('js/planificacion/guardarPlanificacion.js')}}"></script>
 @endsection
