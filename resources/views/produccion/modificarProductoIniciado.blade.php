@@ -80,45 +80,45 @@
                 </tr>
               </thead>
               <tbody>
-              <?php 
-                    $arrayTrazabilidad=array();
-                  ?>
+
                   @foreach($formulacion as $insumo)
+                      <?php
+                      $arrayTrazabilidad=array();
+                      ?>
                       @for ($i = 0; $i < count($trazabilidad); $i++)
                         @if ($trazabilidad[$i]['nombre']==$insumo['nombre'])
                               <?php   array_push($arrayTrazabilidad,$i); //guardo los i de las trazabilidades
                               ?>   
                         @endif
                       @endfor
-                  @endforeach
-                  @if(empty($arrayTrazabilidad))
-                  @foreach($formulacion as $insumo)
-                      <tr>
-                      <td>{{$insumo['nombre']}}</td> 
-                      <td><input type="" ></td>
-                      <td><input type="" placeholder="Teorica Total: {{$insumo['cantidad']}}"></td>
-                      <td>{{ $insumo['tipoUnidad'] }}</td> 
-                      <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
-                      </tr>
-                  @endforeach
-                  @else
-                    @foreach($formulacion as $insumo)
-                       @foreach($arrayTrazabilidad as $traza)
+
+                    @if(empty($arrayTrazabilidad))
+
+                              <tr>
+                              <td>{{$insumo['nombre']}}</td>
+                              <td><input type="" ></td>
+                              <td><input type="" placeholder="Teorica Total: {{$insumo['cantidad']}}"></td>
+                              <td>{{ $insumo['tipoUnidad'] }}</td>
+                              <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
+                              </tr>
+
+                    @else
+                        @for ($i = 0; $i < count($arrayTrazabilidad); $i++)
                           <tr>
                             <td>{{$insumo['nombre']}}</td>
-                            <td><input type="text" name="" value="{{$trazabilidad[$traza]['lote_id']}}"></td>
-                            <td><input type="text" name="" value=" {{ $trazabilidad[$traza]['cantidad'] }} "></td>
-                            <td>{{ $insumo['tipoUnidad'] }}</td> 
-                          @if($traza==$arrayTrazabilidad.length()-1)
+                            <td><input type="text" name="" value="{{$trazabilidad[$arrayTrazabilidad[$i]]['lote_id']}}"></td>
+                            <td><input type="text" name="" value=" {{ $trazabilidad[$arrayTrazabilidad[$i]]['cantidad'] }} "></td>
+                            <td>{{ $insumo['tipoUnidad'] }}</td>
+                          @if($i==count($arrayTrazabilidad)-1)
                             <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
                           </tr>
                           @else
                             </tr>
                           @endif        
-                        @endforeach
-                    @endforeach
-                  @endif
-             
+                        @endfor
+
+                    @endif
+                  @endforeach
 
 
               </tbody>

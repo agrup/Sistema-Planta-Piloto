@@ -36,11 +36,12 @@ class GestorLote extends Model
                     'nombre'=>$producto->nombre,
                     'producto_id'=>$producto->id,
                     'tipoUnidad'=>$producto->tipoUnidad,
+                    'costounitario'=>$lote->costounitario,
                 //Las siguientes operaciones deben ser seguras ya que un lote solo puede consumir de otro finalizado
                     'fechaFinalizacion'=>$lote->fechaFinalizacion
                     /*
                     'cantidadElaborada'=>$lote->cantidadElaborada,
-                    'costoUnitario'=>$lote->costounitario,
+                    ,
                     'inicioMaduracion'=>$lote->fechaInicioMaduracion,
                     'finalizacion'=>$lote->fechaFinalizacion,
                     'cantidadFinal'=>$lote->cantidadFinal,

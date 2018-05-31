@@ -58,6 +58,48 @@ class GestorStock
             self::recalcularStockReal($nuevoMov);
         }
     }
+
+    public static function entradaProducto(int $idLote, int $producto_id, float $cantidad, string $fecha)
+    {
+        //chequeo si posee una planificacion para darla por cumplida
+        $movPlanif = Movimiento::getEntradaPlanificada($idLote);
+        if($movPlanif !=null) {
+            //si existia, lo doy por cumplido
+            $movPlanif->tipo = TipoMovimiento::cumplidoDe($movPlanif->tipo);
+            $movPlanif->save();
+        }
+
+        $banderaRecalcular = false;
+        $ultimoMovReal=Movimiento::ultimoRealProd($producto_id);
+        $movAnterior = $ultimoMovReal;
+        //Compruebo si estoy insertando antes del ultimo mov de ese producto
+        if($ultimoMovReal->fecha > $fecha){
+            //si es asi, recupero el mov anterior a este y deberé recalcular
+            $movAnterior = Movimiento::getAnteriorRealProd($producto_id,$fecha);
+            $banderaRecalcular=true;
+        }
+        $datosNuevoMov = [
+            'producto_id'=>$producto_id,
+            'idLoteConsumidor'=>$idLote,
+            'idLoteIngrediente'=>$idLote,
+            'debe'=>0,
+            'haber'=>$cantidad,
+            'saldoGlobal'=>($movAnterior->saldoGlobal+$cantidad), // cantidad nueva es la anterior mas lo que agrega la llegada
+            'saldoLote'=>$cantidad
+
+        ];
+        $nuevoMov= Movimiento::create($datosNuevoMov);
+
+        if($banderaRecalcular){
+            self::recalcularStockReal($nuevoMov);
+        }
+
+        return $nuevoMov;
+
+
+    }
+
+
     //PLANIFICADOS
 
 
@@ -639,7 +681,7 @@ class GestorStock
             array_push($necesidades,$arrAux);
         }
         //calculo de las alarmas
-        $stocks = self::getStockPorProd($fechaHasta);
+        $stocks = self::getStockPorProd($fechaHasta,true);
         foreach ($stocks as $stock){
             $arrAux = [];
             if($stock['alarma']!='normal'){
@@ -738,7 +780,6 @@ class GestorStock
         $mov=Movimiento::getAnteriorProd($producto_id,$fechaHasta);
         return $mov->saldoGlobal;
     }
-
 
 
 

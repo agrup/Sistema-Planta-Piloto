@@ -25,7 +25,7 @@ class Producto extends Model
     {
     	 # return $this->belongsToMany('Producto', 'producto_productoi', 'producto_id', 'ingrediente_id');
     	 return $this->belongsToMany('App\Producto','producto_productoi')
-    	 	->withPivot('producto_id','ingrediente_id','cantidad','cantidadProducto')->get();
+    	 	->withPivot('producto_id','ingrediente_id','cantidad','cantidadProducto');
     	 ;
 
     }
@@ -52,7 +52,7 @@ class Producto extends Model
      * @return array [ ['id'=>, 'cantidad'=>, 'cantidadProducto'=> ] .. ]
      */
     public function getIngredientes(){
-           $ingredientes = $this->formulacion();
+           $ingredientes = $this->formulacion()->get();
            $arrayResult = [];
            foreach ($ingredientes as $ing){
                array_push($arrayResult,['id'=>$ing->pivot->ingrediente_id,'cantidad'=>$ing->pivot->cantidad, 'cantidadProducto'=>$ing->pivot->cantidadProducto]);

@@ -50,7 +50,7 @@
 							<?php $b=true;?>
 								<td>{{ $trazabilidad[$i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>
 								<td>{{$trazabilidad[$i]['lote_id']}}</td>
-								@break		
+
 							@endif
 	
 						@endfor
@@ -76,7 +76,7 @@
 				@endcase
 
 				@case('iniciado')
-				<form action="/produccion/modificarIniciado/{{$lote['id']}}" method="post">
+				<form action="/produccion/modificarIniciado/{{$lote['id']}}" method="get">
 
 					<button type="submit" class="btn btn-primary">Modificar</button>
 					{{ csrf_field() }}
