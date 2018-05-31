@@ -18,9 +18,6 @@ $(document).ready(function(){
 			guardar.setAttribute('height','30px');
 			guardar.setAttribute('class','guardar');
 			td5.appendChild(guardar);
-			//var agregar=$("<a></a>")appendTo(td5);
-			//agregar.attr('href','#');
-			//agregar.attr('class','guardar');
 
 			row = $(this).closest('tr');
 			$('.nuevaLineaProducto:last').append(td1,td2,td3,td4,td5);

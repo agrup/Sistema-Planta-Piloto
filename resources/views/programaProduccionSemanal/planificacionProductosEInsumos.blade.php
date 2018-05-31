@@ -131,6 +131,12 @@
     </body>
 @endsection
 @section('script')
-      <script type="text/javascript" src="{{asset('js/planificacion/addPlanificacion.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/planificacion/planificacion.js')}}"></script>
+      <script>
+     document.addEventListener("DOMContentLoaded", function() {
+         Planificacion.init();
+     });
+
+        </script>
       <script type="text/javascript" src="{{asset('js/planificacion/guardarPlanificacion.js')}}"></script>
 @endsection
