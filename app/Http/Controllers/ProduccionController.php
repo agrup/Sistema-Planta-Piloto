@@ -166,6 +166,7 @@ class ProduccionController extends Controller
         $lote = ['id' => $loteObj->id,
             'cantidad' => $cantidad,
             'tipoLote' => TipoLote::toString($loteObj->tipoLote),
+            'fecha'=>$loteObj->fechaInicio
 
         ];
         $formulacion = $producto->getFormulacion($cantidad);
