@@ -19,7 +19,9 @@ class ProductoController extends Controller
 
   public function altaProducto(){
     $insumoProducto = "producto";
-    return view('administracion.altaInsumoProducto')->with(compact('insumoProducto'));
+    $insumos = [];
+    return view('administracion.altaInsumoProducto')->with(compact('insumoProducto'))
+                                                    ->with(compact('insumos'));
   }
 
 
@@ -56,7 +58,9 @@ class ProductoController extends Controller
 
   public function altaInsumo(){
     $insumoProducto = "insumo";
-    return view('administracion.altaInsumoProducto')->with(compact('insumoProducto'));
+    $insumos = [];
+    return view('administracion.altaInsumoProducto')->with(compact('insumoProducto'))
+                                                    ->with(compact('insumos'));
   }
 
 
