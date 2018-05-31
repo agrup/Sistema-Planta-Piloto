@@ -5,6 +5,7 @@ namespace App;
 use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use App\Producto;
+use Exception;
 
 /**
  * Lote
@@ -127,6 +128,48 @@ class Lote extends Model
                 return null;
             }
         }
+    }
+
+    public function registrarMaduracion(string $fechaInicioMaduracion){
+        if($this->tipoLote !=TipoLote::INICIADO){
+            throw new Exception('Solo se puede pasar a maduracion un lote que este en estado INICIADO');
+        }
+        $this->tipoLote = TipoLote::MADURACION;
+        $this->fechaInicioMaduracion = $fechaInicioMaduracion;
+        $this->save();
+
+    }
+
+    public function finalizar(float $cantidadFinal, string $fechaFinalizacion, string $fechaVencimiento){
+        if($this->tipoLote !=TipoLote::MADURACION || $this->tipoLote != TipoLote::INICIADO){
+            throw new Exception('Solo se puede finalizar un lote que este en estado INICIADO o MADURACION');
+        }
+        if($fechaVencimiento < $this->fechaInicio || $fechaFinalizacion < $this->fechaInicio) {
+            throw new Exception('fechas anteriores a la fecha de inicio');
+        }
+        if($cantidadFinal < 0){
+            throw new Exception('cantidad menor a 0');
+        }
+
+        //actualizo los datos del lote
+        $this->tipoLote = TipoLote::FINALIZADO;
+        $this->fechaFinalizacion = $fechaFinalizacion;
+        $this->fechaVencimiento = $fechaVencimiento;
+        $this->cantidadFinal = $cantidadFinal;
+        //debo calcular el costo unitario
+        $consumos = GestorLote::getTrazabilidadLote($this->id);
+        $costoTotal = 0;
+        foreach ($consumos as $consumo){
+            //recorro todos los consumos y sumo el costo de lo consumido al costo total
+            $costoTotal += $consumo['cantidad'] * $consumo['costounitario'];
+        }
+        //costo unitario es igual a lo gastado total dividido la cantidad producida
+        $this->costounitario = $costoTotal / $cantidadFinal;
+        //fabrico la fecha en formato timestamp para el movimiento
+        $H_i_s = date('H:i:s');
+        $fechaStamp = $fechaFinalizacion . " ". $H_i_s;
+        GestorStock::entradaProducto($this->id,$this->producto_id,$cantidadFinal,$fechaStamp);
+        $this->save();
     }
 
 
