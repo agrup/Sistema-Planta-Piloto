@@ -17,43 +17,53 @@ class ProductoController extends Controller
     return view('administracion.buscarInsumoProducto')->with(compact('insumoProducto'));
   }
 
-  public function altaProducto(){
+  public function showAltaProducto(){
     $insumoProducto = "producto";
-    return view('administracion.altaInsumoProducto')->with(compact('insumoProducto'));
+    $insumos=Producto::all()->toArray();
+    //var_dump(compact('insumos'));
+    return view('administracion.altaInsumoProducto')
+                                                      ->with(compact('insumos'))
+                                                      ->with(compact('insumoProducto'));
   }
 
 
   public function addProducto(){
     //Recibe por post los datos de un producto para alta
     //"codigo", "nombre", "descripcion", "unidad", "alarmaActiva", "alarmaAmarilla",  "alarmaRoja", "categoria"
-    $alarma = null;
-    if(request()->input('alarmaActiva')=="true")
-        $alarma= true;
-    else
-        $alarma = false;
-
-    $estado = null;
-    if(request()->input('estado')=="true")
-        $estado = true;
-    else
-        $estado = false;
-
-     $datosNuevoProd = [
-            
+      $estado = true;
+     $datosProducto = [
             'nombre'=>request()->input('nombre'),
             'descripcion'=>request()->input('descripcion'),
             'tipoUnidad'=>request()->input('tipoUnidad'),
             'codigo'=>request()->input('codigo'),
-            'alarmaActiva'=>$alarma,
+            'alarmaActiva'=>request()->input('alarmaActiva'),
             'alarmaAmarilla'=>request()->input('alarmaAmarilla'),
             'alarmaRoja'=>request()->input('alarmaRoja'),
             'categoria'=>request()->input('categoria'),
             'estado'=>$estado
         ];
 
-    $nuevoProd = Producto::create($datosNuevoProd);
+    $cantidad = request()->input('productoCantidad');
+
+    $formulacion = request()->input('formulacion');
+
+    $Producto = Producto::create($datosProducto);
+    //recorro todos los ingredientes para agregarlos a la formulacion del producto creado
+    foreach($formulacion as $ingrediente);
+    {
+      $ingrediente_id =$ingredinte['id'];
+      $cantidadProducto = $ingredinte['cantidad'];
+      if ($Producto->agregarIngrediente($cantidad,$cantidadProducto,$ingrediente_id)){
+        return 'erro ingrediente ingrediente ya agregado';
+      }
+    }
+        
+
+
 
     $insumoProducto = 'producto';
+    
+
     return view('administracion.buscarInsumoProducto')->with(compact('insumoProducto'));
   }
 
