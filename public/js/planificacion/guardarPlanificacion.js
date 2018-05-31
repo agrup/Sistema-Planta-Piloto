@@ -13,8 +13,9 @@ $(document).ready(function(){
 
 		});
 	//borro el guardar y su padre y agrego el editar y borrar
-		$('.guardar').parent('td').remove();
-		$('.guardar').remove();
+		//console.log($(this));
+		$(this).parent('td').remove();
+		//$(this).find('img').remove();
 		
 		var tdimg1=document.createElement('td');
 		var tdimg2=document.createElement('td');
