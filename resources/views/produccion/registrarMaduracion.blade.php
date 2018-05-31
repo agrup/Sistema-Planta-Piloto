@@ -14,18 +14,16 @@
 
        
             <div class="form-group">
+
               <label>Fecha de Inicio de Maduración</label>
-              <input type="date" class="form-control">
+              <input type="date" class="form-control" name="fechaMaduracion">
               <small class="form-text text-muted"></small>
 
             </div>
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-primary" formaction="/produccion/postMaduracion/{{$lote['id']}}">Guardar</button>
         
         </div>
-        <div class="modal-footer">
-         
-        
-        </div>
+       
       </div>
     </div>
   </div>

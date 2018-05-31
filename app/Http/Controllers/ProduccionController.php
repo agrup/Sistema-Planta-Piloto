@@ -259,6 +259,14 @@ class ProduccionController extends Controller
         return view('produccion.produccion',compact('data'));
 
     }
+    public static function postMaduracion($id){
+        //var_dump(request()->input('fechaMaduracion'));
+        $lote = Lote::find($id);
+        $fecha = $lote->fechaInicio;
+        $data['lotes']=self::getArrayLotes($fecha);
+        $data['fecha']=$fecha;
+        return view('produccion.produccion',compact('data'));
+    }
 
 
 }
