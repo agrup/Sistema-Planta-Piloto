@@ -69,7 +69,6 @@
 							@include('elementosComunes.cierreBoton')				              
 						</form>
 					
-				
 
 @endsection
 

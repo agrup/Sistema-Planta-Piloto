@@ -52,7 +52,7 @@ Route::get('/productos/administracionInsumos', 'ProductoController@administracio
 Route::get('/productos/administracionInsumo', 'ProductoController@administracionInsumo');
 
 //Alta Producto
-Route::get('/productos/altaProducto', 'ProductoController@altaProducto');
+Route::get('/productos/altaProducto', 'ProductoController@showAltaProducto');
 Route::post('/productos/altaProducto', 'ProductoController@addProducto');
 //Alta Insumo
 Route::get('/productos/altaInsumo', 'ProductoController@altaInsumo');
