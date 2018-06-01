@@ -2,7 +2,7 @@
 
 @section('section')
 		@include('elementosComunes.aperturaTitulo')
-			Lote en Producción
+			Lote en Producción {{ $lote['fecha']}}
 		@include('elementosComunes.cierreTitulo')
 
 		@include('elementosComunes.aperturaTabla')    
@@ -50,7 +50,7 @@
 							<?php $b=true;?>
 								<td>{{ $trazabilidad[$i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>
 								<td>{{$trazabilidad[$i]['lote_id']}}</td>
-								@break		
+
 							@endif
 	
 						@endfor
@@ -76,19 +76,25 @@
 				@endcase
 
 				@case('iniciado')
-				<form action="/produccion/modificarIniciado/{{$lote['id']}}" method="post">
-
+				<form action="/produccion/modificarIniciado/{{$lote['id']}}" method="get">
+				{{ csrf_field() }}
 					<button type="submit" class="btn btn-primary">Modificar</button>
-					{{ csrf_field() }}
+				</form>	
+				<form action="/produccion/postMaduracion/{{$lote['id']}}" method="post">
+
+					 
 					@include('produccion.registrarMaduracion')
-					<button class="btn btn-primary">Finalizar</button>
 				</form>
+				<form action="/produccion/postFinalizarLote/{{$lote['id']}}" method="post">	
+				
+					@include('produccion.finalizarLote')
+				</form>	
 					
 
 					@break
 				@endcase
 
-				@case('maduracion')$lote['id']
+				@case('maduracion')
 					<button class="btn btn-primary">Modificar</button>
 					<button class="btn btn-primary">Finalizar</button>
 					@break

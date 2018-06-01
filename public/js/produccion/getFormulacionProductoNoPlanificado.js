@@ -82,10 +82,10 @@ $(document).ready(function(){
 
 
 	$("#selectProducto").change(function(){   //cambiar el tipo de Unidad dependiendo el producto
-		$('option:selected', this).attr('mytag');
+		//$('option:selected', this).attr('mytag');
 		var tu=$('option:selected', this).attr("name");
 		console.log(tu);
-		$("#tipoUnidad").attr({value:tu});	
+		$("#tipoUnidad").attr({value:tu});
 
 	});
 		

@@ -95,12 +95,58 @@ class ProduccionController extends Controller
     }
 
     public static function postIniciarPlanificado(){
-        var_dump(request());
-        $fecha = '2018-05-04';
-        $data['fecha']=$fecha;
-        $data['lotes']=self::getArrayLotes($fecha);
-        return view('produccion.produccion',compact('data'));
 
+        $loteVista = request()->input('lote');
+        $consumos = request()->input('consumo');
+        //Parseo los datos de la request
+        $dataLoteArr = explode(',',$loteVista);
+        $consumosArr = explode(',',$consumos);
+
+       /* var_dump($dataLoteArr);
+        var_dump($consumosArr);
+        return view('welcome');*/
+        $data =[]; // variable utilizada para retornar a la nueva vista
+        /*var_dump($loteVista);
+        var_dump($consumos);
+        var_dump($dataLoteArr);*/
+
+        //Los primeros 4 datos del lote no pueden estar vacios
+        for($i=0; $i<4;$i++){
+            if(!isset($dataLoteArr[$i]) || trim($dataLoteArr[$i])===''){
+                throw new Exception('Campo que no se permite vacio');
+            }
+        }
+
+        $fecha = $dataLoteArr[2];
+        // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
+        $H_i_s = date('H:i:s');
+        $fechaStamp = $fecha . " ". $H_i_s;
+        //crear el lote
+        $datosLote=[
+            'producto_id'=>$dataLoteArr[0],
+            'cantidadElaborada'=>$dataLoteArr[1],
+            'fechaInicio'=>$fecha,
+            'tipoTP'=>$dataLoteArr[3],
+            'asignatura'=>$dataLoteArr[4]
+        ];
+        $lote = Lote::crearLoteNoPlanificado($datosLote);
+
+        //crear los consumos
+        for($i=0;$i<count($consumosArr);$i+=3){
+            $prodIngId=$consumosArr[$i];
+            $loteIngId=$consumosArr[$i+1];
+            //La vista devuelve 'idInsumo',',' para los insumos que no han sido cargados (no se cargo el consumo)
+            //Porlo que solo doy de alta los que correspondan
+            if(isset($loteIngId) && trim($loteIngId)!==''){
+                $cantidad=$consumosArr[$i+2];
+                GestorStock::altaConsumo($lote->id, $loteIngId,$prodIngId,floatval($cantidad),$fechaStamp);
+            }
+        }
+
+        //Retorno a la vista inicial de produccion en la fecha de este lote
+        $data['lotes']=self::getArrayLotes($fecha);
+        $data['fecha']=$fecha;
+        return view('produccion.produccion',compact('data'));
     }
 
     public static function showLoteInProd ($id)
@@ -120,6 +166,7 @@ class ProduccionController extends Controller
         $lote = ['id' => $loteObj->id,
             'cantidad' => $cantidad,
             'tipoLote' => TipoLote::toString($loteObj->tipoLote),
+            'fecha'=>$loteObj->fechaInicio
 
         ];
         $formulacion = $producto->getFormulacion($cantidad);
@@ -167,9 +214,7 @@ class ProduccionController extends Controller
         $dataLoteArr = explode(',',$loteVista);
         $consumosArr = explode(',',$consumos);
         $data =[]; // variable utilizada para retornar a la nueva vista
-        /*var_dump($loteVista);
-        var_dump($consumos);
-        var_dump($dataLoteArr);*/
+
 
         //Los primeros 4 datos del lote no pueden estar vacios
         for($i=0; $i<4;$i++){
@@ -259,12 +304,60 @@ class ProduccionController extends Controller
         return view('produccion.produccion',compact('data'));
 
     }
-    public static function postMaduracion($id){
-        //var_dump(request()->input('fechaMaduracion'));
+
+    /**
+     * Registra la maduracion de un lote iniciado
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws Exception
+     */
+    public static function postMaduracion($id)
+    {
+
+        $fechaInicioMaduracion = request()->input('fechaMaduracion');
+        if ($fechaInicioMaduracion == null) {
+            throw new Exception('Fecha inválida');
+        }
         $lote = Lote::find($id);
-        $fecha = $lote->fechaInicio;
-        $data['lotes']=self::getArrayLotes($fecha);
-        $data['fecha']=$fecha;
+        if ($lote == null) {
+            throw new Exception('Lote no econtrado');
+        }
+        $lote->registrarMaduracion($fechaInicioMaduracion);
+
+        //Retorno a la vista principal de produccion con la fecha de registro de la maduracion
+        $data['lotes'] = self::getArrayLotes($fechaInicioMaduracion);
+        $data['fecha'] = $fechaInicioMaduracion;
+        return view('produccion.produccion', compact('data'));
+    }
+
+
+    /**
+     * Finaliza un lote, calculando su costo y dando de alta en stock para su consumo o salida a ventas
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws Exception
+     */
+    public static function postFinalizarLote($id){
+   /* var_dump(request()->input('fechaFinalizacion'));
+    var_dump(request()->input('fechaVencimiento'));
+        var_dump(request()->input('cantidad'));*/
+        $fechaFinalizacion = request()->input('fechaFinalizacion');
+        $fechaVencimiento = request()->input('fechaVencimiento');
+        $cantidadAlFinalizar = request()->input('cantidad');
+
+        if($fechaFinalizacion==null || $fechaVencimiento ==null || $cantidadAlFinalizar ==null || $cantidadAlFinalizar <0 ) {
+            throw new Exception('datos inválidos');
+        }
+
+        $lote = Lote::find($id);
+        if($lote==null){
+            throw new Exception('lote no encontrado');
+        }
+        $lote->finalizar($cantidadAlFinalizar,$fechaFinalizacion,$fechaVencimiento);
+
+        //Re3torno a la vista principal de produccion con la fecha de finalizacion
+        $data['lotes']=self::getArrayLotes($fechaFinalizacion);
+        $data['fecha']=$fechaFinalizacion;
         return view('produccion.produccion',compact('data'));
     }
 

@@ -5,10 +5,8 @@ $(document).ready(function(){
 		
 		$("#tbodyformulacion").remove();
 		
-	var id=$("#idlote").attr("value");
+	var id=$("#producto").attr("value");
 	var cantidad=$("#cantidad").val();
-    alert(id+cantidad);
-    
 		//para pedir la formulacion
   		 $.getJSON("/produccion/formulacion",{id,cantidad},function(result){
 
@@ -23,6 +21,7 @@ $(document).ready(function(){
 -            			tbody.setAttribute("id","tbodyformulacion");
             		var tr=document.createElement("tr");
             			tr.setAttribute("id","trformulacion");
+                    	tr.setAttribute('class','trConsumo');
             		var td1=document.createElement("td");
             		//tiene el id
             		var inputID= $('<input>').attr({type:'hidden',value: item['id'],id:"idInsumo"}).appendTo(tr);//tiene el id
@@ -33,7 +32,7 @@ $(document).ready(function(){
                     $('<option selected="selected" disabled></option>').text("-Selecccione un Lote-").appendTo(selectLote);
                     selectLote.addClass('interes');
             		var td3=document.createElement("td");
-            		var inputCant =$('<input>').attr({type:'text',placeholder:"Cantidad Teorica: "+item['cantidad'],id:"cantidad"}).appendTo(td3);            	inputCant.addClass('interes');
+            		var inputCant =$('<input>').attr({type:'text',placeholder:"Teorica Total: "+item['cantidad'],id:"cantidad"}).appendTo(td3);            	inputCant.addClass('interes');
             		var td4=document.createElement("td");            		
             		td1.setAttribute("id",item['codigo']);//producto
                     var td5=document.createElement("td");                       
@@ -71,9 +70,9 @@ $(document).ready(function(){
 
 
 	$("#selectProducto").change(function(){   //cambiar el tipo de Unidad dependiendo el producto
-		$('option:selected', this).attr('mytag');
+		//$('option:selected', this).attr('mytag');
 		var tu=$('option:selected', this).attr("name");
-		console.log(tu);
+		//console.log(tu);
 		$("#tipoUnidad").attr({value:tu});	
 
 	});

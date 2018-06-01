@@ -50,9 +50,21 @@ class ProductoController extends Controller
     $cantidad = request()->input('productoCantidad');
 
     $formulacion = request()->input('formulacion');
-
+    var_dump($formulacion);
     $Producto = Producto::create($datosProducto);
     //recorro todos los ingredientes para agregarlos a la formulacion del producto creado
+    $formulacion = explode(',',$formulacion);// pasa el string a array
+
+    for ($i= 0; $i<count($formulacion) ; $i=$i+2) {
+      $ingrediente_id =$formulacion[$i];
+      $cantidadProducto = $formulacion[$i+1];
+      if ($Producto->agregarIngrediente($cantidad,$cantidadProducto,$ingrediente_id)){
+        return 'erro ingrediente ingrediente ya agregado';
+      }
+    }
+
+    var_dump($formulacion);
+/*
     foreach($formulacion as $ingrediente);
     {
       $ingrediente_id =$ingredinte['id'];
@@ -62,7 +74,7 @@ class ProductoController extends Controller
       }
     }
         
-
+*/
 
 
     $insumoProducto = 'producto';

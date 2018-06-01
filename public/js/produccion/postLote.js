@@ -1,5 +1,6 @@
 
 var PostLote= {
+
     init: function (url) {
         $("#guardar").click(function() {
             $('#myform').attr({'action': url,'method': 'POST','header':{'Content-Type': 'application/json'}});
@@ -39,6 +40,7 @@ var PostLote= {
 
         });
     }
+
 };
 
 

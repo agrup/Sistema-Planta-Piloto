@@ -29,6 +29,7 @@
                     </thead>
 
                     <tbody id="tbodyFormulacion">
+
                     <label>Cantidad Final</label>
                     <input type="text" name="productoCantidad"  class="form-control" required> <label id="labelTipoUnidad"></label>
                     <button type="button" class="btn btn-primary" id="agregarInsumo">Agregar Insumo</button>  
