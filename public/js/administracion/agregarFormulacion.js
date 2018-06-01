@@ -3,6 +3,17 @@ $(document).ready(function() {
 		
 		var row = $('#tbodyFormulacion:last-child');
 		var newRow=row.clone();
+		$('.selectInsumo').on("change", function(){   //cambiar el tipo de Unidad dependiendo el producto
+		
+			var parent = this.closest('tr');
+			console.log(parent);		
+			var tu= $('option:selected', this).attr("data-unit");		
+			console.log(tu);
+			var i = parent
+			var label = $('td:last', parent);
+			console.log(label);
+			label.text(tu);
+		});		
 		newRow.insertAfter(row);
 		var cantidad = row.find("input#cantidad");
 		var tu = row.find("span#tdTipoUnidad");
@@ -12,13 +23,16 @@ $(document).ready(function() {
 
 	});
 
-	$('#selectInsumo').change(function(){   //cambiar el tipo de Unidad dependiendo el producto
+	$('.selectInsumo').on("change", function(){   //cambiar el tipo de Unidad dependiendo el producto
 		
-		var parent = this.parent();
+		var parent = this.closest('tr');
+		console.log(parent);		
 		var tu= $('option:selected', this).attr("data-unit");		
-		var label = parent.find("td:span");		
-		laber.text(tu);
-
+		console.log(tu);
+		var i = parent
+		var label = $('td:last', parent);
+		console.log(label);
+		label.text(tu);
 	});
 
 	$('#guardarFormulacion').on("click", function(){

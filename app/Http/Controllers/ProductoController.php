@@ -50,9 +50,10 @@ class ProductoController extends Controller
     $cantidad = request()->input('productoCantidad');
 
     $formulacion = request()->input('formulacion');
-
+    var_dump($formulacion);
     $Producto = Producto::create($datosProducto);
     //recorro todos los ingredientes para agregarlos a la formulacion del producto creado
+    /*
     foreach($formulacion as $ingrediente);
     {
       $ingrediente_id =$ingredinte['id'];
@@ -63,7 +64,7 @@ class ProductoController extends Controller
     }
         
 
-
+*/
 
     $insumoProducto = 'producto';
     

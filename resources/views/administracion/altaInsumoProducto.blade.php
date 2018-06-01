@@ -21,7 +21,7 @@
 						    		<div class="form-group">
 						              	<label for="exampleInputEmail1">Código</label>
 						              	<input type="text" name="codigo" class="form-control" required>
-									 </div>
+									</div>
 						            <div class="form-group">
 						              <label>Nombre</label>
 						              <input type="text" name="nombre" class="form-control" required> </div>
@@ -38,7 +38,7 @@
 						              <input type="text" name="tipoUnidad" class="form-control" required> </div>
 						            <div class="form-group">
 						              <label>Alarma (Activa o Inactiva)</label>
-						              <select name="alarma" class="form-control" id="alarma" required>
+						              <select name="alarmaActiva" class="form-control" id="alarma" required>
 	  										<option value="true">Activa</option>
 	  										<option value="false">Inactiva</option>  					
 									</select>
