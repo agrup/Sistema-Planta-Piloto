@@ -30,70 +30,96 @@ class ProductoController extends Controller
   }
 
 
-  public function addProducto(){
-    //Recibe por post los datos de un producto para alta
-    //"codigo", "nombre", "descripcion", "unidad", "alarmaActiva", "alarmaAmarilla",  "alarmaRoja", "categoria"
+  public function altaProducto(){
+      //Recibe por post los datos de un producto para alta
+      //"codigo", "nombre", "descripcion", "unidad", "alarmaActiva", "alarmaAmarilla",  "alarmaRoja", "categoria"
 
-      $estado = true;
-     $datosProducto = [
+        $estado = true;
+       $datosProducto = [
 
-            'nombre'=>request()->input('nombre'),
-            'descripcion'=>request()->input('descripcion'),
-            'tipoUnidad'=>request()->input('tipoUnidad'),
-            'codigo'=>request()->input('codigo'),
-            'alarmaActiva'=>request()->input('alarmaActiva'),
-            'alarmaAmarilla'=>request()->input('alarmaAmarilla'),
-            'alarmaRoja'=>request()->input('alarmaRoja'),
-            'categoria'=>request()->input('categoria'),
-            'estado'=>true
-        ];
+              'nombre'=>request()->input('nombre'),
+              'descripcion'=>request()->input('descripcion'),
+              'tipoUnidad'=>request()->input('tipoUnidad'),
+              'codigo'=>request()->input('codigo'),
+              'alarmaActiva'=>request()->input('alarmaActiva'),
+              'alarmaAmarilla'=>request()->input('alarmaAmarilla'),
+              'alarmaRoja'=>request()->input('alarmaRoja'),
+              'categoria'=>request()->input('categoria'),
+              'estado'=>true
+          ];
 
-    $cantidad = request()->input('productoCantidad');
+        $cantidad = request()->input('productoCantidad');
 
-    $formulacion = request()->input('formulacion');
+        $formulacion = request()->input('formulacion');
 
-    $Producto = Producto::create($datosProducto);
-    //recorro todos los ingredientes para agregarlos a la formulacion del producto creado
-    $formulacion = explode(',',$formulacion);// pasa el string a array
+      if (count(Producto::where('codigo',$datosProducto['codigo'])->get())==0) {
+              
+      $Producto = Producto::create($datosProducto);
+      }else{
+        var_dump(count(Producto::where('codigo',$datosProducto['codigo'])->get()));
+        throw new Exception('Codigo de Producto existente');
+      } 
 
-    for ($i= 0; $i<count($formulacion) ; $i=$i+2) {
-      $ingrediente_id =$formulacion[$i];
-      $cantidadProducto = $formulacion[$i+1];
-      if ($Producto->agregarIngrediente($cantidad,$cantidadProducto,$ingrediente_id)){
-        throw new Exception('erro ingrediente ingrediente ya agregado');
-      }
-    }
+        //$Producto = Producto::create($datosProducto);
+        //recorro todos los ingredientes para agregarlos a la formulacion del producto creado
+        $formulacion = explode(',',$formulacion);// pasa el string a array
 
-  
-/*
-    foreach($formulacion as $ingrediente);
-    {
-      $ingrediente_id =$ingredinte['id'];
-      $cantidadProducto = $ingredinte['cantidad'];
-      if ($Producto->agregarIngrediente($cantidad,$cantidadProducto,$ingrediente_id)){
-        return 'erro ingrediente ingrediente ya agregado';
-      }
-    }
-        
-*/
-    Movimiento::crearUltimoRealFicticio($Producto->id);
+        for ($i= 0; $i<count($formulacion) ; $i=$i+2) {
+          $ingrediente_id =$formulacion[$i];
+          $cantidadProducto = $formulacion[$i+1];
+          if ($Producto->agregarIngrediente($cantidad,$cantidadProducto,$ingrediente_id)){
+            throw new Exception('erro ingrediente ingrediente ya agregado');
+          }
+        }
 
-    $insumoProducto = 'producto';
     
+        Movimiento::crearUltimoRealFicticio($Producto->id);
 
-    return view('administracion.buscarInsumoProducto')
-                                      
-                                      ->with(compact('insumoProducto'));
-  }
+        $insumoProducto = 'producto';
+        $succes=true;
 
-  public function altaInsumo(){
+        return view('administracion.buscarInsumoProducto')
+                                          ->with(compact('succes'))
+                                          ->with(compact('insumoProducto'));
+      }
+
+  public function showAltaInsumo(){
     $insumoProducto = "insumo";
     $insumos = [];
     return view('administracion.altaInsumoProducto')->with(compact('insumoProducto'))
                                                     ->with(compact('insumos'));
   }
 
+  public function altaInsumo(){
+    $insumoProducto = "insumo";
+    $insumos = [];
+     $datosInsumo = [
 
+        'nombre'=>request()->input('nombre'),
+        'descripcion'=>request()->input('descripcion'),
+        'tipoUnidad'=>request()->input('tipoUnidad'),
+        'codigo'=>request()->input('codigo'),
+        'alarmaActiva'=>request()->input('alarmaActiva'),
+        'alarmaAmarilla'=>request()->input('alarmaAmarilla'),
+        'alarmaRoja'=>request()->input('alarmaRoja'),
+        'categoria'=>request()->input('categoria'),
+        'estado'=>true
+    ];
+
+
+
+      if (count(Producto::where('codigo',$datosInsumo['codigo'])->get())==0) {
+              
+      $Producto = Producto::create($datosInsumo);
+      }else{
+        throw new Exception('Codigo de Insumo existente');
+      } 
+      $succes=true;
+
+    return view('administracion.altaInsumoProducto')->with(compact('insumoProducto'))
+                                                    ->with(compact('succes'))
+                                                    ->with(compact('insumos'));
+  }
 
 	/*public static function  search()
 	{
