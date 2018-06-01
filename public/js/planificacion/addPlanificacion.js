@@ -9,9 +9,12 @@ $(document).ready(function(){
 
 
 			var input1=$("<input>").attr({type:'text',class:'interes'}).appendTo(td1);
-			var input2=$("<input>").attr({type:'text',class:'interes'}).appendTo(td2);
 			var input3=$("<input>").attr({type:'text',class:'interes'}).appendTo(td3);
 			var input4=$("<input>").attr({type:'text',class:'interes'}).appendTo(td4);
+			//selecciono los productos
+			var select=$("<select>").attr({type:'text',class:'interes'}).appendTo(td2);
+			$('<option selected="selected" disabled></option>').text("-Selecccione un Lote-").appendTo(select); 
+			
 			var guardar=document.createElement('img');
 			guardar.src="img/guardar.png";
 			guardar.setAttribute('width','30px');

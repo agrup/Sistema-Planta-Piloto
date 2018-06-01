@@ -25,16 +25,18 @@ $(document).ready(function(){
 		img1.setAttribute('src','img/modificar.png');
 		img1.setAttribute('width','20px');
 		img1.setAttribute('height','20px');
+		img1.setAttribute('class','modificar');
 		tdimg1.appendChild(img1);
 		//borrar
 		var img2=document.createElement('img');
 		img2.setAttribute('src','img/borrar.png');
 		img2.setAttribute('width','30px');
 		img2.setAttribute('height','30px');
+		img2.setAttribute('class','borrar');
 		tdimg2.appendChild(img2);
 
 		tr.append(tdimg1,tdimg2);
-	
+		
 		
 
 

@@ -44,23 +44,37 @@
 						<td>{{$insumo['nombre']}}</td>
 
 						<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
+						<?php $j=0;?>
 						@for ($i = 0; $i < count($trazabilidad); $i++)
 
 							@if ($trazabilidad[$i]['nombre']==$insumo['nombre'])
-							<?php $b=true;?>
-								<td>{{ $trazabilidad[$i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>
-								<td>{{$trazabilidad[$i]['lote_id']}}</td>
+							<?php $b=true;$j++;?>
+								
 
+								@if($j>1)
+								<tr>
+									<td>{{$insumo['nombre']}}</td>
+									<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
+									<td>{{ $trazabilidad[$i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>
+									<td>{{$trazabilidad[$i]['lote_id']}}</td>
+								</tr>	
+								@else
+									<td>{{ $trazabilidad[$i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>
+									<td>{{$trazabilidad[$i]['lote_id']}}</td>
+
+									</tr>
+								@endif
 							@endif
 	
 						@endfor
 						@if ($b==false)
 							<td>0 {{ $insumo['tipoUnidad'] }}</td>
 							<td>-</td>
+
+							</tr>
 						@endif 
 						
 
-					</tr>
 				
 			@endforeach
 			</tbody>
@@ -78,15 +92,8 @@
 				@case('iniciado')
 				<form action="/produccion/modificarIniciado/{{$lote['id']}}" method="get">
 				{{ csrf_field() }}
-					<button type="submit" class="btn btn-primary">Modificar</button>
-				</form>	
-				<form action="/produccion/postMaduracion/{{$lote['id']}}" method="post">
-
-					 
-					@include('produccion.registrarMaduracion')
-				</form>
-				<form action="/produccion/postFinalizarLote/{{$lote['id']}}" method="post">	
-				
+					<button type="submit" class="btn btn-primary">Modificar</button>		 
+					@include('produccion.registrarMaduracion')				
 					@include('produccion.finalizarLote')
 				</form>	
 					

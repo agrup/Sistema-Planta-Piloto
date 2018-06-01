@@ -9,21 +9,15 @@
         Planificación Productos e Insumos
     
     @include('elementosComunes.cierreTitulo')
-    <div class="py-5">
-        <div class="container">
-            <div class="row">
-                <div class="classol-md-12">
-                    <p class="lead">
-                        <b>Fecha Actual: <?= $fecha; ?> </b>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
     @include('elementosComunes.aperturaTitulo')
-    <h3>
-        <b>Productos</b>
-    </h3>
+    <h4 style="text-align: center">
+    <b>Fecha Actual: <?= date("d-m-Y",strtotime($fecha)); ?></b>
+    </h4>
+    @include('elementosComunes.cierreTitulo')
+    @include('elementosComunes.aperturaTitulo')
+    <h4>
+        Productos
+    </h4>
     @include('elementosComunes.cierreTitulo')
     @include('elementosComunes.aperturaTabla')
     <thead>
@@ -58,8 +52,8 @@
                 <td><?=$nombre[$k];?></td>
                 <td><?=$cantidad[$k];?></td>
                 <td></td>
-                <td><a href="" ><img class="icono" src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;"   /></a></td>
-                <td><a href=""><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" /></a></td>
+                <td><img  src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;"  class="modificar" /></td>
+                <td><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" class="borrar" /></td>
             </tr>
         @endforeach
         
@@ -70,7 +64,7 @@
     @include('elementosComunes.cierreTabla')
     @include('elementosComunes.aperturaTitulo')
     <h3>
-        <b>Llegada de Insumos</b>
+        Llegada de Insumos
     </h3>
     @include('elementosComunes.cierreTitulo')
     @include('elementosComunes.aperturaTabla')
@@ -120,23 +114,24 @@
            
         </tr>
     </tbody>
-    @include('elementosComunes.cierreTabla')}
+    @include('elementosComunes.cierreTabla')
     <div id="imgmodificar">
     <img src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;" hidden="true"  />
     </div>
      <div id="imgborrar">
     <img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" hidden="true" />
     </div>
+    
 
+    
+    <form id="formProduccion">
+        <button class="btn btn-primary"> Guardar </button>
+    </form>
     </body>
 @endsection
 @section('script')
-<script type="text/javascript" src="{{asset('js/planificacion/planificacion.js')}}"></script>
-      <script>
-     document.addEventListener("DOMContentLoaded", function() {
-         Planificacion.init();
-     });
-
-        </script>
+<script type="text/javascript" src="{{asset('js/planificacion/addPlanificacion.js')}}"></script>
       <script type="text/javascript" src="{{asset('js/planificacion/guardarPlanificacion.js')}}"></script>
+       <script type="text/javascript" src="{{asset('js/planificacion/modificarPlanificacion.js')}}"></script>
+       <script type="text/javascript" src="{{asset('js/planificacion/borrarPlanificacion.js')}}"></script>
 @endsection
