@@ -294,6 +294,8 @@ class GestorStock
      */
     public static function altaConsumo(int $idLoteConsumidor, int $idLoteIngrediente, int $idProductoIng, float $cantidad, string $fecha)
     {
+        //chequeo si es un consumo planificado para darlo por cumplido
+        $movPlanif = Movimiento::getConsumoPlanif($idLoteConsumidor,$idProductoIng);
         $banderaRecalcular = false;
         $ultimoMovRealProd=Movimiento::ultimoRealProd($idProductoIng);
         $ultimoMovRealLote = Movimiento::ultimoRealLote($idLoteIngrediente);
@@ -590,19 +592,20 @@ class GestorStock
     public static function getStockPorProd(string $fechaHasta, bool $planificados)
     {
         $result=[];
-        //self::recalcularPlanificados($fechaHasta);
-         if(!$planificados){
+
+         if(!$planificados)
+         {
                 
-            $movimientos =Movimiento::ultimoStockRealProdTodos($fechaHasta);
+            $movimientos =Movimiento::ultimoStockRealProdTodos();
 
 
-            }
+         }
         else
-            {
-
+        {
+            self::recalcularPlanificados($fechaHasta);
              $movimientos =Movimiento::ultimoStockProdTodos($fechaHasta);
 
-            }
+        }
         if(!empty($movimientos )){
             foreach ($movimientos as $movimiento){
                 $arrAux=[];
@@ -753,7 +756,7 @@ class GestorStock
             //itero para todas las planificaciones de este producto
             foreach ($planificacionesProd as $planif){
 
-                //si la planificacion es anterior al ultimo mov debo darla como Incumplido
+                //si la planificacion es anterior al ultimo mov y el la planificacion debo darla como Incumplido
                 if($planif->fecha < $movAnteriorProd->fecha) {
                     $planif->tipo = TipoMovimiento::incumplidoDe($planif->tipo);
                 } else {
@@ -781,6 +784,23 @@ class GestorStock
         return $mov->saldoGlobal;
     }
 
+    /**
+     * Funcion que actualiza los consumos de un lote, verificando que si ya existian, modifica la cantidad y fecha
+     * @param int $id
+     * @param array $consumos
+     * @param string $fechaStamp
+     */
+    public static function actualizarConsumos(int $lote_id, array $consumos,string $fechaStamp)
+    {
+        //eliminar los consumos del lote
+        Movimiento::eliminarConsumos($lote_id);
+        //dar de alta los consumos actualizados
+        foreach ($consumos as $consumo){
+            //alta consumo recalcula como debe ser
+            self::altaConsumo($lote_id, $consumo['lote_id'],$consumo['producto_id'],$consumo['cantidad'],$fechaStamp);
+        }
+
+    }
 
 
 }

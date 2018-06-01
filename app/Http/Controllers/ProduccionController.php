@@ -97,18 +97,17 @@ class ProduccionController extends Controller
     public static function postIniciarPlanificado(){
 
         $loteVista = request()->input('lote');
-        $consumos = request()->input('consumo');
+        $consumosVista = request()->input('consumo');
+        $loteID = request()->input('loteID');
         //Parseo los datos de la request
         $dataLoteArr = explode(',',$loteVista);
-        $consumosArr = explode(',',$consumos);
-
-       /* var_dump($dataLoteArr);
-        var_dump($consumosArr);
+        $consumosArrVista = explode(',',$consumosVista);
+        /*var_dump($loteID);
+        var_dump($dataLoteArr);
+        var_dump($consumosArrVista);
         return view('welcome');*/
         $data =[]; // variable utilizada para retornar a la nueva vista
-        /*var_dump($loteVista);
-        var_dump($consumos);
-        var_dump($dataLoteArr);*/
+
 
         //Los primeros 4 datos del lote no pueden estar vacios
         for($i=0; $i<4;$i++){
@@ -129,19 +128,27 @@ class ProduccionController extends Controller
             'tipoTP'=>$dataLoteArr[3],
             'asignatura'=>$dataLoteArr[4]
         ];
-        $lote = Lote::crearLoteNoPlanificado($datosLote);
+        $lote = Lote::find($loteID);
+        $lote->iniciarPlanificado($datosLote);
 
-        //crear los consumos
-        for($i=0;$i<count($consumosArr);$i+=3){
-            $prodIngId=$consumosArr[$i];
-            $loteIngId=$consumosArr[$i+1];
+        $consumos = []; // armaré un array de consumos como lo necesita el gestor de stock
+        for($i=0;$i<count($consumosArrVista);$i+=3){
+            $arrAux=[];
+            $prodIngId=$consumosArrVista[$i];
+            $loteIngId=$consumosArrVista[$i+1];
+            $cantidadIng = $consumosArrVista[$i+2];
             //La vista devuelve 'idInsumo',',' para los insumos que no han sido cargados (no se cargo el consumo)
-            //Porlo que solo doy de alta los que correspondan
-            if(isset($loteIngId) && trim($loteIngId)!==''){
-                $cantidad=$consumosArr[$i+2];
-                GestorStock::altaConsumo($lote->id, $loteIngId,$prodIngId,floatval($cantidad),$fechaStamp);
+            //Porlo que solo agregare al array de consumos los que correspondan
+            if(isset($loteIngId) && trim($loteIngId)!=='' && isset($cantidadIng) && trim($cantidadIng)!=='' && $cantidadIng>0){
+                //GestorStock::actualizarConsumo($lote->id, $loteIngId,$prodIngId,floatval($cantidadIng),$fechaStamp);
+                $arrAux['producto_id']=$prodIngId;
+                $arrAux['lote_id']=$loteIngId;
+                $arrAux['cantidad']=$cantidadIng;
+                array_push($consumos,$arrAux);
             }
         }
+
+        GestorStock::actualizarConsumos($loteID,$consumos,$fechaStamp);
 
         //Retorno a la vista inicial de produccion en la fecha de este lote
         $data['lotes']=self::getArrayLotes($fecha);
@@ -180,16 +187,7 @@ class ProduccionController extends Controller
 
     public static function indexLoteNoPlanificado(){
         $fecha = Carbon::now()->format('Y-m-d');
-        $productosAux = Producto::all();
-        $productos =[];
-        foreach ($productosAux as $producto){
-            $arrAux=[];
-            //chequeo que el producto no sea un insumo
-            if(!empty($producto->getIngredientes())){
-                $arrAux = $producto->toArray();
-                array_push($productos,$arrAux);
-            }
-        }
+        $productos = Producto::getProductosSinInsumosArr();
 
         return view('produccion.iniciarLoteNoPlanificado')
             ->with(compact('productos'))

@@ -169,7 +169,19 @@ class Producto extends Model
                 
     }
 
-
+    public static function getProductosSinInsumosArr(){
+        $productosAux = Producto::all();
+        $productos =[];
+        foreach ($productosAux as $producto){
+            $arrAux=[];
+            //chequeo que el producto no sea un insumo
+            if(!empty($producto->getIngredientes())){
+                $arrAux = $producto->toArray();
+                array_push($productos,$arrAux);
+            }
+        }
+        return $productos;
+    }
 }
 
 
