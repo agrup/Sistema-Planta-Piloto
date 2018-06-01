@@ -29,9 +29,9 @@
                     </thead>
 
                     <tbody id="tbodyFormulacion">
-                     <label>Cantidad Final</label>
-                    <input type="text" name="productoCantidad"  class="form-control" required>
-                    <a id="agregarInsumo">Agregar Insumo</a>  
+                    <label>Cantidad Final</label>
+                    <input type="text" name="productoCantidad"  class="form-control" required> <label id="labelTipoUnidad"></label>
+                    <button type="button" class="btn btn-primary" id="agregarInsumo">Agregar Insumo</button>  
                       <tr id="trFormulacion"><td><select  id="selectInsumo" class="form-control selectInsumo" required>
                                 <option  selected="selected">--Seleccione un Insumo--</option>
                                 @foreach ($insumos as $insumo)                           
@@ -53,7 +53,7 @@
               <small class="form-text text-muted"></small> --}}
 
             </div>
-            <a class="btn btn-primary" id="guardarFormulacion">Guardar Formulación</a>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" id="guardarFormulacion">Guardar Formulación</button>
             {{-- <button type="submit" class="btn btn-primary" formaction="/produccion/postMaduracion/{{$lote['id']}}">Guardar</button> --}}
         
         </div>

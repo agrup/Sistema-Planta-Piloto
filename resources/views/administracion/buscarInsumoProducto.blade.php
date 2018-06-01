@@ -38,7 +38,7 @@
 		    	</div>
 
 		    	@include('elementosComunes.aperturaBoton')
-		    		<a class="btn btn-primary" id="btnBuscar">Buscar</a>
+		    		<button type="button" class="btn btn-primary" id="btnBuscar"> Buscar</button>
 	          	@include('elementosComunes.cierreBoton')
 		    </form>
 	    @include('elementosComunes.aperturaTabla')

@@ -54,5 +54,11 @@ $(document).ready(function() {
 
 
 	});
+	/*$('#inputTipoUnidad').on("change", function(){
+		console.log(this);
+		var tu = this.val();
+		$('#labelTipoUnidad').text(tu);
+
+	});*/
 
 });
