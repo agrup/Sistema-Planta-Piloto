@@ -103,10 +103,7 @@ public function showModificarInsumo()
     return view('administracion.deleteInsumo')->with(compact('insumoProducto'));
   }
 
-  public function showdeleteInsumo(){
-    $insumoProducto = 'insumo';
-    return view('administracion.deleteInsumo')->with(compact('insumoProducto'));
-  }
+
 
   public function deleteInsumo(){
     $insumoProducto = 'insumo';
