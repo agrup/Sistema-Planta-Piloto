@@ -76,3 +76,7 @@ Route::post('/trabajador', 'TrabajadorController@store');
 //Route::get('/productos/altaProducto', 'ProductoController@altaProducto');
 //Route::get('/productos/altaInsumo', 'ProductoController@altaInsumo');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
