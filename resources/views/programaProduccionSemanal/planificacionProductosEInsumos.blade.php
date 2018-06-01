@@ -12,6 +12,7 @@
     @include('elementosComunes.aperturaTitulo')
     <h4 style="text-align: center">
     <b>Fecha Actual: <?= date("d-m-Y",strtotime($fecha)); ?></b>
+    <input type="hidden" id="fecha" value="{{$fecha}}">
     </h4>
     @include('elementosComunes.cierreTitulo')
     @include('elementosComunes.aperturaTitulo')
@@ -47,11 +48,11 @@
     @if(isset($codigo))
         @foreach($codigo as $k=>$a)
 
-            <tr id="{{$k}}">
+            <tr id="{{$k}}" class="trProducto">
 
-                <td><?=$codigo[$k];?></td>
-                <td><?=$nombre[$k];?></td>
-                <td><?=$cantidad[$k];?></td>
+                <td class="inte"><?=$codigo[$k];?></td>
+                <td class="inte"><?=$nombre[$k];?></td>
+                <td class="inte"><?=$cantidad[$k];?></td>
                 <td></td>
                 @if($estado[$k]=="pendiente")
                     <td><img  src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;"  class="modificar" /></td>
@@ -112,11 +113,11 @@
     @if(isset($codigo))
         @foreach($codigo as $k=>$a)
 
-            <tr id="insumo{{$k}}">
+            <tr id="insumo{{$k}}" class="trInsumo">
 
-                <td><?=$codigo[$k];?></td>
-                <td><?=$nombre[$k];?></td>
-                <td><?=$cantidad[$k];?></td>
+                <td class="inte"><?=$codigo[$k];?></td>
+                <td class="inte"><?=$nombre[$k];?></td>
+                <td class="inte"><?=$cantidad[$k];?></td>
                
                  @if($estado[$k]=="pendiente")
                     <td><img  src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;"  class="modificar" /></td>
@@ -170,9 +171,9 @@
     </select>
 
 
-    <form id="formProduccion">
-        <button class="btn btn-primary"> Guardar </button>
-    </form>
+   
+        <button class="btn btn-primary" id="btnguardar"> Guardar </button>
+    
     </body>
 @endsection
 @section('script')
@@ -180,4 +181,5 @@
       <script type="text/javascript" src="{{asset('js/planificacion/guardarPlanificacion.js')}}"></script>
        <script type="text/javascript" src="{{asset('js/planificacion/modificarPlanificacion.js')}}"></script>
        <script type="text/javascript" src="{{asset('js/planificacion/borrarPlanificacion.js')}}"></script>
+       <script type="text/javascript" src="{{asset('js/planificacion/postPlanificacion.js')}}"></script>
 @endsection
