@@ -56,10 +56,10 @@ Route::get('/productos/administracionInsumos', 'ProductoController@administracio
 
 //Alta Producto
 Route::get('/productos/altaProducto', 'ProductoController@showAltaProducto');
-Route::post('/productos/altaProducto', 'ProductoController@addProducto');
+Route::post('/productos/altaProducto', 'ProductoController@altaProducto');
 //Alta Insumo
-Route::get('/productos/altaInsumo', 'ProductoController@altaInsumo');
-Route::post('/productos/altaInsumo', 'ProductoController@addInsumo');
+Route::get('/productos/altaInsumo', 'ProductoController@showaltaInsumo');
+Route::post('/productos/altaInsumo', 'ProductoController@altaInsumo');
 
 //Route fictisio
 Route::get('/produccion/detalleLoteEnProduccion/{id}','PruebaController@detalleLoteEnProduccion');
