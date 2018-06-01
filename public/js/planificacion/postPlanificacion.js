@@ -1,9 +1,11 @@
 $(document).ready(function(){
 
-            $("#btnguardar").click(function(){
+            $("#btnguardar").click(function(event){
+                event.preventDefault();
              //armo los arreglos de productos e insumos planificados   
               var productos = Array();
-              var fecha=$("#fecha");
+              var fecha=$("#fecha").val();
+              console.log(fecha);
               $("tr.trProducto").each(function(i, v){
                 productos[i] = Array();
                 //var idTr = $(this).id;    
@@ -13,7 +15,7 @@ $(document).ready(function(){
                     });
                
                });
-              console.log(productos);
+
               var insumos = Array();
 
               $("tr.trInsumo").each(function(i, v){
@@ -25,18 +27,19 @@ $(document).ready(function(){
                     });
                
                });
-              console.log(insumos);
 
               //mando los datos
                 $.ajax({ 
-                    url: '/planificacion/planificacionDia',
-                    type: 'post',
-                    data:  {fecha,productos,insumos},
-                    success: function(result)
-                        {
-                            alert("se mando!");
+                    url: "/planificacion/planificacionDia",
+                    data:JSON.stringify({ fechaa: fecha , insumoss: insumos, productoss : productos }),
+                    type: 'POST',
+                    dataType : "json",
+                    contentType: "application/json"
+                    }).done(function (data){
+                        console.log(data)
                         }
-                    });
+
+                    );
             });
 
 });

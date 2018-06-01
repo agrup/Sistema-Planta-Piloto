@@ -1,6 +1,6 @@
 @extends('layouts.layoutPrincipal' )
 @section('section')
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     
     <?php $fecha=$planificaciones[0]['fecha'];?>
 
@@ -171,9 +171,10 @@
     </select>
 
 
-   
+    <form>
+        @csrf
         <button class="btn btn-primary" id="btnguardar"> Guardar </button>
-    
+    </form>
     </body>
 @endsection
 @section('script')

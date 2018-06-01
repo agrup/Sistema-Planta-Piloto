@@ -67,13 +67,11 @@ class PlanificacionController extends Controller
     }
 
     public static function postPlanificacionDia(){
-        $fecha = request()->input('fecha');
-        $insumos = request()->input('insumos');
-        $productos = request()->input('productos');
-        var_dump($fecha);
-        var_dump($insumos);
-        var_dump($productos);
-        return response()->json('OK');
+        $fecha = request()->input('fechaa');
+        $insumos = request()->input('insumoss');
+        $productos = request()->input('productoss');
+
+        return \Response::json(['fecha'=>$fecha,'insumos'=>$insumos, 'productos'=>$productos]);
     }
 
     public static function verNecesidadInsumos(){
