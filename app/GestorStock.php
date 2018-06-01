@@ -296,6 +296,10 @@ class GestorStock
     {
         //chequeo si es un consumo planificado para darlo por cumplido
         $movPlanif = Movimiento::getConsumoPlanif($idLoteConsumidor,$idProductoIng);
+        if($movPlanif != null){
+            $movPlanif->tipo = TipoMovimiento::cumplidoDe($movPlanif->tipo);
+            $movPlanif->save();
+        }
         $banderaRecalcular = false;
         $ultimoMovRealProd=Movimiento::ultimoRealProd($idProductoIng);
         $ultimoMovRealLote = Movimiento::ultimoRealLote($idLoteIngrediente);
@@ -756,19 +760,33 @@ class GestorStock
             //itero para todas las planificaciones de este producto
             foreach ($planificacionesProd as $planif){
 
-                //si la planificacion es anterior al ultimo mov y el la planificacion debo darla como Incumplido
+                //si la planificacion es anterior al ultimo mov
                 if($planif->fecha < $movAnteriorProd->fecha) {
-                    $planif->tipo = TipoMovimiento::incumplidoDe($planif->tipo);
+                    switch ($planif->tipo){
+                        //si el lote planificado ya se inicio no hago nada, sino paso a incumplido
+                        case TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF:
+                        case TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF: {
+                            if(Lote::find($planif->idLoteConsumidor)->tipoLote == TipoLote::PLANIFICACION){
+                                $planif->tipo = TipoMovimiento::incumplidoDe($planif->tipo);
+                            }
+                            break;
+                        }
+                        default : { //las entradas de insumo planif no tienen lote asociado asique simplemente anulo
+                            $planif->tipo = TipoMovimiento::incumplidoDe($planif->tipo);
+                        }
+                    }
+                    $planif->save();
                 } else {
                     //sino recalculo
                     $debe = $planif->debe;
                     $haber = $planif->haber;
                     $nuevoSaldoG = $movAnteriorProd->saldoGlobal + $haber - $debe;
                     $planif->saldoGlobal = $nuevoSaldoG;
+                    $planif->save();
+                    //actualizo para la proxima iteracion
+                    $movAnteriorProd = $planif;
                 }
-                $planif->save();
-                //actualizo para la proxima iteracion
-                $movAnteriorProd = $planif;
+
             }
         }
     }

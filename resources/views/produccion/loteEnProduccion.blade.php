@@ -92,10 +92,16 @@
 				@case('iniciado')
 				<form action="/produccion/modificarIniciado/{{$lote['id']}}" method="get">
 				{{ csrf_field() }}
-					<button type="submit" class="btn btn-primary">Modificar</button>		 
-					@include('produccion.registrarMaduracion')				
+					<button type="submit" class="btn btn-primary">Modificar</button>
+				</form>
+				<form action="" method="post">
+					{{ csrf_field() }}
+				@include('produccion.registrarMaduracion')
+				</form>
+				{{ csrf_field() }}
+				<form action="" method="post">
 					@include('produccion.finalizarLote')
-				</form>	
+				</form>
 					
 
 					@break
@@ -105,18 +111,15 @@
 					<button class="btn btn-primary">Modificar</button>
 					<button class="btn btn-primary">Finalizar</button>
 					@break
-				@endcase
+
 
 				@case('finalizado')
 					<button class="btn btn-primary">Modificar Finalizado</button>
 					@break
-				@endcase
+
 
 				 @default
 	        		<span>Something went wrong, please try again</span>
-	       
-
-
-		@endswitch
+		    @endswitch
 @endsection
 		

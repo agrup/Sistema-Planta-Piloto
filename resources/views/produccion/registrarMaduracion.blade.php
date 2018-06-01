@@ -22,7 +22,8 @@
             </div>
 
             <button type="submit" class="btn btn-primary" formaction="/produccion/postMaduracion/{{$lote['id']}}">Guardar</button>
-        
+
+
         </div>
        
       </div>

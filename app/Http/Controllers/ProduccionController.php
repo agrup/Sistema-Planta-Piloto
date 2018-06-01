@@ -322,8 +322,8 @@ class ProduccionController extends Controller
         }
         $lote->registrarMaduracion($fechaInicioMaduracion);
 
-        //Retorno a la vista principal de produccion con la fecha de registro de la maduracion
-        $data['lotes'] = self::getArrayLotes($fechaInicioMaduracion);
+        //Retorno a la vista principal de produccion con la fecha de inicio del lote
+        $data['lotes'] = self::getArrayLotes($lote->fechaInicio);
         $data['fecha'] = $fechaInicioMaduracion;
         return view('produccion.produccion', compact('data'));
     }
