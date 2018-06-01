@@ -39,6 +39,7 @@
                 $nombre[]=$v['nombre'];
                 $cantidad[]=$v['cantidad'].$v['tipoUnidad'];
                 $id[]=$v["movimiento_id"];
+                $estado[]=$v['estado'];
                 ?>
             @endforeach
         @endif
@@ -46,14 +47,28 @@
     @if(isset($codigo))
         @foreach($codigo as $k=>$a)
 
-            <tr>
+            <tr id="{{$k}}">
 
                 <td><?=$codigo[$k];?></td>
                 <td><?=$nombre[$k];?></td>
                 <td><?=$cantidad[$k];?></td>
                 <td></td>
-                <td><img  src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;"  class="modificar" /></td>
-                <td><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" class="borrar" /></td>
+                @if($estado[$k]=="pendiente")
+                    <td><img  src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;"  class="modificar" /></td>
+                    <td><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" class="borrar" /></td>
+                @elseif ($estado[$k]=="incumplida")
+                   <script type="text/javascript">
+                      $('#'+'{{$k}}').css("background-color","#ffb3b3")
+                   </script>
+                   <td></td>
+                   <td></td> 
+                @else
+                   <script type="text/javascript">
+                      $('#'+'{{$k}}').css("background-color","lightgreen")
+                   </script>
+                   <td></td>
+                   <td></td> 
+                @endif
             </tr>
         @endforeach
         
@@ -80,7 +95,7 @@
     <tr></tr>
     </thead>
     <tbody>
-    <?php unset($codigo);unset($nombre);unset($cantidad);?>
+    <?php unset($codigo);unset($nombre);unset($cantidad);unset($estado);?>
     @foreach($planificaciones as $value)
         @if($value['fecha']==$fecha)
             @foreach($value["insumos"] as $v)
@@ -89,6 +104,7 @@
                 $nombre[]=$v['nombre'];
                 $cantidad[]=$v['cantidad'].$v['tipoUnidad'];
                 $id[]=$v["movimiento_id"];
+                $estado[]=$v['estado'];
                 ?>
             @endforeach
         @endif
@@ -96,14 +112,32 @@
     @if(isset($codigo))
         @foreach($codigo as $k=>$a)
 
-            <tr>
+            <tr id="insumo{{$k}}">
 
                 <td><?=$codigo[$k];?></td>
                 <td><?=$nombre[$k];?></td>
                 <td><?=$cantidad[$k];?></td>
                
-                 <td><img src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;" /></td>
-                <td><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;"/></td>
+                 @if($estado[$k]=="pendiente")
+                    <td><img  src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;"  class="modificar" /></td>
+                    <td><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" class="borrar" /></td>
+                @elseif ($estado[$k]=="incumplida")
+
+                   <script type="text/javascript"> 
+                    
+                      $('#insumo'+'{{$k}}').css("background-color","#ffb3b3");
+                   </script>
+                   <td></td>
+                   <td></td> 
+                @else
+
+                   <script type="text/javascript">
+
+                      $('#insumo'+'{{$k}}').css("background-color","lightgreen");
+                   </script>
+                   <td></td>
+                   <td></td> 
+                @endif
             </tr>
 
         @endforeach
@@ -121,9 +155,21 @@
      <div id="imgborrar">
     <img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" hidden="true" />
     </div>
-    
+    <select id="selectProductos" >
+        <option disabled="true" selected="true">--Selecc.Producto--</option>
+    @foreach($productos as $producto)
+        <option value='{{$producto['nombre']}}' data-codigo='{{$producto['codigo']}}'> {{$producto['nombre']}} </option>
+    @endforeach
+    </select>
 
-    
+     <select id="selectInsumos" >
+        <option disabled="true" selected="true">--Selecc.Insumos--</option>
+    @foreach($insumos as $insumo)
+        <option value='{{$insumo['nombre']}}' data-codigo='{{$insumo['codigo']}}'> {{$insumo['nombre']}} </option>
+    @endforeach
+    </select>
+
+
     <form id="formProduccion">
         <button class="btn btn-primary"> Guardar </button>
     </form>

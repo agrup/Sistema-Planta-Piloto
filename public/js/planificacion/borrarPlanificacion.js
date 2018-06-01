@@ -5,7 +5,7 @@ $(document).ready(function(){
 				var txt;
 				var r=confirm("¿Está seguro que desea borrar esta planificación?");
 				if (r == true) {
-				   //tr.hide();
+				   tr.hide();
 				   //console.log(tr.is(":visible")); 
 				   
 					alert(a);
