@@ -102,9 +102,9 @@ class ProduccionController extends Controller
         $dataLoteArr = explode(',',$loteVista);
         $consumosArr = explode(',',$consumos);
 
-        var_dump($dataLoteArr);
+       /* var_dump($dataLoteArr);
         var_dump($consumosArr);
-        return view('welcome');
+        return view('welcome');*/
         $data =[]; // variable utilizada para retornar a la nueva vista
         /*var_dump($loteVista);
         var_dump($consumos);
