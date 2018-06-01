@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Producto;
+use App\Movimiento;
 class ProductoController extends Controller
 {
     
@@ -50,7 +51,7 @@ class ProductoController extends Controller
     $cantidad = request()->input('productoCantidad');
 
     $formulacion = request()->input('formulacion');
-    var_dump($formulacion);
+
     $Producto = Producto::create($datosProducto);
     //recorro todos los ingredientes para agregarlos a la formulacion del producto creado
     $formulacion = explode(',',$formulacion);// pasa el string a array
@@ -59,11 +60,11 @@ class ProductoController extends Controller
       $ingrediente_id =$formulacion[$i];
       $cantidadProducto = $formulacion[$i+1];
       if ($Producto->agregarIngrediente($cantidad,$cantidadProducto,$ingrediente_id)){
-        return 'erro ingrediente ingrediente ya agregado';
+        throw new Exception('erro ingrediente ingrediente ya agregado');
       }
     }
 
-    var_dump($formulacion);
+  
 /*
     foreach($formulacion as $ingrediente);
     {
@@ -75,12 +76,14 @@ class ProductoController extends Controller
     }
         
 */
-
+    Movimiento::crearUltimoRealFicticio($Producto->id);
 
     $insumoProducto = 'producto';
     
 
-    return view('administracion.buscarInsumoProducto')->with(compact('insumoProducto'));
+    return view('administracion.buscarInsumoProducto')
+                                      
+                                      ->with(compact('insumoProducto'));
   }
 
   public function altaInsumo(){
