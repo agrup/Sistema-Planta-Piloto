@@ -27,6 +27,13 @@
          <li class="nav-item active">
             <a class="nav-link" href="/produccion"><span class="glyphicon glyphicon-compressed">Produccion</span> <span class="sr-only">(current)</span></a>
           </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Administracion</span></a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="/stock">Productos</a>
+              <a class="dropdown-item" href="/stock">Insumos</a>
+            </div>
+          </li>
         </ul>
 
       </div>
