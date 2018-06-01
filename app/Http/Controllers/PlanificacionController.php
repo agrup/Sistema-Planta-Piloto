@@ -62,8 +62,18 @@ class PlanificacionController extends Controller
         $planificaciones = [];
         array_push($planificaciones,$planificacion->toArray());
         return view('programaProduccionSemanal.planificacionProductosEInsumos',compact('planificaciones'))
-            ->with(compact('productos')
-            ->with(compact('insumos')));
+            ->with(compact('productos'))
+            ->with(compact('insumos'));
+    }
+
+    public static function postPlanificacionDia(){
+        $fecha = request()->input('fecha');
+        $insumos = request()->input('insumos');
+        $productos = request()->input('productos');
+        var_dump($fecha);
+        var_dump($insumos);
+        var_dump($productos);
+        return response()->json('OK');
     }
 
     public static function verNecesidadInsumos(){

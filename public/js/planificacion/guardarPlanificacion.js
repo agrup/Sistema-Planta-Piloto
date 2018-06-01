@@ -10,6 +10,13 @@ $(document).ready(function(){
 					td.text(value);
 					$(this).remove();
 			});
+			$(this).find('select').each(function(){
+					//console.log($(this).val());
+					var value=$(this).val(); //guardo el valor del select y escribo el td
+					var td=$(this).closest('td');
+					td.text(value);
+					$(this).remove();
+			});
 
 		});
 	//borro el guardar y su padre (el td que lo contiene) y agrego el editar y borrar

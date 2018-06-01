@@ -1,4 +1,7 @@
 $(document).ready(function(){
+	$("#selectProductos").hide();
+	$("#selectInsumos").hide();
+
 		$(".agregarProducto").click(function(){
 			
 			var td1=document.createElement("td");
@@ -8,13 +11,21 @@ $(document).ready(function(){
 			var td5=document.createElement("td");
 
 
-			var input1=$("<input>").attr({type:'text',class:'interes'}).appendTo(td1);
+			//var input1=$("<input>").attr({type:'text',class:'interes'}).appendTo(td1);
 			var input3=$("<input>").attr({type:'text',class:'interes'}).appendTo(td3);
-			var input4=$("<input>").attr({type:'text',class:'interes'}).appendTo(td4);
-			//selecciono los productos
-			var select=$("<select>").attr({type:'text',class:'interes'}).appendTo(td2);
-			$('<option selected="selected" disabled></option>').text("-Selecccione un Lote-").appendTo(select); 
+
+			//SELECT tipo tp
+			var input4=$("<select>").attr({type:'text',class:'interes'}).appendTo(td4);
+			var option1=$("<option>NO</option>").appendTo(input4);
+			var option2=$("<option>SI</option>").appendTo(input4);
 			
+			//select de los productos
+			var select=$("#selectProductos").clone().appendTo(td2);
+			select.attr('id','productos');
+			select.addClass('interes');
+			select.show();
+			
+
 			var guardar=document.createElement('img');
 			guardar.src="img/guardar.png";
 			guardar.setAttribute('width','30px');
@@ -39,12 +50,16 @@ $(document).ready(function(){
 			var td1=document.createElement("td");
 			var td2=document.createElement("td");
 			var td3=document.createElement("td");
-			var td4=document.createElement("td");
+			//var td4=document.createElement("td");
 			var td5=document.createElement("td");
 
-			var input1=$("<input>").attr({type:'text',class:'interes'}).appendTo(td1);
-			var input2=$("<input>").attr({type:'text',class:'interes'}).appendTo(td2);
+			//var input1=$("<input>").attr({type:'text',class:'interes'}).appendTo(td1);
 			var input3=$("<input>").attr({type:'text',class:'interes'}).appendTo(td3);
+			//select de los Insumos
+			var select=$("#selectInsumos").clone().appendTo(td2);
+			select.attr('id','insumos');
+			select.addClass('interes');
+			select.show();
 			//var input4=$("<input>").attr({type:'text',class:'interes'}).appendTo(td4);
 			var guardar=document.createElement('img');
 			guardar.src="img/guardar.png";
@@ -67,5 +82,19 @@ $(document).ready(function(){
 			//$('.tbodyPlanif').append();
 
 		});
+		//cuando seleccionoel producto pongo automaticamente el codigo
+		$("body").on('change','#productos',function(){   //cambiar el codigo dependiendo el producto
+		//$('option:selected', this).attr('mytag');
+			var codigo=$('option:selected', this).data('codigo');
+			console.log(codigo);
+			$(this).parent('td').prev('td').text(codigo);
 
+	});
+		$("body").on('change','#insumos',function(){   //cambiar el codigo dependiendo el insumo
+		//$('option:selected', this).attr('mytag');
+			var codigo=$('option:selected', this).data('codigo');
+			console.log(codigo);
+			$(this).parent('td').prev('td').text(codigo);
+
+	});
 	});

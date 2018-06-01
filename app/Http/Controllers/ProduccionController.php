@@ -22,7 +22,7 @@ class ProduccionController extends Controller
         $data['fecha']=$fecha;
         $data['lotes']=self::getArrayLotes($fecha);
         return view('produccion.produccion',compact('data'));
-
+        
     }
 
     public static function show()

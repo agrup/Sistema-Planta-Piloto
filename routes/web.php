@@ -16,10 +16,12 @@ Route::get('/detalleLote', 'LotesController@showDetalle');
 //Planificacion
 Route::get('/planificacion', 'PlanificacionController@index');
 Route::post('/planificacion','PlanificacionController@show');
-Route::get('/planificacionDia','PlanificacionController@PlanificacionDia');
 Route::get('/calendarioSig','PlanificacionController@calendarioSig'); //flechita << >>
 Route::get('/calendarioAnt','PlanificacionController@calendarioAnt');
 Route::get('/sumarizacion','PlanificacionController@verNecesidadInsumos');
+//Dia
+Route::get('/planificacion/planificacionDia','PlanificacionController@PlanificacionDia');
+Route::post('/planificacion/planificacionDia','PlanificacionController@postPlanificacionDia');
 
 //Alta de planificacion
 Route::post('/planificacion/agregarProducto','PlanificacionController@agregarProducto');
