@@ -30,8 +30,8 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Administracion</span></a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="/stock">Productos</a>
-              <a class="dropdown-item" href="/stock">Insumos</a>
+              <a class="dropdown-item" href="/productos/administracionProductos">Productos</a>
+              <a class="dropdown-item" href="/productos/administracionInsumos">Insumos</a>
             </div>
           </li>
         </ul>

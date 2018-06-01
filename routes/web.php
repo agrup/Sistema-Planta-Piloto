@@ -52,7 +52,7 @@ Route::get('/Administracion/BuscarProducto','ProductoController@search');//busca
 
 Route::get('/productos/administracionProductos', 'ProductoController@administracionProducto');
 Route::get('/productos/administracionInsumos', 'ProductoController@administracionInsumo');
-Route::get('/productos/administracionInsumo', 'ProductoController@administracionInsumo');
+
 
 //Alta Producto
 Route::get('/productos/altaProducto', 'ProductoController@showAltaProducto');
