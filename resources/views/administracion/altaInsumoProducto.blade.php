@@ -34,8 +34,8 @@
 						        </div>
 						        <div class="col-md-6">
 						            <div class="form-group">
-						              <label">Tipo de Unidad</label>
-						              <input type="text" name="tipoUnidad" class="form-control" required> </div>
+						              <label>Tipo de Unidad</label>
+						              <input type="text" name="tipoUnidad" id="inputTipoUnidad" class="form-control" required> </div>
 						            <div class="form-group">
 						              <label>Alarma (Activa o Inactiva)</label>
 						              <select name="alarmaActiva" class="form-control" id="alarma" required>
