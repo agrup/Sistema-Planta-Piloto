@@ -178,7 +178,7 @@
         <th>
             <b>Trabajadores</b>
         </th>
-
+        <?php /*var_dump($planificaciones) */?>
         @foreach($planificaciones as $value )
         <th> </th>
         @endforeach
