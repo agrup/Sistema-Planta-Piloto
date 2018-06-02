@@ -70,8 +70,12 @@ class PlanificacionController extends Controller
         $fecha = request()->input('fechaa');
         $insumos = request()->input('insumoss');
         $productos = request()->input('productoss');
-
-        return \Response::json(['fecha'=>$fecha,'insumos'=>$insumos, 'productos'=>$productos]);
+        $planificacion = Planificacion::where('fecha','=',$fecha)->first();
+        if($planificacion==null){
+            throw new Exception('Fecha inválida');
+        }
+        $planificacion->actualizar($productos,$insumos);
+        return \Response::json(['fecha'=>$fecha,'insumos'=>$insumos, 'productos'=>$productos, 'planificacion'=>$planificacion->toArray()]);
     }
 
     public static function verNecesidadInsumos(){

@@ -46,23 +46,25 @@
                 $cantidad[]=$v['cantidad'];
                 $tipoUnidad[]=$v['tipoUnidad'];
                 $id[]=$v["movimiento_id"];
+                $prodID[]=$v['id'];
                 $estado[]=$v['estado'];
                 $tp[]=$v['tipoTP'];
                 ?>
             @endforeach
         @endif
     @endforeach
+    <tr hidden></tr>
     @if(isset($codigo))
         @foreach($codigo as $k=>$a)
 
             <tr id="{{$k}}" class="trProducto">
              
                 @if($estado[$k]=="pendiente")
-
-                    <td class="inte" id="codigo"><?=$codigo[$k];?></td>
-                    <td class="inte" id="nombre"><?=$nombre[$k];?></td>
+                    <td class="inte" hidden>{{$prodID[$k]}}</td>
+                    <td id="codigo"><?=$codigo[$k];?></td>
+                    <td id="nombre"><?=$nombre[$k];?></td>
                     <td class="inte" id="cantidad"><?=$cantidad[$k];?></td>
-                    <td class="inte" id="tu"><?=$tipoUnidad[$k];?></td>
+                    <td id="tu"><?=$tipoUnidad[$k];?></td>
                                                     
                     @if ($tp[$k]==false)
                         <td class="inte" id="tp">No</td>
@@ -100,7 +102,7 @@
         @endforeach
         
     @endif
-    <tr class="trProducto"> </tr>
+    {{--<tr class="trProducto"> </tr>--}}
      <tr><td><img src="{{asset('img/agregar.png') }}" width="30" height="30" style="cursor: pointer;"class="agregarProducto"/></td></tr>
     </tbody>
     @include('elementosComunes.cierreTabla')
@@ -123,7 +125,7 @@
     <tr></tr>
     </thead>
     <tbody>
-    <?php unset($codigo);unset($nombre);unset($cantidad);unset($estado);unset($tipoUnidad)?>
+    <?php unset($codigo);unset($nombre);unset($cantidad);unset($estado);unset($tipoUnidad);unset($prodID)?>
     @foreach($planificaciones as $value)
         @if($value['fecha']==$fecha)
             @foreach($value["insumos"] as $v)
@@ -134,10 +136,12 @@
                 $id[]=$v["movimiento_id"];
                 $tipoUnidad[]=$v['tipoUnidad'];
                 $estado[]=$v['estado'];
+                $prodID[]=$v['id'];
                 ?>
             @endforeach
         @endif
     @endforeach
+    <tr hidden></tr>
     @if(isset($codigo))
         @foreach($codigo as $k=>$a)
 
@@ -146,10 +150,11 @@
               
                
                  @if($estado[$k]=="pendiente")
-                     <td class="inte"><?=$codigo[$k];?></td>
-                    <td class="inte"><?=$nombre[$k];?></td>
+                     <td hidden>{{$prodID[$k]}}</td>
+                     <td ><?=$codigo[$k];?></td>
+                    <td ><?=$nombre[$k];?></td>
                     <td class="inte"><?=$cantidad[$k];?></td>
-                    <td class="inte" id="tu"><?=$tipoUnidad[$k];?></td>
+                    <td id="tu"><?=$tipoUnidad[$k];?></td>
                     <td><img  src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;"  class="modificar" /></td>
                     <td><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" class="borrar" /></td>
                 @elseif ($estado[$k]=="incumplida")
@@ -180,10 +185,11 @@
         @endforeach
 
     @endif
-    <tr><td><img  src="{{asset('img/agregar.png') }}" width="30" height="30" style="cursor: pointer;" class="agregarInsumo" /></td></tr>
-     <tr class="trInsumo">
-           
-        </tr>
+    <tr>
+        <td>
+            <img  src="{{asset('img/agregar.png') }}" width="30" height="30" style="cursor: pointer;" class="agregarInsumo" />
+        </td>
+    </tr>
     </tbody>
     @include('elementosComunes.cierreTabla')
     <div id="imgmodificar">
@@ -195,14 +201,14 @@
     <select id="selectProductos" >
         <option disabled="true" selected="true">--Selecc.Producto--</option>
     @foreach($productos as $producto)
-        <option value='{{$producto['nombre']}}' data-codigo='{{$producto['codigo']}}'> {{$producto['nombre']}} </option>
+        <option value='{{$producto['nombre']}}' data-codigo='{{$producto['codigo']}}' data-tu="{{$producto['tipoUnidad']}}" data-id="{{$producto['id']}}"> {{$producto['nombre']}} </option>
     @endforeach
     </select>
 
      <select id="selectInsumos" >
         <option disabled="true" selected="true">--Selecc.Insumos--</option>
     @foreach($insumos as $insumo)
-        <option value='{{$insumo['nombre']}}' data-codigo='{{$insumo['codigo']}}'> {{$insumo['nombre']}} </option>
+        <option value='{{$insumo['nombre']}}' data-codigo='{{$insumo['codigo']}}' data-tu="{{$insumo['tipoUnidad']}}" data-id="{{$insumo['id']}}"> {{$insumo['nombre']}} </option>
     @endforeach
     </select>
      <select id="selecttp" >
