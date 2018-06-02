@@ -8,7 +8,8 @@
 		
 
 		@include('elementosComunes.aperturaFormInline')
-			<h4><b>Programa de {{$data['fecha']}}</b></h4>        
+
+			<h4><b>Programa de {{date('d-m-	Y',strtotime($data["fecha"]))}}</b></h4>        
 			
 		@include('elementosComunes.cierreFormInline')
 

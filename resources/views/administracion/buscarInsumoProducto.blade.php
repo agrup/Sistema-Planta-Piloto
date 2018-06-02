@@ -38,21 +38,22 @@
 		    	</div>
 
 		    	@include('elementosComunes.aperturaBoton')
-		    		<button type="button" class="btn btn-primary" id="btnBuscar"> Buscar</button>
+		    		<button data-insumoProducto="{{ $insumoProducto }}" type="button" class="btn btn-primary" id="btnBuscar"> Buscar</button>
 	          	@include('elementosComunes.cierreBoton')
 		    </form>
 	    @include('elementosComunes.aperturaTabla')
 	    	<thead>
 	    		<tr>
 	    			<th>Código</th> <th>Nombre</th> <th>Descripción</th>
-	    			<th>Unidad</th><th>Alarma</th><th>Aviso Stock</th>
-	    			<th>Aviso Stock Crítico</th><th>Categoría</th><th>Estado</th>
+	    			<th>Unidad</th><th>Alarma</th><th>Alarma Amarilla</th>
+	    			<th>Alarma Roja</th><th>Categoría</th>
 	    		</tr>
 	    	</thead>
 	    	<div id="divRes">
-	    	<tbody id="tbodyResultados">	    		</div>
+	    	<tbody id="tbodyResultados">	    		
 
 	    	</tbody>		
+	    	</div>
         @include('elementosComunes.cierreTabla')
 
         @if ($insumoProducto=='producto')
