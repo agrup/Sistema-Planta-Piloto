@@ -9,20 +9,24 @@ $(document).ready(function(){
 			var td3=document.createElement("td");
 			var td4=document.createElement("td");
 			var td5=document.createElement("td");
+			td1.setAttribute('id','codigo');
+			td2.setAttribute('id','nombre');
+			td3.setAttribute('id','cantidad');
+			td4.setAttribute('id','tp');
 
 
 			//var input1=$("<input>").attr({type:'text',class:'interes'}).appendTo(td1);
 			var input3=$("<input>").attr({type:'text',class:'interes'}).appendTo(td3);
 
 			//SELECT tipo tp
-			var input4=$("<select>").attr({type:'text',class:'interes'}).appendTo(td4);
+			var input4=$("<select>").attr({type:'text',class:'interes',id:'selecttp'}).appendTo(td4);
 			var option1=$("<option>NO</option>").appendTo(input4);
 			var option2=$("<option>SI</option>").appendTo(input4);
 			
 			//select de los productos
 			var select=$("#selectProductos").clone().appendTo(td2);
 			select.attr('id','productos');
-			select.addClass('interes');
+			select.addClass('inte');
 			select.show();
 			
 
@@ -54,15 +58,15 @@ $(document).ready(function(){
 			var td5=document.createElement("td");
 
 			//var input1=$("<input>").attr({type:'text',class:'interes'}).appendTo(td1);
-			var input3=$("<input>").attr({type:'text',class:'interes'}).appendTo(td3);
+			var input3=$("<input>").attr({type:'text',class:'inte'}).appendTo(td3);
 			//select de los Insumos
 			var select=$("#selectInsumos").clone().appendTo(td2);
 			select.attr('id','insumos');
-			select.addClass('interes');
+			select.addClass('inte');
 			select.show();
 			//var input4=$("<input>").attr({type:'text',class:'interes'}).appendTo(td4);
 			var guardar=document.createElement('img');
-			guardar.src="img/guardar.png";
+			guardar.src="img/guardar.png ";
 			guardar.setAttribute('width','30px');
 			guardar.setAttribute('height','30px');
 			guardar.setAttribute('class','guardar');
