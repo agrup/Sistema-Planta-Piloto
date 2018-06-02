@@ -31,10 +31,13 @@ $(document).ready(function(){
 			
 
 			var guardar=document.createElement('img');
-			guardar.src="img/guardar.png";
+			guardar.src=$('img#iHGuardar').attr('src');
 			guardar.setAttribute('width','30px');
 			guardar.setAttribute('height','30px');
 			guardar.setAttribute('class','guardar');
+			/*var guardar=$('img#iHGuardar').clone();
+			guardar.show();
+			console.log(guardar);*/
 			td5.appendChild(guardar);
 
 			row = $(this).closest('tr');
@@ -66,7 +69,7 @@ $(document).ready(function(){
 			select.show();
 			//var input4=$("<input>").attr({type:'text',class:'interes'}).appendTo(td4);
 			var guardar=document.createElement('img');
-			guardar.src="img/guardar.png ";
+			guardar.src=$('img#iHGuardar').attr('src');
 			guardar.setAttribute('width','30px');
 			guardar.setAttribute('height','30px');
 			guardar.setAttribute('class','guardar');
