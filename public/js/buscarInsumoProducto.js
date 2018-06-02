@@ -26,7 +26,7 @@ $(document).ready(function() {
 	        	alarma: al,
 	        	insumoProducto: insProd
 	  		},
-	  		
+	  		//nada para nada
 	  	}).done(
 	  		function(data, i) {	  				
 	  			console.log("------------------------");

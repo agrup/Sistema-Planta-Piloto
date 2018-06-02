@@ -37,7 +37,9 @@
            <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle"  id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Gestion de Stock</span></a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="stock/entradaLoteInsumo" id="dropdown05">Entrada de Insumo</a>
+
+              <a class="dropdown-item" href="/stock/entradaLoteInsumo" id="dropdown05">Entrada de Insumo</a>
+
             </div>
           </li>
         </ul>

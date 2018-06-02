@@ -83,6 +83,7 @@ class GestorStock
             $movAnterior = Movimiento::getAnteriorRealProd($producto_id,$fecha);
             $banderaRecalcular=true;
         }
+        
         $datosNuevoMov = [
             'producto_id'=>$producto_id,
             'idLoteConsumidor'=>$idLote,

@@ -16,6 +16,7 @@ $(document).ready(function() {
 	    var nom = $("#nombre").val();
 	    var cat = $("#categoria").val();
 		var al = $("#alarma").val();
+		var insProd = $(this).attr("data-insumoProducto");
 
 		$.ajax({
 	  		url: "/Administracion/BuscarProducto",
@@ -23,15 +24,17 @@ $(document).ready(function() {
 	    		codigo: cod,
 	        	nombre: nom,
 	        	categoria: cat, 
-	        	alarma: al
+	        	alarma: al,
+	        	insumoProducto: insProd
 	  		},
 	  		type:'get',
 	  		
 	  	}).done(
+		
+	 		function(data, i) {	  			
 	
-	 		function(data, i) {	  				
 	  			console.log("------------------------");
-				console.log(data);			    
+		    
 			    var tbody = document.getElementById("tbodyResultados");
 			    remove(tbody);
 			    var array = ["codigo", "nombre", "descripcion", "unidad", "alarmaActiva", "alarmaAmarilla",	"alarmaRoja", "categoria", "estado"];
@@ -70,10 +73,11 @@ $(document).ready(function() {
 			    	var td=document.createElement("td");	    			
 			    		td.innerHTML = item.categoria;
 			    		tr.appendChild(td);        	
+			    	/*
 			    	var td=document.createElement("td");	    			
 			    		td.innerHTML = item.estado;
 			    		tr.appendChild(td);        			   		   		   	   			   
-			    	/*var td=document.createElement("td");	    			
+			    	var td=document.createElement("td");	    			
 			    		td.innerHTML = item.codigo;
 			    		tr.appendChild(td);        			   
 		        	$.each(item, function(i,item1){

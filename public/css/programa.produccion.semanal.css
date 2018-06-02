@@ -6203,12 +6203,13 @@ html, body {
 
 
 .modal{
-  background-color: #6c757d;
-  height: 500px;
-  width: 800px;
-  margin-left: 25vw;
+  margin-left: 1vw;
   margin-top: 5vw;
 
+}
+
+#myModal{
+  
 }
 
 .interes{

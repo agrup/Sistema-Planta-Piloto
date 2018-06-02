@@ -80,4 +80,7 @@ public static function getProdPorLote (int $lote)
     }    
 
 
+
+
+
 }
