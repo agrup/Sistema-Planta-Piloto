@@ -62,11 +62,12 @@
           </form>
         </div>
       </div>
-
+  <form id="myform">
+      @csrf
       @include('elementosComunes.aperturaTabla')
    <div class="row"></div>
     <div class="col"></div>
-          <form id="myform">
+
             <h4 class="">
               <b>Formulación:</b>
             </h4>
@@ -123,11 +124,13 @@
 
               </tbody>
             </table>
+
             <button id="guardar" type="submit" class="btn btn-primary">Guardar</button>
-          </form>
+
    </div>
  </div>
  @include('elementosComunes.cierreTabla')
+  </form>
 
 @endsection
 @section('script')

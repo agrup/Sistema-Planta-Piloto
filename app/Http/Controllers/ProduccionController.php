@@ -286,6 +286,14 @@ class ProduccionController extends Controller
     }
 
     public static function postModificarIniciado($id){
+
+
+        $data['fecha']='2018-06-04';
+
+        $data['lotes']=self::getArrayLotes('2018-06-04');
+        return view('produccion.produccion',compact('data'));
+
+
         //Datos de la vista
         $loteVista = request()->input('lote');
         $consumosVista = request()->input('consumo');
