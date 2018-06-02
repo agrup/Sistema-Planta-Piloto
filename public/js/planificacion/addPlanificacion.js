@@ -45,13 +45,14 @@ $(document).ready(function(){
 			td5.appendChild(guardar);
 
 			row = $(this).closest('tr');
-			$('.nuevaLineaProducto:last').append(td1,td2,td3,td4,td5);
+			$('.trProducto:last').append(td1,td2,td3,td4,td5);
 			
 			tbody = $(this).closest('tbody');
 			var tr=document.createElement("tr");
-			tr.setAttribute('class','nuevaLineaProducto');
+			tr.setAttribute('class','trProducto');
 			//$(this).remove();
 			var parent=$(this).closest('tr');
+			console.log($(this).closest('tr'));
 			tbody.append(tr,this);
 			parent.remove();
 			//$('.tbodyPlanif').append();
@@ -86,11 +87,11 @@ $(document).ready(function(){
 			td5.appendChild(guardar);
 
 			row = $(this).closest('tr');
-			$('.nuevaLineaInsumo:last').append(td1,td2,td3,td5);
+			$('.trProducto:last').append(td1,td2,td3,td5);
 			
 			tbody = $(this).closest('tbody');
 			var tr=document.createElement("tr");
-			tr.setAttribute('class','nuevaLineaInsumo');
+			tr.setAttribute('class','trInsumo');
 			//$(this).remove();
 			var parent=$(this).closest('tr');
 			tbody.append(tr,this);
