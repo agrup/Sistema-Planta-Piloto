@@ -90,16 +90,16 @@
 				@endcase
 
 				@case('iniciado')
-				<form action="/produccion/modificarIniciado/{{$lote['id']}}" method="get">
+				<form action="/produccion/modificarIniciado/{{$lote['id']}}" method="get" class="col-md-4">
 				{{ csrf_field() }}
 					<button type="submit" class="btn btn-primary">Modificar</button>
 				</form>
-				<form action="" method="post">
+				<form action="" method="post" class="col-md-4">
 					{{ csrf_field() }}
 				@include('produccion.registrarMaduracion')
 				</form>
 				{{ csrf_field() }}
-				<form action="" method="post">
+				<form action="" method="post" class="col-md-4">
 					@include('produccion.finalizarLote')
 				</form>
 					
