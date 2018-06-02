@@ -8,7 +8,8 @@
 		
 
 		@include('elementosComunes.aperturaFormInline')
-			<h4><b>Programa de {{$data['fecha']}}</b></h4>        
+
+			<h4><b>Programa de {{date('d-m-	Y',strtotime($data["fecha"]))}}</b></h4>        
 			
 		@include('elementosComunes.cierreFormInline')
 
@@ -26,9 +27,9 @@
 					<tr>
 		        		<td>{{ $lote['lote'] }}</td> 
 		        		<td>{{ $lote['producto'] }}</td>
-		        		<td>{{ $lote['cantidad'] }} {{ $lote['tu'] }}</td>
+		        		<td>{{ $lote['cantidad'] }} {{ $lote['tipoUnidad'] }}</td>
 		        		<td>{{ $lote['estado'] }}</td>
-		        		<td></td>
+
 
 		        		<td>@if ($lote['asignatura']!= null)						
 								{{ $lote['asignatura'] }}
@@ -40,7 +41,7 @@
 			</tbody>
 
 		@include('elementosComunes.cierreTabla')    
-		<form class="form-inline" id="form" name="form" action="./produccion" method="POST" enctype="multipart/form-data">
+		<form class="form-inline" id="form" name="form" action="/produccion" method="POST" enctype="multipart/form-data">
 				{{csrf_field()}}
 	           
 					<input type="date" class="form-control" placeholder="Fecha" id='inputDate' name='fecha' value={{ $data['fecha'] }} required>
@@ -68,5 +69,5 @@
 		@include('elementosComunes.cierreFormInline')
 @endsection
  @section('script')
-  <script type="text/javascript" src="{{asset('js/buscarLote.js')}}"></script>
+  <script type="text/javascript" src="{{asset('js/produccion/buscarLote.js')}}"></script>
  @endsection

@@ -2,7 +2,7 @@
 
 @section('section')
 		@include('elementosComunes.aperturaTitulo')
-			Lotes de {{ $lote['producto'] }}
+			Lotes de {{ $lote['nombre'] }}
 		@include('elementosComunes.cierreTitulo')
 
 		
@@ -23,7 +23,7 @@
 		        		<td>{{ $l['fechaInicio'] }}</td> 
 		        		<td>{{ $l['vencimiento'] }}</td> 
 		        		<td> {{ $l['cantidad'] }}</td> 
-		        		<td> {{ $lote['tu'] }}</td>
+		        		<td> {{ $lote['tipoUnidad'] }}</td>
 		        		<td> <a href="detalleLote?lote={{ $l['numeroLote'] }}">Ver Detalles de Lote</a></td>
 		        	</tr> 
 	        	@endforeach

@@ -25,7 +25,7 @@
         <tr>
             <td> {{$v['codigo']}}</td>
             <td>{{$v['insumo']}}</td>
-            <td>{{$v['necesidadFinal']}}  {{$v['tu']}}</td>
+            <td>{{$v['necesidadFinal']}}  {{$v['tipoUnidad']}}</td>
             <td>{{$v['fechaAgotamiento']}}</td>
         </tr>
     @endforeach
@@ -50,11 +50,11 @@
             <td> {{$v['codigo']}}</td>
             <td>{{$v['insumo']}}</td>
             @if($v['color']=="roja")
-                <td><font color="red" > {{$v['cantidad']}}  {{$v['tu']}}</td>
+                <td><font color="red" > {{$v['cantidad']}}  {{$v['tipoUnidad']}}</font></td>
             @elseif($v['color']=="amarilla")
-                <td > {{$v['cantidad']}}  {{$v['tu']}}</td>
+                <td > {{$v['cantidad']}}  {{$v['tipoUnidad']}}</td>
             @else    
-                <td>{{$v['cantidad']}}  {{$v['tu']}}</td>
+                <td>{{$v['cantidad']}}  {{$v['tipoUnidad']}}</td>
             @endif
         </tr>
     @endforeach

@@ -3,6 +3,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Eloquent;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,31 @@ class Movimiento extends Model
     const FECHA_FICTICIA = '1994-06-12 00:00:01';
     protected $guarded=[];
 
+    public static function getConsumoPlanif(int $idLoteConsumidor, int $producto_id)
+    {
+        return Movimiento::where('idLoteConsumidor','=',$idLoteConsumidor)
+                            ->where('producto_id','=',$producto_id)
+                            ->where('tipo','=',TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF)
+                            ->first();
+    }
+
+    public static function eliminarMovsPlanificados(int $planificacion_id)
+    {
+        if($planificacion_id==null){
+            throw new Exception('planificacion id null');
+        }
+        self::where('planificacion_id','=',$planificacion_id)
+            ->where('tipo','=',TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF)
+            ->delete();
+        self::where('planificacion_id','=',$planificacion_id)
+            ->where('tipo','=',TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF)
+            ->delete();
+        self::where('planificacion_id','=',$planificacion_id)
+            ->where('tipo','=',TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF)
+            ->delete();
+    }
+
+
 
 
     public function planificacion(){
@@ -27,6 +53,7 @@ class Movimiento extends Model
 
 
     /**
+     *
      * @param int $producto_id
      * @return Movimiento
      */
@@ -36,7 +63,7 @@ class Movimiento extends Model
                'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO .
                'or tipo=' . TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS . ')')
            ->orderBy('fecha', 'desc')
-           ->limit(1);
+           ->first();
     }
     /**
      * @param string $idLote
@@ -45,15 +72,15 @@ class Movimiento extends Model
     public static function ultimoRealLote($idLote)
     {
 
-        return self::where('idLoteIngrediente','=',$idLote)
-            ->whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
+        return self::whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
                             'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
                             'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_EXCEP.
                             'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO.
                             'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
                             )
+            ->where('idLoteIngrediente','=',$idLote)
             ->orderBy('fecha','desc')
-            ->limit(1);
+            ->first();
 
     }
 
@@ -92,8 +119,9 @@ class Movimiento extends Model
                 ->where('fecha','>',$fechaInicio)
                 ->where('fecha','<',$fechaTope)
                 ->where('saldoGlobal','<','0')
+                ->where('tipo','=',9)
                 ->orderBy('fecha','asc')
-                ->limit(1);
+                ->first();
             if($mov!=null){
                 array_push($arrayResult,$mov);
             }
@@ -200,19 +228,25 @@ class Movimiento extends Model
      */
     public static function getMovimientosProdDespuesDe($producto_id, $fechaCambio)
     {
-        //TODO
-        //real
+
+        return Movimiento::whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
+                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
+                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_EXCEP.
+                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO.
+                'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
+            )
+                            ->where('fecha','>=',$fechaCambio)
+                            ->where('producto_id','=',$producto_id);
+
+        //movimientos reales
         //Ordenados por favooor
     }
+
     /**
      * @param string $producto_id
      * @param string $fecha
      *
      */
-
-
-
-
     public static function eliminarEntradaInsumoPlanif($producto_id, $fecha)
     {
     }
@@ -261,23 +295,33 @@ class Movimiento extends Model
         return $result;
 
     }
+
+
+
+
+    
         public static function ultimoStockRealProdTodos()
     {
         $result = [];
         $movProductos = self::distinct()->select('producto_id')->get();
         foreach ($movProductos as $movProducto) {
             if (($aux = self::ultimoRealProd($movProducto->producto_id)) != null) {
-                $result[] = $aux->get();
+                array_push($result,$aux);
             }
         }
         return $result;
 
     }
 
-    public static function crearUltimoRealFicticio($idProducto)
+    /**
+     * Crea un movimiento real de entrada de insumo para el producto
+     * en una fecha ficticia vieja, con stock 0
+     * @param int $producto_id
+     */
+    public static function crearUltimoRealFicticio(int $producto_id)
     {
         $datosMov = [
-        'producto_id'=>$idProducto,
+        'producto_id'=>$producto_id,
         'fecha'=>self::FECHA_FICTICIA,
         'tipo'=>TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO,
         'idLoteConsumidor'=>null,
@@ -311,6 +355,34 @@ class Movimiento extends Model
         $mov->save();
     }
 
+    public static function getEntradaPlanificada($idLote)
+    {
+        return Movimiento::where('tipo','=',TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF)
+                    ->where('idLoteConsumidor')
+                    ->first();
+    }
+
+    public static function getEntradaInsumoPlanificada($idProducto, $fecha)
+    {
+        $fechaStr = Carbon::createFromFormat('Y-m-d H:i:s',$fecha)->format('Y-m-d');
+        $fechaMin = $fechaStr . '00:00:00';
+        $fechaMax = $fechaStr . '23:59:59';
+        return Movimiento::where('producto_id','=',$idProducto)
+                        ->where('fecha','>',$fechaMin)
+                        ->where('fecha','<',$fechaMax)
+                        ->first();
+    }
+
+    /**
+     * Elimina los consumos de ese lote_id y devuelve el planificacion_id si corresponde, sino null
+     * @param int $lote_id
+     */
+    public static function eliminarConsumos(int $lote_id)
+    {
+        Movimiento::where('idLoteConsumidor','=',$lote_id)
+            ->where('tipo','=',TipoMovimiento::TIPO_MOV_CONSUMO)
+            ->delete();
+    }
 
 }
 

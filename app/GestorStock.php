@@ -25,12 +25,17 @@ class GestorStock
      *
      * @param string $idLote
      * @param int $idProducto
-     * @param double $cantidad
+     * @param float $cantidad
      * @param string $fecha
      *
      */
-    public static function entradaInsumoProducto(string $idLote, int $idProducto, double $cantidad, string $fecha)
+    public static function entradaInsumo(string $idLote, int $idProducto, float $cantidad, string $fecha)
     {
+        $movPlanif = Movimiento::getEntradaInsumoPlanificada($idProducto,$fecha);
+        if($movPlanif != null){
+            $movPlanif->tipo = TipoMovimiento::cumplidoDe($movPlanif->tipo);
+            $movPlanif->save();
+        }
         $banderaRecalcular = false;
         $ultimoMovReal=Movimiento::ultimoRealProd($idProducto);
         $movAnterior = $ultimoMovReal;
@@ -58,11 +63,54 @@ class GestorStock
             self::recalcularStockReal($nuevoMov);
         }
     }
+
+    public static function entradaProducto(int $idLote, int $producto_id, float $cantidad, string $fecha)
+    {
+        //chequeo si posee una planificacion para darla por cumplida
+        $movPlanif = Movimiento::getEntradaPlanificada($idLote);
+        if($movPlanif !=null) {
+            //si existia, lo doy por cumplido
+            $movPlanif->tipo = TipoMovimiento::cumplidoDe($movPlanif->tipo);
+            $movPlanif->save();
+        }
+
+        $banderaRecalcular = false;
+        $ultimoMovReal=Movimiento::ultimoRealProd($producto_id);
+        $movAnterior = $ultimoMovReal;
+        //Compruebo si estoy insertando antes del ultimo mov de ese producto
+        if($ultimoMovReal->fecha > $fecha){
+            //si es asi, recupero el mov anterior a este y deberé recalcular
+            $movAnterior = Movimiento::getAnteriorRealProd($producto_id,$fecha);
+            $banderaRecalcular=true;
+        }
+        
+        $datosNuevoMov = [
+            'producto_id'=>$producto_id,
+            'idLoteConsumidor'=>$idLote,
+            'idLoteIngrediente'=>$idLote,
+            'debe'=>0,
+            'haber'=>$cantidad,
+            'saldoGlobal'=>($movAnterior->saldoGlobal+$cantidad), // cantidad nueva es la anterior mas lo que agrega la llegada
+            'saldoLote'=>$cantidad
+
+        ];
+        $nuevoMov= Movimiento::create($datosNuevoMov);
+
+        if($banderaRecalcular){
+            self::recalcularStockReal($nuevoMov);
+        }
+
+        return $nuevoMov;
+
+
+    }
+
+
     //PLANIFICADOS
 
 
 
-    public static function entradaInsumoPlanificado(int $idProducto, double $cantidad, string $fecha, int $planificacion_id)
+    public static function entradaInsumoPlanificado(int $idProducto, float $cantidad, string $fecha, int $planificacion_id)
 
     {
         // si no posee un stock real crearlo con 0 en una fecha que no moleste debido a que se necesita para iniciar el recalculo de las planificaciones
@@ -115,7 +163,7 @@ class GestorStock
     }
 
 
-    public static function entradaProductoPlanificado(string $idLote, int $idProducto, double $cantidad, string $fecha, int $planificacion_id ){
+    public static function entradaProductoPlanificado(string $idLote, int $idProducto, float $cantidad, string $fecha, int $planificacion_id ){
 
         $producto = Producto::find($idProducto);
         //Doy de alta los consumos
@@ -123,12 +171,11 @@ class GestorStock
         foreach ($ingredientes as $ing){
             //regla de 3 simple segun la formulación
             $cantConsumo = $cantidad * $ing['cantidadProducto'] / $ing['cantidad'];
-            GestorStock::altaConsumoPlanificado($idLote, $ing['id'], $cantConsumo, $fecha );
+            GestorStock::altaConsumoPlanificado($idLote, $ing['id'], $cantConsumo, $fecha,$planificacion_id );
         }
 
-
         // si no posee un stock real crearlo con 0 en una fecha que no moleste debido a que se necesita para iniciar el recalculo de las planificaciones
-        if(Movimiento::ultimoRealProd($idProducto)->count()==0){
+        if(Movimiento::ultimoRealProd($idProducto)==null){
             Movimiento::crearUltimoRealFicticio($idProducto);
         }
 
@@ -137,7 +184,7 @@ class GestorStock
         $datosNuevoMov = [
             'producto_id'=>$idProducto,
             'fecha'=>$fecha,
-            'tipo'=>TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF,
+            'tipo'=>TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF,
             'idLoteConsumidor'=>$idLote,
             'idLoteIngrediente'=>$idLote,
             'debe'=>0,
@@ -187,10 +234,10 @@ class GestorStock
      *
      * @param string $idLote
      * @param int $idProducto
-     * @param double $cantidadObsrv
+     * @param float $cantidadObsrv
      * @param string $fecha
      */
-    public static function controlarExistencia(string $idLote, int $idProducto, double $cantidadObsrv, string $fecha)
+    public static function controlarExistencia(string $idLote, int $idProducto, float $cantidadObsrv, string $fecha)
     {
         $banderaRecalcular = false;
         $ultimoMovReal=Movimiento::ultimoRealProd($idProducto);
@@ -238,33 +285,39 @@ class GestorStock
         if($banderaRecalcular){
             self::recalcularStockReal($nuevoMov);
         }
-        //TODO
+        
     }
     //MOVIMIENTOS DE SALIDA
     //REALES
     /**
      *
-     * @param string $idLoteConsumidor
-     * @param string $idLoteIngrediente
+     * @param int $idLoteConsumidor
+     * @param int $idLoteIngrediente
      * @param int $idProductoIng
-     * @param double $cantidad
+     * @param float $cantidad
      * @param string $fecha
      */
-    public static function altaConsumo(string $idLoteConsumidor, string $idLoteIngrediente, int $idProductoIng, double $cantidad, string $fecha)
+    public static function altaConsumo(int $idLoteConsumidor, int $idLoteIngrediente, int $idProductoIng, float $cantidad, string $fecha)
     {
+        //chequeo si es un consumo planificado para darlo por cumplido
+        $movPlanif = Movimiento::getConsumoPlanif($idLoteConsumidor,$idProductoIng);
+        if($movPlanif != null){
+            $movPlanif->tipo = TipoMovimiento::cumplidoDe($movPlanif->tipo);
+            $movPlanif->save();
+        }
         $banderaRecalcular = false;
         $ultimoMovRealProd=Movimiento::ultimoRealProd($idProductoIng);
         $ultimoMovRealLote = Movimiento::ultimoRealLote($idLoteIngrediente);
         $movAnteriorProd = $ultimoMovRealProd;
         $movAnteriorLote = $ultimoMovRealLote;
         //Compruebo si estoy insertando antes del ultimo mov de ese producto
-        if($ultimoMovRealProd->fecha>$fecha){
+        if($ultimoMovRealProd->fecha > $fecha){
             //si es asi, recupero el mov anterior a este y deberé recalcular
             $movAnteriorProd = Movimiento::getAnteriorProd($idProductoIng,$fecha);
             $banderaRecalcular=true;
         }
         //Compruebo si estoy insertando antes del ultimo mov de ese lote
-        if($ultimoMovRealLote->fecha>$fecha){
+        if($ultimoMovRealLote->fecha > $fecha){
             //si es asi, recupero el mov anterior a este y deberé recalcular
             $movAnteriorLote = Movimiento::getAnteriorLote($idLoteIngrediente,$fecha);
             $banderaRecalcular=true;
@@ -290,13 +343,13 @@ class GestorStock
      *
      * @param string $idLote
      * @param int $idProducto
-     * @param double $cantidad
+     * @param float $cantidad
      * @param string $fecha
      * @param String $motivo
      * @param string $detalle
      * @parm string tipo
      */
-    public static function salidaExcepcional(string $idLote, int $idProducto, double $cantidad, string $fecha, String $motivo, String $detalle )
+    public static function salidaExcepcional(string $idLote, int $idProducto, float $cantidad, string $fecha, String $motivo, String $detalle )
     {
         $banderaRecalcular = false;
         $ultimoMovRealProd=Movimiento::ultimoRealProd($idProducto);
@@ -351,10 +404,10 @@ class GestorStock
      *
      * @param string $idLote
      * @param int $idProducto
-     * @param double $cantidad
+     * @param float $cantidad
      * @param string $fecha
      */
-    public static function salidaVentas(string $idLote, int $idProducto, double $cantidad, string $fecha)
+    public static function salidaVentas(string $idLote, int $idProducto, float $cantidad, string $fecha)
     {
         $banderaRecalcular = false;
         $ultimoMovRealProd=Movimiento::ultimoRealProd($idProducto);
@@ -399,12 +452,12 @@ class GestorStock
      *
      * @param string $idLote
      * @param int $idProducto
-     * @param double $cantidad
+     * @param float $cantidad
      * @param String $detalle
      * @param string $fecha
      *
      */
-    public static function decomisar(string $idLote, int $idProducto, double $cantidad, String $detalle, string $fecha)
+    public static function decomisar(string $idLote, int $idProducto, float $cantidad, String $detalle, string $fecha)
     {
         $banderaRecalcular = false;
         $ultimoMovRealProd=Movimiento::ultimoRealProd($idProducto);
@@ -459,11 +512,11 @@ class GestorStock
     /**
      * @param int $idLoteConsumidor
      * @param int $idProdIng
-     * @param double $cantidad
+     * @param float $cantidad
      * @param string $fecha
      * @return \Illuminate\Database\Eloquent\Model|$this
      */
-    public static function altaConsumoPlanificado(int $idLoteConsumidor, int $idProdIng, double $cantidad, string $fecha)
+    public static function altaConsumoPlanificado(int $idLoteConsumidor, int $idProdIng, float $cantidad, string $fecha, int $planificacion_id)
     {
 
         // si no posee un stock real crearlo con 0 en una fecha que no moleste debido a que se necesita para iniciar el recalculo de las planificaciones
@@ -471,6 +524,7 @@ class GestorStock
             Movimiento::crearUltimoRealFicticio($idProdIng);
         }
         $datosNuevoMov = [
+            'planificacion_id'=>$planificacion_id,
             'producto_id'=>$idProdIng,
             'fecha'=>$fecha,
             'tipo'=>TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF,
@@ -494,15 +548,15 @@ class GestorStock
     /**
      *
      * @param string $idLote
-     * @return int[] $idsLotesTrazabilidad // devolvera array asociativo  donde la key será el id de lote y el valor la cantidad usada
-     */
+     * @return array de arrays de la forma ['idLote'=> , 'cantidad'=> ]
+     *     */
     public static function Trazabilidad(string $idLote)
     {
         $arrayReturn = [];
         $movimientos= Movimiento::getTrazabilidadLote($idLote);
         foreach ($movimientos as $mov){
             $arrayAux=[];
-            $arrayAux['idLote']=$mov->idLoteIngrediente;
+            $arrayAux['lote_id']=$mov->idLoteIngrediente;
             $arrayAux['cantidad']=$mov->debe;
             array_push($arrayReturn,$arrayAux);
         }
@@ -545,35 +599,47 @@ class GestorStock
      * @return array [['nombre'=>,'codigo'=>, 'tu'=>, 'alarma'=>, 'stock'=>, 'producto_id'=>, ]...] hashmap key: idProducto, value: cantidad
      * Hay que evaluar si con esta funcion no alcanza ya para desde afuera calcular getNecesidadInsumos y otras por el estilo
      */
-    public static function getStockPorProd(string $fechaHasta)
+    public static function getStockPorProd(string $fechaHasta, bool $planificados)
     {
         $result=[];
-        self::recalcularPlanificados($fechaHasta);
 
-        if(!empty($movimientos =Movimiento::ultimoStockProdTodos($fechaHasta)))
+         if(!$planificados)
+         {
+                
+            $movimientos =Movimiento::ultimoStockRealProdTodos();
+
+
+         }
+        else
         {
-        foreach ($movimientos as $movimiento){
-            $arrAux=[];
-            $producto=Producto::find($movimiento->producto_id);
-            $stock=$movimiento->saldoGlobal;
-            $arrAux['alarma']='normal';
-            $arrAux['nombre']=$producto->nombre;
-            $arrAux['codigo']=$producto->codigo;
-            $arrAux['tu']=$producto->tipoUnidad;
-            $arrAux['stock']=$stock;
-            $arrAux['producto_id']=$movimiento->producto_id;
-            if($producto->alarmaActiva){
-                if($stock<$producto->alarmaAmarilla){
-                    $arrAux['alarma']='amarilla';
-                }
-                if($stock<$producto->alarmaRoja){
-                    $arrAux['alarma']='roja';
-                }
-            }
+            self::recalcularPlanificados($fechaHasta);
+             $movimientos =Movimiento::ultimoStockProdTodos($fechaHasta);
 
-            array_push($result, $arrAux);
-            }
         }
+        if(!empty($movimientos )){
+            foreach ($movimientos as $movimiento){
+                $arrAux=[];
+                $producto=Producto::find($movimiento->producto_id);
+                $stock=$movimiento->saldoGlobal;
+                $arrAux['alarma']='normal';
+                $arrAux['nombre']=$producto->nombre;
+                $arrAux['codigo']=$producto->codigo;
+                $arrAux['tipoUnidad']=$producto->tipoUnidad;
+                $arrAux['stock']=$stock;
+                $arrAux['producto_id']=$movimiento->producto_id;
+                if($producto->alarmaActiva){
+                    if($stock<$producto->alarmaAmarilla){
+                        $arrAux['alarma']='amarilla';
+                    }
+                    if($stock<$producto->alarmaRoja){
+                        $arrAux['alarma']='roja';
+                    }
+                }
+
+                    array_push($result, $arrAux);
+            }
+                
+       }
         return $result;
     }
 
@@ -616,7 +682,7 @@ class GestorStock
             //armo el array
             $arrAux['codigo']=$producto->codigo;
             $arrAux['insumo']=$producto->nombre;
-            $arrAux['tu']=$producto->tipoUnidad;
+            $arrAux['tipoUnidad']=$producto->tipoUnidad;
             $arrAux['fechaAgotamiento']=$fechaAgot;
             //calculo la necesidad en funcion del stock final del producto a la fecha
             if($stockFinal>0){
@@ -628,14 +694,14 @@ class GestorStock
             array_push($necesidades,$arrAux);
         }
         //calculo de las alarmas
-        $stocks = self::getStockPorProd($fechaHasta);
+        $stocks = self::getStockPorProd($fechaHasta,true);
         foreach ($stocks as $stock){
             $arrAux = [];
             if($stock['alarma']!='normal'){
                 $arrAux['codigo']=$stock['codigo'];
                 $arrAux['insumo']=$stock['nombre'];
                 $arrAux['cantidad']=$stock['stock'];
-                $arrAux['tu']=$stock['tu'];
+                $arrAux['tipoUnidad']=$stock['tipoUnidad'];
                 $arrAux['color']=$stock['alarma'];
                 array_push($alarmas,$arrAux);
             }
@@ -690,7 +756,7 @@ class GestorStock
     private static function recalcularPlanificados($fechaHasta)
     {
         //Guardo el ultimo mov de cada producto, ya que el recalculo se hará por cada producto
-        $movimientosInicialesProducto = Movimiento::ultimoStockRealProdTodos($fechaHasta);
+        $movimientosInicialesProducto = Movimiento::ultimoStockRealProdTodos();
         //Por cada producto
         foreach ($movimientosInicialesProducto as $ultMovRealProd){
             //Tomo el ultimo movimiento
@@ -700,19 +766,33 @@ class GestorStock
             //itero para todas las planificaciones de este producto
             foreach ($planificacionesProd as $planif){
 
-                //si la planificacion es anterior al ultimo mov debo darla como Incumplido
-                if($planif->fecha<$movAnteriorProd->fecha) {
-                    $planif->tipo = TipoMovimiento::incumplidoDe($planif->tipo);
+                //si la planificacion es anterior al ultimo mov
+                if($planif->fecha < $movAnteriorProd->fecha) {
+                    switch ($planif->tipo){
+                        //si el lote planificado ya se inicio no hago nada, sino paso a incumplido
+                        case TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF:
+                        case TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF: {
+                            if(Lote::find($planif->idLoteConsumidor)->tipoLote == TipoLote::PLANIFICACION){
+                                $planif->tipo = TipoMovimiento::incumplidoDe($planif->tipo);
+                            }
+                            break;
+                        }
+                        default : { //las entradas de insumo planif no tienen lote asociado asique simplemente anulo
+                            $planif->tipo = TipoMovimiento::incumplidoDe($planif->tipo);
+                        }
+                    }
+                    $planif->save();
                 } else {
                     //sino recalculo
                     $debe = $planif->debe;
                     $haber = $planif->haber;
                     $nuevoSaldoG = $movAnteriorProd->saldoGlobal + $haber - $debe;
                     $planif->saldoGlobal = $nuevoSaldoG;
+                    $planif->save();
+                    //actualizo para la proxima iteracion
+                    $movAnteriorProd = $planif;
                 }
-                $planif->save();
-                //actualizo para la proxima iteracion
-                $movAnteriorProd = $planif;
+
             }
         }
     }
@@ -720,7 +800,7 @@ class GestorStock
     /**
      * @param int $producto_id
      * @param string $fechaHasta
-     * @return $double
+     * @return $float
      */
     public static function getStockProd($producto_id, $fechaHasta)
     {
@@ -728,7 +808,23 @@ class GestorStock
         return $mov->saldoGlobal;
     }
 
+    /**
+     * Funcion que actualiza los consumos de un lote, verificando que si ya existian, modifica la cantidad y fecha
+     * @param int $id
+     * @param array $consumos
+     * @param string $fechaStamp
+     */
+    public static function actualizarConsumos(int $lote_id, array $consumos,string $fechaStamp)
+    {
+        //eliminar los consumos del lote
+        Movimiento::eliminarConsumos($lote_id);
+        //dar de alta los consumos actualizados
+        foreach ($consumos as $consumo){
+            //alta consumo recalcula como debe ser
+            self::altaConsumo($lote_id, $consumo['lote_id'],$consumo['producto_id'],$consumo['cantidad'],$fechaStamp);
+        }
 
+    }
 
 
 }

@@ -11,20 +11,31 @@ class StockController extends Controller
 {
     public function show()
     {
-    	if ((request(['fecha']))==null){
+
+    	if ((request()->input('fecha'))==null){
     		$fecha=Carbon::now()->format('Y-m-d');
 
     	}else
     	{
 
-    		$fecha=array_values(request(['fecha']))[0];
+    		$fecha=(request()->input('fecha'));
     		
     	}
+        $mostarPlanificados = (request()->input('mostarPlanificados'));
+
+
+        if($mostarPlanificados){
+            $mostarPlanificados=true;
+        }else{
+            $mostarPlanificados=false;
+        }
+
     	$fecha=Carbon::createFromFormat('Y-m-d',$fecha);
     	$fechaString=$fecha->format('Y-m-d H:i:s');
-    	$stock=GestorStock::getStockPorProd($fechaString);
+    	$stock=GestorStock::getStockPorProd($fechaString,$mostarPlanificados);
     	return view('informes.stock')
-                                    ->with('fecha',$fecha->format('d-m-y'))
+                                    ->with('fecha',$fecha->format('Y-m-d'))
+                                    ->with($mostarPlanificados)
                                     ->with(compact('stock'));	
     }
 }

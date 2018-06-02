@@ -27,7 +27,7 @@
                         <form action="calendarioSig" method="GET" enctype="multipart/form-data"  class="col-md-1">
 
                             {{csrf_field()}}
-                            <input   type="hidden" name="fecha" value="{{$value["fecha"]}}">
+                            <input  type="hidden" name="fecha" value="{{$value["fecha"]}}">
                             <input type="submit" class="btn btn-primary" value=">>">
 
                         </form>
@@ -41,16 +41,18 @@
             <div class="row">
                 <form action="planificacion" method="POST" enctype="multipart/form-data"  class="col-md-5">
                     {{csrf_field()}}
-                    <input type="date" name="fecha" value="{{$planificaciones[0]['fecha']}}" >
+                    <input class="inputchiquito"  type="date" name="fecha" value="{{$planificaciones[0]['fecha']}}" >
                     <input  class="btn btn-secondary"  type="submit" value="Ir a semana">
                 </form>
             </div>
         </div>
     </div>
 
-
+    <form action="/planificacion/planificacionDia" method="get" enctype="multipart/form-data" class="col-md-11">
+        {{csrf_field()}}
     @include('elementosComunes.aperturaTabla')
     <thead>
+
     <tr>
         <th>
             <b>Producción</b>
@@ -59,22 +61,22 @@
         @foreach($planificaciones as $value  )
 
 
-            <form action="planificacionDia" method="get" enctype="multipart/form-data" class="col-md-11">
-                {{csrf_field()}}
+
 
                 <th> <input type="submit" class="btn btn-primary" name="fecha" value={{date('d-m-Y',strtotime($value["fecha"]))}}></th>
 
-            </form>
+
 
 
 
         @endforeach
 
     </tr>
+
     <tr>
-        <th>2018</th>
+        <th class="diassemana"></th>
         @foreach($planificaciones as $value )
-            <th>{{$value["diaSemana"]}}</th>
+            <th class="diassemana">{{$value["diaSemana"]}}</th>
         @endforeach
     </tr>
     </thead>
@@ -169,7 +171,7 @@
 
 
     </tbody>
-
+<thead>
     <tr><td></td></tr>
 
     <tr>
@@ -178,10 +180,10 @@
         </th>
 
         @foreach($planificaciones as $value )
-            <th>{{$value["diaSemana"]}}</th>
+        <th> </th>
         @endforeach
     </tr>
-    </thead>
+
 
     </thead>
     <tbody>
@@ -269,19 +271,21 @@
     </tbody>
 
 
-    <thead>
+  
 
     <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr>
+    <thead>
         <th>
             <b>Llegada de Insumos</b>
         </th>
 
         @foreach($planificaciones as $value )
-            <th>{{$value["diaSemana"]}}</th>
+          <th></th>
         @endforeach
     </tr>
     </thead>
+   
     <tbody>
     <?php unset($lunes);unset($martes);unset($miercoles);unset($jueves);unset($viernes);?>
 
@@ -369,6 +373,7 @@
 
 
     @include('elementosComunes.cierreTabla')
+    </form>
     <div class="py-5">
         <div class="container">
             <div class="row">
@@ -382,11 +387,10 @@
                     <div class="row">
 
 
-                        <div>
                             <form action="sumarizacion" method="get" enctype="multipart/form-data">
 
                                 {{csrf_field()}}
-                                <input type="date" name='fecha' value="{{$planificaciones[4]["fecha"]}}" class="form-control"></div>
+                                <input type="date" name='fecha' value="{{$planificaciones[4]["fecha"]}}" class="form-control">
 
                         <input type="submit" value="Ver necesidad de Insumos" class="btn btn-primary" required>
 

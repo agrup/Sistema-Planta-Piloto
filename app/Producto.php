@@ -25,8 +25,9 @@ class Producto extends Model
     {
     	 # return $this->belongsToMany('Producto', 'producto_productoi', 'producto_id', 'ingrediente_id');
     	 return $this->belongsToMany('App\Producto','producto_productoi')
-    	 	->withPivot('producto_id','ingrediente_id','cantidad','cantidadProducto')->get();
+    	 	->withPivot('producto_id','ingrediente_id','cantidad','cantidadProducto');
     	 ;
+        //App\Producto::find(1)->formulacion()->attach('6',['cantidad'=>2,'cantidadProducto'=>10,'ingrediente_id'=>6])
 
     }
 
@@ -52,7 +53,7 @@ class Producto extends Model
      * @return array [ ['id'=>, 'cantidad'=>, 'cantidadProducto'=> ] .. ]
      */
     public function getIngredientes(){
-           $ingredientes = $this->formulacion();
+           $ingredientes = $this->formulacion()->get();
            $arrayResult = [];
            foreach ($ingredientes as $ing){
                array_push($arrayResult,['id'=>$ing->pivot->ingrediente_id,'cantidad'=>$ing->pivot->cantidad, 'cantidadProducto'=>$ing->pivot->cantidadProducto]);
@@ -97,19 +98,116 @@ class Producto extends Model
          $ingredientes = $this->getIngredientes();
          foreach ($ingredientes as $ing){
             $arrAux=[];
+            $arrayLotes=[];
             $productoAux = Producto::find($ing['id']);
             $arrAux['id']=$ing['id'];
             $arrAux['codigo']=$productoAux->codigo;
             $arrAux['nombre']=$productoAux->nombre;
             $arrAux['tipoUnidad']=$productoAux->tipoUnidad;
             $arrAux['cantidad'] = $cantidad * $ing['cantidad'] / $ing ['cantidadProducto'];
+            //Agrego además los lotes, accion altamente cuestionable
+             $lotes = Lote::where('producto_id','=',$ing['id'])->get();
+             foreach($lotes as $lote){
+                 if(GestorStock::getSaldoLote($lote->id)>0){
+                     array_push($arrayLotes,$lote->id);
+                 }
+             }
+             $arrAux['lotes']=$arrayLotes;
             array_push($formulacion,$arrAux);
         }
         return $formulacion;
      }
 
 
+     public function agregarIngrediente($cantidad,$cantidadProducto,$ingrediente_id)
+     {
 
+       return $this->formulacion()->attach($ingrediente_id,['cantidad'=>$cantidad,'cantidadProducto'=>$cantidadProducto,'ingrediente_id'=>$ingrediente_id]);
+        //App\Producto::find(1)->formulacion()->attach('6',['cantidad'=>2,'cantidadProducto'=>10,'ingrediente_id'=>6])
+     }
+
+
+     //filtro producto por codigo
+    public static function filterRAW($codigo ,$nombre, $categoria,$alarma){
+
+
+      $query=null;
+      
+     if($codigo!=null){
+        $query = 'codigo='."'$codigo'";
+     }; 
+     
+     if($nombre!=null){
+        if ($query==null) {
+            $query='nombre='."'$nombre'";
+        }else{
+            $query=$query.'and nombre='."'$nombre'";
+        }
+     };
+
+     if($categoria!=null){
+      if ($query==null) {
+            $query='categoria='."'$categoria'";
+        }else{
+          $query=$query.'and categoria='."'$categoria'";
+        }
+     };
+
+     if($alarma!=null){
+
+       if ($query==null) {
+              $query=$query.'"alarmaActiva"='."'$alarma'";
+          }else{
+            $query=$query.'and "alarmaActiva"='."'$alarma'";
+          }
+     };
+     if ($query==null) {
+       return Producto::all();
+     }else{
+     return Producto::whereRAW($query)->get();
+     }
+                
+    }
+
+    public static function getProductosSinInsumosArr(){
+        $productosAux = Producto::all();
+        $productos =[];
+        foreach ($productosAux as $producto){
+            $arrAux=[];
+            //chequeo que el producto no sea un insumo
+            if(!empty($producto->getIngredientes())){
+                $arrAux = $producto->toArray();
+                array_push($productos,$arrAux);
+            }
+        }
+        return $productos;
+    }
+
+
+
+
+
+
+    public static function test($inspro,$codigo,$nombre,$categoria,$alarma){
+        if($inspro=='insumo'){
+        $productos=[];
+        
+        $insumos= (Producto::filterRAW($codigo,$nombre,$categoria,$alarma));
+        //var_dump($insumos);
+        foreach ($insumos as $insumo) {
+        
+          if (empty($insumo->getIngredientes())) {
+           array_push($productos, $insumo);
+          }
+          
+        }
+        $productos=compact('productos');
+         //var_dump($productos);
+      }
+
+    return  $productos;
+
+}
 }
 
 

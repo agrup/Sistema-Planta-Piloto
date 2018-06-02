@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\GestorStock;
+use App\Producto;
 use Carbon\Carbon;
 
 use App\Planificacion;
@@ -56,10 +57,25 @@ class PlanificacionController extends Controller
             throw new Exception('Fecha inválida');
         }
         $planificacion=Planificacion::where('fecha','=',$fecha)->first();
-
+        $productos = Producto::getProductosSinInsumosArr();
+        $insumos = Producto::all()->toArray();
         $planificaciones = [];
         array_push($planificaciones,$planificacion->toArray());
-        return view('programaProduccionSemanal.planificacionProductosEInsumos',compact('planificaciones'));
+        return view('programaProduccionSemanal.planificacionProductosEInsumos',compact('planificaciones'))
+            ->with(compact('productos'))
+            ->with(compact('insumos'));
+    }
+
+    public static function postPlanificacionDia(){
+        $fecha = request()->input('fechaa');
+        $insumos = request()->input('insumoss');
+        $productos = request()->input('productoss');
+        $planificacion = Planificacion::where('fecha','=',$fecha)->first();
+        if($planificacion==null){
+            throw new Exception('Fecha inválida');
+        }
+        $planificacion->actualizar($productos,$insumos);
+        return \Response::json(['fecha'=>$fecha,'insumos'=>$insumos, 'productos'=>$productos, 'planificacion'=>$planificacion->toArray()]);
     }
 
     public static function verNecesidadInsumos(){
