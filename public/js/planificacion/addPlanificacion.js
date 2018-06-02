@@ -87,7 +87,7 @@ $(document).ready(function(){
 			td5.appendChild(guardar);
 
 			row = $(this).closest('tr');
-			$('.trProducto:last').append(td1,td2,td3,td5);
+			$('.trInsumo:last').append(td1,td2,td3,td5);
 			
 			tbody = $(this).closest('tbody');
 			var tr=document.createElement("tr");
