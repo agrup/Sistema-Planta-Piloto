@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	$('#divRes').hide();
+	//$('#divRes').hide();
 
 	remove = function(div){
 		while (div.firstChild) {
@@ -48,7 +48,7 @@ $(document).ready(function() {
 			    		tr.appendChild(td);        			  
 
 			    	var td=document.createElement("td");	    			
-			    		td.innerHTML = item.estado;
+			    		td.innerHTML = item.categoria;
 			    		tr.appendChild(td);        			  
 			    });
 
