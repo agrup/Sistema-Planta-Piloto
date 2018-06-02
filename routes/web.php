@@ -4,10 +4,14 @@
 Route::get('/','MainController@index');
 
 
+//INFORMES
 
 //informes stock
 Route::get('/stock', 'StockController@show');
 Route::post('/stock', 'StockController@show');
+//informes produccion
+Route::get('/Informes/ResumenProduccion','ProduccionController@show');
+Route::post('/Informes/ResumenProduccion','ProduccionController@informeProduccion');
 
 //lotes 
 Route::get('/verLotes', 'LotesController@show');
@@ -45,8 +49,9 @@ Route::post('/produccion/modificarIniciado/{id}', 'ProduccionController@postModi
 Route::post('/produccion/postMaduracion/{id}','ProduccionController@postMaduracion');
 Route::post('/produccion/postFinalizarLote/{id}','ProduccionController@postFinalizarLote');
 
-//Producto
+//Administracion
 Route::get('/Administracion/BuscarProducto','ProductoController@search');//busca insumos y productos a partir de un array de caracteristicas
+
 
 
 
