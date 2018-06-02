@@ -1,12 +1,16 @@
-$(document).ready(function() {
-	
-	remove = function(div){
+remove = function(div){
 		while (div.firstChild) {
  		   div.removeChild(div.firstChild);
 		}		
 	};
+$(document).ready(function() {
+	
+		var suc = $('#alertConfirm').val();
+		if(suc==1){
+			alert('Se ha guardado un producto');
+		}	
 
-	$("#btnBuscar").on("click", function() {
+	$("#btnBuscar").click( function() {
 		//$("#tbodyResultados").remove();
 		console.log($("#codigo").val());
 		console.log($("#nombre").val());
@@ -73,11 +77,10 @@ $(document).ready(function() {
 			    	var td=document.createElement("td");	    			
 			    		td.innerHTML = item.categoria;
 			    		tr.appendChild(td);        	
-			    	/*
-			    	var td=document.createElement("td");	    			
-			    		td.innerHTML = item.estado;
-			    		tr.appendChild(td);        			   		   		   	   			   
-			    	var td=document.createElement("td");	    			
+
+			    		   		   		   	   			   
+			    	/*var td=document.createElement("td");	    			
+
 			    		td.innerHTML = item.codigo;
 			    		tr.appendChild(td);        			   
 		        	$.each(item, function(i,item1){
