@@ -287,6 +287,17 @@ class ProduccionController extends Controller
 
     public static function postModificarIniciado($id){
         //Datos de la vista
+        $loteVista = request()->input('lote');
+        $consumosVista = request()->input('consumo');
+        $loteID = request()->input('loteID');
+        //Parseo los datos de la request
+        $dataLoteArr = explode(',',$loteVista);
+        $consumosArrVista = explode(',',$consumosVista);
+        var_dump($loteID);
+        var_dump($dataLoteArr);
+        var_dump($consumosArrVista);
+        return view('welcome');
+
         $datosLote = [];
         $consumos=[];
         $lote = Lote::find($datosLote['lote_id']);

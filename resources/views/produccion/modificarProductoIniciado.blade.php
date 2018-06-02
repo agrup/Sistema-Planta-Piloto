@@ -66,7 +66,7 @@
       @include('elementosComunes.aperturaTabla')
    <div class="row"></div>
     <div class="col"></div>
-          <form >
+          <form id="myform">
             <h4 class="">
               <b>Formulación:</b>
             </h4>
@@ -133,4 +133,12 @@
 @section('script')
    <script type="text/javascript" src="{{asset('js/produccion/addAsignatura.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/produccion/addRowLote.js')}}"></script>
+   <script type="text/javascript" src="{{asset('js/produccion/postLote.js')}}"></script>
+   <script>
+       document.addEventListener("DOMContentLoaded", function() {
+           PostLote.init("/produccion/modificarIniciado/{{$lote['id']}}");
+       });
+
+   </script>
+
 @endsection

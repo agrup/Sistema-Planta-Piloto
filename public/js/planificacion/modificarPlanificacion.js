@@ -47,7 +47,7 @@ $(document).ready(function(){
 				//agrego el boton guardar
 				var td5=document.createElement("td");
 				var guardar=document.createElement('img');
-				guardar.src="img/guardar.png";
+				guardar.src= $('img#iHGuardar').attr('src');
 				guardar.setAttribute('width','30px');
 				guardar.setAttribute('height','30px');
 				guardar.setAttribute('class','guardar');
