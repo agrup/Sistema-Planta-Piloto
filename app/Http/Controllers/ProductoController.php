@@ -52,10 +52,12 @@ class ProductoController extends Controller
         throw new Exception('Codigo de Insumo existente');
       } 
 
+
     return view('administracion.altaInsumoProducto')->with(compact('insumoProducto'))
                                                     ->with(compact('succes'))
                                                     ->with(compact('insumos'));
   }
+
 
 
 public function showModificarInsumo()
