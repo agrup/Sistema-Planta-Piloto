@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Lote;
 use App\GestorLote;
 use App\Producto;
+use App\TipoLote;
+use App\GestorStock;
 
 class LotesController extends Controller
 {
@@ -36,26 +38,34 @@ class LotesController extends Controller
         return view('informes.detalleLote',compact('detalle'));
     }
 
-public static function show()
+public static function showentradaLoteInsumo()
 {
-    $productos::all();
-    return view('gestionDeStock.entradaInsumo',compact('producto'));
+    $insumos= Producto::all();
+    return view('gestionDeStock.entradaInsumo',compact('insumos'));
 }
 
 public static function alta()
 {
-
+    $producto_id=request()->input('id');
+    $cantidad =request()->input('cantidadElaborada');
 
     $lote = [
-        $cantidadElaborada = request()->input('cantidadElaborada'),
-        $fechaInicio = request()->input('fechaInicio'),
-        $fechaVencimiento = request()->input('fechaVencimiento'),
-        $costounitario = request()->input('costounitario'),
-        $id=request()->input('id')
+        'cantidadElaborada' => $cantidad,
+        'fechaInicio' => request()->input('fechaInicio'),
+        'fechaVencimiento' =>request()->input('fechaVencimiento'),
+        'costounitario' => request()->input('costounitario'),
+        'producto_id'=>$producto_id,
+        'tipoLote'=>TipoLote::INSUMO
     ];
 
-    Lote::create($lote);
-    return view('gestionDeStock.entradaInsumo',compact('producto'))->with('succes'=>true);
+    $lote=Lote::create($lote);
+        // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
+        $H_i_s = date('H:i:s');
+        $fechaStamp = request()->input('fechaInicio') . " ". $H_i_s;    
+    GestorStock::entradaInsumo($lote->id,$producto_id,$cantidad,$fechaStamp);//,id lote, id producto, cantidad , fecha
+    $insumos= Producto::all();
+    return view('gestionDeStock.entradaInsumo',compact('insumos'))
+                                    ->with(['succes'=>true]);
 }
 
 

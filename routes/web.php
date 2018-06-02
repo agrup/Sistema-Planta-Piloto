@@ -60,8 +60,8 @@ Route::post('/productos/altaProducto', 'ProductoController@altaProducto');
 //Alta Insumo
 Route::get('/productos/altaInsumo', 'ProductoController@showaltaInsumo');
 Route::post('/productos/altaInsumo', 'ProductoController@altaInsumo');
-
-Route::get('/stock/entradaLoteInsumo','LotesController@show');
+//entrada lote insumo
+Route::get('/stock/entradaLoteInsumo','LotesController@showentradaLoteInsumo');
 Route::post('/stock/entradaLoteInsumo','LotesController@alta');
 
 

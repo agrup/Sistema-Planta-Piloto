@@ -6,7 +6,7 @@
 		Entrada Lote de Insumo
 	@include('elementosComunes.cierreTitulo')
 
-	<form action="stock/entradaLoteInsumo" method="POST">
+	<form action="/stock/entradaLoteInsumo" method="POST">
 		@csrf
 		<div class="row">			
 			<label>Insumo</label>

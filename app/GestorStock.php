@@ -29,7 +29,7 @@ class GestorStock
      * @param string $fecha
      *
      */
-    public static function entradaInsumoProducto(string $idLote, int $idProducto, float $cantidad, string $fecha)
+    public static function entradaInsumo(string $idLote, int $idProducto, float $cantidad, string $fecha)
     {
         $banderaRecalcular = false;
         $ultimoMovReal=Movimiento::ultimoRealProd($idProducto);
