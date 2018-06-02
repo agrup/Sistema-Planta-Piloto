@@ -67,7 +67,7 @@
 							          <a class="btn btn-primary" href="/productos/administracionInsumos">Cancelar</a>
 								@endif							         
 							@include('elementosComunes.cierreBoton')				  
-							<input type="hidden" name="formulacion" id="inputHidden"/>        
+							<input type="hidden" name="formulacion" value="" id="inputHidden"/>        
 						</form>
 					
 
