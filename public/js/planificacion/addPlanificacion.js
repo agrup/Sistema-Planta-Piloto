@@ -32,7 +32,7 @@ $(document).ready(function(){
 			var select=$("#selectProductos").clone().appendTo(td2);
 			select.attr('id','productos');
 			select.addClass('interes');
-			select.show();
+			select.show();	
 			
 
 			var guardar=document.createElement('img');
@@ -53,7 +53,7 @@ $(document).ready(function(){
 			tr.setAttribute('class','trProducto');
 			//$(this).remove(div)ove();
 			var parent=$(this).closest('tr');
-			console.log($(this).closest('tr'));
+			//console.log($(this).closest('tr'));
 			tbody.append(tr,this);
 			parent.remove();
 			//$('.tbodyPlanif').append();
