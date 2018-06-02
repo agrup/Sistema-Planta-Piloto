@@ -123,7 +123,7 @@
 
               </tbody>
             </table>
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button id="guardar" type="submit" class="btn btn-primary">Guardar</button>
           </form>
    </div>
  </div>
