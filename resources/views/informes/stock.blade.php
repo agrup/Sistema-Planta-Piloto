@@ -48,6 +48,3 @@
         @include('elementosComunes.cierreTabla')
 
 @endsection
-@section('script')
-<script src="{{ asset('js/dataTable.js') }}"></script>
-@endsection

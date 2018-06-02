@@ -31,17 +31,19 @@
                     <tbody id="tbodyFormulacion">
 
                     <label>Cantidad Final</label>
-                    <input type="text" name="productoCantidad"  class="form-control" required> <label id="labelTipoUnidad"></label>
+                    <input type="text" name="productoCantidad"  class="form-control inputFormulacion" required> <label id="labelTipoUnidad"></label>
                     <button type="button" class="btn btn-primary" id="agregarInsumo">Agregar Insumo</button>  
-                      <tr id="trFormulacion"><td><select  id="selectInsumo" class="form-control selectInsumo" required>
-                                <option  selected="selected">--Seleccione un Insumo--</option>
+                      <tr id="trFormulacion" class="trFormulacion"><td><select  id="selectInsumo" class="form-control selectInsumo inputFormulacion" required>
+                                <option  selected="selected" value="default">--Seleccione un Insumo--</option>
                                 @foreach ($insumos as $insumo)                           
                                   <option  id="producto" data-id="{{$insumo['id']}}" data-unit="{{$insumo['tipoUnidad']}}" value="{{$insumo['nombre']}}">{{$insumo['nombre']}}</option>
                                 @endforeach
                               </select>
-                          </td>
-                          <td><input type="text" id="cantidad"  class="form-control" required></td>
+                          </td>            
+
+                          <td><input type="text" id="cantidad"  name="cantidad" class="form-control inputFormulacion" required></td>
                           <td><span id="tdTipoUnidad"></span></td>
+                          <td><p class="eliminarRow" >x</p></td>
                       </tr>                 
 
                     </tbody>
