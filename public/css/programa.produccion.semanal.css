@@ -44,7 +44,7 @@
 *::before,
 *::after {
 
-  box-sizing: border-box; }
+ box-sizing: border-box; }
 
 
 html {
@@ -6242,4 +6242,7 @@ html, body {
   border-radius: 0.25rem;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.navegadora{
+  font-size: 1.5rem;
 }

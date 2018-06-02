@@ -13,7 +13,7 @@
                 @foreach($planificaciones as $value  )
                     @if($value['diaSemana']=="lunes")
 
-                        <form action="calendarioAnt{{--?fecha={{$value["fecha"]}}--}}" method="GET" enctype="multipart/form-data" class="col-md-11"> {{csrf_field()}}
+                        <form action="calendarioAnt?fecha={{$value["fecha"]}}" method="GET" enctype="multipart/form-data" class="col-md-11" > {{csrf_field()}}
                             <input   type="hidden" name="fecha" value="{{$value["fecha"]}}">
                             <input type="submit" class="btn btn-primary"  value="<<">
 
@@ -48,15 +48,7 @@
         </div>
     </div>
 
-
-    @include('elementosComunes.aperturaTabla')
-    <thead>
-    <tr>
-        <th>
-            <b>Producción</b>
-        </th>
-
-        @foreach($planificaciones as $value  )
+         @foreach($planificaciones as $value )
 
 
             <form action="/planificacion/planificacionDia" method="get" enctype="multipart/form-data" class="col-md-11">
@@ -69,6 +61,15 @@
 
 
         @endforeach
+    @include('elementosComunes.aperturaTabla')
+    <thead>
+        
+    <tr>
+        <th>
+            <b>Producción</b>
+        </th>
+
+   
 
     </tr>
     <tr>
@@ -245,24 +246,29 @@
             <td>{{$k+1}}</td>
             @if(isset($lunes[$k]))
                 <td><?= $lunes[$k];?> </td>
-
+             @else
+                <td></td>       
             @endif
 
             @if(isset($martes[$k]))
                 <td><?= $martes[$k]; ?> </td>
-
+             @else
+                <td></td>       
             @endif
             @if(isset($miercoles[$k]))
                 <td><?= $miercoles[$k]; ?> </td>
-
+             @else
+                <td></td>       
             @endif
             @if(isset($jueves[$k]) )
                 <td><?=$jueves[$k] ;?> </td>
-
+             @else
+                <td></td>       
             @endif
             @if(isset($viernes[$k]))
                 <td><?= $viernes[$k]; ?> </td>
-
+             @else
+                <td></td>       
             @endif
         </tr>
     @endfor
@@ -345,24 +351,29 @@
             <td>{{$k+1}}</td>
             @if(isset($lunes[$k]))
                 <td><?= $lunes[$k];?> </td>
-
+             @else
+                <td></td>   
             @endif
 
             @if(isset($martes[$k]))
                 <td><?= $martes[$k]; ?> </td>
-
+             @else
+                <td></td>   
             @endif
             @if(isset($miercoles[$k]))
                 <td><?= $miercoles[$k]; ?> </td>
-
+             @else
+                <td></td>   
             @endif
             @if(isset($jueves[$k]) )
                 <td><?=$jueves[$k] ;?> </td>
-
+             @else
+                <td></td>   
             @endif
             @if(isset($viernes[$k]))
                 <td><?= $viernes[$k]; ?> </td>
-
+            @else
+                <td></td>    
             @endif
         </tr>
     @endfor
