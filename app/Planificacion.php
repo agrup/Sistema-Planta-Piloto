@@ -106,6 +106,7 @@ class Planificacion extends Model
             $lote = Lote::find($mov->idLoteConsumidor);
             $estado = 'pendiente';
             $producto=Producto::find($mov->producto_id);
+            $arrProd['id']=$producto->id;
             $arrProd['nombre']=$producto->nombre;
 
             $arrProd['codigo']=$producto->codigo;
@@ -154,7 +155,7 @@ class Planificacion extends Model
             $estado = 'pendiente';
             $producto=Producto::find($mov->producto_id);
             $arrProd['nombre']=$producto->nombre;
-
+            $arrProd['id']=$producto->id;
             $arrProd['codigo']=$producto->codigo;
             $arrProd['cantidad']=$mov->haber;
             $arrProd['tipoUnidad']=$producto->tipoUnidad;
@@ -285,6 +286,72 @@ class Planificacion extends Model
             return response()->json('ERROR: el movimiento no es de un tipo editable');
         }
         return response()->json('OK');
+    }
+
+    /**
+     * Actualiza los productos e insumos planificados para ese dia
+     * @param array $productos
+     * @param array $insumos
+     */
+    public function actualizar( $productos,  $insumos){
+        //borro los lotes planificados
+        Lote::eliminarLotesPlanificados($this->fecha);
+        //borro los movimientos planificados asociados a la planificacion
+        Movimiento::eliminarMovsPlanificados($this->id);
+        //creo lotes y mov planificados para los productos
+        foreach ($productos as $producto){
+            if(count($producto)>=3) {
+                $productoID = $producto[0];
+                $cantidad = $producto[1];
+                $tipoTP = ($producto[2] == 'Si') ? true : false;
+                //creo los lotes planificados
+                $datosLote = [
+                    'producto_id' => $productoID,
+                    'tipoLote' => TipoLote::PLANIFICACION,
+                    'fechaInicio' => $this->fecha,
+                    'cantidadElaborada' => $cantidad,
+                    'tipoTP' => $tipoTP
+                ];
+                $lote = Lote::create($datosLote);
+                //doy de alta los movimientos
+                // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
+                $H_i_s = date('H:i:s');
+                $fechaStamp = $this->fecha . " " . $H_i_s;
+                GestorStock::entradaProductoPlanificado($lote->id, $productoID, $cantidad, $fechaStamp, $this->id);
+            }
+        }
+        //creo movimientos planificados para los insumos
+        foreach ($insumos as $insumo){
+            if(count($insumo)>=2){
+                $productoID = $insumo[0];
+                $cantidad = $insumo[1];
+                //doy de alta movimiento
+                // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
+                $H_i_s = date('H:i:s');
+                $fechaStamp = $this->fecha . " " . $H_i_s;
+                GestorStock::entradaInsumoPlanificado($productoID,$cantidad,$fechaStamp,$this->id);
+            }
+        }
+    }
+
+    public static function dameArrProd(){
+        $arr=[];
+        array_push($arr,['1','200','No']);
+        array_push($arr,['6','100','Si']);
+        return $arr;
+    }
+
+    public static function dameArrInsm(){
+        $arr=[];
+        array_push($arr,[]);
+        array_push($arr,[]);
+        array_push($arr,[]);
+        array_push($arr,[]);
+        array_push($arr,['2','1000']);
+        array_push($arr,['3','5000']);
+        array_push($arr,['4','1500']);
+
+        return $arr;
     }
 
 }

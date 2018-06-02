@@ -18,6 +18,8 @@ class Lote extends Model
 
     protected $guarded=[];
 
+
+
     /**
      * @param array $datos
      * @return $this|Model
@@ -197,5 +199,14 @@ class Lote extends Model
         $this->save();
     }
 
+    public static function eliminarLotesPlanificados(string $fecha)
+    {
+        if($fecha==null){
+            throw new Exception('fecha null');
+        }
+        self::where('fechaInicio','=',$fecha)
+            ->where('tipoLote','=',TipoLote::PLANIFICACION)
+            ->delete();
+    }
 
 }

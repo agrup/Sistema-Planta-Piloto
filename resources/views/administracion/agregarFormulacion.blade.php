@@ -33,7 +33,9 @@
                     <label>Cantidad Final</label>
                     <input type="text" name="productoCantidad"  class="form-control inputFormulacion" required> <label id="labelTipoUnidad"></label>
                     <button type="button" class="btn btn-primary" id="agregarInsumo">Agregar Insumo</button>  
+
                       <tr id="trFormulacion"><td><select  id="selectInsumo" class="form-control ">
+
                                 <option  selected="selected" value="default">--Seleccione un Insumo--</option>
                                 @foreach ($insumos as $insumo)                           
                                   <option  id="producto" data-id="{{$insumo['id']}}" data-unit="{{$insumo['tipoUnidad']}}" value="{{$insumo['nombre']}}">{{$insumo['nombre']}}</option>

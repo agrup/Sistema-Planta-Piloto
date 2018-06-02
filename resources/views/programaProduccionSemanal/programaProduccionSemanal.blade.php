@@ -48,9 +48,11 @@
         </div>
     </div>
 
-
+    <form action="/planificacion/planificacionDia" method="get" enctype="multipart/form-data">
+        {{csrf_field()}}
     @include('elementosComunes.aperturaTabla')
     <thead>
+
     <tr>
         <th>
             <b>Producción</b>
@@ -59,18 +61,18 @@
         @foreach($planificaciones as $value  )
 
 
-            <form action="/planificacion/planificacionDia" method="get" enctype="multipart/form-data" class="col-md-11">
-                {{csrf_field()}}
+
 
                 <th> <input type="submit" class="btn btn-primary" name="fecha" value={{date('d-m-Y',strtotime($value["fecha"]))}}></th>
 
-            </form>
+
 
 
 
         @endforeach
 
     </tr>
+
     <tr>
         <th class="diassemana"></th>
         @foreach($planificaciones as $value )
@@ -371,6 +373,7 @@
 
 
     @include('elementosComunes.cierreTabla')
+    </form>
     <div class="py-5">
         <div class="container">
             <div class="row">

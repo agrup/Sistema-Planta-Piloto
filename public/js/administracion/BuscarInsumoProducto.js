@@ -34,10 +34,11 @@ $(document).ready(function() {
 	  		type:'get',
 	  		
 	  	}).done(
+		
+	 		function(data, i) {	  			
 	
-	 		function(data, i) {	  				
 	  			console.log("------------------------");
-				console.log(data);			    
+		    
 			    var tbody = document.getElementById("tbodyResultados");
 			    remove(tbody);
 			    var array = ["codigo", "nombre", "descripcion", "unidad", "alarmaActiva", "alarmaAmarilla",	"alarmaRoja", "categoria", "estado"];
@@ -76,8 +77,10 @@ $(document).ready(function() {
 			    	var td=document.createElement("td");	    			
 			    		td.innerHTML = item.categoria;
 			    		tr.appendChild(td);        	
+
 			    		   		   		   	   			   
 			    	/*var td=document.createElement("td");	    			
+
 			    		td.innerHTML = item.codigo;
 			    		tr.appendChild(td);        			   
 		        	$.each(item, function(i,item1){
