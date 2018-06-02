@@ -27,6 +27,19 @@
          <li class="nav-item active">
             <a class="nav-link" href="/produccion"><span class="glyphicon glyphicon-compressed">Produccion</span> <span class="sr-only">(current)</span></a>
           </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Administracion</span></a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="/productos/administracionProductos">Productos</a>
+              <a class="dropdown-item" href="/productos/administracionInsumos">Insumos</a>
+            </div>
+          </li>
+           <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Gestion de Stock</span></a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="#">Entrada de Insumo</a>
+            </div>
+          </li>
         </ul>
 
       </div>

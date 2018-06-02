@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
 <script src="{{ asset('jquery/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ asset('jquery/datatables.min.js') }}"></script>
+
   <script type="text/javascript" src="{{asset('ajax/sendNombreProducto.js')}}"></script>
   @yield('script')
 

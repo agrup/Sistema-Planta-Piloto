@@ -16,10 +16,12 @@ Route::get('/detalleLote', 'LotesController@showDetalle');
 //Planificacion
 Route::get('/planificacion', 'PlanificacionController@index');
 Route::post('/planificacion','PlanificacionController@show');
-Route::get('/planificacionDia','PlanificacionController@PlanificacionDia');
 Route::get('/calendarioSig','PlanificacionController@calendarioSig'); //flechita << >>
 Route::get('/calendarioAnt','PlanificacionController@calendarioAnt');
 Route::get('/sumarizacion','PlanificacionController@verNecesidadInsumos');
+//Dia
+Route::get('/planificacion/planificacionDia','PlanificacionController@PlanificacionDia');
+Route::post('/planificacion/planificacionDia','PlanificacionController@postPlanificacionDia');
 
 //Alta de planificacion
 Route::post('/planificacion/agregarProducto','PlanificacionController@agregarProducto');
@@ -50,14 +52,14 @@ Route::get('/Administracion/BuscarProducto','ProductoController@search');//busca
 
 Route::get('/productos/administracionProductos', 'ProductoController@administracionProducto');
 Route::get('/productos/administracionInsumos', 'ProductoController@administracionInsumo');
-Route::get('/productos/administracionInsumo', 'ProductoController@administracionInsumo');
+
 
 //Alta Producto
 Route::get('/productos/altaProducto', 'ProductoController@showAltaProducto');
-Route::post('/productos/altaProducto', 'ProductoController@addProducto');
+Route::post('/productos/altaProducto', 'ProductoController@altaProducto');
 //Alta Insumo
-Route::get('/productos/altaInsumo', 'ProductoController@altaInsumo');
-Route::post('/productos/altaInsumo', 'ProductoController@addInsumo');
+Route::get('/productos/altaInsumo', 'ProductoController@showaltaInsumo');
+Route::post('/productos/altaInsumo', 'ProductoController@altaInsumo');
 
 //Route fictisio
 Route::get('/produccion/detalleLoteEnProduccion/{id}','PruebaController@detalleLoteEnProduccion');

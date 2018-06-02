@@ -103,21 +103,33 @@ class Planificacion extends Model
                                             'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO)->get();
         foreach ($movs as $mov){
             $arrProd=[];
-            $color = 'normal';
+            $lote = Lote::find($mov->idLoteConsumidor);
+            $estado = 'pendiente';
             $producto=Producto::find($mov->producto_id);
             $arrProd['nombre']=$producto->nombre;
 
             $arrProd['codigo']=$producto->codigo;
             $arrProd['cantidad']=$mov->haber;
             $arrProd['tipoUnidad']=$producto->tipoUnidad;
-            if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_CUMPLIDO){
-                $color = 'verde';
+            /*if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_CUMPLIDO){
+                $estado = 'cumplida';
+            }*/
+            /*//Si alguno de sus consumos fue cumplido, considero la planificacion cumplida para que no pueda editarse ni borrarse
+            if(Movimiento::where('idLoteConsumidor','=',$mov->idLoteConsumidor)
+                ->where('tipo','=',TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF_CUMPLIDO)->first() !=null) {
+                $estado = 'cumplida';
+            }*/
+            //si el lote se inicio considero la planificacion cumplida para que no pueda editarse ni borrarse
+            if($lote->tipoLote != TipoLote::PLANIFICACION){
+                $estado = 'cumplida';
             }
             if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO){
-                $color = 'rojo';
+                $estado = 'incumplida';
             }
-            $arrProd['color']=$color;
+            $arrProd['estado']=$estado;
             $arrProd['movimiento_id']=$mov->id;
+            $arrProd['tipoTP']=$lote->tipoTP;
+            $arrProd['asignatura']=$lote->asignatura;
             array_push($arrayResult,$arrProd);
 
         }
@@ -139,7 +151,7 @@ class Planificacion extends Model
 
         foreach ($movs as $mov){
             $arrProd=[];
-            $color = 'normal';
+            $estado = 'pendiente';
             $producto=Producto::find($mov->producto_id);
             $arrProd['nombre']=$producto->nombre;
 
@@ -147,12 +159,12 @@ class Planificacion extends Model
             $arrProd['cantidad']=$mov->haber;
             $arrProd['tipoUnidad']=$producto->tipoUnidad;
             if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_CUMPLIDO){
-                $color = 'verde';
+                $estado = 'cumplida';
             }
             if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_INCUMPLIDO){
-                $color = 'rojo';
+                $estado = 'incumplida';
             }
-            $arrProd['color']=$color;
+            $arrProd['estado']=$estado;
             $arrProd['movimiento_id']=$mov->id;
             array_push($arrayResult,$arrProd);
 

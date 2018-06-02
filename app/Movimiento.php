@@ -19,6 +19,13 @@ class Movimiento extends Model
     const FECHA_FICTICIA = '1994-06-12 00:00:01';
     protected $guarded=[];
 
+    public static function getConsumoPlanif(int $idLoteConsumidor, int $producto_id)
+    {
+        return Movimiento::where('idLoteConsumidor','=',$idLoteConsumidor)
+                            ->where('producto_id','=',$producto_id)
+                            ->where('tipo','=',TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF)
+                            ->first();
+    }
 
 
     public function planificacion(){
@@ -27,6 +34,7 @@ class Movimiento extends Model
 
 
     /**
+     *
      * @param int $producto_id
      * @return Movimiento
      */
@@ -286,10 +294,15 @@ class Movimiento extends Model
 
     }
 
-    public static function crearUltimoRealFicticio($idProducto)
+    /**
+     * Crea un movimiento real de entrada de insumo para el producto
+     * en una fecha ficticia vieja, con stock 0
+     * @param int $producto_id
+     */
+    public static function crearUltimoRealFicticio(int $producto_id)
     {
         $datosMov = [
-        'producto_id'=>$idProducto,
+        'producto_id'=>$producto_id,
         'fecha'=>self::FECHA_FICTICIA,
         'tipo'=>TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO,
         'idLoteConsumidor'=>null,
@@ -328,6 +341,17 @@ class Movimiento extends Model
         return Movimiento::where('tipo','=',TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF)
                     ->where('idLoteConsumidor')
                     ->first();
+    }
+
+    /**
+     * Elimina los consumos de ese lote_id y devuelve el planificacion_id si corresponde, sino null
+     * @param int $lote_id
+     */
+    public static function eliminarConsumos(int $lote_id)
+    {
+        Movimiento::where('idLoteConsumidor','=',$lote_id)
+            ->where('tipo','=',TipoMovimiento::TIPO_MOV_CONSUMO)
+            ->delete();
     }
 
 }
