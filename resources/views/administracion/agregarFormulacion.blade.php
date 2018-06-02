@@ -58,7 +58,7 @@
             </div>
             <button type="button" class="btn btn-primary" data-dismiss="modal" id="guardarFormulacion">Guardar Formulación</button>
             {{-- <button type="submit" class="btn btn-primary" formaction="/produccion/postMaduracion/{{$lote['id']}}">Guardar</button> --}}
-        
+           <input type="hidden" name="" id="alertConfirm" value="{{ $succes }}">
         </div>
        
      </div>

@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+
 	$('#trFormulacion').hide();
 	$('#agregarInsumo').on("click", function(){		
 		var row = $('#trFormulacion');

@@ -5,7 +5,10 @@ remove = function(div){
 	};
 $(document).ready(function() {
 	
-	
+		var suc = $('#alertConfirm').val();
+		if(suc==1){
+			alert('Se ha guardado un producto');
+		}	
 
 	$("#btnBuscar").click( function() {
 		//$("#tbodyResultados").remove();

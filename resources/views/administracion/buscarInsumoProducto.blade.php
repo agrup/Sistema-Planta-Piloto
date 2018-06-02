@@ -74,7 +74,8 @@
 
 	        @include('elementosComunes.cierreBoton')
         @endif
-
+       
+       <input type="hidden" name="" id="alertConfirm" value="{{ $succes }}">
 @endsection
 
  @section('script')
