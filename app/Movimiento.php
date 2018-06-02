@@ -3,6 +3,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Eloquent;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +27,24 @@ class Movimiento extends Model
                             ->where('tipo','=',TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF)
                             ->first();
     }
+
+    public static function eliminarMovsPlanificados(int $planificacion_id)
+    {
+        if($planificacion_id==null){
+            throw new Exception('planificacion id null');
+        }
+        self::where('planificacion_id','=',$planificacion_id)
+            ->where('tipo','=',TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF)
+            ->delete();
+        self::where('planificacion_id','=',$planificacion_id)
+            ->where('tipo','=',TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF)
+            ->delete();
+        self::where('planificacion_id','=',$planificacion_id)
+            ->where('tipo','=',TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF)
+            ->delete();
+    }
+
+
 
 
     public function planificacion(){
@@ -341,6 +360,17 @@ class Movimiento extends Model
         return Movimiento::where('tipo','=',TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF)
                     ->where('idLoteConsumidor')
                     ->first();
+    }
+
+    public static function getEntradaInsumoPlanificada($idProducto, $fecha)
+    {
+        $fechaStr = Carbon::createFromFormat('Y-m-d H:i:s',$fecha)->format('Y-m-d');
+        $fechaMin = $fechaStr . '00:00:00';
+        $fechaMax = $fechaStr . '23:59:59';
+        return Movimiento::where('producto_id','=',$idProducto)
+                        ->where('fecha','>',$fechaMin)
+                        ->where('fecha','<',$fechaMax)
+                        ->first();
     }
 
     /**

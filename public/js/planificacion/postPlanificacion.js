@@ -5,11 +5,12 @@ $(document).ready(function(){
              //armo los arreglos de productos e insumos planificados   
               var productos = Array();
               var fecha=$("#fecha").val();
-              console.log(fecha);
+              //console.log(fecha);
               $("tr.trProducto").each(function(i, v){
                // if($(this).has('td.inte')=="true){
                   productos[i] = Array();
-                  //var idTr = $(this).id;    
+                  //var idTr = $(this).id;
+
                       $(this).find('.inte').each(function(ii, vv){
                           productos[i][ii] =$(this).text();
                           

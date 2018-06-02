@@ -11,9 +11,9 @@
 					@include('elementosComunes.cierreTitulo')
 
 						@if ($insumoProducto=='producto')			
-							<form action="/productos/altaProducto" class="" method="POST" id="myForm">
+							<form action="/productos/altaProducto" class="" method="POST" id="myForm" novalidate>
 						@elseif ($insumoProducto=='insumo')
-							<form action="/productos/altaInsumo" class="" method="POST" id="myForm">
+							<form action="/productos/altaInsumo" class="" method="POST" id="myForm" novalidate>
 						@endif					    
 							@csrf
 					    	<div class="row">
@@ -50,7 +50,7 @@
 						              <input type="text" name="alarmaRoja" class="form-control" required> </div>
 						        </div>
 					        </div>
-					        
+					        <input type="hidden" name="formulacion" id="inputHidden"/>
 						        
 						        	
 					        @if ($insumoProducto=='producto')
@@ -59,7 +59,7 @@
 
 						    @include('elementosComunes.aperturaBoton')
 
-						    		<input type="submit" name="alta"  href="" class="btn btn-primary" value="Guardar">
+						    		<button type="submit" name="alta"  href="" class="btn btn-primary" value="Guardar"> Guardar</button>
 								@if ($insumoProducto=='producto')
 							          <a class="btn btn-primary" href="/productos/administracionProductos">Cancelar</a>
 							          
@@ -67,7 +67,7 @@
 							          <a class="btn btn-primary" href="/productos/administracionInsumos">Cancelar</a>
 								@endif							         
 							@include('elementosComunes.cierreBoton')				  
-							<input type="hidden" name="formulacion" id="inputHidden"/>        
+							<input type="hidden" name="formulacion"  id="inputHidden" value=""/>        
 						</form>
 					
 

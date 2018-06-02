@@ -31,6 +31,11 @@ class GestorStock
      */
     public static function entradaInsumo(string $idLote, int $idProducto, float $cantidad, string $fecha)
     {
+        $movPlanif = Movimiento::getEntradaInsumoPlanificada($idProducto,$fecha);
+        if($movPlanif != null){
+            $movPlanif->tipo = TipoMovimiento::cumplidoDe($movPlanif->tipo);
+            $movPlanif->save();
+        }
         $banderaRecalcular = false;
         $ultimoMovReal=Movimiento::ultimoRealProd($idProducto);
         $movAnterior = $ultimoMovReal;
@@ -166,12 +171,11 @@ class GestorStock
         foreach ($ingredientes as $ing){
             //regla de 3 simple segun la formulación
             $cantConsumo = $cantidad * $ing['cantidadProducto'] / $ing['cantidad'];
-            GestorStock::altaConsumoPlanificado($idLote, $ing['id'], $cantConsumo, $fecha );
+            GestorStock::altaConsumoPlanificado($idLote, $ing['id'], $cantConsumo, $fecha,$planificacion_id );
         }
 
-
         // si no posee un stock real crearlo con 0 en una fecha que no moleste debido a que se necesita para iniciar el recalculo de las planificaciones
-        if(Movimiento::ultimoRealProd($idProducto)->count()==0){
+        if(Movimiento::ultimoRealProd($idProducto)==null){
             Movimiento::crearUltimoRealFicticio($idProducto);
         }
 
@@ -180,7 +184,7 @@ class GestorStock
         $datosNuevoMov = [
             'producto_id'=>$idProducto,
             'fecha'=>$fecha,
-            'tipo'=>TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF,
+            'tipo'=>TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF,
             'idLoteConsumidor'=>$idLote,
             'idLoteIngrediente'=>$idLote,
             'debe'=>0,
@@ -512,7 +516,7 @@ class GestorStock
      * @param string $fecha
      * @return \Illuminate\Database\Eloquent\Model|$this
      */
-    public static function altaConsumoPlanificado(int $idLoteConsumidor, int $idProdIng, float $cantidad, string $fecha)
+    public static function altaConsumoPlanificado(int $idLoteConsumidor, int $idProdIng, float $cantidad, string $fecha, int $planificacion_id)
     {
 
         // si no posee un stock real crearlo con 0 en una fecha que no moleste debido a que se necesita para iniciar el recalculo de las planificaciones
@@ -520,6 +524,7 @@ class GestorStock
             Movimiento::crearUltimoRealFicticio($idProdIng);
         }
         $datosNuevoMov = [
+            'planificacion_id'=>$planificacion_id,
             'producto_id'=>$idProdIng,
             'fecha'=>$fecha,
             'tipo'=>TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF,
