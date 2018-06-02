@@ -44,7 +44,8 @@
   $arregloNav=explode("/",$url);
   ?>
     @foreach( $arregloNav as $nav )
-    <a href={{$url}} data-place="home" id="home" class="navegadora">->{{$nav}}</a>
+    <a href="#" data-place="home" id="home" class="navegadora" >->{{$nav}}</a>
+   
     @endforeach
 
 	
