@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <form action="/planificacion/planificacionDia" method="get" enctype="multipart/form-data" class="col-md-11">
+    <form action="/planificacion/planificacionDia" method="get" enctype="multipart/form-data">
         {{csrf_field()}}
     @include('elementosComunes.aperturaTabla')
     <thead>
