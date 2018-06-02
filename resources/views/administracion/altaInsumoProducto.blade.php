@@ -11,9 +11,9 @@
 					@include('elementosComunes.cierreTitulo')
 
 						@if ($insumoProducto=='producto')			
-							<form action="/productos/altaProducto" class="" method="POST" id="myform">
+							<form action="/productos/altaProducto" class="" method="POST" id="myForm">
 						@elseif ($insumoProducto=='insumo')
-							<form action="/productos/altaInsumo" class="" method="POST" id="myform">
+							<form action="/productos/altaInsumo" class="" method="POST" id="myForm">
 						@endif					    
 							@csrf
 					    	<div class="row">
@@ -66,7 +66,8 @@
 								@elseif ($insumoProducto=='insumo')		 					 
 							          <a class="btn btn-primary" href="/productos/administracionInsumos">Cancelar</a>
 								@endif							         
-							@include('elementosComunes.cierreBoton')				              
+							@include('elementosComunes.cierreBoton')				  
+							<input type="hidden" name="formulacion" id="inputHidden"/>        
 						</form>
 					
 

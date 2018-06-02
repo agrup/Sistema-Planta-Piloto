@@ -52,6 +52,7 @@ class ProductoController extends Controller
     $formulacion = request()->input('formulacion');
     var_dump($formulacion);
     $Producto = Producto::create($datosProducto);
+    
     //recorro todos los ingredientes para agregarlos a la formulacion del producto creado
     $formulacion = explode(',',$formulacion);// pasa el string a array
 
