@@ -13,7 +13,7 @@
                 @foreach($planificaciones as $value  )
                     @if($value['diaSemana']=="lunes")
 
-                        <form action="calendarioAnt?fecha={{$value["fecha"]}}" method="GET" enctype="multipart/form-data" class="col-md-11"> {{csrf_field()}}
+                        <form action="calendarioAnt?fecha={{$value["fecha"]}}" method="GET" enctype="multipart/form-data" class="col-md-11" > {{csrf_field()}}
                             <input   type="hidden" name="fecha" value="{{$value["fecha"]}}">
                             <input type="submit" class="btn btn-primary"  value="<<">
 
@@ -48,16 +48,8 @@
         </div>
     </div>
 
+         @foreach($planificaciones as $value )
 
-    @include('elementosComunes.aperturaTabla')
-    <thead>
-    <tr>
-        <th>
-            <b>Producción</b>
-        </th>
-
-        @foreach($planificaciones as $value )
-        
 
             <form action="/planificacion/planificacionDia" method="get" enctype="multipart/form-data" class="col-md-11">
                 {{csrf_field()}}
@@ -69,6 +61,15 @@
 
 
         @endforeach
+    @include('elementosComunes.aperturaTabla')
+    <thead>
+        
+    <tr>
+        <th>
+            <b>Producción</b>
+        </th>
+
+   
 
     </tr>
     <tr>
