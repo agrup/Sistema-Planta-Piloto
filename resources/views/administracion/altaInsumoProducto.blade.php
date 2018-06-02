@@ -71,8 +71,13 @@
 						</form>
 					
 
+
+
+
 @endsection
 
 @section('script')
-	<script type="text/javascript" src="{{asset('js/administracion/agregarFormulacion.js')}}"></script>
+	@if ($insumoProducto=='producto')
+		<script type="text/javascript" src="{{asset('js/administracion/agregarFormulacion.js')}}"></script>
+		@endif
 @endsection

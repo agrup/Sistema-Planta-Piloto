@@ -80,4 +80,12 @@ public static function getProdPorLote (int $lote)
     }    
 
 
+public static function show()
+{
+    return view('gestionDeStock.entradaInsumo');
+}
+
+
+
+
 }

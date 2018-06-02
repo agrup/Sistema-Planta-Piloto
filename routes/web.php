@@ -61,6 +61,11 @@ Route::post('/productos/altaProducto', 'ProductoController@altaProducto');
 Route::get('/productos/altaInsumo', 'ProductoController@showaltaInsumo');
 Route::post('/productos/altaInsumo', 'ProductoController@altaInsumo');
 
+Route::get('/stock/entradaLoteInsumo','LotesController@show');
+Route::post('/stock/entradaLoteInsumo','LotesController@alta');
+
+
+
 //Route fictisio
 Route::get('/produccion/detalleLoteEnProduccion/{id}','PruebaController@detalleLoteEnProduccion');
 

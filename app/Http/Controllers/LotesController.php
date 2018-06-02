@@ -36,8 +36,27 @@ class LotesController extends Controller
         return view('informes.detalleLote',compact('detalle'));
     }
 
+public static function show()
+{
+    $productos::all();
+    return view('gestionDeStock.entradaInsumo',compact('producto'));
+}
+
+public static function alta()
+{
 
 
+    $lote = [
+        $cantidadElaborada = request()->input('cantidadElaborada'),
+        $fechaInicio = request()->input('fechaInicio'),
+        $fechaVencimiento = request()->input('fechaVencimiento'),
+        $costounitario = request()->input('costounitario'),
+        $id=request()->input('id')
+    ];
+
+    Lote::create($lote);
+    return view('gestionDeStock.entradaInsumo',compact('producto'))->with('succes'=>true);
+}
 
 
 }
