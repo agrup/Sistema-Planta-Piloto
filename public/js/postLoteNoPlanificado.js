@@ -11,19 +11,18 @@ $(document).ready(function() {
                     var idTr = $(this).id;
                     if(idTr !== "trhformulacion"){
                         $(this).children('td').each(function(ii, vv){
-
-
                            data[i][ii] =$(this).children('input[type=text]').val();
                             //  alert(data);  
-                          }
+                          
                           else{
                             data[i][ii] = $(this).text();
                            
                           }
+                        });
                          // alert("ok");
-                    }); 
-                  }
-                })
+                    } 
+                  });
+             
 
           var producto=  [$('#producto').val(),$('#cantidad').val(),$('#fecha').val(),$('#asignatura').val()
           ];

@@ -29,11 +29,13 @@ $(document).ready(function(){
 							$(this).append(input);
 						}
 						if(n=="tp"){
+							var valortd=$(this).text(); 
 							$(this).find('input').remove();
 							$(this).find('select').remove();
 							var select=$("#selecttp").clone().appendTo(this);
 							select.attr('id','tp');
 							select.addClass('interes');
+							select.val(valortd);
 							select.show();
 						}
 						//var input=$('<input>').val(valortd);
