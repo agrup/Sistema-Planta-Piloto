@@ -7,12 +7,15 @@ $(document).ready(function(){
               var fecha=$("#fecha").val();
               console.log(fecha);
               $("tr.trProducto").each(function(i, v){
-                productos[i] = Array();
-                //var idTr = $(this).id;    
-                    $(this).find('.inte').each(function(ii, vv){
-                        productos[i][ii] =$(this).text();
-                        
-                    });
+               // if($(this).has('td.inte')=="true){
+                  productos[i] = Array();
+                  //var idTr = $(this).id;    
+                      $(this).find('.inte').each(function(ii, vv){
+                          productos[i][ii] =$(this).text();
+                          
+                      });
+
+               //   }
                
                });
 
