@@ -272,7 +272,7 @@ public function modificarProducto()
 	public function  search()
 	{
   $inspro = request()->input('insumoProducto');
-		 $insumoProducto = $inspro;	
+		 $insumoProducto = 'producto';	
 
 
 		 $codigo=request()->input('codigo');
@@ -285,15 +285,18 @@ public function modificarProducto()
     $productos= (Producto::filterRAW($codigo,$nombre,$categoria,$alarma))->toArray();
      }
       if($inspro=='insumo'){
-        $producos=[];
+        $productos=[];
+        
         $insumos= (Producto::filterRAW($codigo,$nombre,$categoria,$alarma));
-        var_dump($insumos);
-        foreach ($insumos as $insumos) {
+
+        foreach ($insumos as $insumo) {
           if (empty($insumo->getIngredientes())) {
-            $productos[$insumo];
+           array_push($productos, $insumo);
           }
           
         }
+        
+         //var_dump($productos);
       }
 
 		return  \Response::json($productos);
@@ -304,6 +307,8 @@ public function modificarProducto()
 
 
 	}
+
+
 
 
 
