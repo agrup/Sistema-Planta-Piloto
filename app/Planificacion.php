@@ -103,6 +103,7 @@ class Planificacion extends Model
                                             'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO)->get();
         foreach ($movs as $mov){
             $arrProd=[];
+            $lote = Lote::find($mov->idLoteConsumidor);
             $estado = 'pendiente';
             $producto=Producto::find($mov->producto_id);
             $arrProd['nombre']=$producto->nombre;
@@ -119,7 +120,7 @@ class Planificacion extends Model
                 $estado = 'cumplida';
             }*/
             //si el lote se inicio considero la planificacion cumplida para que no pueda editarse ni borrarse
-            if(Lote::find($mov->idLoteConsumidor)->tipoLote != TipoLote::PLANIFICACION){
+            if($lote->tipoLote != TipoLote::PLANIFICACION){
                 $estado = 'cumplida';
             }
             if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO){
@@ -127,6 +128,8 @@ class Planificacion extends Model
             }
             $arrProd['estado']=$estado;
             $arrProd['movimiento_id']=$mov->id;
+            $arrProd['tipoTP']=$lote->tipoTP;
+            $arrProd['asignatura']=$lote->asignatura;
             array_push($arrayResult,$arrProd);
 
         }

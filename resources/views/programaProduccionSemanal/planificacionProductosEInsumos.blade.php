@@ -1,6 +1,9 @@
 @extends('layouts.layoutPrincipal' )
 @section('section')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <img  src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;"  class="modificar" id="imgModificar" hidden>
+    <img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" class="borrar" id="imgBorrar" hidden />
+
     
     <?php $fecha=$planificaciones[0]['fecha'];?>
 
