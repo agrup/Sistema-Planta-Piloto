@@ -27,7 +27,7 @@
                         <form action="calendarioSig" method="GET" enctype="multipart/form-data"  class="col-md-1">
 
                             {{csrf_field()}}
-                            <input   type="hidden" name="fecha" value="{{$value["fecha"]}}">
+                            <input  type="hidden" name="fecha" value="{{$value["fecha"]}}">
                             <input type="submit" class="btn btn-primary" value=">>">
 
                         </form>
@@ -41,7 +41,7 @@
             <div class="row">
                 <form action="planificacion" method="POST" enctype="multipart/form-data"  class="col-md-5">
                     {{csrf_field()}}
-                    <input type="date" name="fecha" value="{{$planificaciones[0]['fecha']}}" >
+                    <input class="inputchiquito"  type="date" name="fecha" value="{{$planificaciones[0]['fecha']}}" >
                     <input  class="btn btn-secondary"  type="submit" value="Ir a semana">
                 </form>
             </div>
@@ -384,11 +384,10 @@
                     <div class="row">
 
 
-                        <div>
                             <form action="sumarizacion" method="get" enctype="multipart/form-data">
 
                                 {{csrf_field()}}
-                                <input type="date" name='fecha' value="{{$planificaciones[4]["fecha"]}}" class="form-control"></div>
+                                <input type="date" name='fecha' value="{{$planificaciones[4]["fecha"]}}" class="form-control">
 
                         <input type="submit" value="Ver necesidad de Insumos" class="btn btn-primary" required>
 
