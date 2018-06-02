@@ -1,6 +1,7 @@
 $(document).ready(function(){
 	$("#selectProductos").hide();
 	$("#selectInsumos").hide();
+	$("#selecttp").hide();
 
 		$(".agregarProducto").click(function(){
 			
@@ -13,7 +14,10 @@ $(document).ready(function(){
 			td2.setAttribute('id','nombre');
 			td3.setAttribute('id','cantidad');
 			td4.setAttribute('id','tp');
-
+			td1.setAttribute('class','inte');
+			td2.setAttribute('class','inte');
+			td3.setAttribute('class','inte');
+			td4.setAttribute('class','inte');
 
 			//var input1=$("<input>").attr({type:'text',class:'interes'}).appendTo(td1);
 			var input3=$("<input>").attr({type:'text',class:'interes'}).appendTo(td3);
@@ -26,7 +30,7 @@ $(document).ready(function(){
 			//select de los productos
 			var select=$("#selectProductos").clone().appendTo(td2);
 			select.attr('id','productos');
-			select.addClass('inte');
+			select.addClass('interes');
 			select.show();
 			
 
@@ -56,13 +60,19 @@ $(document).ready(function(){
 			var td3=document.createElement("td");
 			//var td4=document.createElement("td");
 			var td5=document.createElement("td");
-
+			td1.setAttribute('id','codigo');
+			td2.setAttribute('id','nombre');
+			td3.setAttribute('id','cantidad');
+			td1.setAttribute('class','inte');
+			td2.setAttribute('class','inte');
+			td3.setAttribute('class','inte');
+			
 			//var input1=$("<input>").attr({type:'text',class:'interes'}).appendTo(td1);
-			var input3=$("<input>").attr({type:'text',class:'inte'}).appendTo(td3);
+			var input3=$("<input>").attr({type:'text',class:'interes'}).appendTo(td3);
 			//select de los Insumos
 			var select=$("#selectInsumos").clone().appendTo(td2);
 			select.attr('id','insumos');
-			select.addClass('inte');
+			select.addClass('interes');
 			select.show();
 			//var input4=$("<input>").attr({type:'text',class:'interes'}).appendTo(td4);
 			var guardar=document.createElement('img');

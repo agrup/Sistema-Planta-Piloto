@@ -53,19 +53,24 @@
         @foreach($codigo as $k=>$a)
 
             <tr id="{{$k}}" class="trProducto">
-
+             
                 @if($estado[$k]=="pendiente")
 
                     <td class="inte" id="codigo"><?=$codigo[$k];?></td>
                     <td class="inte" id="nombre"><?=$nombre[$k];?></td>
                     <td class="inte" id="cantidad"><?=$cantidad[$k];?></td>
-                    <td class="inte" id="tp"><?=$tp[$k];?></td>
+                    @if ($tp[$k]==false)
+                        <td class="inte" id="tp">No</td>
+                    @else
+                        <td class="inte" id="tp">Si</td>
+                    @endif
                     <td><img  src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;"  class="modificar" /></td>
                     <td><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" class="borrar" /></td>
                 @elseif ($estado[$k]=="incumplida")
                    <td id="codigo"><?=$codigo[$k];?></td>
                    <td id="nombre"><?=$nombre[$k];?></td>
                    <td id="cantidad"><?=$cantidad[$k];?></td>
+                    <td class="inte" id="tp"><?=$tp[$k];?></td>
                    <td></td> 
                    <script type="text/javascript">
                       $('#'+'{{$k}}').css("background-color","#ffb3b3")
@@ -76,6 +81,7 @@
                    <td  id="codigo"><?=$codigo[$k];?></td>
                     <td id="nombre"><?=$nombre[$k];?></td>
                     <td id="cantidad"><?=$cantidad[$k];?></td>
+                     <td class="inte" id="tp"><?=$tp[$k];?></td>
                     <td></td>
                    <script type="text/javascript">
                       $('#'+'{{$k}}').css("background-color","lightgreen")
@@ -87,7 +93,7 @@
         @endforeach
         
     @endif
-    <tr class="nuevaLineaProducto"> </tr>
+    <tr class="trProducto"> </tr>
      <tr><td><img src="{{asset('img/agregar.png') }}" width="30" height="30" style="cursor: pointer;"class="agregarProducto"/></td></tr>
     </tbody>
     @include('elementosComunes.cierreTabla')
@@ -128,15 +134,18 @@
 
             <tr id="insumo{{$k}}" class="trInsumo">
 
-                <td class="inte"><?=$codigo[$k];?></td>
-                <td class="inte"><?=$nombre[$k];?></td>
-                <td class="inte"><?=$cantidad[$k];?></td>
+              
                
                  @if($estado[$k]=="pendiente")
+                     <td class="inte"><?=$codigo[$k];?></td>
+                    <td class="inte"><?=$nombre[$k];?></td>
+                    <td class="inte"><?=$cantidad[$k];?></td>
                     <td><img  src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;"  class="modificar" /></td>
                     <td><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" class="borrar" /></td>
                 @elseif ($estado[$k]=="incumplida")
-
+                      <td ><?=$codigo[$k];?></td>
+                    <td ><?=$nombre[$k];?></td>
+                    <td ><?=$cantidad[$k];?></td>
                    <script type="text/javascript"> 
                     
                       $('#insumo'+'{{$k}}').css("background-color","#ffb3b3");
@@ -144,7 +153,9 @@
                    <td></td>
                    <td></td> 
                 @else
-
+                    <td ><?=$codigo[$k];?></td>
+                    <td ><?=$nombre[$k];?></td>
+                    <td ><?=$cantidad[$k];?></td>
                    <script type="text/javascript">
 
                       $('#insumo'+'{{$k}}').css("background-color","lightgreen");
@@ -158,7 +169,7 @@
 
     @endif
     <tr><td><img  src="{{asset('img/agregar.png') }}" width="30" height="30" style="cursor: pointer;" class="agregarInsumo" /></td></tr>
-     <tr class="nuevaLineaInsumo">
+     <tr class="trInsumo">
            
         </tr>
     </tbody>
@@ -182,8 +193,10 @@
         <option value='{{$insumo['nombre']}}' data-codigo='{{$insumo['codigo']}}'> {{$insumo['nombre']}} </option>
     @endforeach
     </select>
-
-
+     <select id="selecttp" >
+        <option>NO</option>
+         <option>SI</option>
+    </select>  
     <form>
         @csrf
         <button class="btn btn-primary" id="btnguardar"> Guardar </button>
