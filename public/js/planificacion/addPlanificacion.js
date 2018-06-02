@@ -10,6 +10,7 @@ $(document).ready(function(){
 			var td3=document.createElement("td");
 			var td4=document.createElement("td");
 			var td5=document.createElement("td");
+			var td6=document.createElement("td");
 			td1.setAttribute('id','codigo');
 			td2.setAttribute('id','nombre');
 			td3.setAttribute('id','cantidad');
@@ -23,7 +24,7 @@ $(document).ready(function(){
 			var input3=$("<input>").attr({type:'text',class:'interes'}).appendTo(td3);
 
 			//SELECT tipo tp
-			var input4=$("<select>").attr({type:'text',class:'interes',id:'selecttp'}).appendTo(td4);
+			var input4=$("<select>").attr({type:'text',class:'interes',id:'selecttp'}).appendTo(td5);
 			var option1=$("<option>NO</option>").appendTo(input4);
 			var option2=$("<option>SI</option>").appendTo(input4);
 			
@@ -31,7 +32,7 @@ $(document).ready(function(){
 			var select=$("#selectProductos").clone().appendTo(td2);
 			select.attr('id','productos');
 			select.addClass('interes');
-			select.show();
+			select.show();	
 			
 
 			var guardar=document.createElement('img');
@@ -42,17 +43,17 @@ $(document).ready(function(){
 			/*var guardar=$('img#iHGuardar').clone();
 			guardar.show();
 			console.log(guardar);*/
-			td5.appendChild(guardar);
+			td6.appendChild(guardar);
 
 			row = $(this).closest('tr');
-			$('.trProducto:last').append(td1,td2,td3,td4,td5);
+			$('.trProducto:last').append(td1,td2,td3,td4,td6);
 			
 			tbody = $(this).closest('tbody');
 			var tr=document.createElement("tr");
 			tr.setAttribute('class','trProducto');
-			//$(this).remove();
+			//$(this).remove(div)ove();
 			var parent=$(this).closest('tr');
-			console.log($(this).closest('tr'));
+			//console.log($(this).closest('tr'));
 			tbody.append(tr,this);
 			parent.remove();
 			//$('.tbodyPlanif').append();
@@ -62,7 +63,7 @@ $(document).ready(function(){
 			var td1=document.createElement("td");
 			var td2=document.createElement("td");
 			var td3=document.createElement("td");
-			//var td4=document.createElement("td");
+			var td4=document.createElement("td");
 			var td5=document.createElement("td");
 			td1.setAttribute('id','codigo');
 			td2.setAttribute('id','nombre');
@@ -87,7 +88,7 @@ $(document).ready(function(){
 			td5.appendChild(guardar);
 
 			row = $(this).closest('tr');
-			$('.trInsumo:last').append(td1,td2,td3,td5);
+			$('.trInsumo:last').append(td1,td2,td3,td4,td5);
 			
 			tbody = $(this).closest('tbody');
 			var tr=document.createElement("tr");
