@@ -44,23 +44,37 @@
 						<td>{{$insumo['nombre']}}</td>
 
 						<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
+						<?php $j=0;?>
 						@for ($i = 0; $i < count($trazabilidad); $i++)
 
 							@if ($trazabilidad[$i]['nombre']==$insumo['nombre'])
-							<?php $b=true;?>
-								<td>{{ $trazabilidad[$i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>
-								<td>{{$trazabilidad[$i]['lote_id']}}</td>
+							<?php $b=true;$j++;?>
+								
 
+								@if($j>1)
+								<tr>
+									<td>{{$insumo['nombre']}}</td>
+									<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
+									<td>{{ $trazabilidad[$i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>
+									<td>{{$trazabilidad[$i]['lote_id']}}</td>
+								</tr>	
+								@else
+									<td>{{ $trazabilidad[$i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>
+									<td>{{$trazabilidad[$i]['lote_id']}}</td>
+
+									</tr>
+								@endif
 							@endif
 	
 						@endfor
 						@if ($b==false)
 							<td>0 {{ $insumo['tipoUnidad'] }}</td>
 							<td>-</td>
+
+							</tr>
 						@endif 
 						
 
-					</tr>
 				
 			@endforeach
 			</tbody>
@@ -79,16 +93,15 @@
 				<form action="/produccion/modificarIniciado/{{$lote['id']}}" method="get">
 				{{ csrf_field() }}
 					<button type="submit" class="btn btn-primary">Modificar</button>
-				</form>	
-				<form action="/produccion/postMaduracion/{{$lote['id']}}" method="post">
-
-					 
-					@include('produccion.registrarMaduracion')
 				</form>
-				<form action="/produccion/postFinalizarLote/{{$lote['id']}}" method="post">	
-				
+				<form action="" method="post">
+					{{ csrf_field() }}
+				@include('produccion.registrarMaduracion')
+				</form>
+				{{ csrf_field() }}
+				<form action="" method="post">
 					@include('produccion.finalizarLote')
-				</form>	
+				</form>
 					
 
 					@break
@@ -98,18 +111,15 @@
 					<button class="btn btn-primary">Modificar</button>
 					<button class="btn btn-primary">Finalizar</button>
 					@break
-				@endcase
+
 
 				@case('finalizado')
 					<button class="btn btn-primary">Modificar Finalizado</button>
 					@break
-				@endcase
+
 
 				 @default
 	        		<span>Something went wrong, please try again</span>
-	       
-
-
-		@endswitch
+		    @endswitch
 @endsection
 		

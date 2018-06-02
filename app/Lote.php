@@ -140,6 +140,31 @@ class Lote extends Model
 
     }
 
+    /**
+     * Inicia un lote planificado, permitiendo alterarle algunos datos de como fue planificado
+     * @param array $datos
+     * @throws Exception si no esta en estado planificado
+     */
+    public function iniciarPlanificado(array $datos) {
+        if($this->tipoLote != TipoLote::PLANIFICACION){
+            throw new Exception('Intentando iniciar como planificado un lote que no esta en estado PLANIFICACION');
+        }
+        $this->tipoLote = TipoLote::INICIADO;
+        $this->fechaInicio = $datos['fechaInicio'];
+        $this->tipoTP = $datos['tipoTP'];
+        $this->asignatura = $datos['asignatura'];
+        $this->cantidadElaborada = $datos['cantidadElaborada'];
+        $this->save();
+    }
+
+    /**
+     * Retorna booleano de si esta en estado planificado
+     * @return bool
+     */
+    public function isPlanificado(){
+        return ($this->tipoLote == TipoLote::PLANIFICACION);
+    }
+
     public function finalizar(float $cantidadFinal, string $fechaFinalizacion, string $fechaVencimiento){
         if($this->tipoLote !=TipoLote::MADURACION || $this->tipoLote != TipoLote::INICIADO){
             throw new Exception('Solo se puede finalizar un lote que este en estado INICIADO o MADURACION');

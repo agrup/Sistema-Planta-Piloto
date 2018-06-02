@@ -26,8 +26,8 @@
               <input type="date" class="form-control" value="{{$lote['fecha']}}"> </div>
             <div class="row">
               <div class="col">
-                <label>Cantidad Elaborada</label>
-                <input type="text" class="form-control" placeholder="Cantidad Actual: {{$lote['cantidad']}}"> </div>
+                <label>Cantidad Actual</label>
+                <input type="text" class="form-control" value={{$lote['cantidad']}}></div>
               <div class="col">
                 <label for="exampleInputEmail1">Unidad</label>
                 <input type="text" class="form-control"  id="inlineFormInput" disabled="true" value="{{$producto['tipoUnidad']}}"> </div>
@@ -38,8 +38,8 @@
           <form class="formu" action="">
             <div class="form-group" id="#divselect">
               <label>Trabajo Práctico</label>
-                
-                   @if($lote['tipoTp'])
+                  
+                   @if($lote['tipoTp']==true)
                    <select class="form-control" id="selectTP">
                       <option value="true" selected>SI</option>
                       <option value="false" >NO</option>
@@ -66,7 +66,7 @@
       @include('elementosComunes.aperturaTabla')
    <div class="row"></div>
     <div class="col"></div>
-          <form >
+          <form id="myform">
             <h4 class="">
               <b>Formulación:</b>
             </h4>
@@ -107,7 +107,7 @@
                           <tr>
                             <td>{{$insumo['nombre']}}</td>
                             <td><input type="text" name="" value="{{$trazabilidad[$arrayTrazabilidad[$i]]['lote_id']}}"></td>
-                            <td><input type="text" name="" value=" {{ $trazabilidad[$arrayTrazabilidad[$i]]['cantidad'] }} "></td>
+                            <td><input type="text" name="" value=" {{ $trazabilidad[$arrayTrazabilidad[$i]]['cantidad'] }}"></td>
                             <td>{{ $insumo['tipoUnidad'] }}</td>
                           @if($i==count($arrayTrazabilidad)-1)
                             <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
@@ -133,4 +133,12 @@
 @section('script')
    <script type="text/javascript" src="{{asset('js/produccion/addAsignatura.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/produccion/addRowLote.js')}}"></script>
+   <script type="text/javascript" src="{{asset('js/produccion/postLote.js')}}"></script>
+   <script>
+       document.addEventListener("DOMContentLoaded", function() {
+           PostLote.init("/produccion/modificarIniciado/{{$lote['id']}}");
+       });
+
+   </script>
+
 @endsection

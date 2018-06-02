@@ -32,7 +32,7 @@
 
           <form class="formu" id="myform" action="">
             {{ csrf_field() }}
-
+              <input type="hidden" value="{{$lote['id']}}" name="loteID">
             <div class="form-group">
               <label>Cantidad a Elaborar</label>
               <input type="text" id="cantidad" class="form-control" >
@@ -80,8 +80,8 @@
               </thead>
               <tbody id="tbodyformulacion">
                 @foreach($formulacion as $value)
-                  <tr>
-                  
+                  <tr class="trConsumo">
+                      <input type="hidden" value="{{$value['id']}}" class="interes">
                     <td>{{$value['nombre']}}</td>
                     
                     <td><select class="interes">
@@ -90,7 +90,7 @@
                         <option value="{{$nlote}}">{{$nlote}}</option>
                       @endforeach
                     </select></td>
-                    <td><input type=""  placeholder="Cantidad Teorica:{{$value['cantidad']}}" class="interes"></td>
+                    <td><input type=""  placeholder="Teorica total:{{$value['cantidad']}}" class="interes"></td>
                     <td> {{$value['tipoUnidad']}}</td>
                     <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
                   </tr>
