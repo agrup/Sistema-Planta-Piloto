@@ -18,7 +18,7 @@ class ProduccionController extends Controller
         $data =[];
        /* $fecha =Carbon::createFromFormat('Y-m-d H:i:s',Movimiento::getFechaUltimoReal());
         $fecha = $fecha->format('Y-m-d');*/
-       $fecha = '2018-05-04';
+       $fecha = '2018-05-28';
         $data['fecha']=$fecha;
         $data['lotes']=self::getArrayLotes($fecha);
         return view('produccion.produccion',compact('data'));
@@ -286,6 +286,14 @@ class ProduccionController extends Controller
     }
 
     public static function postModificarIniciado($id){
+
+
+        $data['fecha']='2018-06-04';
+
+        $data['lotes']=self::getArrayLotes('2018-06-04');
+        return view('produccion.produccion',compact('data'));
+
+
         //Datos de la vista
         $loteVista = request()->input('lote');
         $consumosVista = request()->input('consumo');

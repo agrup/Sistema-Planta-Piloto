@@ -5,7 +5,7 @@ $('table').dataTable({
 "bFilter": false,
 "aaSorting": [[ 2, "desc" ]],
 "bInfo": false,
-"bAutoWidth": false,
+"bAutoWidth": false
 "oLanguage": {"sZeroRecords": "", "sEmptyTable": ""}
 });
 } );

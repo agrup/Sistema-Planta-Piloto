@@ -4,10 +4,14 @@
 Route::get('/','MainController@index');
 
 
+//INFORMES
 
 //informes stock
 Route::get('/stock', 'StockController@show');
 Route::post('/stock', 'StockController@show');
+//informes produccion
+Route::get('/Informes/ResumenProduccion','ProduccionController@show');
+Route::post('/Informes/ResumenProduccion','ProduccionController@informeProduccion');
 
 //lotes 
 Route::get('/verLotes', 'LotesController@show');
@@ -45,8 +49,9 @@ Route::post('/produccion/modificarIniciado/{id}', 'ProduccionController@postModi
 Route::post('/produccion/postMaduracion/{id}','ProduccionController@postMaduracion');
 Route::post('/produccion/postFinalizarLote/{id}','ProduccionController@postFinalizarLote');
 
-//Producto
+//Administracion
 Route::get('/Administracion/BuscarProducto','ProductoController@search');//busca insumos y productos a partir de un array de caracteristicas
+
 
 
 
@@ -60,6 +65,11 @@ Route::post('/productos/altaProducto', 'ProductoController@altaProducto');
 //Alta Insumo
 Route::get('/productos/altaInsumo', 'ProductoController@showaltaInsumo');
 Route::post('/productos/altaInsumo', 'ProductoController@altaInsumo');
+//entrada lote insumo
+Route::get('/stock/entradaLoteInsumo','LotesController@showentradaLoteInsumo');
+Route::post('/stock/entradaLoteInsumo','LotesController@alta');
+
+
 
 //Route fictisio
 Route::get('/produccion/detalleLoteEnProduccion/{id}','PruebaController@detalleLoteEnProduccion');
@@ -71,7 +81,8 @@ Route::get('/lotes/{id}', 'LotesController@show') ;
 Route::get('/trabajador', 'TrabajadorController@index');
 Route::get('/trabajador/create', 'TrabajadorController@create');
 Route::post('/trabajador', 'TrabajadorController@store');
-
+Route::get('/stock/entradaLoteInsumo','LotesController@showentradaLoteInsumo');
+Route::post('/stock/entradaLoteInsumo','LotesController@alta');
 
 
 //Administracion de productoInsumos

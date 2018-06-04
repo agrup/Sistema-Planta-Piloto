@@ -182,6 +182,32 @@ class Producto extends Model
         }
         return $productos;
     }
+
+
+
+
+
+
+    public static function test($inspro,$codigo,$nombre,$categoria,$alarma){
+        if($inspro=='insumo'){
+        $productos=[];
+        
+        $insumos= (Producto::filterRAW($codigo,$nombre,$categoria,$alarma));
+        //var_dump($insumos);
+        foreach ($insumos as $insumo) {
+        
+          if (empty($insumo->getIngredientes())) {
+           array_push($productos, $insumo);
+          }
+          
+        }
+        $productos=compact('productos');
+         //var_dump($productos);
+      }
+
+    return  $productos;
+
+}
 }
 
 

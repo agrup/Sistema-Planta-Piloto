@@ -31,6 +31,7 @@ class GestorStock
      */
     public static function entradaInsumo(string $idLote, int $idProducto, float $cantidad, string $fecha)
     {
+        // Si corresponde a una entrada planificada la doy por cumplida
         $movPlanif = Movimiento::getEntradaInsumoPlanificada($idProducto,$fecha);
         if($movPlanif != null){
             $movPlanif->tipo = TipoMovimiento::cumplidoDe($movPlanif->tipo);
@@ -57,7 +58,7 @@ class GestorStock
             'saldoLote'=>$cantidad
         ];
 
-        $nuevoMov = Movimiento::create($datosNuevoMov); //puede que no ande, que haya que hacer ->get();
+        $nuevoMov = Movimiento::create($datosNuevoMov);
 
         if($banderaRecalcular){
             self::recalcularStockReal($nuevoMov);
@@ -83,6 +84,7 @@ class GestorStock
             $movAnterior = Movimiento::getAnteriorRealProd($producto_id,$fecha);
             $banderaRecalcular=true;
         }
+        
         $datosNuevoMov = [
             'producto_id'=>$producto_id,
             'idLoteConsumidor'=>$idLote,
@@ -113,7 +115,7 @@ class GestorStock
 
     {
         // si no posee un stock real crearlo con 0 en una fecha que no moleste debido a que se necesita para iniciar el recalculo de las planificaciones
-        if(Movimiento::ultimoRealProd($idProducto)->count()==0){
+        if(Movimiento::ultimoRealProd($idProducto)==null){
             Movimiento::crearUltimoRealFicticio($idProducto);
         }
         //No deben existir mas de una entrada de insumo planificada para un mismo dia

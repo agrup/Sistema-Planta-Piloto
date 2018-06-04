@@ -6203,12 +6203,13 @@ html, body {
 
 
 .modal{
-  background-color: #6c757d;
-  height: 500px;
-  width: 800px;
-  margin-left: 25vw;
+  margin-left: 1vw;
   margin-top: 5vw;
 
+}
+
+#myModal{
+  
 }
 
 .interes{
@@ -6245,5 +6246,9 @@ html, body {
 }
 .navegadora{
   font-size: 1.5rem;
+<<<<<<< HEAD
 
+=======
+  margin-bottom: 800px;
+>>>>>>> 4b5f213d1a9822d549a155531fe452e0fdd58f02
 }

@@ -12,8 +12,10 @@ class ProductoController extends Controller
 
   public function administracionInsumo(){
     $insumoProducto = 'insumo';
-    return view('administracion.buscarInsumoProducto')->with(compact('insumoProducto'));
-  }
+    $succes=false;
+    return view('administracion.buscarInsumoProducto')->with(compact('succes'))
+                                            ->with(compact('insumoProducto'));
+  } 
 
 
 
@@ -22,7 +24,9 @@ class ProductoController extends Controller
   public function showAltaInsumo(){
     $insumoProducto = "insumo";
     $insumos = [];
+     $succes=false;
     return view('administracion.altaInsumoProducto')->with(compact('insumoProducto'))
+                                                    ->with(compact('succes'))
                                                     ->with(compact('insumos'));
   }
 
@@ -120,18 +124,20 @@ public function showModificarInsumo()
 
   public function showAltaProducto(){
   $insumoProducto = "producto";
-
+ $succes=false;
   $insumos=Producto::all()->toArray();
   //var_dump(compact('insumos'));
   return view('administracion.altaInsumoProducto')
                                                     ->with(compact('insumos'))
-                                                    ->with(compact('insumoProducto'));
-
+                                                    ->with(compact('insumoProducto'))
+                                                    ->with(compact('succes'));
 }
 
   public function administracionProducto(){
     $insumoProducto = 'producto';
-    return view('administracion.buscarInsumoProducto')->with(compact('insumoProducto'));
+    $succes=false;
+    return view('administracion.buscarInsumoProducto')->with(compact('succes'))
+                                                  ->with(compact('insumoProducto'));
   }
 
 public function altaProducto(){
@@ -271,17 +277,33 @@ public function modificarProducto()
 
 	public function  search()
 	{
-		
+  $inspro = request()->input('insumoProducto');
 		 $insumoProducto = 'producto';	
+
 
 		 $codigo=request()->input('codigo');
 		 $nombre=request()->input('nombre');
 		 $categoria=request()->input('categoria');
 		 $alarma=request()->input('alarma');
 
-		 
+	   if($inspro=='producto'){
 
-		$productos= (Producto::filterRAW($codigo,$nombre,$categoria,$alarma))->toArray();
+    $productos= (Producto::filterRAW($codigo,$nombre,$categoria,$alarma))->toArray();
+     }
+      if($inspro=='insumo'){
+        $productos=[];
+        
+        $insumos= (Producto::filterRAW($codigo,$nombre,$categoria,$alarma));
+
+        foreach ($insumos as $insumo) {
+          if (empty($insumo->getIngredientes())) {
+           array_push($productos, $insumo);
+          }
+          
+        }
+        
+         //var_dump($productos);
+      }
 
 		return  \Response::json($productos);
 
@@ -291,6 +313,8 @@ public function modificarProducto()
 
 
 	}
+
+
 
 
 
