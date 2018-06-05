@@ -108,8 +108,11 @@ class Producto extends Model
             //Agrego además los lotes, accion altamente cuestionable
              $lotes = Lote::where('producto_id','=',$ing['id'])->get();
              foreach($lotes as $lote){
-                 if(GestorStock::getSaldoLote($lote->id)>0){
-                     array_push($arrayLotes,$lote->id);
+                 $arrAuxL =[];
+                 $arrAuxL['id']=$lote->id;
+                 $arrAuxL['stock']=GestorStock::getSaldoLote($lote->id);
+                 if($arrAuxL['stock']>0){
+                     array_push($arrayLotes,$arrAuxL);
                  }
              }
              $arrAux['lotes']=$arrayLotes;

@@ -4,4 +4,3 @@
 
             <div class="col-md-11">
                 <table class="table table-striped" id="tablaStock" >
-

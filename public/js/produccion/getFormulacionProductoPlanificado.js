@@ -11,10 +11,10 @@ $(document).ready(function(){
   		 $.getJSON("/produccion/formulacion",{id,cantidad},function(result){
 
 			
-            	resultado=result;
-            	console.log(resultado);
+            	let formulacion=result;
+            	console.log(formulacion);
 
-            	resultado.forEach(function(item,index) { //trato al json como un array enumerado por index
+            	formulacion.forEach(function(ing,index) { //trato al json como un array enumerado por index
             		
             		//creo la tabla
             		var tbody=document.createElement("tbody");
@@ -52,12 +52,16 @@ $(document).ready(function(){
             	
 					$("#tformulacion").append(tbody);
             		$("#tbodyformulacion").append(tr);
-		  			$("#"+item['codigo']).html(item['nombre']); 
-					$("#"+item['tipoUnidad']+index).html(item['tipoUnidad']); 
+		  			$("#"+item['codigo']).html(item['nombre']);
+					$("#"+item['tipoUnidad']+index).html(item['tipoUnidad']);
 
-                    item['lotes'].forEach(function(nlote,index) {
-                        var option=$('<option></option>').text(nlote);
-                        option.attr("value",nlote);
+                    //Agrego las opciones al select de lotes
+                    item['lotes'].forEach(function(lote,index) {
+                        var option=$('<option></option>').text(lote['id']);
+                        option.attr("value",lote['id']);
+                        // se guarda en data-stock la cantidad en stock para ser mostrada luego de seleccionar el lote
+
+                        option.data('stock',lote['stock']);
                         selectLote.append(option);  
                     });
 		  			
