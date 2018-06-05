@@ -84,7 +84,7 @@ $(document).ready(function() {
 						imgMod.setAttribute("width", "20");
 						imgMod.setAttribute("height", "20");
 						imgMod.setAttribute("style", "cursor: pointer");
-						imgMod.setAttribute("id", "btnModificar");
+						imgMod.setAttribute("class", "btnModificar");
 			    		td.appendChild(imgMod);
 			    		tr.appendChild(td); 
 
@@ -95,16 +95,48 @@ $(document).ready(function() {
 						imgEliminar.setAttribute("width", "20");
 						imgEliminar.setAttribute("height", "20");
 						imgEliminar.setAttribute("style", "cursor: pointer");
-						imgEliminar.setAttribute("id", "btnEliminar");
+						imgEliminar.setAttribute("class", "btnEliminar");
 			    		td.appendChild(imgEliminar);			    		
 			    		tr.appendChild(td); 
 
 		        	tbody.appendChild(tr);
+
+		        	//
+		        	
 			    });		
+			    $('.btnEliminar').on('click', function(){
+						var r=confirm("¿Está seguro que desea borrar este Producto?");
+						if(r){
+							var tr = $(this).closest('tr');
+							var cod = tr.find('td:first-child').text();
+							console.log("Codigo: "+cod);
+							$.ajax({
+						  		url: "/productos/eliminarProducto",
+						  		data: {
+						    		codigo: cod,	        	
+						  		},
+						  		type:'get',
+						  		
+						  	}).done(		
+						 		function(data, i) {
+						 			console.log('Datos recibidos: '+data);
+						 			if(data.success){
+								    	alert('Se ha eliminado el producto');
+								    	$(this).closest('tr').hide();
+								    }
+								}).fail(function(){
+									alert('Ha ocurrido un error al eliminar el producto');
+						  			console.log('Error');
+							  	}
+						  	);
+						}
+
+					});
 			}).fail(function(){
 	  			console.log('Error');
 		  	}
 	  	);
+
 	});
 		
 });

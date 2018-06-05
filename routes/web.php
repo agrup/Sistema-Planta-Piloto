@@ -65,6 +65,15 @@ Route::post('/productos/altaProducto', 'ProductoController@altaProducto');
 //Alta Insumo
 Route::get('/productos/altaInsumo', 'ProductoController@showaltaInsumo');
 Route::post('/productos/altaInsumo', 'ProductoController@altaInsumo');
+
+//Modificacion Producto
+Route::get('/productos/modificarProducto', 'ProductoController@showModificarProducto');
+Route::post('/productos/modificarProducto', 'ProductoController@modificarProducto');
+
+//Eliminar Producto
+Route::get('/productos/eliminarProducto', 'ProductoController@deleteProducto');
+//Route::post('/productos/eliminarProducto', 'ProductoController@modificarProducto');
+
 //entrada lote insumo
 Route::get('/stock/entradaLoteInsumo','LotesController@showentradaLoteInsumo');
 Route::post('/stock/entradaLoteInsumo','LotesController@alta');
