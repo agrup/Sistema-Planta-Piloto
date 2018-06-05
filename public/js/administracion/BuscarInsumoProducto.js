@@ -75,7 +75,30 @@ $(document).ready(function() {
 			    		tr.appendChild(td);        	
 			    	var td=document.createElement("td");	    			
 			    		td.innerHTML = item.categoria;
-			    		tr.appendChild(td);        	
+			    		tr.appendChild(td); 
+
+					var td=document.createElement("td");
+					var imgMod = document.createElement("img");							    			
+						var src = $('img#iHModificar').attr('src');
+						imgMod.setAttribute("src", src);
+						imgMod.setAttribute("width", "20");
+						imgMod.setAttribute("height", "20");
+						imgMod.setAttribute("style", "cursor: pointer");
+						imgMod.setAttribute("id", "btnModificar");
+			    		td.appendChild(imgMod);
+			    		tr.appendChild(td); 
+
+			    		var td=document.createElement("td");	    			
+			    		var imgEliminar = document.createElement("img");							    			
+			    		var src1 = $('img#iHBorrar').attr('src');						
+						imgEliminar.setAttribute("src", src1);
+						imgEliminar.setAttribute("width", "20");
+						imgEliminar.setAttribute("height", "20");
+						imgEliminar.setAttribute("style", "cursor: pointer");
+						imgEliminar.setAttribute("id", "btnEliminar");
+			    		td.appendChild(imgEliminar);			    		
+			    		tr.appendChild(td); 
+
 		        	tbody.appendChild(tr);
 			    });		
 			}).fail(function(){
