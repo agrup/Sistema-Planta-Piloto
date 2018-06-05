@@ -6,6 +6,7 @@ $(document).ready(function(){
 				var r=confirm("¿Está seguro que desea borrar esta planificación?");
 				if (r == true) {
 				   tr.hide();
+				   tr.remove();
 				   //console.log(tr.is(":visible")); 
 				   
 					alert(a);
