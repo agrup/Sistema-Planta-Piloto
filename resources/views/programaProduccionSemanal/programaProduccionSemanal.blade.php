@@ -117,43 +117,7 @@
             </tr>
         @endfor
         </tbody>
-        {{-- Tabla de trabajadores --}}
-        {{-- Busco la planificacion con mas trabajadores y guardo la cantidad en $trNumber --}}
-        <?php
-        $trNumber=0;
-        foreach ($planificaciones as $planificacion){
-            $numberAux = count($planificacion['trabajadores']);
-            if($numberAux > $trNumber){
-                $trNumber = $numberAux;
-            }
-        }
-        ?>
-        @if($trNumber >0) {{-- Imprimo la tabla de trabajadores solo si hay--}}
-            <thead>
-            <tr>
-                <th>
-                    <b>Trabajadores</b>
-                </th>
-                @foreach($planificaciones as $value )
-                    <th> </th>
-                @endforeach
-            </tr>
-            </thead>
-            <tbody>
-            @for($i=0;$i<$trNumber ; $i++)
-                <tr>
-                    <td>{{ $i+1 }}</td>
-                    @foreach($planificaciones as $planificacion)
-                        <td>
-                            @if(isset($planificacion['trabajadores'][$i]))
-                                {{ $planificacion['trabajadores'][$i]}}
-                            @endif
-                        </td>
-                    @endforeach
-                </tr>
-            @endfor
-            </tbody>
-        @endif {{--// endif si hay trabajadores en alguna planificacion--}}
+       
 
         @include('elementosComunes.cierreTabla')
         {{-- Necesidad De insumos --}}
