@@ -46,6 +46,7 @@
             <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Informes</span></a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
               <a class="dropdown-item" href="/stock">Stock</a>
+               <a class="dropdown-item" href="/sumarizacion">Ver Necesidad de Insumos</a>
 
             </div>
           </li>

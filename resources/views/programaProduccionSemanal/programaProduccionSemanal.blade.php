@@ -131,24 +131,5 @@
     </form>
 
 
-    <div class="py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h4 class="">Fecha Hasta</h4  >
-                </div>
-            </div>
-            <div class="py-5">
-                <div class="container">
-                    <div class="row">
-                        <form action="sumarizacion" method="get" enctype="multipart/form-data">
-                            {{csrf_field()}}
-                            <input type="date" name='fecha' value="{{$planificaciones[4]["fecha"]}}" class="form-control">
-                            <input type="submit" value="Ver necesidad de Insumos" class="btn btn-primary" required>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+   
 @endsection
