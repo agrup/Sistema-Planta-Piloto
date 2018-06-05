@@ -41,8 +41,8 @@ $(document).ready(function(){
                     contentType: "application/json"
                     }).done(function (data){
                         alert('Planificacion Guardada Satisfactoriamente');
-
-                        console.log(data)
+                        window.location.replace("/planificacion")
+                        
                         }
 
                     );
