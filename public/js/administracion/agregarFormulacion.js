@@ -6,19 +6,19 @@ $(document).ready(function() {
 		newRow.on("change", function(){   //cambiar el tipo de Unidad dependiendo el producto
 		
 			var parent = this.closest('tr');
-			console.log(parent);		
+	
 			var tu= $('option:selected', this).attr("data-unit");		
 			console.log(tu);
 			var i = parent
 			var label = $('td:last', parent);
-			console.log(label);
+
 			label.text(tu);
 		});		
 		newRow.insertAfter(row);
 		var cantidad = row.find("input#cantidad");
 		var tu = row.find("span#tdTipoUnidad");
 		tu.attr({id:cantidad});
-		console.log(cantidad);
+
 		cantidad.removeAttr('placeholder');
 
 	});
@@ -26,30 +26,30 @@ $(document).ready(function() {
 	$('.selectInsumo').on("change", function(){   //cambiar el tipo de Unidad dependiendo el producto
 		
 		var parent = this.closest('tr');
-		console.log(parent);		
+		
 		var tu= $('option:selected', this).attr("data-unit");		
-		console.log(tu);
+
 		var i = parent
 		var label = $('td:last', parent);
-		console.log(label);
+
 		label.text(tu);
 	});
 
 	$('#guardarFormulacion').on("click", function(){
 		var dataFormulacion = [];
-		$('.selectFormulacion').each(function(index){
-			console.log(this);
+		$('.selectInsumo').each(function(index){
+
 			var id = $('option:selected', this).attr("data-id");
-			var cantidad = $('input', this).val();
-			console.log(cantidad);
+			var cantidad = $('.inputFormulacion', this).val();
+
 			//var id = this.firstChild.getAttribute("data-id");
-			console.log(id);			
+		
 			var row = [id, cantidad];
 			dataFormulacion.push(row);
 		});
 		console.log(dataFormulacion);
 		var input = $('#inputHidden').val(dataFormulacion);
-		console.log(input.attr("name"));
+
 
 
 
