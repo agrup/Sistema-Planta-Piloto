@@ -12,6 +12,7 @@
 <script type="text/javascript" src="{{asset('js/nav/navbar.js')}}"></script>
 
 <link rel="stylesheet" type="text/css" href="{{ asset('css/dataTables.bootstrap4.css') }}">
+
   <script type="text/javascript" src="{{asset('ajax/sendNombreProducto.js')}}"></script>
   @yield('script')
 
@@ -31,6 +32,7 @@
 
   <div class="fixed-top">
 @include('nav.navbar')
+
   </div>
 
    </head>

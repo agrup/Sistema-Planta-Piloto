@@ -14,13 +14,7 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
          
-			<li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Informes</span></a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="/stock">Stock</a>
-
-            </div>
-          </li>
+		
 			<li class="nav-item active">
             <a class="nav-link" href="/planificacion" id="dropdown02"><span class="glyphicon glyphicon-calendar">Planificacion</span> <span class="sr-only">(current)</span></a>
           </li>
@@ -34,11 +28,19 @@
               <a class="dropdown-item" href="/productos/administracionInsumos">Insumos</a>
             </div>
           </li>
+
            <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle"  id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Gestion de Stock</span></a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
 
               <a class="dropdown-item" href="/stock/entradaLoteInsumo" id="dropdown05">Entrada de Insumo</a>
+
+            </div>
+          </li>
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Informes</span></a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="/stock">Stock</a>
 
             </div>
           </li>
