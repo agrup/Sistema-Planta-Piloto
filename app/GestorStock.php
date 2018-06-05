@@ -672,8 +672,8 @@ class GestorStock
 
         $necesidades = [];
         $alarmas =[];
-        $fechaVista = Carbon::createFromFormat('Y-m-d H:i:s',$fechaHasta);
-        $fechaVista = $fechaVista->format('Y-m-d');
+        $fechaVista = Carbon::createFromFormat(self::FORMATO_FECHA,$fechaHasta);
+        $fechaVista = $fechaVista->format(Lote::FORMATO_FECHA);
         //primero recalculo los planificados
         self::recalcularPlanificados($fechaHasta);
         //Luego guardamos los movimientos criticos para ver la necesidad de insumos
@@ -684,9 +684,9 @@ class GestorStock
             $producto = Producto::find($movC->producto_id);
             //y su stock final para ver la necesidad final
             $stockFinal = self::getStockProd($movC->producto_id,$fechaHasta);
-            $fechaAgot = Carbon::createFromFormat('Y-m-d H:i:s',$movC->fecha);
+            $fechaAgot = Carbon::createFromFormat(self::FORMATO_FECHA,$movC->fecha);
             //paso la fecha a yyyy/mm/dd
-            $fechaAgot = $fechaAgot->format('Y-m-d');
+            $fechaAgot = $fechaAgot->format(Lote::FORMATO_FECHA);
             //armo el array
             $arrAux['codigo']=$producto->codigo;
             $arrAux['insumo']=$producto->nombre;

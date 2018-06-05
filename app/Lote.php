@@ -16,6 +16,7 @@ use Exception;
 class Lote extends Model
 {
 
+    const FORMATO_FECHA = 'Y-m-d';
     protected $guarded=[];
 
 
