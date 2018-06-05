@@ -88,7 +88,7 @@
     {{--  Tabla de los Insumos --}}
     <thead>
        <tr>
-        <th style="width: 0%">
+        <th style="width:   0%">
             <b>Insumos</b>
         </th>
         {{--  Botones de cada dia --}}
