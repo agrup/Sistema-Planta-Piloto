@@ -189,9 +189,7 @@ svg:not(:root) {
   overflow: hidden; }
 
 table {
-  border-collapse: collapse; 
-  
-
+  border-collapse: collapse;
 }
 
 
@@ -6248,9 +6246,6 @@ html, body {
 }
 .navegadora{
   font-size: 1.5rem;
-<<<<<<< HEAD
 
-=======
   margin-bottom: 800px;
->>>>>>> 4b5f213d1a9822d549a155531fe452e0fdd58f02
 }

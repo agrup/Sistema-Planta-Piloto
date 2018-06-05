@@ -40,7 +40,6 @@
     <thead>
     <tr>
         <th>
-            <b>Producción</b>
         </th>
         {{--  Botones de cada dia --}}
         @foreach($planificaciones as $planificacion)
@@ -49,7 +48,7 @@
     </tr>
     {{-- fila de los titulos de los dias: Lunes - Martes, etc --}}
     <tr>
-        <th class="diassemana"></th>
+        <th ><b>Producción</b></th>
         @foreach($planificaciones as $planificacion )
             <th class="diassemana">{{$planificacion["diaSemana"]}}</th>
         @endforeach
@@ -88,12 +87,12 @@
     {{--  Tabla de los Insumos --}}
     <thead>
        <tr>
-        <th style="width: 0%">
-            <b>Insumos</b>
+        <th>
+            <b>Llegada Insumos</b>
         </th>
         {{--  Botones de cada dia --}}
         @foreach($planificaciones as $planificacion)
-                <th style="width: 20%"> xx</th>
+                <th class="diassemana"> {{$planificacion['diaSemana']}}</th>
         @endforeach
     </tr>
     </thead>
