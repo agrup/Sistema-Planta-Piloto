@@ -3,18 +3,21 @@ $(document).ready(function() {
 
 
 	$('#trFormulacion').hide();
-	$('#agregarInsumo').on("click", function(){		
-		var row = $('#trFormulacion');
-		console.log(row);
 
+	$('#agregarInsumo').on("click", function(){		
+
+
+		var row = $('#trFormulacion');
 		var newRow=row.clone();
+		$(newRow).show();
+		alert(newRow);
 		newRow.on("change", function(){   //cambiar el tipo de Unidad dependiendo el producto
 
 		$(newRow).show();
 		newRow.addClass('trFormulacion');
 		$('input', newRow).addClass('inputFormulacion');
-
 		$('select', newRow).addClass('selectFormulacion');
+
 		newRow.on("change", function(){   //cambiar el tipo de Unidad dependiendo el producto		
 
 			var parent = this.closest('tr');
@@ -35,6 +38,8 @@ $(document).ready(function() {
 
 	});
 
+
+
 	$('.selectInsumo').on("change", function(){   //cambiar el tipo de Unidad dependiendo el producto
 		
 		var parent = this.closest('tr');
@@ -48,20 +53,24 @@ $(document).ready(function() {
 	});
 
 	$('#guardarFormulacion').on("click", function(){
+		//var dataFormulacion[];
+
+	});
+
+
+
+
+	/*
+	$('#guardarFormulacion').on("click", function(){
 		var dataFormulacion = [];
-
-
-		var b = true;
-		
+		var b = true;	
 		var inputs = $('.inputFormulacion');
-		
 		inputs.each(function(){			
 			if ($(this).val()=="") {
 				b = false;			
 			}
 		});
 		var selects = $('.selectFormulacion');
-		
 		selects.each(function(){
 			console.log($('option:selected', this).val());
 			if($('option:selected', this).val()==null){
@@ -69,9 +78,6 @@ $(document).ready(function() {
 			}
 			
 		});
-		
-
-
 		if(b){
 			$('.trFormulacion').each(function(index){
 				
@@ -79,7 +85,6 @@ $(document).ready(function() {
 				var id = $('option:selected', this).attr("data-id");
 				var cantidad = $('input#cantidad', this).val();
 				console.log(cantidad);
-				console.log('22222222222222')
 				console.log(id);			
 				var row = [id, cantidad];
 				dataFormulacion.push(row);
@@ -90,7 +95,7 @@ $(document).ready(function() {
 		}else{
 			alert("Por Favor complete el formulario")
 		}	
-
+	*/
 
 	$('#myForm').on('submit', function(){
 		event.preventDefault();			
