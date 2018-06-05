@@ -1,6 +1,5 @@
-    @extends('layouts.layoutPrincipal' )
+@extends('layouts.layoutPrincipal' )
 @section('section')
-
     @include('elementosComunes.aperturaTitulo')
   
         Programa de Producción Semanal
@@ -61,15 +60,16 @@
     {{--  Cuerpo de la tabla  --}}
     <tbody>
     {{-- Busco la planificacion con mas productos y guardo la cantidad en $trNumber --}}
-    @foreach($planificaciones as  $planificacion)
-        <?php
+    @php
         $trNumber=0;
-        $numberAux = count($planificacion['productos']);
-        if($numberAux > $trNumber){
-            $trNumber = $numberAux;
+        foreach($planificaciones as  $planificacion){
+            $numberAux = count($planificacion['productos']);
+            if($numberAux > $trNumber){
+                $trNumber = $numberAux;
+            }
         }
-        ?>
-    @endforeach
+    @endphp
+
     {{--  Imprimo la cantidad de rows y lleno los td si existe el i-esimo producto para cada planificacion --}}
     @for($i=0;$i<$trNumber ; $i++)
         <tr>
@@ -94,72 +94,72 @@
         <th></th>
     @endforeach
     </thead>
-        {{-- Busco la planificacion con mas insumos y guardo la cantidad en $trNumber --}}
-        <?php
-        $trNumber=0;
-        foreach ($planificaciones as $planificacion){
-            $numberAux = count($planificacion['insumos']);
-            if($numberAux > $trNumber){
-                $trNumber = $numberAux;
-            }
+    {{-- Busco la planificacion con mas insumos y guardo la cantidad en $trNumber --}}
+    <?php
+    $trNumber=0;
+    foreach ($planificaciones as $planificacion){
+        $numberAux = count($planificacion['insumos']);
+        if($numberAux > $trNumber){
+            $trNumber = $numberAux;
         }
-        ?>
+    }
+    ?>
+    <tbody>
+    {{-- Por Cada planificacion imprimo las td necesarias y si existe el i-esimo insumo imprimo su nombre en la td--}}
+    @for($i=0;$i<$trNumber ; $i++)
+        <tr>
+            <td>{{$i+1}}</td>
+            @foreach($planificaciones as $planificacion)
+            <td>
+                @if(isset($planificacion['insumos'][$i]))
+                {{ $planificacion['insumos'][$i]['nombre'] }}
+                @endif
+            </td>
+            @endforeach
+        </tr>
+    @endfor
+    </tbody>
+    {{-- Tabla de trabajadores --}}
+    {{-- Busco la planificacion con mas trabajadores y guardo la cantidad en $trNumber --}}
+    <?php
+    $trNumber=0;
+    foreach ($planificaciones as $planificacion){
+        $numberAux = count($planificacion['trabajadores']);
+        if($numberAux > $trNumber){
+            $trNumber = $numberAux;
+        }
+    }
+    ?>
+    @if($trNumber >0) {{-- Imprimo la tabla de trabajadores solo si hay--}}
+        <thead>
+        <tr>
+            <th>
+                <b>Trabajadores</b>
+            </th>
+            @foreach($planificaciones as $value )
+                <th> </th>
+            @endforeach
+        </tr>
+        </thead>
         <tbody>
-        {{-- Por Cada planificacion imprimo las td necesarias y si existe el i-esimo insumo imprimo su nombre en la td--}}
         @for($i=0;$i<$trNumber ; $i++)
             <tr>
-                <td>{{$i+1}}</td>
+                <td>{{ $i+1 }}</td>
                 @foreach($planificaciones as $planificacion)
-                <td>
-                    @if(isset($planificacion['insumos'][$i]))
-                    {{ $planificacion['insumos'][$i]['nombre'] }}
-                    @endif
-                </td>
+                    <td>
+                        @if(isset($planificacion['trabajadores'][$i]))
+                            {{ $planificacion['trabajadores'][$i]}}
+                        @endif
+                    </td>
                 @endforeach
             </tr>
         @endfor
         </tbody>
-        {{-- Tabla de trabajadores --}}
-        {{-- Busco la planificacion con mas trabajadores y guardo la cantidad en $trNumber --}}
-        <?php
-        $trNumber=0;
-        foreach ($planificaciones as $planificacion){
-            $numberAux = count($planificacion['trabajadores']);
-            if($numberAux > $trNumber){
-                $trNumber = $numberAux;
-            }
-        }
-        ?>
-        @if($trNumber >0) {{-- Imprimo la tabla de trabajadores solo si hay--}}
-            <thead>
-            <tr>
-                <th>
-                    <b>Trabajadores</b>
-                </th>
-                @foreach($planificaciones as $value )
-                    <th> </th>
-                @endforeach
-            </tr>
-            </thead>
-            <tbody>
-            @for($i=0;$i<$trNumber ; $i++)
-                <tr>
-                    <td>{{ $i+1 }}</td>
-                    @foreach($planificaciones as $planificacion)
-                        <td>
-                            @if(isset($planificacion['trabajadores'][$i]))
-                                {{ $planificacion['trabajadores'][$i]}}
-                            @endif
-                        </td>
-                    @endforeach
-                </tr>
-            @endfor
-            </tbody>
-        @endif {{--// endif si hay trabajadores en alguna planificacion--}}
-
-        @include('elementosComunes.cierreTabla')
-        {{-- Necesidad De insumos --}}
+    @endif {{--// endif si hay trabajadores en alguna planificacion--}}
+    @include('elementosComunes.cierreTabla')
     </form>
+
+    {{-- Necesidad De insumos --}}
     <div class="py-5">
         <div class="container">
             <div class="row">
