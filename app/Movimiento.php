@@ -18,6 +18,7 @@ class Movimiento extends Model
 
 
     const FECHA_FICTICIA = '1994-06-12 00:00:01';
+    const FORMATO_FECHA = 'Y-m-d H:i:s';
     protected $guarded=[];
 
     public static function getConsumoPlanif(int $idLoteConsumidor, int $producto_id)

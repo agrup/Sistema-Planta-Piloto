@@ -21,6 +21,9 @@ class GestorStock
 
     // MOVIMIENTOS DE ENTRADA
     //REALES
+    const DIAS_DE_VIDA_INSUMO_PLANIF = 1;
+    const FORMATO_FECHA = Movimiento::FORMATO_FECHA;
+
     /**
      *
      * @param string $idLote
@@ -760,6 +763,7 @@ class GestorStock
     }
     private static function recalcularPlanificados($fechaHasta)
     {
+
         //Guardo el ultimo mov de cada producto, ya que el recalculo se hará por cada producto
         $movimientosInicialesProducto = Movimiento::ultimoStockRealProdTodos();
         //Por cada producto
@@ -771,10 +775,11 @@ class GestorStock
             //itero para todas las planificaciones de este producto
             foreach ($planificacionesProd as $planif){
 
-                //si la planificacion es anterior al ultimo mov
+                //si la planificacion es anterior al ultimo mov del producto, la mato
                 if($planif->fecha < $movAnteriorProd->fecha) {
+                    //Switch asesino de planificaciones
                     switch ($planif->tipo){
-                        //si el lote planificado ya se inicio no hago nada, sino paso a incumplido
+                        // Si corresponde a un producto planif y el lote planificado ya se inicio no hago nada, sino paso a incumplido
                         case TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF:
                         case TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF: {
                             if(Lote::find($planif->idLoteConsumidor)->tipoLote == TipoLote::PLANIFICACION){
@@ -782,7 +787,16 @@ class GestorStock
                             }
                             break;
                         }
-                        default : { //las entradas de insumo planif no tienen lote asociado asique simplemente anulo
+                        // Si es entrada de insumo planif darle un dia de changui
+                        case TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF:{
+                            $movFecha=Carbon::createFromFormat(self::FORMATO_FECHA,$planif->fecha);
+                            $fechaUltMov=Carbon::createFromFormat(self::FORMATO_FECHA,$movAnteriorProd->fecha);
+                            if($movFecha->diffInDays($fechaUltMov)>self::DIAS_DE_VIDA_INSUMO_PLANIF){
+                                $planif->tipo = TipoMovimiento::incumplidoDe($planif->tipo);
+                            }
+                            break;
+                        }
+                        default : {
                             $planif->tipo = TipoMovimiento::incumplidoDe($planif->tipo);
                         }
                     }
