@@ -77,5 +77,13 @@ class TipoMovimiento
         ];
     }
 
+    public static function planificadosPendientes(){
+        return [
+            self::TIPO_MOV_ENTRADA_INSUMO_PLANIF,
+            self::TIPO_MOV_CONSUMO_PLANIF,
+            self::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF
+        ];
+    }
+
 }
 

@@ -35,10 +35,11 @@
 					<th>Insumo</th>
 					<th>Cantidad Utilizada</th>
 					<th>Nro de Lote</th>
-					<th>Cantidad Teórica</th>
+					<th>Cantidad Teórica Total</th>
 				</tr>
 			</thead>
 			<tbody>
+            {{-- Versión fallida , se refactorizó con la intencion de fusionar las celdas de cant teoricas para las row del mismo insumo --}}
             {{-- Calculo de los datos de los consumos--}}
 			@php
                 //generare un array con los valores necesarios para llenar la tabla
@@ -65,6 +66,7 @@
 					}
 
 			@endphp
+            {{-- Impresión de los consumos--}}
             @foreach($insumos as $insumo)
                 {{-- si no posee un consumo imprimo una sola row con cant utilizada 0 y lote '-' --}}
                 @if(count($insumo['consumos'])==0)
@@ -74,17 +76,16 @@
                         <td> - </td>
                         <td> {{$insumo['cantTeorica']}} </td>
                     </tr>
-                @else
+                @else {{-- Si posee consumos --}}
                     @foreach($insumo['consumos'] as $consumo)
                         <tr>
                             <td>{{$insumo['nombre']}}</td>
-                            <td> {{$consumo['cantidad']}} {{ $insumo['tipoUnidad']}}</td>
+                            <td> {{$consumo['cantidadConsumida']}} {{ $insumo['tipoUnidad']}}</td>
                             <td> {{$consumo['lote_id']}} </td>
                             <td> {{$insumo['cantTeorica']}} {{ $insumo['tipoUnidad']}} </td>
                         </tr>
                     @endforeach
                 @endif
-
             @endforeach
 			</tbody>
 		@include('elementosComunes.cierreTabla')    

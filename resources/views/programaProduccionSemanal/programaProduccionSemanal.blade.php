@@ -6,17 +6,39 @@
     
     @include('elementosComunes.cierreTitulo')
     {{--  Input y boton para ir a una semana específica  --}}
+    <div class="navSemanas">
+        <div class="flechita">
+            <form action="calendarioAnt" method="GET" enctype="multipart/form-data" > {{csrf_field()}}
+                <input   type="hidden" name="fecha" value="{{$planificaciones[0]['fecha']}}">
+                <input type="submit" class="btn btn-primary"  value="<<">
+            </form>
+        </div>
+        <div class="inputFecha">
+            <form action="planificacion" method="POST" enctype="multipart/form-data"  >
+                {{csrf_field()}}
+                <input  type="date" name="fecha" value="{{$planificaciones[0]['fecha']}}" >
+                <input  class="btn btn-secondary"  type="submit" value="Ir a semana">
+            </form>
+        </div>
+        <div class="flechita">
+            <form action="calendarioSig" method="GET" enctype="multipart/form-data"  >
+                {{csrf_field()}}
+                <input  type="hidden" name="fecha" value="{{$planificaciones[0]['fecha']}}">
+                <input type="submit" class="btn btn-primary" value=">>">
+            </form>
+        </div>
+    </div>
 
-                <form action="planificacion" method="POST" enctype="multipart/form-data"  class="form-horizontal">
-                      {{csrf_field()}}
-                     <div class="form-group">
-                    <input class="col-sm-2 control-label"  type="date" name="fecha" value="{{$planificaciones[0]['fecha']}}" >
-                    <input  class="btn btn-secondary"  type="submit" value="Ir a semana">
-                  </div>
-                </form>
+    <!-- <form action="planificacion" method="POST" enctype="multipart/form-data"  class="form-horizontal">
+        {{csrf_field()}}
+        <div class="form-group">
+            <input class="col-sm-2 control-label"  type="date" name="fecha" value="{{$planificaciones[0]['fecha']}}" >
+            <input  class="btn btn-secondary"  type="submit" value="Ir a semana">
+        </div>
+    </form> -->
 
     {{-- Flechas anterior y siguiente semana --}}
-    <div class="py-5">
+    <!-- <div class="py-5">
         <div class="container">
             <div class="row">
                 <form action="calendarioAnt" method="GET" enctype="multipart/form-data" class="col-md-11"> {{csrf_field()}}
@@ -30,7 +52,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
 
     {{-- Tabla de contenidos, el form es para los botones de cada dia --}}
     <form action="/planificacion/planificacionDia" method="get" enctype="multipart/form-data">
@@ -88,7 +110,7 @@
     <thead>
        <tr>
         <th >
-            <b>LlegadaInsumos</b>
+            <span style="color: #e9ecef">--</span><b>Insumos</b><span style="color: #e9ecef">--</span>
         </th>
         {{--  Botones de cada dia --}}
         @foreach($planificaciones as $planificacion)

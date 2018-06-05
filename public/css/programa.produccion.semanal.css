@@ -6249,3 +6249,29 @@ html, body {
 
   margin-bottom: 800px;
 }
+
+div.navSemanas {
+    /*margin: 0.55rem;*/
+   /* padding: 0.35rem;*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.inputFecha input {
+    margin: 1.5rem;
+}
+
+div.flechita {
+  flex-basis: 10%;
+}
+
+div.inputFecha {
+  flex-basis: 50%;
+  display: flex;
+  justify-content: space-between;
+}
+
+th {
+     vertical-align: middle !important;
+ }
