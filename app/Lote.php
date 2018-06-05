@@ -16,6 +16,7 @@ use Exception;
 class Lote extends Model
 {
 
+    const FORMATO_FECHA = 'Y-m-d';
     protected $guarded=[];
 
 
@@ -48,7 +49,7 @@ class Lote extends Model
             'nombreProducto'=>$producto->nombre,//
             'tipoUnidad'=>$producto->tipoUnidad,//
             'cantidadElaborada'=>$this->cantidadElaborada,//
-            'costoUnitario'=>$this->costoUnitario,//
+            'costoUnitario'=>$this->costounitario,//
             'inicioMaduracion'=>$this->fechaInicioMaduracion,//
             'finalizacion'=>$this->fechaFinalizacion,//
             'cantidadFinal'=>$this->cantidadFinal,//
@@ -169,7 +170,7 @@ class Lote extends Model
     }
 
     public function finalizar(float $cantidadFinal, string $fechaFinalizacion, string $fechaVencimiento){
-        if($this->tipoLote !=TipoLote::MADURACION || $this->tipoLote != TipoLote::INICIADO){
+        if($this->tipoLote !=TipoLote::MADURACION && $this->tipoLote != TipoLote::INICIADO){
             throw new Exception('Solo se puede finalizar un lote que este en estado INICIADO o MADURACION');
         }
         if($fechaVencimiento < $this->fechaInicio || $fechaFinalizacion < $this->fechaInicio) {
@@ -210,4 +211,13 @@ class Lote extends Model
             ->delete();
     }
 
+    public static function fechaUltimoIniciado(){
+        $lote= self::where('tipoLote','=',TipoLote::INICIADO)
+            ->orderBy('fechaInicio','desc')
+            ->first();
+        if($lote==null){
+            return null;
+        }
+        return $lote->fechaInicio;
+    }
 }

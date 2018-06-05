@@ -66,5 +66,24 @@ class TipoMovimiento
         }
     }
 
+    public static function reales(){
+        return [
+            self::TIPO_MOV_ENTRADA_INSUMO,
+            self::TIPO_MOV_SALIDA_VENTAS,
+            self::TIPO_MOV_SALIDA_EXCEP,
+            self::TIPO_MOV_SALIDA_DECOMISO,
+            self::TIPO_MOV_CONSUMO,
+            self::TIPO_MOV_CONTROL_EXISTENCIAS,
+        ];
+    }
+
+    public static function planificadosPendientes(){
+        return [
+            self::TIPO_MOV_ENTRADA_INSUMO_PLANIF,
+            self::TIPO_MOV_CONSUMO_PLANIF,
+            self::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF
+        ];
+    }
+
 }
 

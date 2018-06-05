@@ -18,6 +18,7 @@ class Movimiento extends Model
 
 
     const FECHA_FICTICIA = '1994-06-12 00:00:01';
+    const FORMATO_FECHA = 'Y-m-d H:i:s';
     protected $guarded=[];
 
     public static function getConsumoPlanif(int $idLoteConsumidor, int $producto_id)
@@ -72,15 +73,10 @@ class Movimiento extends Model
     public static function ultimoRealLote($idLote)
     {
 
-        return self::whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
-                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
-                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_EXCEP.
-                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO.
-                            'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
-                            )
-            ->where('idLoteIngrediente','=',$idLote)
-            ->orderBy('fecha','desc')
-            ->first();
+        return self::whereIn('tipo',TipoMovimiento::reales())
+                    ->where('idLoteIngrediente','=',$idLote)
+                    ->orderBy('fecha','desc')
+                    ->first();
 
     }
 
@@ -89,13 +85,7 @@ class Movimiento extends Model
 
     public static function getFechaUltimoReal()
     {
-        return self::whereRaw('tipo='.TipoMovimiento::SIN_TIPO.
-                            'or tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
-                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
-                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_EXCEP.
-                            'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO.
-                            'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
-                            )
+        return self::whereIn('tipo',TipoMovimiento::reales())
                         ->orderBy('fecha','desc')
                         ->first()
                         ->fecha;
@@ -153,12 +143,7 @@ class Movimiento extends Model
      */
     public static function getPlanificadosProd(int $producto_id, string $fechaHasta)
     {
-	return self::whereRaw(
-						'producto_id= '.$producto_id.
-						'and (tipo =' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF .
-                        'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF .
-                        'or tipo=' . TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF.')'
-                        )
+	return self::whereIn('tipo',TipoMovimiento::planificadosPendientes())
 				->where('fecha','<',$fechaHasta)
 				->orderBy('fecha','asc')
 				->get();
@@ -370,6 +355,7 @@ class Movimiento extends Model
         return Movimiento::where('producto_id','=',$idProducto)
                         ->where('fecha','>',$fechaMin)
                         ->where('fecha','<',$fechaMax)
+                        ->where('tipo','=',TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF)
                         ->first();
     }
 
