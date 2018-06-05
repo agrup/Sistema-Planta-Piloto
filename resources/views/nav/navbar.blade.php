@@ -15,9 +15,14 @@
         <ul class="navbar-nav mr-auto">
          
 		
-			<li class="nav-item active">
-            <a class="nav-link" href="/planificacion" id="dropdown02"><span class="glyphicon glyphicon-calendar">Planificacion</span> <span class="sr-only">(current)</span></a>
+			  <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"  id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Planificación</span></a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="/planificacion">Productos y llegada de insumos</a>
+              <a class="dropdown-item" href="#">Disponibilidad de trabajadores</a>
+            </div>
           </li>
+
          <li class="nav-item active">
             <a class="nav-link" href="/produccion"><span class="glyphicon glyphicon-compressed">Produccion</span> <span class="sr-only">(current)</span></a>
           </li>
