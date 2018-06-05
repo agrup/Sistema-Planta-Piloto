@@ -43,7 +43,7 @@ class Producto extends Model
                   'numeroLote'=>$lote->id,
                   'fechaInicio'=>$lote->fechaInicio,
                   'vencimiento'=>$lote->fechaVencimiento,
-                  'cantidad'=>$lote->cantidadFinal
+                  'cantidad'=>GestorStock::getSaldoLote($lote->id)
               ]);
         }
         return $lotesReturn;

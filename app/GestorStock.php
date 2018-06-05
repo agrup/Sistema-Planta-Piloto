@@ -171,7 +171,7 @@ class GestorStock
         $ingredientes = $producto->getIngredientes();
         foreach ($ingredientes as $ing){
             //regla de 3 simple segun la formulación
-            $cantConsumo = $cantidad * $ing['cantidadProducto'] / $ing['cantidad'];
+            $cantConsumo = $cantidad * $ing['cantidad'] / $ing['cantidadProducto'];
             GestorStock::altaConsumoPlanificado($idLote, $ing['id'], $cantConsumo, $fecha,$planificacion_id );
         }
 
@@ -521,7 +521,7 @@ class GestorStock
     {
 
         // si no posee un stock real crearlo con 0 en una fecha que no moleste debido a que se necesita para iniciar el recalculo de las planificaciones
-        if(Movimiento::ultimoRealProd($idProdIng)->count()==0){
+        if(Movimiento::ultimoRealProd($idProdIng)==null){
             Movimiento::crearUltimoRealFicticio($idProdIng);
         }
         $datosNuevoMov = [
@@ -544,6 +544,9 @@ class GestorStock
     public static function getSaldoLote(string $idLote)
     {
         $ultMov = Movimiento::ultimoRealLote($idLote);
+        if($ultMov==null){
+            return 0;
+        }
         return $ultMov->saldoLote;
     }
     /**
