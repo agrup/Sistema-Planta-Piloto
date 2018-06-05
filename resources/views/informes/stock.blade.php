@@ -26,7 +26,7 @@
 	    @include('elementosComunes.cierreFormInline')
 
 	    {{-- TABLA STOCK --}}
-		@include('elementosComunes.aperturaTabla')    
+		@include('elementosComunes.aperturaTablaStock')
 			<thead ><tr><th>Código</th> 
 						<th>Insumo/Producto</th> 
 						<th>Cantidad en Stock</th> 

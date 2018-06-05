@@ -41,22 +41,23 @@ class Lote extends Model
 
         $producto = Producto::find($this->producto_id);
 		return[
-        'numeroLote'=>$this->id,//
-        'cantidad'=>GestorStock::getSaldoLote($this->id), //
-        'vencimiento'=>$this->fechaVencimiento, //
-        'fechaInicio'=>$this->fechaInicio,//
-        'nombreProducto'=>$producto->nombre,//
-        'tipoUnidad'=>$producto->tipoUnidad,//
-        'cantidadElaborada'=>$this->cantidadElaborada,//
-        'costoUnitario'=>$this->costoUnitario,//
-        'inicioMaduracion'=>$this->fechaInicioMaduracion,//
-        'finalizacion'=>$this->fechaFinalizacion,//
-        'cantidadFinal'=>$this->cantidadFinal,//
-        'proveedor'=>null,//
-        'tipoTp'=>$this->tipoTP,//
-        'codigo'=>$producto->codigo,//
-        'asignatura'=>null//
-        ]	;
+            'numeroLote'=>$this->id,//
+            'cantidad'=>GestorStock::getSaldoLote($this->id), //
+            'vencimiento'=>$this->fechaVencimiento, //
+            'fechaInicio'=>$this->fechaInicio,//
+            'nombreProducto'=>$producto->nombre,//
+            'tipoUnidad'=>$producto->tipoUnidad,//
+            'cantidadElaborada'=>$this->cantidadElaborada,//
+            'costoUnitario'=>$this->costoUnitario,//
+            'inicioMaduracion'=>$this->fechaInicioMaduracion,//
+            'finalizacion'=>$this->fechaFinalizacion,//
+            'cantidadFinal'=>$this->cantidadFinal,//
+            'tipoLote'=>TipoLote::toString($this->tipoLote),
+            'proveedor'=>null,//
+            'tipoTp'=>$this->tipoTP,//
+            'codigo'=>$producto->codigo,//
+            'asignatura'=>null//
+            ];
 
 	}
 
