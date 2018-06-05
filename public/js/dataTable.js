@@ -6,6 +6,8 @@ $('table').dataTable({
 "aaSorting": [[ 2, "desc" ]],
 "bInfo": false,
 "bAutoWidth": false,
+"scrollY":        "200px",
+   "scrollCollapse": true,
 "oLanguage": {"sZeroRecords": "", "sEmptyTable": ""}
 });
 } );
