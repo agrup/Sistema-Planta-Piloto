@@ -10,12 +10,7 @@ $(document).ready(function() {
 			alert('Se ha guardado un producto');
 		}	
 
-	$("#btnBuscar").click( function() {
-		//$("#tbodyResultados").remove();
-		console.log($("#codigo").val());
-		console.log($("#nombre").val());
-		console.log($("#categoria").val());
-		console.log($("#alarma").val());
+	$("#btnBuscar").click( function() {		
 		var cod = $("#codigo").val();
 	    var nom = $("#nombre").val();
 	    var cat = $("#categoria").val();
@@ -35,23 +30,27 @@ $(document).ready(function() {
 	  		
 	  	}).done(
 		
-	 		function(data, i) {	  			
-	
-	  			console.log("------------------------");
-		    
-			    var tbody = document.getElementById("tbodyResultados");
-			    remove(tbody);
-			    var array = ["codigo", "nombre", "descripcion", "unidad", "alarmaActiva", "alarmaAmarilla",	"alarmaRoja", "categoria", "estado"];
-
-
+	 		function(data, i) {	  					    
+			    var tbody = document.getElementsByTagName("tbody")[0];
+			    $(tbody).empty();
+			    //remove(tbody);
 			    data.forEach(function(item, index){
 			    	console.log(item);
 			    	console.log(index);			    	
 
 			    	var tr=document.createElement("tr");
+			    	tr.setAttribute("data", "normal");
+			    	tr.setAttribute("role", "row");
+			    	if ((index % 2) == 0){
+			    		tr.setAttribute("class", "odd");	
+			    	}else{
+			    		tr.setAttribute("class", "even");
+			    	}
+			    	
 			    	var td=document.createElement("td");	    			
 			    		td.innerHTML = item.codigo;
 			    		tr.appendChild(td);   
+			    		td.setAttribute("class", "sorting_1");
 
 			    	var td=document.createElement("td");	    			
 			    		td.innerHTML = item.nombre;
@@ -77,19 +76,8 @@ $(document).ready(function() {
 			    	var td=document.createElement("td");	    			
 			    		td.innerHTML = item.categoria;
 			    		tr.appendChild(td);        	
-
-			    		   		   		   	   			   
-			    	/*var td=document.createElement("td");	    			
-
-			    		td.innerHTML = item.codigo;
-			    		tr.appendChild(td);        			   
-		        	$.each(item, function(i,item1){
-		        		var td=document.createElement("td");	    			
-			    		td.innerHTML = item[i];
-			    		tr.appendChild(td);        
-		        	});*/
 		        	tbody.appendChild(tr);
-			    });				 
+			    });		
 			}).fail(function(){
 	  			console.log('Error');
 		  	}

@@ -48,12 +48,10 @@
 	    			<th>Unidad</th><th>Alarma</th><th>Alarma Amarilla</th>
 	    			<th>Alarma Roja</th><th>Categoría</th>
 	    		</tr>
-	    	</thead>
-	    	<div id="divRes">
-	    	<tbody id="tbodyResultados">	    		
+	    	</thead>	    	
+	    	<tbody>	    		
 
 	    	</tbody>		
-	    	</div>
         @include('elementosComunes.cierreTabla')
 
         @if ($insumoProducto=='producto')

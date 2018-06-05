@@ -1,32 +1,34 @@
 $(document).ready(function() {
 
 
-
 	$('#trFormulacion').hide();
 	$('#agregarInsumo').on("click", function(){		
 		var row = $('#trFormulacion');
 		console.log(row);
-
 		var newRow=row.clone();
-		newRow.on("change", function(){   //cambiar el tipo de Unidad dependiendo el producto
-
+		
 		$(newRow).show();
 		newRow.addClass('trFormulacion');
 		$('input', newRow).addClass('inputFormulacion');
 
 		$('select', newRow).addClass('selectFormulacion');
 		newRow.on("change", function(){   //cambiar el tipo de Unidad dependiendo el producto		
-
 			var parent = this.closest('tr');
 			console.log(parent);		
 			var tu= $('option:selected', this).attr("data-unit");		
 			console.log(tu);
 			var i = parent
-			var label = $('td:last', parent);
+			var label = $('td span', parent);
 			console.log(label);
 			label.text(tu);
 		});		
+		
+
 		newRow.insertAfter(row);
+		$('.eliminarRow').on('click', function(){
+			var parent = this.closest('tr');
+			parent.remove();
+		});
 		var cantidad = row.find("input#cantidad");
 		var tu = row.find("span#tdTipoUnidad");
 		tu.attr({id:cantidad});
@@ -41,15 +43,15 @@ $(document).ready(function() {
 		console.log(parent);		
 		var tu= $('option:selected', this).attr("data-unit");		
 		console.log(tu);
-		var i = parent
-		var label = $('td:last', parent);
+		//var i = parent;
+		var label = $('td span', parent);
 		console.log(label);
 		label.text(tu);
 	});
 
 	$('#guardarFormulacion').on("click", function(){
+		event.preventDefault();	
 		var dataFormulacion = [];
-
 		var b = true;
 		
 		var inputs = $('.inputFormulacion');
@@ -84,11 +86,14 @@ $(document).ready(function() {
 			});
 			console.log(dataFormulacion);
 			$('#inputHidden').val(dataFormulacion);
-			//console.log(input.attr("name"));
+			
+			
 		}else{
 			alert("Por Favor complete el formulario")
 		}	
 
+	});
+	
 
 	$('#myForm').on('submit', function(){
 		event.preventDefault();			
@@ -106,13 +111,10 @@ $(document).ready(function() {
 		this.submit();
 	});
 
-
+	$('.eliminarRow').on('click', function(){
+		var parent = this.closest('tr');
+		parent.remove();
 	});
-	/*$('#inputTipoUnidad').on("change", function(){
-		console.log(this);
-		var tu = this.val();
-		$('#labelTipoUnidad').text(tu);
-	});*/
 
 
 });
