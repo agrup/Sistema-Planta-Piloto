@@ -82,15 +82,20 @@
         </tr>
     @endfor
     </tbody>
-
+      @include('elementosComunes.cierreTabla')
+   
+ @include('elementosComunes.aperturaTabla')
     {{--  Tabla de los Insumos --}}
     <thead>
-    <th>
-        <b>Llegada de Insumos</b>
-    </th>
-    @foreach($planificaciones as $planificacion )
-        <th></th>
-    @endforeach
+       <tr>
+        <th style="width: 0%">
+            <b>Insumos</b>
+        </th>
+        {{--  Botones de cada dia --}}
+        @foreach($planificaciones as $planificacion)
+                <th style="width: 20%"> xx</th>
+        @endforeach
+    </tr>
     </thead>
     {{-- Busco la planificacion con mas insumos y guardo la cantidad en $trNumber --}}
     <?php
@@ -121,11 +126,11 @@
        
 
         @include('elementosComunes.cierreTabla')
-        {{-- Necesidad De insumos --}}
+ 
 
     </form>
 
-    {{-- Necesidad De insumos --}}
+
     <div class="py-5">
         <div class="container">
             <div class="row">

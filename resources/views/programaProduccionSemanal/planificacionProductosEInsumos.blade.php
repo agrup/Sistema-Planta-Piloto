@@ -150,7 +150,7 @@
               
                
                  @if($estado[$k]=="pendiente")
-                     <td hidden>{{$prodID[$k]}}</td>
+                     <td hidden class="inte">{{$prodID[$k]}}</td>
                      <td ><?=$codigo[$k];?></td>
                     <td ><?=$nombre[$k];?></td>
                     <td class="inte"><?=$cantidad[$k];?></td>
