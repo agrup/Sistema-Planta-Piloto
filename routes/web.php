@@ -81,7 +81,8 @@ Route::get('/lotes/{id}', 'LotesController@show') ;
 Route::get('/trabajador', 'TrabajadorController@index');
 Route::get('/trabajador/create', 'TrabajadorController@create');
 Route::post('/trabajador', 'TrabajadorController@store');
-
+Route::get('/stock/entradaLoteInsumo','LotesController@showentradaLoteInsumo');
+Route::post('/stock/entradaLoteInsumo','LotesController@alta');
 
 
 //Administracion de productoInsumos

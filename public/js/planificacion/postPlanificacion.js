@@ -40,6 +40,8 @@ $(document).ready(function(){
                     dataType : "json",
                     contentType: "application/json"
                     }).done(function (data){
+                        alert('Planificacion Guardada Satisfactoriamente');
+
                         console.log(data)
                         }
 

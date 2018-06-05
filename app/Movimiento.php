@@ -365,8 +365,8 @@ class Movimiento extends Model
     public static function getEntradaInsumoPlanificada($idProducto, $fecha)
     {
         $fechaStr = Carbon::createFromFormat('Y-m-d H:i:s',$fecha)->format('Y-m-d');
-        $fechaMin = $fechaStr . '00:00:00';
-        $fechaMax = $fechaStr . '23:59:59';
+        $fechaMin = $fechaStr ." ". '00:00:00';
+        $fechaMax = $fechaStr . " ". '23:59:59';
         return Movimiento::where('producto_id','=',$idProducto)
                         ->where('fecha','>',$fechaMin)
                         ->where('fecha','<',$fechaMax)

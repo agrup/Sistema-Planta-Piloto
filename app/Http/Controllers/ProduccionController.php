@@ -18,7 +18,7 @@ class ProduccionController extends Controller
         $data =[];
        /* $fecha =Carbon::createFromFormat('Y-m-d H:i:s',Movimiento::getFechaUltimoReal());
         $fecha = $fecha->format('Y-m-d');*/
-       $fecha = '2018-05-04';
+       $fecha = '2018-05-28';
         $data['fecha']=$fecha;
         $data['lotes']=self::getArrayLotes($fecha);
         return view('produccion.produccion',compact('data'));
