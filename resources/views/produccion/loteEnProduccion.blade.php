@@ -30,53 +30,62 @@
 		@include('elementosComunes.cierreTitulo')
 
 		@include('elementosComunes.aperturaTabla')    
-			<thead><tr><th>Insumo</th> 
-						<th>Cantidad Teórica</th> 
-						<th>Cantidad Utilizada</th> 
-						<th>Nro de Lote</th>
-					</tr>
+			<thead>
+				<tr>
+					<th>Insumo</th>
+					<th>Cantidad Utilizada</th>
+					<th>Nro de Lote</th>
+					<th>Cantidad Teórica</th>
+				</tr>
 			</thead>
 			<tbody>
-		
-			@foreach ($formulacion as $insumo)
-					<?php $b=false;?>				
-					<tr>
-						<td>{{$insumo['nombre']}}</td>
+            {{-- Calculo de los datos de los consumos--}}
+			@php
+                //generare un array con los valores necesarios para llenar la tabla
+				$insumos=[];
+				    //para cada insumo
+					foreach($formulacion as $insumo){
+					    //tendré un array con sus datos, entre ellos un array de consumos
+					    $arrInsumoAux=[];
+						$arrInsumoAux['nombre'] = $insumo['nombre'];
+						$arrInsumoAux['cantTeorica'] = $insumo['cantidad'];
+						$arrInsumoAux['tipoUnidad']= $insumo['tipoUnidad'];
+						$arrInsumoAux['consumos']=[];
+						foreach ($trazabilidad as $consumo){
+						    $rowAux = [];
+						    //por cada consumo en la trazabilidad que coincida con el insumo agrego sus datos al array de consumos del insumo
+						    if($consumo['nombre']==$insumo['nombre']){
+						        $rowAux['cantidadConsumida'] = $consumo['cantidad'];
+						        $rowAux['lote_id'] = $consumo['lote_id'];
+						        array_push($arrInsumoAux['consumos'],$rowAux);
+						    }
+						}
+						//agrego el array del insumo al array de todos los insumos, incluso si no hay ningun consumo cargado para el mismo
+						array_push($insumos,$arrInsumoAux);
+					}
 
-						<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
-						<?php $j=0;?>
-						@for ($i = 0; $i < count($trazabilidad); $i++)
+			@endphp
+            @foreach($insumos as $insumo)
+                {{-- si no posee un consumo imprimo una sola row con cant utilizada 0 y lote '-' --}}
+                @if(count($insumo['consumos'])==0)
+                    <tr>
+                        <td>{{$insumo['nombre']}}</td>
+                        <td> 0 {{ $insumo['tipoUnidad']}}</td>
+                        <td> - </td>
+                        <td> {{$insumo['cantTeorica']}} </td>
+                    </tr>
+                @else
+                    @foreach($insumo['consumos'] as $consumo)
+                        <tr>
+                            <td>{{$insumo['nombre']}}</td>
+                            <td> {{$consumo['cantidad']}} {{ $insumo['tipoUnidad']}}</td>
+                            <td> {{$consumo['lote_id']}} </td>
+                            <td> {{$insumo['cantTeorica']}} {{ $insumo['tipoUnidad']}} </td>
+                        </tr>
+                    @endforeach
+                @endif
 
-							@if ($trazabilidad[$i]['nombre']==$insumo['nombre'])
-							<?php $b=true;$j++;?>
-								
-
-								@if($j>1)
-								<tr>
-									<td>{{$insumo['nombre']}}</td>
-									<td>{{$insumo['cantidad']}} {{ $insumo['tipoUnidad'] }}</td>
-									<td>{{ $trazabilidad[$i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>
-									<td>{{$trazabilidad[$i]['lote_id']}}</td>
-								</tr>	
-								@else
-									<td>{{ $trazabilidad[$i]['cantidad'] }} {{ $insumo['tipoUnidad'] }}</td>
-									<td>{{$trazabilidad[$i]['lote_id']}}</td>
-
-									</tr>
-								@endif
-							@endif
-	
-						@endfor
-						@if ($b==false)
-							<td>0 {{ $insumo['tipoUnidad'] }}</td>
-							<td>-</td>
-
-							</tr>
-						@endif 
-						
-
-				
-			@endforeach
+            @endforeach
 			</tbody>
 		@include('elementosComunes.cierreTabla')    
 
@@ -87,7 +96,6 @@
 					<button type="submit"  class="btn btn-primary" >Iniciar</button>
 					</form>
 					@break
-				@endcase
 
 				@case('iniciado')
 				<form action="/produccion/modificarIniciado/{{$lote['id']}}" method="get" class="col-md-4">
@@ -106,11 +114,12 @@
 					
 
 					@break
-				@endcase
 
 				@case('maduracion')
-					<button class="btn btn-primary">Modificar</button>
-					<button class="btn btn-primary">Finalizar</button>
+                <form action="" method="post" class="col-md-4">
+                    {{ csrf_field() }}
+                    @include('produccion.finalizarLote')
+                </form>
 					@break
 
 
