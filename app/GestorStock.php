@@ -92,8 +92,9 @@ class GestorStock
             'debe'=>0,
             'haber'=>$cantidad,
             'saldoGlobal'=>($movAnterior->saldoGlobal+$cantidad), // cantidad nueva es la anterior mas lo que agrega la llegada
-            'saldoLote'=>$cantidad
-
+            'saldoLote'=>$cantidad,
+            'fecha'=>$fecha,
+            'tipo'=>TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO
         ];
         $nuevoMov= Movimiento::create($datosNuevoMov);
 

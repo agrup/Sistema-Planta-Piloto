@@ -18,11 +18,11 @@
                     
                        <div class="form-group">
                         <label for="exampleInputEmail1">Fecha de Finalizacion</label>
-                        <input type="date" class="form-control" id="inlineFormInput" name="fechaVencimiento">
+                        <input type="date" class="form-control" id="inlineFormInput" name="fechaFinalizacion">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Fecha de Vencimiento</label>
-                        <input type="date" class="form-control" id="inlineFormInput" name="fechaFinalizacion">
+                        <input type="date" class="form-control" id="inlineFormInput" name="fechaVencimiento">
                       </div>
                       @if( $lote['tipoLote']=="maduracion")
                             <div class="form-group">

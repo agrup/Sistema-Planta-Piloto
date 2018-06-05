@@ -49,6 +49,24 @@ class Producto extends Model
         return $lotesReturn;
       }
 
+    public static function showLotesSinPlanifByProd(string $codigo)
+    {
+        $lotesReturn=[];
+        $lotes = GestorLote::getLotesPorProd($codigo);
+        foreach ($lotes as $lote) {
+            if($lote->tipoLote != TipoLote::PLANIFICACION){
+                array_push($lotesReturn,
+                    [
+                        'numeroLote'=>$lote->id,
+                        'fechaInicio'=>$lote->fechaInicio,
+                        'vencimiento'=>$lote->fechaVencimiento,
+                        'cantidad'=>GestorStock::getSaldoLote($lote->id)
+                    ]);
+            }
+        }
+        return $lotesReturn;
+    }
+
     /**
      * @return array [ ['id'=>, 'cantidad'=>, 'cantidadProducto'=> ] .. ]
      */

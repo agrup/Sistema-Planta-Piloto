@@ -98,8 +98,9 @@
 					{{ csrf_field() }}
 				@include('produccion.registrarMaduracion')
 				</form>
-				{{ csrf_field() }}
+
 				<form action="" method="post" class="col-md-4">
+					{{ csrf_field() }}
 					@include('produccion.finalizarLote')
 				</form>
 					

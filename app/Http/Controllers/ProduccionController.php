@@ -16,9 +16,10 @@ class ProduccionController extends Controller
 {
     public static function index(){
         $data =[];
-       /* $fecha =Carbon::createFromFormat('Y-m-d H:i:s',Movimiento::getFechaUltimoReal());
-        $fecha = $fecha->format('Y-m-d');*/
-       $fecha = '2018-05-28';
+        if(($fecha=Lote::fechaUltimoIniciado())==null){
+            $fecha = Carbon::now()->format('Y-m-d');
+        }
+
         $data['fecha']=$fecha;
         $data['lotes']=self::getArrayLotes($fecha);
         return view('produccion.produccion',compact('data'));
@@ -355,21 +356,30 @@ class ProduccionController extends Controller
      * @throws Exception
      */
     public static function postFinalizarLote($id){
-   /* var_dump(request()->input('fechaFinalizacion'));
-    var_dump(request()->input('fechaVencimiento'));
-        var_dump(request()->input('cantidad'));*/
-        $fechaFinalizacion = request()->input('fechaFinalizacion');
-        $fechaVencimiento = request()->input('fechaVencimiento');
-        $cantidadAlFinalizar = request()->input('cantidad');
 
-        if($fechaFinalizacion==null || $fechaVencimiento ==null || $cantidadAlFinalizar ==null || $cantidadAlFinalizar <0 ) {
-            throw new Exception('datos inválidos');
-        }
 
         $lote = Lote::find($id);
         if($lote==null){
             throw new Exception('lote no encontrado');
         }
+        $fechaFinalizacion = request()->input('fechaFinalizacion');
+        $fechaVencimiento = request()->input('fechaVencimiento');
+        if(request()->exists('cantidad')) {
+            $cantidadAlFinalizar = request()->input('cantidad');
+        }
+        else {
+            $cantidadAlFinalizar = $lote->cantidadElaborada;
+        }
+
+
+        if($fechaFinalizacion==null || $fechaVencimiento ==null || $cantidadAlFinalizar ==null || $cantidadAlFinalizar <0 ) {
+            throw new Exception('datos inválidos');
+        }
+        /*var_dump($fechaFinalizacion);
+        var_dump($fechaVencimiento);
+        var_dump($cantidadAlFinalizar);
+        return vi*/
+
         $lote->finalizar($cantidadAlFinalizar,$fechaFinalizacion,$fechaVencimiento);
 
         //Re3torno a la vista principal de produccion con la fecha de finalizacion

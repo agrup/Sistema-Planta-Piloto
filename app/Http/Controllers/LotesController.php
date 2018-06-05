@@ -20,7 +20,7 @@ class LotesController extends Controller
     {
         $codigo=request()->input('codigo');
         $producto=Producto::where('codigo','=',$codigo)->first();
-        $lotes=Producto::showLotesByProd($codigo);
+        $lotes=Producto::showLotesSinPlanifByProd($codigo);
         $lote=['nombre'=>$producto->nombre,'tipoUnidad'=>$producto->tipoUnidad,'lotes'=>$lotes];
 
 
