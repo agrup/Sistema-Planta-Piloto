@@ -41,14 +41,7 @@
 <main role="main">
 <body class="container jumbotron">
 
-<?php $url= url()->current(); 
-  $url=str_replace("http://127.0.0.1:8000","Home",$url);
-  $arregloNav=explode("/",$url);
-  ?>
-    @foreach( $arregloNav as $nav )
-    <a href="#" data-place="home" id="home" class="navegadora" >->{{$nav}}</a>
-   
-    @endforeach
+
 
 	
   @yield('section')

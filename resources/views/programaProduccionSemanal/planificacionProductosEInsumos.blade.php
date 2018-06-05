@@ -217,7 +217,7 @@
     </select>  
     <form>
         @csrf
-        <button class="btn btn-primary" id="btnguardar"> Guardar </button>
+        <button class="btn btn-primary" id="btnguardar"> Guardar y Salir</button>
     </form>
     </body>
 @endsection
