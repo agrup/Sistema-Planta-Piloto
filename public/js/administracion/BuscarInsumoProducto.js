@@ -31,26 +31,26 @@ $(document).ready(function() {
 	  	}).done(
 		
 	 		function(data, i) {	  					    
-			    var tbody = document.getElementsByTagName("tbody")[0];
+			    var tbody = $("tbody");
 			    $(tbody).empty();
 			    //remove(tbody);
 			    data.forEach(function(item, index){
-			    	console.log(item);
-			    	console.log(index);			    	
+		    	
 
 			    	var tr=document.createElement("tr");
 			    	tr.setAttribute("data", "normal");
 			    	tr.setAttribute("role", "row");
+			    	/*
 			    	if ((index % 2) == 0){
 			    		tr.setAttribute("class", "odd");	
 			    	}else{
 			    		tr.setAttribute("class", "even");
 			    	}
-			    	
+			    	*/
 			    	var td=document.createElement("td");	    			
 			    		td.innerHTML = item.codigo;
 			    		tr.appendChild(td);   
-			    		td.setAttribute("class", "sorting_1");
+			    		//td.setAttribute("class", "sorting_1");
 
 			    	var td=document.createElement("td");	    			
 			    		td.innerHTML = item.nombre;
@@ -99,7 +99,7 @@ $(document).ready(function() {
 			    		td.appendChild(imgEliminar);			    		
 			    		tr.appendChild(td); 
 
-		        	tbody.appendChild(tr);
+		        	tbody.append(tr);
 			    });		
 			}).fail(function(){
 	  			console.log('Error');
