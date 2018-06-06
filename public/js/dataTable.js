@@ -21,7 +21,7 @@ $(document).ready(function() {
        "aaSorting": [[ 2, "desc" ]],
        "bInfo": false,
        "bAutoWidth": false,
-       "scrollY":        "200rem",
+       "scrollY":        "24rem",
        "scrollCollapse": true,
        "oLanguage": {"sZeroRecords": "", "sEmptyTable": ""}
    });

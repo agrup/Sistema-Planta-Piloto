@@ -68,21 +68,27 @@ public static function showentradaLoteInsumo()
                                         ->with(['succes'=>true]);
     }
 
-    public static function showControlExist($request){
+    public static function showControlExist(){
 
         $tipoUnidades = Producto::tipoUnidadesTodas();
-        return view('gestionDeStock.controlExistencias')->with(compact($tipoUnidades));
+        return view('gestionDeStock.controlExistencias')->with(compact('tipoUnidades'));
     }
 
-    public static function saveControlExists(){
+    public static function saveControlExist(){
         $lote_id = request()->input('lote_id');
         $cantidadObservada = request()->input('cantidadObservada');
         $tipoUnidad = request()->input('tipoUnidad');
 
-        if(Lote::find(request()->input('lote_id'))==null){
+        $lote = Lote::find(request()->input('lote_id'));
+
+        
+        if($lote==null){
             return view('gestionDeStock.loteNoEncontrado')->with(compact('lote_id'))
                 ->with(compact('cantidadObservada'))
                 ->with(compact('tipoUnidad'));
+        }else{
+            return \Response::json(['fecha'=>$lote], 200);    
+
         }
     }
 

@@ -50,7 +50,7 @@
 						              <input type="text" name="alarmaRoja" class="form-control" required> </div>
 						        </div>
 					        </div>
-					        <input type="hidden" name="formulacion" id="inputHidden"/>
+					        
 						        
 						        	
 					        @if ($insumoProducto=='producto')
