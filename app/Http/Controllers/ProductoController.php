@@ -259,6 +259,7 @@ public function modificarProducto()
     $insumoProducto = 'producto';
 
     $producto=Producto::where('codigo',request()->input('codigo'));
+    
     $producto->detach();
 
     //return \Response::json(['response'=>true]);
