@@ -65,9 +65,9 @@ body {
   font-family: 'Open Sans',serif;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 1rem;
+  font-size: 0.80rem;
   font-weight: 0;
-  line-height: 1.5;
+  /*line-height: 1.5;*/
   color: #333;
   text-align: left;
   background-color: white;
@@ -1359,9 +1359,9 @@ select.form-control:focus::-ms-value {
 .input-group-sm > .input-group-append > .input-group-text,
 .input-group-sm > .input-group-prepend > .btn,
 .input-group-sm > .input-group-append > .btn {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
-  line-height: 1.5;
+  padding: 0.25rem 0.4rem;
+  font-size: 0.7rem;
+  line-height: 1;
   border-radius: 0.2rem; }
 
 select.form-control-sm:not([size]):not([multiple]), .input-group-sm > select.form-control:not([size]):not([multiple]),
@@ -6274,4 +6274,5 @@ div.inputFecha {
 
 th {
      vertical-align: middle !important;
+    padding: 0;
  }
