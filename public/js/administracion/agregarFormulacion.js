@@ -83,6 +83,7 @@ $(document).ready(function() {
 				console.log(id);			
 				var row = [id, cantidad];
 				dataFormulacion.push(row);
+				alert(row);
 			});
 			console.log(dataFormulacion);
 			$('#inputHidden').val(dataFormulacion);
