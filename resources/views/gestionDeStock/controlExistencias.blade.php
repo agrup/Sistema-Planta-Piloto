@@ -8,7 +8,7 @@
             <option value="{{$tu}}">{{$tu}}</option>
         @endforeach
     </select>
-    <button> Cargar y Continuar </button>
-    <button> Cargar y Terminar</button>
-    <button> Salir </button>
+    <button type="submit" name="submit" value="continue"> Cargar y Continuar </button>
+    <button type="submit" name="submit" value="end"> Cargar y Terminar</button>
+    <button type="submit" name="submit" value="exit"> Salir </button>
 </form>
