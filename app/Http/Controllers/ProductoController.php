@@ -143,7 +143,6 @@ public function showModificarInsumo()
 public function altaProducto(){
       //Recibe por post los datos de un producto para alta
       //"codigo", "nombre", "descripcion", "unidad", "alarmaActiva", "alarmaAmarilla",  "alarmaRoja", "categoria"
-
         $estado = true;
        $datosProducto = [
 
@@ -161,6 +160,7 @@ public function altaProducto(){
         $cantidad = request()->input('productoCantidad');
 
         $formulacion = request()->input('formulacion');
+  
 
       if (count(Producto::where('codigo',$datosProducto['codigo'])->get())==0) {
               
@@ -173,7 +173,8 @@ public function altaProducto(){
         //$Producto = Producto::create($datosProducto);
         //recorro todos los ingredientes para agregarlos a la formulacion del producto creado
         $formulacion = explode(',',$formulacion);// pasa el string a array
-
+        var_dump($formulacion);
+/*
         for ($i= 0; $i<count($formulacion) ; $i=$i+2) {
           $ingrediente_id =$formulacion[$i];
           $cantidadProducto = $formulacion[$i+1];
@@ -182,7 +183,7 @@ public function altaProducto(){
           }
         }
 
-    
+    */
         Movimiento::crearUltimoRealFicticio($Producto->id);
 
         $insumoProducto = 'producto';
@@ -258,10 +259,15 @@ public function modificarProducto()
   public function deleteProducto(){
     $insumoProducto = 'producto';
 
-    $producto=Producto::where('codigo',equest()->input('codigo'));
+    $producto=Producto::where('codigo',request()->input('codigo'));
+    
     $producto->detach();
 
-    return view('administracion.deleteProducto')->with(compact('insumoProducto'));
+    //return \Response::json(['response'=>true]);
+    //return response()->json($producto);
+    $result = true;
+    return Response::json(['success' => $result], 200);
+    //return view('administracion.deleteProducto')->with(compact('insumoProducto'));
   }
 
 
