@@ -95,7 +95,7 @@ public function showModificarInsumo()
         throw new Exception('Codigo de Insumo inexistente');
       }else{
       Producto::where('codigo',$datosInsumo['codigo'])->delete();
-      $Producto = Producto::create($datosProducto);
+      $Producto = Producto::create($datosInsumo);
       $succes=true;
       } 
 
@@ -283,7 +283,7 @@ public function modificarProducto()
 	public function  search()
 	{
   $inspro = request()->input('insumoProducto');
-		 $insumoProducto = 'producto';	
+		// $insumoProducto = 'producto';
 
 
 		 $codigo=request()->input('codigo');

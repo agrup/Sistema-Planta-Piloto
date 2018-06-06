@@ -79,19 +79,19 @@
                 </tr>
               </thead>
               <tbody id="tbodyformulacion">
-                @foreach($formulacion as $value)
+                @foreach($formulacion as $ingrediente)
                   <tr class="trConsumo">
-                      <input type="hidden" value="{{$value['id']}}" class="interes">
-                    <td>{{$value['nombre']}}</td>
+                      <input type="hidden" value="{{$ingrediente['id']}}" class="interes">
+                    <td>{{$ingrediente['nombre']}}</td>
                     
                     <td><select class="interes">
                       <option disabled="true" selected="true">--Seleccionar Lote--</option>
-                      @foreach($value['lotes'] as $nlote)
-                        <option value="{{$nlote}}">{{$nlote}}</option>
+                      @foreach($ingrediente['lotes'] as $lote)
+                        <option value="{{$lote['id']}}" data-stock="{{$lote['stock']}}">{{$lote['id']}}</option>
                       @endforeach
                     </select></td>
-                    <td><input type=""  placeholder="Teorica total:{{$value['cantidad']}}" class="interes"></td>
-                    <td> {{$value['tipoUnidad']}}</td>
+                    <td><input type=""  placeholder="Teorica total:{{$ingrediente['cantidad']}}" class="interes"></td>
+                    <td> {{$ingrediente['tipoUnidad']}}</td>
                     <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
                   </tr>
                 @endforeach

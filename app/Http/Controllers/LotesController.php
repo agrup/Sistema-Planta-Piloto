@@ -20,7 +20,7 @@ class LotesController extends Controller
     {
         $codigo=request()->input('codigo');
         $producto=Producto::where('codigo','=',$codigo)->first();
-        $lotes=Producto::showLotesByProd($codigo);
+        $lotes=Producto::showLotesSinPlanifByProd($codigo);
         $lote=['nombre'=>$producto->nombre,'tipoUnidad'=>$producto->tipoUnidad,'lotes'=>$lotes];
 
 
@@ -44,29 +44,46 @@ public static function showentradaLoteInsumo()
     return view('gestionDeStock.entradaInsumo',compact('insumos'));
 }
 
-public static function alta()
-{
-    $producto_id=request()->input('id');
-    $cantidad =request()->input('cantidadElaborada');
+    public static function alta()
+    {
+        $producto_id=request()->input('id');
+        $cantidad =request()->input('cantidadElaborada');
 
-    $lote = [
-        'cantidadElaborada' => $cantidad,
-        'fechaInicio' => request()->input('fechaInicio'),
-        'fechaVencimiento' =>request()->input('fechaVencimiento'),
-        'costounitario' => request()->input('costounitario'),
-        'producto_id'=>$producto_id,
-        'tipoLote'=>TipoLote::INSUMO
-    ];
+        $lote = [
+            'cantidadElaborada' => $cantidad,
+            'fechaInicio' => request()->input('fechaInicio'),
+            'fechaVencimiento' =>request()->input('fechaVencimiento'),
+            'costounitario' => request()->input('costounitario'),
+            'producto_id'=>$producto_id,
+            'tipoLote'=>TipoLote::INSUMO
+        ];
 
-    $lote=Lote::create($lote);
-        // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
-        $H_i_s = date('H:i:s');
-        $fechaStamp = request()->input('fechaInicio') . " ". $H_i_s;    
-    GestorStock::entradaInsumo($lote->id,$producto_id,$cantidad,$fechaStamp);//,id lote, id producto, cantidad , fecha
-    $insumos= Producto::all();
-    return view('gestionDeStock.entradaInsumo',compact('insumos'))
-                                    ->with(['succes'=>true]);
-}
+        $lote=Lote::create($lote);
+            // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
+            $H_i_s = date('H:i:s');
+            $fechaStamp = request()->input('fechaInicio') . " ". $H_i_s;
+        GestorStock::entradaInsumo($lote->id,$producto_id,$cantidad,$fechaStamp);//,id lote, id producto, cantidad , fecha
+        $insumos= Producto::all();
+        return view('gestionDeStock.entradaInsumo',compact('insumos'))
+                                        ->with(['succes'=>true]);
+    }
 
+    public static function showControlExist($request){
+
+        $tipoUnidades = Producto::tipoUnidadesTodas();
+        return view('gestionDeStock.controlExistencias')->with(compact($tipoUnidades));
+    }
+
+    public static function saveControlExists(){
+        $lote_id = request()->input('lote_id');
+        $cantidadObservada = request()->input('cantidadObservada');
+        $tipoUnidad = request()->input('tipoUnidad');
+
+        if(Lote::find(request()->input('lote_id'))==null){
+            return view('gestionDeStock.loteNoEncontrado')->with(compact('lote_id'))
+                ->with(compact('cantidadObservada'))
+                ->with(compact('tipoUnidad'));
+        }
+    }
 
 }

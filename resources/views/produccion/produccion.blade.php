@@ -61,9 +61,10 @@
 					<input type="text" class="form-control" placeholder="Número Lote" id='lote' name='lote' required> 	
 					<button  class="btn btn-primary" id="buscarLote">Buscar Lote</button>	
 				
-				<div class="col">
-					<a href="/produccion/loteNoPlanificado" class="btn btn-primary">Nuevo Lote</a>
-				</div>
+				
+				<form action="/produccion/loteNoPlanificado" method="get">
+					<button  class="btn btn-primary" id="buscarLote">Nuevo Lote</button>	
+				</form>
 			</div>
 
 		@include('elementosComunes.cierreFormInline')
