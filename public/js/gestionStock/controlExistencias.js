@@ -38,11 +38,7 @@ $(document).ready(function(){
 			    	var td=document.createElement("td");	    			
 			    		td.innerHTML = tipo;
 			    		tr.appendChild(td);   
-
-
 			tbody.appendChild(tr);
-			    		
-
 					
 		}).fail(function(){
 	  		alert('Error, Lote No Encontrado');		  
