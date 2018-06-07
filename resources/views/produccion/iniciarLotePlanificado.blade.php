@@ -12,6 +12,7 @@
                 <th>Lote</th>
                 <th>Producto</th>
                 <th>Cantidad Planificada</th>
+                <th>Unidad</th>
               </tr>
             </thead>
             <tbody>
@@ -19,6 +20,7 @@
                 <td >{{ $lote['id'] }}</td>
                 <td>{{ $producto['nombre'] }}</td>
                 <td>{{ $lote['cantidadElaborada'] }}</td>
+                <td>{{$producto['tipoUnidad']}}</td>
               </tr>
               <tr></tr>
               <tr></tr>
@@ -38,16 +40,13 @@
               <input type="text" id="cantidad" class="form-control" >
               <button type="button" id="btnformulacion" class="btn btn-primary">Actualizar Formulación</button>
           </div>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Unidad</label>
-              <input type="text" id="tipoUnidad"  class="form-control" value="{{$producto['tipoUnidad']}}" disabled="true"> 
-            </div>
+         
           </div>
           <div class="col">
             <div class="form-group">
               <label for="exampleInputEmail1">Fecha Inicio</label>
               <input type="date" class="form-control" id="fecha" value="{{$fecha}}"> </div>
-            <div class="form-group">
+          {{-- <div class="form-group">
               <label></label>
               <label for="exampleInputEmail1">Trabajo Práctico</label>
               <select class="form-control" id="tp">
@@ -57,7 +56,7 @@
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Asignatura</label>
-              <input type="text" class="form-control" id="asignatura" > </div>
+              <input type="text" class="form-control" id="asignatura" > </div>--}}
           </div>
         </div>
          
