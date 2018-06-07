@@ -65,6 +65,15 @@ Route::post('/productos/altaProducto', 'ProductoController@altaProducto');
 //Alta Insumo
 Route::get('/productos/altaInsumo', 'ProductoController@showaltaInsumo');
 Route::post('/productos/altaInsumo', 'ProductoController@altaInsumo');
+
+//Modificacion Producto
+Route::get('/productos/modificarProducto', 'ProductoController@showModificarProducto');
+Route::post('/productos/modificarProducto', 'ProductoController@modificarProducto');
+
+//Eliminar Producto
+Route::get('/productos/eliminarProducto', 'ProductoController@deleteProducto');
+//Route::post('/productos/eliminarProducto', 'ProductoController@modificarProducto');
+
 //entrada lote insumo
 Route::get('/stock/entradaLoteInsumo','LotesController@showentradaLoteInsumo');
 Route::post('/stock/entradaLoteInsumo','LotesController@alta');
@@ -81,8 +90,11 @@ Route::get('/lotes/{id}', 'LotesController@show') ;
 Route::get('/trabajador', 'TrabajadorController@index');
 Route::get('/trabajador/create', 'TrabajadorController@create');
 Route::post('/trabajador', 'TrabajadorController@store');
+//Gestion de stock
 Route::get('/stock/entradaLoteInsumo','LotesController@showentradaLoteInsumo');
 Route::post('/stock/entradaLoteInsumo','LotesController@alta');
+Route::get('/stock/controlExistencias','LotesController@showControlExist');
+Route::post('/stock/controlExistencias','LotesController@saveControlExist');
 
 
 //Administracion de productoInsumos

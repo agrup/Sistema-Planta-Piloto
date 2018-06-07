@@ -16,8 +16,18 @@ class Producto extends Model
 
 
     protected $guarded=[];
-
-
+    const TIPO_UNIDADES=[
+        'Kg',
+        'Gr',
+        'Mg',
+        'L',
+        'Ml',
+        'U'
+    ];
+    public static function tipoUnidadesTodas()
+    {
+        return self::TIPO_UNIDADES;
+    }
 
 
 #addformulacion agrega las ttablas pivot al producto que le paso

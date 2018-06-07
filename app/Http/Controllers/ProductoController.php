@@ -259,10 +259,15 @@ public function modificarProducto()
   public function deleteProducto(){
     $insumoProducto = 'producto';
 
-    $producto=Producto::where('codigo',equest()->input('codigo'));
+    $producto=Producto::where('codigo',request()->input('codigo'));
+    
     $producto->detach();
 
-    return view('administracion.deleteProducto')->with(compact('insumoProducto'));
+    //return \Response::json(['response'=>true]);
+    //return response()->json($producto);
+    $result = true;
+    return Response::json(['success' => $result], 200);
+    //return view('administracion.deleteProducto')->with(compact('insumoProducto'));
   }
 
 

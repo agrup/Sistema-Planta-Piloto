@@ -156,14 +156,9 @@ class Movimiento extends Model
 
 
     public static function getAnteriorRealProd(int $producto_id, string $fecha){
-        return(self::where('producto_id','=',$producto_id)
+        return(self::whereIn('tipo',TipoMovimiento::reales())
+            ->where('producto_id','=',$producto_id)
             ->where('fecha','<',$fecha)
-            ->whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
-                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
-                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_EXCEP.
-                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO.
-                'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
-            )
             ->orderBy('fecha','desc')
             ->first()
         );
@@ -193,14 +188,9 @@ class Movimiento extends Model
     public static function getAnteriorLote($idLoteIngrediente, $fecha)
     {
 
-        return(self::where('idLoteIngrediente','=',$idLoteIngrediente)
+        return(self::whereIn('tipo',TipoMovimiento::reales())
+            ->where('idLoteIngrediente','=',$idLoteIngrediente)
             ->where('fecha','<',$fecha)
-            ->whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
-                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
-                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_EXCEP.
-                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO.
-                'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
-            )
             ->orderBy('fecha','desc')
             ->first()
         );
@@ -214,14 +204,10 @@ class Movimiento extends Model
     public static function getMovimientosProdDespuesDe($producto_id, $fechaCambio)
     {
 
-        return Movimiento::whereRaw('tipo='. TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO.
-                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_VENTAS.
-                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_EXCEP.
-                'or tipo='.TipoMovimiento::TIPO_MOV_SALIDA_DECOMISO.
-                'or tipo='.TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS
-            )
-                            ->where('fecha','>=',$fechaCambio)
-                            ->where('producto_id','=',$producto_id);
+        return Movimiento::whereIn('tipo',TipoMovimiento::reales())
+                ->where('producto_id','=',$producto_id)
+                ->where('fecha','>=',$fechaCambio)
+                ->orderBy('fecha','asc');
 
         //movimientos reales
         //Ordenados por favooor
