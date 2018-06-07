@@ -9,34 +9,35 @@
                 <th>Lote</th>
                 <th>Código</th>
                 <th>Producto</th> 
+                <th>Unidad</th> 
               </tr>
             </thead>
             <tbody>
               <tr><td>{{$lote['id']}}</td>
                 <td>{{$producto['codigo']}}</td>
-                <td>{{$producto['nombre']}}</td>          
+                <td>{{$producto['nombre']}}</td> 
+                <td>{{$producto['tipoUnidad']}}</td>         
               </tr>
             </tbody>
+            <input type="hidden" id="producto" value="{{$producto['id']}}">
 @include('elementosComunes.cierreTabla')        
       <div class="row">
         <div class="col-md-6">
           <form class="formu" action="">
             <div class="form-group">
               <label>Fecha Inicio</label>
-              <input type="date" class="form-control" value="{{$lote['fecha']}}"> </div>
+              <input type="date" class="form-control" value="{{$lote['fecha']}}" id="fecha"> </div>
             <div class="row">
               <div class="col">
                 <label>Cantidad Actual</label>
-                <input type="text" class="form-control" value={{$lote['cantidad']}}></div>
-              <div class="col">
-                <label for="exampleInputEmail1">Unidad</label>
-                <input type="text" class="form-control"  id="inlineFormInput" disabled="true" value="{{$producto['tipoUnidad']}}"> </div>
+                <input type="text" class="form-control" value="{{$lote['cantidad']}}" id="cantidad"></div>
+           
             </div>
           </form>
         </div>
         <div class="col-md-6">
           <form class="formu" action="">
-            <div class="form-group" id="#divselect">
+          {{-- <div class="form-group" id="#divselect">
               <label>Trabajo Práctico</label>
                   
                    @if($lote['tipoTp']==true)
@@ -56,7 +57,7 @@
                       <input id="inputasignatura" type="text" class="form-control" disabled="true" />
 
                      
-                   @endif
+                   @endif--}} 
                 
 
           </form>

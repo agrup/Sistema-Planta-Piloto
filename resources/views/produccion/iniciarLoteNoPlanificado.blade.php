@@ -52,13 +52,13 @@
         @include("elementosComunes.aperturaTabla")
               <thead id="theadformulacion">
                 <tr id="trhformulacion">
-                  <th id="thinsumo">Insumo</th>
-                  <th id="thlote">Lote&nbsp;</th>
-                  <th id="thcantidad">Cantidad Utilizada</th>
+                  <th style="width:15% " id="thinsumo">Insumo</th>
+                  <th style="width:15% " id="thlote">Lote&nbsp;</th>
+                  <th style="width:15% " id="thcantidad">Cantidad Utilizada</th>
 
-                  <th id="thtu">Tipo Unidad</th>
-                  <th>Stock</th>
-                  <th></th>
+                  <th  style="width:15% " id="thtu">Tipo Unidad</th>
+                  <th style="width:15% ">Stock</th>
+                  <th style="width:15% "></th>
                 </tr>
               </thead>
               <tbody id="tbodyformulacion">
