@@ -81,15 +81,16 @@ public static function showentradaLoteInsumo()
 
         $lote = Lote::find(request()->input('lote_id'));
 
-        
+        /*
         if($lote==null){
             return view('gestionDeStock.loteNoEncontrado')->with(compact('lote_id'))
                 ->with(compact('cantidadObservada'))
                 ->with(compact('tipoUnidad'));
         }else{
-            return \Response::json(['fecha'=>$lote], 200);    
+            return \Response::json(['fecha'=>$lote]);    
 
-        }
+        }*/
+        return \Response::json($lote);    
     }
 
 }

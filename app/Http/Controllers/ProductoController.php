@@ -129,7 +129,7 @@ public function showModificarInsumo()
   public function deleteInsumo(){
     $insumoProducto = 'insumo';
 
-    Producto::where('codigo',equest()->input('codigo'))->delete();
+    Producto::where('codigo',request()->input('codigo'))->delete();
 
     return view('administracion.deleteInsumo')->with(compact('insumoProducto'));
   }

@@ -75,7 +75,7 @@
            <table id="tformulacion" class="table">
               <thead>
                 <tr>
-                  <th>Insumo</th>
+                  <th >Insumo</th>
                   <th>Lote&nbsp;</th>
                   <th>Cantidad Utilizada</th>
                   <th>Tipo Unidad</th>

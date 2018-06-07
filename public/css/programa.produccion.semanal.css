@@ -2711,7 +2711,7 @@ tbody.collapse.show {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 0.1rem 0.2rem; }
+  padding: 0.5rem 0.2rem; }
   .navbar > .container,
   .navbar > .container-fluid {
     display: flex;
@@ -6280,3 +6280,40 @@ th {
     padding: 0;
  }
 
+.menuPrincipal{
+  display: flex; 
+}
+.contenedoropcion{
+  width: 25%;
+  display: flex;
+   flex-flow: column;
+  padding-left: 2.5rem;
+  padding-right: 1rem;
+  padding-bottom: 2rem;
+  padding-top: 2rem;
+  background-color:#5ec34ab8;
+  margin: 2rem;
+  border-style: solid;
+  border-width: 0.5px;
+  border-radius: 10px;
+}
+.flextitulo{
+  flex-basis: 40%;
+}
+.flexboton{
+  flex-basis: 60%;
+}
+
+.menuPrincipal .contenedoropcion button{
+
+  padding: 0rem;
+  background-color: white;
+ 
+  
+}
+.titulo{
+
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}

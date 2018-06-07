@@ -1,5 +1,7 @@
 $(document).ready(function(){
-	$('#botonCargarContinuar').on('click', function(){
+	var tbody = document.getElementsByTagName("tbody")[0];
+			$(tbody).empty();									
+	$('#botonCargarContinuar').click(function(){
 		var lote = $('#lote_id').val();
 		var cantidad = $('#cantidadObservada').val();
 		var tipo = $('#tipoUnidad').val();
@@ -14,9 +16,9 @@ $(document).ready(function(){
 	        	cantidadObservada: cantidad,
 	        	tipoUnidad: tipo
 	  		},
-	  		type: "POST"
+	  		type: "post"
 	  		
-	  	}).done(function(data) {	  					    
+	  	}).done(function(data, i) {	  					    
 			//var tbody = $('tbody');
 			var tbody = document.getElementsByTagName("tbody")[0];
 			//$(tbody).empty();									
@@ -36,18 +38,14 @@ $(document).ready(function(){
 			    	var td=document.createElement("td");	    			
 			    		td.innerHTML = tipo;
 			    		tr.appendChild(td);   
-
-
-			tbody.appendChild(tr)
-			    		
-
+			tbody.appendChild(tr);
 					
 		}).fail(function(){
 	  		alert('Error, Lote No Encontrado');		  
 		});
 	});
 
-	$('#botonCargarTerminar').on('click', function(){
+	$('#botonCargarTerminar').click(function(){
 		var lote = $('#lote_id').val();
 		var cantidad = $('#cantidadObservada').val();
 		var tipo = $('#tipoUnidad').val();

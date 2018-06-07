@@ -18,8 +18,12 @@
 				</div>
 				<input  type="submit" class="btn btn-primary" value="Actualizar"> 
 				<div class="input-group">
-				<input type="checkbox" name="mostarPlanificados" checked="True">
-				<h6>Tener en cuenta productos planificados</h6>
+					@if($mostarPlanificados==true)
+						<input type="checkbox" name="mostarPlanificados" checked>
+					@else
+						<input type="checkbox" name="mostarPlanificados">
+					@endif
+					<h6>Tener en cuenta productos planificados</h6>
 				</div>
 			</form>
 

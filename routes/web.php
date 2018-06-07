@@ -1,7 +1,6 @@
 
 <?php
 
-Route::get('/','MainController@index');
 
 
 //INFORMES
@@ -89,9 +88,11 @@ Route::get('/produccion/detalleLoteEnProduccion/{id}','PruebaController@detalleL
 Route::get('/lotes', 'LotesController@index')->middleware('checkRoles:administrador,produccion,jefeProduccion') ;
 Route::get('/lotes/{id}', 'LotesController@show')->middleware('checkRoles:administrador,produccion,jefeProduccion') ;
 
+
 Route::get('/trabajador', 'TrabajadorController@index')->middleware('checkRoles:administrador,produccion,jefeProduccion');
 Route::get('/trabajador/create', 'TrabajadorController@create')->middleware('checkRoles:administrador,produccion,jefeProduccion');
 Route::post('/trabajador', 'TrabajadorController@store')->middleware('checkRoles:administrador,produccion,jefeProduccion');
+
 //Gestion de stock
 Route::get('/stock/entradaLoteInsumo','LotesController@showentradaLoteInsumo')->middleware('checkRoles:administrador,produccion,jefeProduccion');
 Route::post('/stock/entradaLoteInsumo','LotesController@alta')->middleware('checkRoles:administrador,produccion,jefeProduccion');
@@ -103,7 +104,10 @@ Route::post('/stock/controlExistencias','LotesController@saveControlExist')->mid
 //Route::get('/productos/altaProducto', 'ProductoController@altaProducto');
 //Route::get('/productos/altaInsumo', 'ProductoController@altaInsumo');
 
+Route::get('/','MainController@index')->middleware('checkRoles:administrador,produccion,jefeProduccion');
 
 Auth::routes();
 
+
 Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/', 'HomeController@index');
