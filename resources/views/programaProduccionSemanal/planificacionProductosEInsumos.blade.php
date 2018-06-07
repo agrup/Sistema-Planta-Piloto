@@ -9,10 +9,9 @@
     <?php $fecha=$planificaciones[0]['fecha'];?>
 
     @include('elementosComunes.aperturaTitulo')
-
-        Planificación Productos e Insumos
-    
+        Planificación Productos e Insumos  
     @include('elementosComunes.cierreTitulo')
+
     @include('elementosComunes.aperturaTitulo')
     <h4 style="text-align: center">
     <b>Fecha Actual: <?= date("d-m-Y",strtotime($fecha)); ?></b>
@@ -241,4 +240,5 @@
        <script type="text/javascript" src="{{asset('js/planificacion/modificarPlanificacion.js')}}"></script>
        <script type="text/javascript" src="{{asset('js/planificacion/borrarPlanificacion.js')}}"></script>
        <script type="text/javascript" src="{{asset('js/planificacion/postPlanificacion.js')}}"></script>
+
 @endsection

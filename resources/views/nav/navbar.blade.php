@@ -11,8 +11,8 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      {{--   <ul class="navbar-nav mr-auto">
          
 		
 			  <li class="nav-item dropdown">
@@ -50,15 +50,22 @@
 
             </div>
           </li>
-        </ul>
+        </ul>--}} 
+             <?php $url= url()->current();
+             /* 
+               $arregloNav[]= $titulo;;
+               if($arregloNav!=""){
+                $arregloNav[]=$titulo;*/
+              
+  //$url=str_replace("http://127.0.0.1:8000","",$url);
+  //$arregloNav=explode("/",$url);
+  ?> 
+
+
+  <ul class="navbar-nav mr-auto">     
+       <li><a href="{{$url}}" data-place="home" id="home" class="navbar-brand" ></a></li>    
+  </ul>
+    </nav>
 
       </div>
-      <?php $url= url()->current(); 
-  $url=str_replace("http://127.0.0.1:8000","Home",$url);
-  $arregloNav=explode("/",$url);
-  ?>
-    @foreach( $arregloNav as $nav )
-    <a href="#" data-place="home" id="home" class="navbar-brand" >->{{$nav}}</a>
-   
-    @endforeach
-    </nav>
+ 
