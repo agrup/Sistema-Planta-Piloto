@@ -3,7 +3,9 @@
 
     <title>PP</title>
 
+@guest
 
+@else
 
  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <a class="navbar-brand" href="/" id="dropdown00"> Planta Piloto</a>
@@ -28,10 +30,10 @@
           </li>
 
 
-            @guest
+     
                 <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
 
-                @else
+                  
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }} <span class="caret"></span>
@@ -49,10 +51,10 @@
                             </form>
                         </div>
                     </li>
-                @if(Auth::user()->hasAnyRole('administrador'))
-                    <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
-                @endif
-                    @endguest
+                  @if(($user=Auth::user())!=null && $user->hasAnyRole('administrador'))
+                      <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                  @endif
+
 
         </ul>
 
@@ -66,3 +68,4 @@
    
     @endforeach
     </nav>
+@endguest
