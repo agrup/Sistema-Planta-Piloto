@@ -26,30 +26,31 @@
          <li class="nav-item active">
             <a class="nav-link" href="/produccion"><span class="glyphicon glyphicon-compressed">Produccion</span> <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle"  id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Administracion</span></a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="/productos/administracionProductos">Productos</a>
-              <a class="dropdown-item" href="/productos/administracionInsumos">Insumos</a>
-            </div>
-          </li>
 
-           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle"  id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Gestion de Stock</span></a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
 
-              <a class="dropdown-item" href="/stock/entradaLoteInsumo" id="dropdown05">Entrada de Insumo</a>
+            @guest
+                <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                @else
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ Auth::user()->name }} <span class="caret"></span>
+                        </a>
 
-            </div>
-          </li>
-            <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Informes</span></a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="/stock">Stock</a>
-               <a class="dropdown-item" href="/sumarizacion">Ver Necesidad de Insumos</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
 
-            </div>
-          </li>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                    @endguest
+
         </ul>
 
       </div>

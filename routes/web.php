@@ -35,7 +35,7 @@ Route::post('/planificacion/modificar', 'PlanificacionController@modificar');
 
 
 //Produccion
-Route::get('/produccion','ProduccionController@index');
+Route::get('/produccion','ProduccionController@index')->middleware('ChekRole');
 Route::post('/produccion','ProduccionController@show');
 Route::get('/produccion/loteEnProduccion/{id}','ProduccionController@loteEnProduccion');
 Route::get('/produccion/iniciarPlanificado/{id}','ProduccionController@iniciarPlanificado');
@@ -101,3 +101,7 @@ Route::post('/stock/controlExistencias','LotesController@saveControlExist');
 //Route::get('/productos/altaProducto', 'ProductoController@altaProducto');
 //Route::get('/productos/altaInsumo', 'ProductoController@altaInsumo');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
