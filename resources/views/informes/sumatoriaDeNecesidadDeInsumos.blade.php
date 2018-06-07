@@ -1,12 +1,10 @@
 @extends('layouts.layoutPrincipal' )
 @section('section')
     @include('elementosComunes.aperturaTitulo')
-  
         Sumatoria de necesidades de Insumos
-   
     @include('elementosComunes.cierreTitulo')
     @include('elementosComunes.aperturaTitulo')
-    <h4 class="">Sumarizacion hasta: {{$fechaHasta}}</h4>
+    <h4 class="">Sumarizacion hasta: {{date("d-m-Y",strtotime($fechaHasta))}}</h4>
     @include('elementosComunes.cierreTitulo')
     @include('elementosComunes.aperturaTitulo')
     <h4 class="">En necesidad</h4>
@@ -26,7 +24,7 @@
             <td> {{$v['codigo']}}</td>
             <td>{{$v['insumo']}}</td>
             <td>{{$v['necesidadFinal']}}  {{$v['tipoUnidad']}}</td>
-            <td>{{$v['fechaAgotamiento']}}</td>
+            <td>{{date("d-m-Y",strtotime($v['fechaAgotamiento']))}}</td>
         </tr>
     @endforeach
     <?php unset($value);?>

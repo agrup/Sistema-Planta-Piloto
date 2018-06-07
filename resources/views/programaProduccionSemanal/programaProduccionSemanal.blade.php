@@ -1,10 +1,9 @@
 @extends('layouts.layoutPrincipal' )
 @section('section')
     @include('elementosComunes.aperturaTitulo')
-  
-        Programa de Producción Semanal
-    
+        Programa de Producción Semanal   
     @include('elementosComunes.cierreTitulo')
+    
     {{--  Input y boton para ir a una semana específica  --}}
     <div class="navSemanas">
         <div class="flechita">
@@ -154,3 +153,4 @@
 
 
 @endsection
+

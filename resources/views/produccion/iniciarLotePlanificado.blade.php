@@ -40,7 +40,7 @@
               <input type="text" id="cantidad" class="form-control" >
               <button type="button" id="btnformulacion" class="btn btn-primary">Actualizar Formulación</button>
           </div>
-         
+          
           </div>
           <div class="col">
             <div class="form-group">
@@ -71,10 +71,12 @@
             <table id="tformulacion" class="table">
               <thead>
                 <tr>
-                  <th>Insumo</th>
-                  <th>Lote&nbsp;</th>
-                  <th>Cantidad Utilizada</th>
-                  <th>Tipo Unidad</th>
+                  <th style="width:15% ">Insumo</th>
+                  <th style="width:15% ">Lote&nbsp;</th>
+                  <th style="width:15% ">Cantidad Utilizada</th>    
+                  <th style="width:15% ">Tipo Unidad</th>
+                  <th style="width:15% ">Stock</th>
+                  <th style="width:15% "> </th>
                 </tr>
               </thead>
               <tbody id="tbodyformulacion">
@@ -91,7 +93,9 @@
                     </select></td>
                     <td><input type=""  placeholder="Teorica total:{{$ingrediente['cantidad']}}" class="interes"></td>
                     <td> {{$ingrediente['tipoUnidad']}}</td>
+                    <td id="tdstock"></td>
                     <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
+                    
                   </tr>
                 @endforeach
               </tbody>
