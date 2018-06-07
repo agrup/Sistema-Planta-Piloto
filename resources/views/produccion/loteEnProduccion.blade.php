@@ -2,7 +2,7 @@
 
 @section('section')
 		@include('elementosComunes.aperturaTitulo')
-			Lote en Producción {{ $lote['fecha']}}
+			Lote en Producción {{date('d-m-Y',strtotime($lote["fecha"]))}}
 		@include('elementosComunes.cierreTitulo')
 
 		@include('elementosComunes.aperturaTabla')    
@@ -10,7 +10,7 @@
 						<th>Nombre</th> 
 						<th>Cantidad</th> 
 						<th>Estado</th> 						
-						<th></th>
+						
 					</tr>
 			</thead>	
 			<tbody>
@@ -74,7 +74,7 @@
                         <td>{{$insumo['nombre']}}</td>
                         <td> 0 {{ $insumo['tipoUnidad']}}</td>
                         <td> - </td>
-                        <td> {{$insumo['cantTeorica']}} </td>
+                        <td> {{$insumo['cantTeorica']}} {{ $insumo['tipoUnidad']}} </td>
                     </tr>
                 @else {{-- Si posee consumos --}}
                     @foreach($insumo['consumos'] as $consumo)

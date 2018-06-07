@@ -18,7 +18,7 @@
 						<th>Producto</th> 
 						<th>Cantidad</th> 
 						<th>Estado</th> 
-						<th>Asignatura</th>
+						{{--<th>Asignatura</th>--}}
 						
 						<th></th></tr>
 			</thead>			
@@ -31,9 +31,9 @@
 		        		<td>{{ $lote['estado'] }}</td>
 
 
-		        		<td>@if ($lote['asignatura']!= null)						
+		        		{{--<td>@if ($lote['asignatura']!= null)						
 								{{ $lote['asignatura'] }}
-							@endif</td>
+							@endif</td>--}}
 		        		<td> <a href="/produccion/loteEnProduccion/{{ $lote['lote'] }}">Detalles</a></td>
 		        	</tr> 
 		        	

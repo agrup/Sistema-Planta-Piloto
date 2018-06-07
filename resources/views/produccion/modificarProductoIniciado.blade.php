@@ -9,34 +9,35 @@
                 <th>Lote</th>
                 <th>Código</th>
                 <th>Producto</th> 
+                <th>Unidad</th> 
               </tr>
             </thead>
             <tbody>
               <tr><td>{{$lote['id']}}</td>
                 <td>{{$producto['codigo']}}</td>
-                <td>{{$producto['nombre']}}</td>          
+                <td>{{$producto['nombre']}}</td> 
+                <td>{{$producto['tipoUnidad']}}</td>         
               </tr>
             </tbody>
+            <input type="hidden" id="producto" value="{{$producto['id']}}">
 @include('elementosComunes.cierreTabla')        
       <div class="row">
         <div class="col-md-6">
           <form class="formu" action="">
             <div class="form-group">
               <label>Fecha Inicio</label>
-              <input type="date" class="form-control" value="{{$lote['fecha']}}"> </div>
+              <input type="date" class="form-control" value="{{$lote['fecha']}}" id="fecha"> </div>
             <div class="row">
               <div class="col">
                 <label>Cantidad Actual</label>
-                <input type="text" class="form-control" value={{$lote['cantidad']}}></div>
-              <div class="col">
-                <label for="exampleInputEmail1">Unidad</label>
-                <input type="text" class="form-control"  id="inlineFormInput" disabled="true" value="{{$producto['tipoUnidad']}}"> </div>
+                <input type="text" class="form-control" value="{{$lote['cantidad']}}" id="cantidad"></div>
+           
             </div>
           </form>
         </div>
         <div class="col-md-6">
           <form class="formu" action="">
-            <div class="form-group" id="#divselect">
+          {{-- <div class="form-group" id="#divselect">
               <label>Trabajo Práctico</label>
                   
                    @if($lote['tipoTp']==true)
@@ -56,7 +57,7 @@
                       <input id="inputasignatura" type="text" class="form-control" disabled="true" />
 
                      
-                   @endif
+                   @endif--}} 
                 
 
           </form>
@@ -71,7 +72,7 @@
             <h4 class="">
               <b>Formulación:</b>
             </h4>
-            <table class="table">
+           <table id="tformulacion" class="table">
               <thead>
                 <tr>
                   <th>Insumo</th>
@@ -80,48 +81,23 @@
                   <th>Tipo Unidad</th>
                 </tr>
               </thead>
-              <tbody>
-
-                  @foreach($formulacion as $insumo)
-                      <?php
-                      $arrayTrazabilidad=array();
-                      ?>
-                      @for ($i = 0; $i < count($trazabilidad); $i++)
-                        @if ($trazabilidad[$i]['nombre']==$insumo['nombre'])
-                              <?php   array_push($arrayTrazabilidad,$i); //guardo los i de las trazabilidades
-                              ?>   
-                        @endif
-                      @endfor
-
-                    @if(empty($arrayTrazabilidad))
-
-                              <tr>
-                              <td>{{$insumo['nombre']}}</td>
-                              <td><input type="" ></td>
-                              <td><input type="" placeholder="Teorica Total: {{$insumo['cantidad']}}"></td>
-                              <td>{{ $insumo['tipoUnidad'] }}</td>
-                              <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
-                              </tr>
-
-                    @else
-                        @for ($i = 0; $i < count($arrayTrazabilidad); $i++)
-                          <tr>
-                            <td>{{$insumo['nombre']}}</td>
-                            <td><input type="text" name="" value="{{$trazabilidad[$arrayTrazabilidad[$i]]['lote_id']}}"></td>
-                            <td><input type="text" name="" value=" {{ $trazabilidad[$arrayTrazabilidad[$i]]['cantidad'] }}"></td>
-                            <td>{{ $insumo['tipoUnidad'] }}</td>
-                          @if($i==count($arrayTrazabilidad)-1)
-                            <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
-                          </tr>
-                          @else
-                            </tr>
-                          @endif        
-                        @endfor
-
-                    @endif
-                  @endforeach
-
-
+              <tbody id="tbodyformulacion">
+                @foreach($formulacion as $ingrediente)
+                  <tr class="trConsumo">
+                      <input type="hidden" value="{{$ingrediente['id']}}" class="interes">
+                    <td>{{$ingrediente['nombre']}}</td>
+                    
+                    <td><select class="interes">
+                      <option disabled="true" selected="true">--Seleccionar Lote--</option>
+                      @foreach($ingrediente['lotes'] as $lote)
+                        <option value="{{$lote['id']}}" data-stock="{{$lote['stock']}}">{{$lote['id']}}</option>
+                      @endforeach
+                    </select></td>
+                    <td><input type=""  placeholder="Teorica total:{{$ingrediente['cantidad']}}" class="interes"></td>
+                    <td> {{$ingrediente['tipoUnidad']}}</td>
+                    <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
+                  </tr>
+                @endforeach
               </tbody>
             </table>
 

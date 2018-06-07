@@ -41,7 +41,7 @@ $(document).ready(function(){
             		var inputID= $('<input>').attr({type:'hidden',value: ing['id'],id:"idInsumo"}).appendTo(tr);//tiene el id
 					inputID.addClass('interes');
             		var td2=document.createElement("td");            	 	
-            		var selectLote=$('<select></select>').attr({id:"lote"}).appendTo(td2);
+            		var selectLote=$('<select></select>').attr({id:"selectLote"}).appendTo(td2);
             		$('<option selected="selected" disabled></option>').text("-Selecccione un Lote-").appendTo(selectLote);
                     selectLote.addClass('interes');
             		var td3=document.createElement("td");
@@ -51,6 +51,9 @@ $(document).ready(function(){
             		var agregarLote=$("<button>").attr({type:"button",value:"agregarLote"}).appendTo(td5);
             		agregarLote.addClass("btn btn-primary");
             		agregarLote.text("Agregar Lote");
+            		
+            		var tdStock=document.createElement("td");//td que contiene el stock
+            		tdStock.setAttribute('id','tdstock');
             		  // $( '<button type="button" id="agregarLote">Agregar Lote</button>').appendTo( 
 					//	td5 ).trigger( 'create' );
 
@@ -61,20 +64,24 @@ $(document).ready(function(){
             		
             		
             		td4.setAttribute("id",ing['tipoUnidad']+index);//tu
-            		tr.append(td1,td2,td3,td4,td5);
+            		tr.append(td1,td2,td3,td4,tdStock,td5);	
 
             		$("#tbodyformulacion").append(tr);
 		  			$("#"+ing['codigo']).html(ing['nombre']);
 					$("#"+ing['tipoUnidad']+index).html(ing['tipoUnidad']);
 
 					//Agrego las opciones al select de lotes
+					
 					ing['lotes'].forEach(function(lote,index) {
 						let option=$('<option></option>').text(lote['id']);
 						option.attr("value",lote['id']);
                         // se guarda en data-stock la cantidad en stock para ser mostrada luego de seleccionar el lote
                         option.data('stock',lote['stock']);
 						selectLote.append(option);
+						
 					});
+					
+					
 
 		  		});
             	//$("#alert").html(insumo.codigo);
@@ -90,6 +97,13 @@ $(document).ready(function(){
 		console.log(tu);
 		$("#tipoUnidad").attr({value:tu});
 
+	});
+
+	
+
+	$('body').on('change','#selectLote',function(){
+		var stock=$('option:selected', this).data('stock');
+		$(this).parent('td').next().next().next().text(stock);
 	});
 		
 });// post a /produccion/lotenoplanificado
