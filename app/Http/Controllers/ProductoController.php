@@ -22,6 +22,9 @@ class ProductoController extends Controller
   
 
   public function showAltaInsumo(){
+
+
+
     $insumoProducto = "insumo";
     $insumos = [];
      $succes=false;
@@ -31,6 +34,18 @@ class ProductoController extends Controller
   }
 
   public function altaInsumo(){
+/*
+
+*/
+    $this->validate(request(),[
+       'nombre'=>'required',
+        'descripcion'=>'required',
+        'tipoUnidad'=>'required',
+        'codigo'=>'required',
+        'alarmaActiva'=>'required|boolean',
+
+      ]);
+
     $insumoProducto = "insumo";
     $insumos = [];
      $datosInsumo = [

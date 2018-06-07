@@ -100,7 +100,7 @@ $(document).ready(function() {
 			    		tr.appendChild(td); 
 
 
-		        	tbody.appendChild(tr);
+		        	tbody.append(tr);
 
 		        	//
 		        	
