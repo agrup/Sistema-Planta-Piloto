@@ -21,6 +21,9 @@ class GestorStock
 
     // MOVIMIENTOS DE ENTRADA
     //REALES
+    const DIAS_DE_VIDA_INSUMO_PLANIF = 1;
+    const FORMATO_FECHA = Movimiento::FORMATO_FECHA;
+
     /**
      *
      * @param string $idLote
@@ -29,8 +32,14 @@ class GestorStock
      * @param string $fecha
      *
      */
-    public static function entradaInsumoProducto(string $idLote, int $idProducto, float $cantidad, string $fecha)
+    public static function entradaInsumo(string $idLote, int $idProducto, float $cantidad, string $fecha)
     {
+        // Si corresponde a una entrada planificada la doy por cumplida
+        $movPlanif = Movimiento::getEntradaInsumoPlanificada($idProducto,$fecha);
+        if($movPlanif != null){
+            $movPlanif->tipo = TipoMovimiento::cumplidoDe($movPlanif->tipo);
+            $movPlanif->save();
+        }
         $banderaRecalcular = false;
         $ultimoMovReal=Movimiento::ultimoRealProd($idProducto);
         $movAnterior = $ultimoMovReal;
@@ -52,7 +61,7 @@ class GestorStock
             'saldoLote'=>$cantidad
         ];
 
-        $nuevoMov = Movimiento::create($datosNuevoMov); //puede que no ande, que haya que hacer ->get();
+        $nuevoMov = Movimiento::create($datosNuevoMov);
 
         if($banderaRecalcular){
             self::recalcularStockReal($nuevoMov);
@@ -78,6 +87,7 @@ class GestorStock
             $movAnterior = Movimiento::getAnteriorRealProd($producto_id,$fecha);
             $banderaRecalcular=true;
         }
+        
         $datosNuevoMov = [
             'producto_id'=>$producto_id,
             'idLoteConsumidor'=>$idLote,
@@ -85,8 +95,9 @@ class GestorStock
             'debe'=>0,
             'haber'=>$cantidad,
             'saldoGlobal'=>($movAnterior->saldoGlobal+$cantidad), // cantidad nueva es la anterior mas lo que agrega la llegada
-            'saldoLote'=>$cantidad
-
+            'saldoLote'=>$cantidad,
+            'fecha'=>$fecha,
+            'tipo'=>TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO
         ];
         $nuevoMov= Movimiento::create($datosNuevoMov);
 
@@ -108,7 +119,7 @@ class GestorStock
 
     {
         // si no posee un stock real crearlo con 0 en una fecha que no moleste debido a que se necesita para iniciar el recalculo de las planificaciones
-        if(Movimiento::ultimoRealProd($idProducto)->count()==0){
+        if(Movimiento::ultimoRealProd($idProducto)==null){
             Movimiento::crearUltimoRealFicticio($idProducto);
         }
         //No deben existir mas de una entrada de insumo planificada para un mismo dia
@@ -164,13 +175,12 @@ class GestorStock
         $ingredientes = $producto->getIngredientes();
         foreach ($ingredientes as $ing){
             //regla de 3 simple segun la formulación
-            $cantConsumo = $cantidad * $ing['cantidadProducto'] / $ing['cantidad'];
-            GestorStock::altaConsumoPlanificado($idLote, $ing['id'], $cantConsumo, $fecha );
+            $cantConsumo = $cantidad * $ing['cantidad'] / $ing['cantidadProducto'];
+            GestorStock::altaConsumoPlanificado($idLote, $ing['id'], $cantConsumo, $fecha,$planificacion_id );
         }
 
-
         // si no posee un stock real crearlo con 0 en una fecha que no moleste debido a que se necesita para iniciar el recalculo de las planificaciones
-        if(Movimiento::ultimoRealProd($idProducto)->count()==0){
+        if(Movimiento::ultimoRealProd($idProducto)==null){
             Movimiento::crearUltimoRealFicticio($idProducto);
         }
 
@@ -179,7 +189,7 @@ class GestorStock
         $datosNuevoMov = [
             'producto_id'=>$idProducto,
             'fecha'=>$fecha,
-            'tipo'=>TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF,
+            'tipo'=>TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF,
             'idLoteConsumidor'=>$idLote,
             'idLoteIngrediente'=>$idLote,
             'debe'=>0,
@@ -511,14 +521,15 @@ class GestorStock
      * @param string $fecha
      * @return \Illuminate\Database\Eloquent\Model|$this
      */
-    public static function altaConsumoPlanificado(int $idLoteConsumidor, int $idProdIng, float $cantidad, string $fecha)
+    public static function altaConsumoPlanificado(int $idLoteConsumidor, int $idProdIng, float $cantidad, string $fecha, int $planificacion_id)
     {
 
         // si no posee un stock real crearlo con 0 en una fecha que no moleste debido a que se necesita para iniciar el recalculo de las planificaciones
-        if(Movimiento::ultimoRealProd($idProdIng)->count()==0){
+        if(Movimiento::ultimoRealProd($idProdIng)==null){
             Movimiento::crearUltimoRealFicticio($idProdIng);
         }
         $datosNuevoMov = [
+            'planificacion_id'=>$planificacion_id,
             'producto_id'=>$idProdIng,
             'fecha'=>$fecha,
             'tipo'=>TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF,
@@ -537,6 +548,9 @@ class GestorStock
     public static function getSaldoLote(string $idLote)
     {
         $ultMov = Movimiento::ultimoRealLote($idLote);
+        if($ultMov==null){
+            return 0;
+        }
         return $ultMov->saldoLote;
     }
     /**
@@ -658,8 +672,8 @@ class GestorStock
 
         $necesidades = [];
         $alarmas =[];
-        $fechaVista = Carbon::createFromFormat('Y-m-d H:i:s',$fechaHasta);
-        $fechaVista = $fechaVista->format('Y-m-d');
+        $fechaVista = Carbon::createFromFormat(self::FORMATO_FECHA,$fechaHasta);
+        $fechaVista = $fechaVista->format(Lote::FORMATO_FECHA);
         //primero recalculo los planificados
         self::recalcularPlanificados($fechaHasta);
         //Luego guardamos los movimientos criticos para ver la necesidad de insumos
@@ -670,9 +684,9 @@ class GestorStock
             $producto = Producto::find($movC->producto_id);
             //y su stock final para ver la necesidad final
             $stockFinal = self::getStockProd($movC->producto_id,$fechaHasta);
-            $fechaAgot = Carbon::createFromFormat('Y-m-d H:i:s',$movC->fecha);
+            $fechaAgot = Carbon::createFromFormat(self::FORMATO_FECHA,$movC->fecha);
             //paso la fecha a yyyy/mm/dd
-            $fechaAgot = $fechaAgot->format('Y-m-d');
+            $fechaAgot = $fechaAgot->format(Lote::FORMATO_FECHA);
             //armo el array
             $arrAux['codigo']=$producto->codigo;
             $arrAux['insumo']=$producto->nombre;
@@ -749,6 +763,7 @@ class GestorStock
     }
     private static function recalcularPlanificados($fechaHasta)
     {
+
         //Guardo el ultimo mov de cada producto, ya que el recalculo se hará por cada producto
         $movimientosInicialesProducto = Movimiento::ultimoStockRealProdTodos();
         //Por cada producto
@@ -760,10 +775,11 @@ class GestorStock
             //itero para todas las planificaciones de este producto
             foreach ($planificacionesProd as $planif){
 
-                //si la planificacion es anterior al ultimo mov
+                //si la planificacion es anterior al ultimo mov del producto, la mato
                 if($planif->fecha < $movAnteriorProd->fecha) {
+                    //Switch asesino de planificaciones
                     switch ($planif->tipo){
-                        //si el lote planificado ya se inicio no hago nada, sino paso a incumplido
+                        // Si corresponde a un producto planif y el lote planificado ya se inicio no hago nada, sino paso a incumplido
                         case TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF:
                         case TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF: {
                             if(Lote::find($planif->idLoteConsumidor)->tipoLote == TipoLote::PLANIFICACION){
@@ -771,7 +787,16 @@ class GestorStock
                             }
                             break;
                         }
-                        default : { //las entradas de insumo planif no tienen lote asociado asique simplemente anulo
+                        // Si es entrada de insumo planif darle un dia de changui
+                        case TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF:{
+                            $movFecha=Carbon::createFromFormat(self::FORMATO_FECHA,$planif->fecha);
+                            $fechaUltMov=Carbon::createFromFormat(self::FORMATO_FECHA,$movAnteriorProd->fecha);
+                            if($movFecha->diffInDays($fechaUltMov)>self::DIAS_DE_VIDA_INSUMO_PLANIF){
+                                $planif->tipo = TipoMovimiento::incumplidoDe($planif->tipo);
+                            }
+                            break;
+                        }
+                        default : {
                             $planif->tipo = TipoMovimiento::incumplidoDe($planif->tipo);
                         }
                     }

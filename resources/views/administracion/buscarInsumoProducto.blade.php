@@ -1,7 +1,8 @@
 @extends('layouts.layoutPrincipal' )
 
 @section('section')
-
+		<img  src="{{asset('img/modificar.png') }}" width="20" height="20" class="modificar" id="iHModificar" style="display: none; cursor: pointer">
+	    <img src="{{asset('img/borrar.png') }}" width="30" height="30" style="display: none; cursor: pointer" class="borrar" id="iHBorrar" hidden />
 		@include('elementosComunes.aperturaTitulo')
 			@if ($insumoProducto=='producto')			
 				Administración de Productos
@@ -38,42 +39,40 @@
 		    	</div>
 
 		    	@include('elementosComunes.aperturaBoton')
-		    		<button type="button" class="btn btn-primary" id="btnBuscar"> Buscar</button>
+		    		<button data-insumoProducto="{{ $insumoProducto }}" type="button" class="btn btn-primary" id="btnBuscar"> Buscar</button>
 	          	@include('elementosComunes.cierreBoton')
 		    </form>
 	    @include('elementosComunes.aperturaTabla')
 	    	<thead>
 	    		<tr>
-	    			<th>Código</th> <th>Nombre</th> <th>Descripción</th>
-	    			<th>Unidad</th><th>Alarma</th><th>Aviso Stock</th>
-	    			<th>Aviso Stock Crítico</th><th>Categoría</th><th>Estado</th>
+	    			<th>Código</th> 
+	    			<th>Nombre</th>
+	    			<th>Descripción</th>
+	    			<th>Unidad</th>
+	    			<th>Alarma</th>
+	    			<th>Alarma Amarilla</th>
+	    			<th>Alarma Roja</th>
+	    			<th>Categoría</th>
+	    			<th></th>
+	    			<th></th>
 	    		</tr>
-	    	</thead>
-	    	<div id="divRes">
-	    	<tbody id="tbodyResultados">	    		</div>
+	    	</thead>	    	
+	    	<tbody>	    		
 
 	    	</tbody>		
         @include('elementosComunes.cierreTabla')
 
         @if ($insumoProducto=='producto')
         	@include('elementosComunes.aperturaBoton')        		
-				<a href="/productos/altaProducto" class="btn btn-primary">Agregar Producto</a>	        
-				<a class="btn btn-primary">Modificar Producto</a>
-	        
-				<a class="btn btn-primary">Eliminar Producto</a>
+				<a href="/productos/altaProducto" class="btn btn-primary">Agregar Producto</a>	        		
 	        @include('elementosComunes.cierreBoton')
 	    @elseif ($insumoProducto=='insumo')
 	    	@include('elementosComunes.aperturaBoton')
 					<a href="/productos/altaInsumo" class="btn btn-primary">Agregar Insumo</a>
-	        
-	        
-					<a href="" class="btn btn-primary">Modificar Insumo</a>
-	        
-					<a href="" class="btn btn-primary">Eliminar Insumo</a>
-
 	        @include('elementosComunes.cierreBoton')
         @endif
-
+       
+       <input type="hidden" name="" id="alertConfirm" value="{{ $succes }}">
 @endsection
 
  @section('script')

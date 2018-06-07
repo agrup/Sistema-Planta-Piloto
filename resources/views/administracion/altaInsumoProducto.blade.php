@@ -11,9 +11,9 @@
 					@include('elementosComunes.cierreTitulo')
 
 						@if ($insumoProducto=='producto')			
-							<form action="/productos/altaProducto" class="" method="POST" id="myform">
+							<form action="/productos/altaProducto" class="" method="POST" id="myForm" novalidate>
 						@elseif ($insumoProducto=='insumo')
-							<form action="/productos/altaInsumo" class="" method="POST" id="myform">
+							<form action="/productos/altaInsumo" class="" method="POST" id="myForm" novalidate>
 						@endif					    
 							@csrf
 					    	<div class="row">
@@ -59,19 +59,27 @@
 
 						    @include('elementosComunes.aperturaBoton')
 
-						    		<input type="submit" name="alta"  href="" class="btn btn-primary" value="Guardar">
+						    		<button type="submit" name="alta"  href="" class="btn btn-primary" value="Guardar"> Guardar</button>
 								@if ($insumoProducto=='producto')
 							          <a class="btn btn-primary" href="/productos/administracionProductos">Cancelar</a>
 							          
 								@elseif ($insumoProducto=='insumo')		 					 
 							          <a class="btn btn-primary" href="/productos/administracionInsumos">Cancelar</a>
 								@endif							         
-							@include('elementosComunes.cierreBoton')				              
+							@include('elementosComunes.cierreBoton')				  
+
+							<input type="hidden" name="formulacion" value="" id="inputHidden"/>        
+
 						</form>
 					
+
+
+
 
 @endsection
 
 @section('script')
-	<script type="text/javascript" src="{{asset('js/administracion/agregarFormulacion.js')}}"></script>
+	@if ($insumoProducto=='producto')
+		<script type="text/javascript" src="{{asset('js/administracion/agregarFormulacion.js')}}"></script>
+		@endif
 @endsection

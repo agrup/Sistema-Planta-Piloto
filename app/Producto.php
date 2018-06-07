@@ -16,8 +16,18 @@ class Producto extends Model
 
 
     protected $guarded=[];
-
-
+    const TIPO_UNIDADES=[
+        'Kg',
+        'Gr',
+        'Mg',
+        'L',
+        'Ml',
+        'U'
+    ];
+    public static function tipoUnidadesTodas()
+    {
+        return self::TIPO_UNIDADES;
+    }
 
 
 #addformulacion agrega las ttablas pivot al producto que le paso
@@ -43,11 +53,29 @@ class Producto extends Model
                   'numeroLote'=>$lote->id,
                   'fechaInicio'=>$lote->fechaInicio,
                   'vencimiento'=>$lote->fechaVencimiento,
-                  'cantidad'=>$lote->cantidadFinal
+                  'cantidad'=>GestorStock::getSaldoLote($lote->id)
               ]);
         }
         return $lotesReturn;
       }
+
+    public static function showLotesSinPlanifByProd(string $codigo)
+    {
+        $lotesReturn=[];
+        $lotes = GestorLote::getLotesPorProd($codigo);
+        foreach ($lotes as $lote) {
+            if($lote->tipoLote != TipoLote::PLANIFICACION){
+                array_push($lotesReturn,
+                    [
+                        'numeroLote'=>$lote->id,
+                        'fechaInicio'=>$lote->fechaInicio,
+                        'vencimiento'=>$lote->fechaVencimiento,
+                        'cantidad'=>GestorStock::getSaldoLote($lote->id)
+                    ]);
+            }
+        }
+        return $lotesReturn;
+    }
 
     /**
      * @return array [ ['id'=>, 'cantidad'=>, 'cantidadProducto'=> ] .. ]
@@ -108,8 +136,11 @@ class Producto extends Model
             //Agrego además los lotes, accion altamente cuestionable
              $lotes = Lote::where('producto_id','=',$ing['id'])->get();
              foreach($lotes as $lote){
-                 if(GestorStock::getSaldoLote($lote->id)>0){
-                     array_push($arrayLotes,$lote->id);
+                 $arrAuxL =[];
+                 $arrAuxL['id']=$lote->id;
+                 $arrAuxL['stock']=GestorStock::getSaldoLote($lote->id);
+                 if($arrAuxL['stock']>0){
+                     array_push($arrayLotes,$arrAuxL);
                  }
              }
              $arrAux['lotes']=$arrayLotes;
@@ -182,6 +213,32 @@ class Producto extends Model
         }
         return $productos;
     }
+
+
+
+
+
+
+    public static function test($inspro,$codigo,$nombre,$categoria,$alarma){
+        if($inspro=='insumo'){
+        $productos=[];
+        
+        $insumos= (Producto::filterRAW($codigo,$nombre,$categoria,$alarma));
+        //var_dump($insumos);
+        foreach ($insumos as $insumo) {
+        
+          if (empty($insumo->getIngredientes())) {
+           array_push($productos, $insumo);
+          }
+          
+        }
+        $productos=compact('productos');
+         //var_dump($productos);
+      }
+
+    return  $productos;
+
+}
 }
 
 

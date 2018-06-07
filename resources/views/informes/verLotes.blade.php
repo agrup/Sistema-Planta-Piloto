@@ -10,7 +10,7 @@
 		@include('elementosComunes.aperturaTabla')    
 		
 			<thead ><tr><th>Nro Lote </th> 
-						<th>Fecha de Inicio</th> 
+						<th>Fecha </th>
 						<th>Vencimiento</th> 
 						<th>Cantidad en Stock</th> 
 						<th>Tipo Unidad</th>

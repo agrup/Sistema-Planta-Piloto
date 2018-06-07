@@ -87,7 +87,7 @@ class Planificacion extends Model
 
 
     public function movimientos(){
-        return $this->hasMany('App\Movimiento', 'planificacion_id');
+        return $this->hasMany('App\Movimiento', 'planificacion_id')->get();
     }
 
     //retorna array [['codigo'=> ,'nombre'=> , 'cantidad'=>], .. ]
@@ -97,38 +97,35 @@ class Planificacion extends Model
      */
     public function productos(){
         $arrayResult = [];
-        $movs= $this->movimientos()->whereRaw(
-        									'tipo =' . TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF .
-                                            'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_CUMPLIDO .
-                                            'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO)->get();
+        $movs= $this->movimientos()/*->whereRaw('tipo ='.TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF.'or tipo='.TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_CUMPLIDO.                                            'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO)*/;
         foreach ($movs as $mov){
-            $arrProd=[];
-            $estado = 'pendiente';
-            $producto=Producto::find($mov->producto_id);
-            $arrProd['nombre']=$producto->nombre;
+            if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF
+            || $mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_CUMPLIDO
+            || $mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO) {
+                $arrProd = [];
+                $lote = Lote::find($mov->idLoteConsumidor);
+                $estado = 'pendiente';
+                $producto = Producto::find($mov->producto_id);
+                $arrProd['id'] = $producto->id;
+                $arrProd['nombre'] = $producto->nombre;
 
-            $arrProd['codigo']=$producto->codigo;
-            $arrProd['cantidad']=$mov->haber;
-            $arrProd['tipoUnidad']=$producto->tipoUnidad;
-            /*if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_CUMPLIDO){
-                $estado = 'cumplida';
-            }*/
-            /*//Si alguno de sus consumos fue cumplido, considero la planificacion cumplida para que no pueda editarse ni borrarse
-            if(Movimiento::where('idLoteConsumidor','=',$mov->idLoteConsumidor)
-                ->where('tipo','=',TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF_CUMPLIDO)->first() !=null) {
-                $estado = 'cumplida';
-            }*/
-            //si el lote se inicio considero la planificacion cumplida para que no pueda editarse ni borrarse
-            if(Lote::find($mov->idLoteConsumidor)->tipoLote != TipoLote::PLANIFICACION){
-                $estado = 'cumplida';
-            }
-            if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO){
-                $estado = 'incumplida';
-            }
-            $arrProd['estado']=$estado;
-            $arrProd['movimiento_id']=$mov->id;
-            array_push($arrayResult,$arrProd);
+                $arrProd['codigo'] = $producto->codigo;
+                $arrProd['cantidad'] = $mov->haber;
+                $arrProd['tipoUnidad'] = $producto->tipoUnidad;
 
+                //si el lote se inicio considero la planificacion cumplida para que no pueda editarse ni borrarse
+                if ($lote->tipoLote != TipoLote::PLANIFICACION) {
+                    $estado = 'cumplida';
+                }
+                if ($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF_INCUMPLIDO) {
+                    $estado = 'incumplida';
+                }
+                $arrProd['estado'] = $estado;
+                $arrProd['movimiento_id'] = $mov->id;
+                $arrProd['tipoTP'] = $lote->tipoTP;
+                $arrProd['asignatura'] = $lote->asignatura;
+                array_push($arrayResult, $arrProd);
+            }
         }
 
         return $arrayResult;
@@ -141,37 +138,36 @@ class Planificacion extends Model
      */
     public function insumos(){
         $arrayResult = [];
-        $movs= $this->movimientos()->whereRaw(
+        $movs= $this->movimientos()/*->whereRaw(
         	'tipo =' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF .
             'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_CUMPLIDO .
-            'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_INCUMPLIDO)->get();
-
+            'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_INCUMPLIDO)->get()*/;
         foreach ($movs as $mov){
-            $arrProd=[];
-            $estado = 'pendiente';
-            $producto=Producto::find($mov->producto_id);
-            $arrProd['nombre']=$producto->nombre;
-
-            $arrProd['codigo']=$producto->codigo;
-            $arrProd['cantidad']=$mov->haber;
-            $arrProd['tipoUnidad']=$producto->tipoUnidad;
-            if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_CUMPLIDO){
-                $estado = 'cumplida';
+            if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF
+                || $mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_CUMPLIDO
+                || $mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_INCUMPLIDO){
+                $arrProd=[];
+                $estado = 'pendiente';
+                $producto=Producto::find($mov->producto_id);
+                $arrProd['nombre']=$producto->nombre;
+                $arrProd['id']=$producto->id;
+                $arrProd['codigo']=$producto->codigo;
+                $arrProd['cantidad']=$mov->haber;
+                $arrProd['tipoUnidad']=$producto->tipoUnidad;
+                if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_CUMPLIDO){
+                    $estado = 'cumplida';
+                }
+                if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_INCUMPLIDO){
+                    $estado = 'incumplida';
+                }
+                $arrProd['estado']=$estado;
+                $arrProd['movimiento_id']=$mov->id;
+                array_push($arrayResult,$arrProd);
             }
-            if($mov->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF_INCUMPLIDO){
-                $estado = 'incumplida';
-            }
-            $arrProd['estado']=$estado;
-            $arrProd['movimiento_id']=$mov->id;
-            array_push($arrayResult,$arrProd);
-
-        }
-
+        } //End foreach
         return $arrayResult;
 
     }
-    //
-
 
     public function toArray()
     {
@@ -282,6 +278,72 @@ class Planificacion extends Model
             return response()->json('ERROR: el movimiento no es de un tipo editable');
         }
         return response()->json('OK');
+    }
+
+    /**
+     * Actualiza los productos e insumos planificados para ese dia
+     * @param array $productos
+     * @param array $insumos
+     */
+    public function actualizar( $productos,  $insumos){
+        //borro los lotes planificados
+        Lote::eliminarLotesPlanificados($this->fecha);
+        //borro los movimientos planificados asociados a la planificacion
+        Movimiento::eliminarMovsPlanificados($this->id);
+        //creo lotes y mov planificados para los productos
+        foreach ($productos as $producto){
+            if(count($producto)>=3) {
+                $productoID = $producto[0];
+                $cantidad = $producto[1];
+                $tipoTP = ($producto[2] == 'Si') ? true : false;
+                //creo lote planificados
+                $datosLote = [
+                    'producto_id' => $productoID,
+                    'tipoLote' => TipoLote::PLANIFICACION,
+                    'fechaInicio' => $this->fecha,
+                    'cantidadElaborada' => $cantidad,
+                    'tipoTP' => $tipoTP
+                ];
+                $lote = Lote::create($datosLote);
+                //doy de alta los movimientos
+                // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
+                $H_i_s = date('H:i:s');
+                $fechaStamp = $this->fecha . " " . $H_i_s;
+                GestorStock::entradaProductoPlanificado($lote->id, $productoID, $cantidad, $fechaStamp, $this->id);
+            }
+        }
+        //creo movimientos planificados para los insumos
+        foreach ($insumos as $insumo){
+            if(count($insumo)>=2){
+                $productoID = $insumo[0];
+                $cantidad = $insumo[1];
+                //doy de alta movimiento
+                // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
+                $H_i_s = date('H:i:s');
+                $fechaStamp = $this->fecha . " " . $H_i_s;
+                GestorStock::entradaInsumoPlanificado($productoID,$cantidad,$fechaStamp,$this->id);
+            }
+        }
+    }
+
+    public static function dameArrProd(){
+        $arr=[];
+        array_push($arr,['1','200','No']);
+        array_push($arr,['6','100','Si']);
+        return $arr;
+    }
+
+    public static function dameArrInsm(){
+        $arr=[];
+        array_push($arr,[]);
+        array_push($arr,[]);
+        array_push($arr,[]);
+        array_push($arr,[]);
+        array_push($arr,['2','1000']);
+        array_push($arr,['3','5000']);
+        array_push($arr,['4','1500']);
+
+        return $arr;
     }
 
 }

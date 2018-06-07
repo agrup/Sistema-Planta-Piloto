@@ -62,11 +62,12 @@
           </form>
         </div>
       </div>
-
+  <form id="myform">
+      @csrf
       @include('elementosComunes.aperturaTabla')
    <div class="row"></div>
     <div class="col"></div>
-          <form >
+
             <h4 class="">
               <b>Formulación:</b>
             </h4>
@@ -123,14 +124,24 @@
 
               </tbody>
             </table>
-            <button type="submit" class="btn btn-primary">Guardar</button>
-          </form>
+
+            <button id="guardar" type="submit" class="btn btn-primary">Guardar</button>
+
    </div>
  </div>
  @include('elementosComunes.cierreTabla')
+  </form>
 
 @endsection
 @section('script')
    <script type="text/javascript" src="{{asset('js/produccion/addAsignatura.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/produccion/addRowLote.js')}}"></script>
+   <script type="text/javascript" src="{{asset('js/produccion/postLote.js')}}"></script>
+   <script>
+       document.addEventListener("DOMContentLoaded", function() {
+           PostLote.init("/produccion/modificarIniciado/{{$lote['id']}}");
+       });
+
+   </script>
+
 @endsection
