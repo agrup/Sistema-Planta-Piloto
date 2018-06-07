@@ -4,7 +4,28 @@
         Sumatoria de necesidades de Insumos
     @include('elementosComunes.cierreTitulo')
     @include('elementosComunes.aperturaTitulo')
-    <h4 class="">Sumarizacion hasta: {{date("d-m-Y",strtotime($fechaHasta))}}</h4>
+    
+    <form action="/sumarizacion" method="get">
+        {{csrf_field()}}
+        <div class="py-5">
+            <h5 class=""><b>Sumarizacion hasta: </b></h5>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        {{-- {date("d-m-Y",strtotime($fechaHasta))}} --}}
+                        <input type="date" name="fecha" class="form-control" value="{{$fechaHasta}}"> 
+                    </div>
+                    <div class="col-md-3">
+                        
+                            <input type="submit" class="btn btn-primary" value="Ir a la Fecha">
+                        
+                    </div>
+                </div>                            
+            </div>
+        </div>     
+    </form>
+
+    
     @include('elementosComunes.cierreTitulo')
     @include('elementosComunes.aperturaTitulo')
     <h4 class="">En necesidad</h4>
@@ -58,25 +79,5 @@
     @endforeach
     </tbody>
     @include('elementosComunes.cierreTabla')
-    <form action="/sumarizacion" method="get">
-        {{csrf_field()}}
-    <div class="py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h5 class="">Revisar Planificacion Hasta:</h5>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3">
-                    <input type="date" name="fecha" class="form-control"> </div>
-            </div>
-        </div>
-
-    </div>
-    @include('elementosComunes.aperturaBoton')
-    <input type="submit" class="btn btn-primary" value="Ir a la Fecha">
-    @include('elementosComunes.cierreBoton')
-    </form>
+    
 @endsection
