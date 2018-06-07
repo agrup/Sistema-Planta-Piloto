@@ -5,24 +5,14 @@
     @include('elementosComunes.cierreTitulo')
     @include('elementosComunes.aperturaTitulo')
     
-    <form action="/sumarizacion" method="get">
+    <h5><b>Sumarizacion hasta: </b></h5>
+    <form action="/sumarizacion" method="get" class="form-inline">
         {{csrf_field()}}
-        <div class="py-5">
-            <h5 class=""><b>Sumarizacion hasta: </b></h5>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3">
-                        {{-- {date("d-m-Y",strtotime($fechaHasta))}} --}}
-                        <input type="date" name="fecha" class="form-control" value="{{$fechaHasta}}"> 
-                    </div>
-                    <div class="col-md-3">
-                        
-                            <input type="submit" class="btn btn-primary" value="Ir a la Fecha">
-                        
-                    </div>
-                </div>                            
-            </div>
-        </div>     
+        {{-- {date("d-m-Y",strtotime($fechaHasta))}} --}}
+        <div class="input-group">
+        <input type="date" name="fecha" class="form-control" value="{{$fechaHasta}}">                     
+        </div>
+        <input type="submit" class="btn btn-primary" value="Ir a la Fecha">         
     </form>
 
     
