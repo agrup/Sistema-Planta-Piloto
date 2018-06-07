@@ -24,14 +24,14 @@
         Productos
     </h4>
     @include('elementosComunes.cierreTitulo')
-    @include('elementosComunes.aperturaTabla')
+    @include('elementosComunes.aperturaTablaPlanificacion')
     <thead>
     <tr>
         <th>Código</th>
         <th>Producto</th>
         <th>Cantidad</th>       
         <th>Tipo Unidad</th>
-        <th>TP</th>
+  
         <th></th>
         <th></th>
     </tr>
@@ -66,11 +66,11 @@
                     <td class="inte" id="cantidad"><?=$cantidad[$k];?></td>
                     <td id="tu"><?=$tipoUnidad[$k];?></td>
                                                     
-                    @if ($tp[$k]==false)
+                    <!--@if ($tp[$k]==false)
                         <td class="inte" id="tp">No</td>
                     @else
                         <td class="inte" id="tp">Si</td>
-                    @endif
+                    @endif -->
                     <td><img  src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;"  class="modificar" /></td>
                     <td><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" class="borrar" /></td>
                 @elseif ($estado[$k]=="incumplida")
@@ -78,26 +78,28 @@
                    <td id="nombre"><?=$nombre[$k];?></td>
                    <td id="cantidad"><?=$cantidad[$k];?></td>
                    <td><?=$tipoUnidad[$k];?></td>
-                    @if($tp[$k])
+                  <!--  @if($tp[$k])
                         <td>Si</td>
                     @else
                         <td>No</td>
-                    @endif
+                    @endif -->
                    <script type="text/javascript">
                       $('#'+'{{$k}}').css("background-color","#ffb3b3")
                    </script>
-                   {{--<td></td>
-                   <td></td> --}}
+                   <td></td>
+                   <td></td> 
                 @else
                    <td  id="codigo"><?=$codigo[$k];?></td>
                     <td id="nombre"><?=$nombre[$k];?></td>
                     <td id="cantidad"><?=$cantidad[$k];?></td>
                     <td  id="tu"><?=$tipoUnidad[$k];?></td>
-                    @if($tp[$k])
+                    <td></td>
+                    <td></td>
+                   <!-- @if($tp[$k])
                         <td>Si</td>
                     @else
                         <td>No</td>
-                    @endif
+                    @endif -->
                    <script type="text/javascript">
                       $('#'+'{{$k}}').css("background-color","lightgreen")
                    </script>
@@ -109,7 +111,9 @@
         
     @endif
     {{--<tr class="trProducto"> </tr>--}}
-     <tr><td><img src="{{asset('img/agregar.png') }}" width="30" height="30" style="cursor: pointer;"class="agregarProducto"/></td></tr>
+     <tr><td><img src="{{asset('img/agregar.png') }}" width="30" height="30" style="cursor: pointer;"class="agregarProducto"/></td>
+        
+     </tr>
     </tbody>
     @include('elementosComunes.cierreTabla')
     @include('elementosComunes.aperturaTitulo')
@@ -117,7 +121,7 @@
         Llegada de Insumos
     </h3>
     @include('elementosComunes.cierreTitulo')
-    @include('elementosComunes.aperturaTabla')
+    @include('elementosComunes.aperturaTablaPlanificacion')
     <thead>
     <tr>
         <th>Código</th>
@@ -193,6 +197,12 @@
         <td>
             <img  src="{{asset('img/agregar.png') }}" width="30" height="30" style="cursor: pointer;" class="agregarInsumo" />
         </td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+
     </tr>
     </tbody>
     @include('elementosComunes.cierreTabla')

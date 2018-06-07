@@ -6,7 +6,7 @@ $(document).ready(function() {
        "aaSorting": [[ 2, "desc" ]],
        "bInfo": false,
       // "bAutoWidth": true,
-       "scrollY":        "200px",
+       "scrollY":        "23rem",
           "scrollCollapse": true,
        "oLanguage": {"sZeroRecords": "", "sEmptyTable": ""},
            "columnDefs": [
@@ -25,4 +25,6 @@ $(document).ready(function() {
        "scrollCollapse": true,
        "oLanguage": {"sZeroRecords": "", "sEmptyTable": ""}
    });
+
+
 });
