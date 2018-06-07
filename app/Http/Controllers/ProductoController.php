@@ -12,8 +12,10 @@ class ProductoController extends Controller
 
   public function administracionInsumo(){
     $insumoProducto = 'insumo';
-    return view('administracion.buscarInsumoProducto')->with(compact('insumoProducto'));
-  }
+    $succes=false;
+    return view('administracion.buscarInsumoProducto')->with(compact('succes'))
+                                            ->with(compact('insumoProducto'));
+  } 
 
 
 
@@ -22,7 +24,9 @@ class ProductoController extends Controller
   public function showAltaInsumo(){
     $insumoProducto = "insumo";
     $insumos = [];
+     $succes=false;
     return view('administracion.altaInsumoProducto')->with(compact('insumoProducto'))
+                                                    ->with(compact('succes'))
                                                     ->with(compact('insumos'));
   }
 
@@ -91,7 +95,7 @@ public function showModificarInsumo()
         throw new Exception('Codigo de Insumo inexistente');
       }else{
       Producto::where('codigo',$datosInsumo['codigo'])->delete();
-      $Producto = Producto::create($datosProducto);
+      $Producto = Producto::create($datosInsumo);
       $succes=true;
       } 
 
@@ -120,24 +124,25 @@ public function showModificarInsumo()
 
   public function showAltaProducto(){
   $insumoProducto = "producto";
-
+ $succes=false;
   $insumos=Producto::all()->toArray();
   //var_dump(compact('insumos'));
   return view('administracion.altaInsumoProducto')
                                                     ->with(compact('insumos'))
-                                                    ->with(compact('insumoProducto'));
-
+                                                    ->with(compact('insumoProducto'))
+                                                    ->with(compact('succes'));
 }
 
   public function administracionProducto(){
     $insumoProducto = 'producto';
-    return view('administracion.buscarInsumoProducto')->with(compact('insumoProducto'));
+    $succes=false;
+    return view('administracion.buscarInsumoProducto')->with(compact('succes'))
+                                                  ->with(compact('insumoProducto'));
   }
 
 public function altaProducto(){
       //Recibe por post los datos de un producto para alta
       //"codigo", "nombre", "descripcion", "unidad", "alarmaActiva", "alarmaAmarilla",  "alarmaRoja", "categoria"
-
         $estado = true;
        $datosProducto = [
 
@@ -155,6 +160,7 @@ public function altaProducto(){
         $cantidad = request()->input('productoCantidad');
 
         $formulacion = request()->input('formulacion');
+  
 
       if (count(Producto::where('codigo',$datosProducto['codigo'])->get())==0) {
               
@@ -168,6 +174,8 @@ public function altaProducto(){
         //recorro todos los ingredientes para agregarlos a la formulacion del producto creado
         $formulacion = explode(',',$formulacion);// pasa el string a array
 
+/*
+    */
         for ($i= 0; $i<count($formulacion) ; $i=$i+2) {
           $ingrediente_id =$formulacion[$i];
           $cantidadProducto = $formulacion[$i+1];
@@ -176,7 +184,6 @@ public function altaProducto(){
           }
         }
 
-    
         Movimiento::crearUltimoRealFicticio($Producto->id);
 
         $insumoProducto = 'producto';
@@ -252,10 +259,15 @@ public function modificarProducto()
   public function deleteProducto(){
     $insumoProducto = 'producto';
 
-    $producto=Producto::where('codigo',equest()->input('codigo'));
+    $producto=Producto::where('codigo',request()->input('codigo'));
+    
     $producto->detach();
 
-    return view('administracion.deleteProducto')->with(compact('insumoProducto'));
+    //return \Response::json(['response'=>true]);
+    //return response()->json($producto);
+    $result = true;
+    return Response::json(['success' => $result], 200);
+    //return view('administracion.deleteProducto')->with(compact('insumoProducto'));
   }
 
 
@@ -272,7 +284,7 @@ public function modificarProducto()
 	public function  search()
 	{
   $inspro = request()->input('insumoProducto');
-		 $insumoProducto = 'producto';	
+		// $insumoProducto = 'producto';
 
 
 		 $codigo=request()->input('codigo');

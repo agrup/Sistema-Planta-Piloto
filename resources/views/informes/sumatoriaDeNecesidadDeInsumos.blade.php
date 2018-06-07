@@ -6,7 +6,7 @@
    
     @include('elementosComunes.cierreTitulo')
     @include('elementosComunes.aperturaTitulo')
-    <h4 class="">Sumarizacion hasta: <?= $_GET['fecha'];?></h4>
+    <h4 class="">Sumarizacion hasta: {{$fechaHasta}}</h4>
     @include('elementosComunes.cierreTitulo')
     @include('elementosComunes.aperturaTitulo')
     <h4 class="">En necesidad</h4>

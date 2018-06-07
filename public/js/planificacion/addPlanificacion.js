@@ -53,7 +53,6 @@ $(document).ready(function(){
 			let newRow = document.createElement('tr');
 			newRow.setAttribute('class','trProducto');
 			//La agrego en la ante-ultima row porque la ultima es la del boton agregar
-			console.log($(this).closest('table').find('tr:last').prev());
             $(this).closest('table').find('tr:last').prev().after(newRow);
 			newRow.append(tdHiddenID,tdCod,tdProd,tdCant,tdTipoUnidad,tdTP,tdImgGuardar);
 			

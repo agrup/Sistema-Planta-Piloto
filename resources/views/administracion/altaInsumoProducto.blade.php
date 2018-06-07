@@ -50,7 +50,7 @@
 						              <input type="text" name="alarmaRoja" class="form-control" required> </div>
 						        </div>
 					        </div>
-					        <input type="hidden" name="formulacion" id="inputHidden"/>
+					        
 						        
 						        	
 					        @if ($insumoProducto=='producto')
@@ -67,7 +67,9 @@
 							          <a class="btn btn-primary" href="/productos/administracionInsumos">Cancelar</a>
 								@endif							         
 							@include('elementosComunes.cierreBoton')				  
-							<input type="hidden" name="formulacion"  id="inputHidden" value=""/>        
+
+							<input type="hidden" name="formulacion" value="" id="inputHidden"/>        
+
 						</form>
 					
 

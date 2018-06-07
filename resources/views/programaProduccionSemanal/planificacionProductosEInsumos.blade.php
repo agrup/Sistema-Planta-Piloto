@@ -78,25 +78,31 @@
                    <td id="nombre"><?=$nombre[$k];?></td>
                    <td id="cantidad"><?=$cantidad[$k];?></td>
                    <td><?=$tipoUnidad[$k];?></td>
-                    <td ><?=$tp[$k];?></td>
-                   <td></td> 
+                    @if($tp[$k])
+                        <td>Si</td>
+                    @else
+                        <td>No</td>
+                    @endif
                    <script type="text/javascript">
                       $('#'+'{{$k}}').css("background-color","#ffb3b3")
                    </script>
-                   <td></td>
-                   <td></td> 
+                   {{--<td></td>
+                   <td></td> --}}
                 @else
                    <td  id="codigo"><?=$codigo[$k];?></td>
                     <td id="nombre"><?=$nombre[$k];?></td>
                     <td id="cantidad"><?=$cantidad[$k];?></td>
                     <td  id="tu"><?=$tipoUnidad[$k];?></td>
-                     <td ><?=$tp[$k];?></td>
-                    <td></td>
+                    @if($tp[$k])
+                        <td>Si</td>
+                    @else
+                        <td>No</td>
+                    @endif
                    <script type="text/javascript">
                       $('#'+'{{$k}}').css("background-color","lightgreen")
                    </script>
-                   <td></td>
-                   <td></td> 
+                   {{--<td></td>
+                   <td></td> --}}
                 @endif
             </tr>
         @endforeach
@@ -150,7 +156,7 @@
               
                
                  @if($estado[$k]=="pendiente")
-                     <td hidden>{{$prodID[$k]}}</td>
+                     <td hidden class="inte">{{$prodID[$k]}}</td>
                      <td ><?=$codigo[$k];?></td>
                     <td ><?=$nombre[$k];?></td>
                     <td class="inte"><?=$cantidad[$k];?></td>
@@ -166,8 +172,7 @@
                     
                       $('#insumo'+'{{$k}}').css("background-color","#ffb3b3");
                    </script>
-                   <td></td>
-                   <td></td> 
+
                 @else
                     <td ><?=$codigo[$k];?></td>
                     <td ><?=$nombre[$k];?></td>
@@ -177,8 +182,7 @@
 
                       $('#insumo'+'{{$k}}').css("background-color","lightgreen");
                    </script>
-                   <td></td>
-                   <td></td> 
+
                 @endif
             </tr>
 
@@ -217,7 +221,7 @@
     </select>  
     <form>
         @csrf
-        <button class="btn btn-primary" id="btnguardar"> Guardar </button>
+        <button class="btn btn-primary" id="btnguardar"> Guardar y Salir</button>
     </form>
     </body>
 @endsection
