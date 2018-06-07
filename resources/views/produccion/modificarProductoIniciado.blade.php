@@ -71,7 +71,7 @@
             <h4 class="">
               <b>Formulación:</b>
             </h4>
-            <table class="table">
+           <table id="tformulacion" class="table">
               <thead>
                 <tr>
                   <th>Insumo</th>
@@ -80,48 +80,23 @@
                   <th>Tipo Unidad</th>
                 </tr>
               </thead>
-              <tbody>
-
-                  @foreach($formulacion as $insumo)
-                      <?php
-                      $arrayTrazabilidad=array();
-                      ?>
-                      @for ($i = 0; $i < count($trazabilidad); $i++)
-                        @if ($trazabilidad[$i]['nombre']==$insumo['nombre'])
-                              <?php   array_push($arrayTrazabilidad,$i); //guardo los i de las trazabilidades
-                              ?>   
-                        @endif
-                      @endfor
-
-                    @if(empty($arrayTrazabilidad))
-
-                              <tr>
-                              <td>{{$insumo['nombre']}}</td>
-                              <td><input type="" ></td>
-                              <td><input type="" placeholder="Teorica Total: {{$insumo['cantidad']}}"></td>
-                              <td>{{ $insumo['tipoUnidad'] }}</td>
-                              <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
-                              </tr>
-
-                    @else
-                        @for ($i = 0; $i < count($arrayTrazabilidad); $i++)
-                          <tr>
-                            <td>{{$insumo['nombre']}}</td>
-                            <td><input type="text" name="" value="{{$trazabilidad[$arrayTrazabilidad[$i]]['lote_id']}}"></td>
-                            <td><input type="text" name="" value=" {{ $trazabilidad[$arrayTrazabilidad[$i]]['cantidad'] }}"></td>
-                            <td>{{ $insumo['tipoUnidad'] }}</td>
-                          @if($i==count($arrayTrazabilidad)-1)
-                            <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
-                          </tr>
-                          @else
-                            </tr>
-                          @endif        
-                        @endfor
-
-                    @endif
-                  @endforeach
-
-
+              <tbody id="tbodyformulacion">
+                @foreach($formulacion as $ingrediente)
+                  <tr class="trConsumo">
+                      <input type="hidden" value="{{$ingrediente['id']}}" class="interes">
+                    <td>{{$ingrediente['nombre']}}</td>
+                    
+                    <td><select class="interes">
+                      <option disabled="true" selected="true">--Seleccionar Lote--</option>
+                      @foreach($ingrediente['lotes'] as $lote)
+                        <option value="{{$lote['id']}}" data-stock="{{$lote['stock']}}">{{$lote['id']}}</option>
+                      @endforeach
+                    </select></td>
+                    <td><input type=""  placeholder="Teorica total:{{$ingrediente['cantidad']}}" class="interes"></td>
+                    <td> {{$ingrediente['tipoUnidad']}}</td>
+                    <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
+                  </tr>
+                @endforeach
               </tbody>
             </table>
 
