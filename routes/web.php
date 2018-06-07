@@ -35,7 +35,8 @@ Route::post('/planificacion/modificar', 'PlanificacionController@modificar');
 
 
 //Produccion
-Route::get('/produccion','ProduccionController@index')->middleware('ChekRole');
+
+Route::get('/produccion','ProduccionController@index')->middleware('checkRoles:administrador,');
 Route::post('/produccion','ProduccionController@show');
 Route::get('/produccion/loteEnProduccion/{id}','ProduccionController@loteEnProduccion');
 Route::get('/produccion/iniciarPlanificado/{id}','ProduccionController@iniciarPlanificado');
