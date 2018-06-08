@@ -39,8 +39,8 @@
 						            <div class="form-group">
 						              <label>Alarma (Activa o Inactiva)</label>
 						              <select name="alarmaActiva" class="form-control" id="alarma" required>
-	  										<option value="true">Activa</option>
-	  										<option value="false">Inactiva</option>  					
+	  										<option value="1">Activa</option>
+	  										<option value="0">Inactiva</option>  					
 									</select>
 						            <div class="form-group">
 						              <label> Cantidad para aviso de falta de stock</label>
