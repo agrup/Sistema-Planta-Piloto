@@ -65,8 +65,9 @@ class ProductoController extends Controller
 
       if (count(Producto::where('codigo',$datosInsumo['codigo'])->get())==0) {
               
-      $Producto = Producto::create($datosInsumo);
+      $producto = Producto::create($datosInsumo);
       $succes=true;
+      Movimiento::crearUltimoRealFicticio($producto->id);
       }else{
         throw new Exception('Codigo de Insumo existente');
       } 
@@ -74,7 +75,9 @@ class ProductoController extends Controller
 
     return view('administracion.altaInsumoProducto')->with(compact('insumoProducto'))
                                                     ->with(compact('succes'))
-                                                    ->with(compact('insumos'));
+                                                    ->with(compact('insumos'))
+                                                    ->with('alert', 'Alta Exitosa');
+                                                    ;
   }
 
 
@@ -306,10 +309,14 @@ public function modificarProducto()
 		 $nombre=request()->input('nombre');
 		 $categoria=request()->input('categoria');
 		 $alarma=request()->input('alarma');
+     if($alarma=="no"){
+        $alarma = "";
+     }
 
 	   if($inspro=='producto'){
 
     $productos = (Producto::filterRAW($codigo,$nombre,$categoria,$alarma));
+
     $respuesta=[];
         foreach ($productos as $producto) {
           if (!empty($producto->getIngredientes())) {
