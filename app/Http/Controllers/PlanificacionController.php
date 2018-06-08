@@ -57,6 +57,10 @@ class PlanificacionController extends Controller
             throw new Exception('Fecha inválida');
         }
         $planificacion=Planificacion::where('fecha','=',$fecha)->first();
+        if($planificacion==null){
+            Planificacion::getSemana($fecha);
+        }
+        $planificacion=Planificacion::where('fecha','=',$fecha)->first();
         $productos = Producto::getProductosSinInsumosArr();
         $insumos = Producto::all()->toArray();
         $planificaciones = [];
@@ -75,7 +79,7 @@ class PlanificacionController extends Controller
             throw new Exception('Fecha inválida');
         }
         $planificacion->actualizar($productos,$insumos);
-        return \Response::json(['fecha'=>$fecha,'insumos'=>$insumos, 'productos'=>$productos, 'planificacion'=>$planificacion->toArray()]);
+        return \Response::json(['fecha'=>$fecha,'insumos'=>$insumos, 'productos'=>count($productos), 'planificacion'=>$planificacion->toArray()]);
     }
 
     public static function verNecesidadInsumos(){

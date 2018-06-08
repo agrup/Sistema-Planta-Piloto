@@ -23,19 +23,24 @@
         Productos
     </h4>
     @include('elementosComunes.cierreTitulo')
-    @include('elementosComunes.aperturaTablaPlanificacion')
+    <div class="py-5"  >
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-11">
+                    <table class="table table-striped" id="tablaProd">
     <thead>
     <tr>
         <th>Código</th>
         <th>Producto</th>
         <th>Cantidad</th>       
         <th>Tipo Unidad</th>
-  
+        <th>Estado</th>
         <th></th>
         <th></th>
     </tr>
     </thead>
-    <tbody class="tbodyPlanif">
+    <tbody>
     @foreach($planificaciones as $value)
         @if($value['fecha']==$fecha)
             @foreach($value["productos"] as $v)
@@ -52,67 +57,65 @@
             @endforeach
         @endif
     @endforeach
-    <tr hidden></tr>
+    <tr hidden>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
     @if(isset($codigo))
         @foreach($codigo as $k=>$a)
-
-            <tr id="{{$k}}" class="trProducto">
-             
-                @if($estado[$k]=="pendiente")
-                    <td class="inte" hidden>{{$prodID[$k]}}</td>
-                    <td id="codigo"><?=$codigo[$k];?></td>
-                    <td id="nombre"><?=$nombre[$k];?></td>
-                    <td class="inte" id="cantidad"><?=$cantidad[$k];?></td>
-                    <td id="tu"><?=$tipoUnidad[$k];?></td>
-                                                    
-                    <!--@if ($tp[$k]==false)
-                        <td class="inte" id="tp">No</td>
-                    @else
-                        <td class="inte" id="tp">Si</td>
-                    @endif -->
-                    <td><img  src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;"  class="modificar" /></td>
-                    <td><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" class="borrar" /></td>
-                @elseif ($estado[$k]=="incumplida")
-                   <td id="codigo"><?=$codigo[$k];?></td>
-                   <td id="nombre"><?=$nombre[$k];?></td>
-                   <td id="cantidad"><?=$cantidad[$k];?></td>
-                   <td><?=$tipoUnidad[$k];?></td>
-                  <!--  @if($tp[$k])
-                        <td>Si</td>
-                    @else
-                        <td>No</td>
-                    @endif -->
-                   <script type="text/javascript">
-                      $('#'+'{{$k}}').css("background-color","#ffb3b3")
-                   </script>
-                   <td></td>
-                   <td></td> 
-                @else
-                   <td  id="codigo"><?=$codigo[$k];?></td>
-                    <td id="nombre"><?=$nombre[$k];?></td>
-                    <td id="cantidad"><?=$cantidad[$k];?></td>
-                    <td  id="tu"><?=$tipoUnidad[$k];?></td>
+            @if($estado[$k]=="pendiente")
+                <tr data-tipo="pendiente">
+                    {{--<td class="inte" hidden>{{$prodID[$k]}}</td>--}}
+                    <td><span class="interes" hidden>{{$prodID[$k]}}</span><?=$codigo[$k];?></td>
+                    <td><?=$nombre[$k];?></td>
+                    <td><span class="interes"><?=$cantidad[$k];?></span></td>
+                    <td><?=$tipoUnidad[$k];?></td>
+                    <td> Pendiente </td>
+                    <td>
+                        <img  src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;"  class="modificar" />
+                    </td>
+                    <td>
+                        <img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" class="borrar" />
+                    </td>
+                </tr>
+            @elseif ($estado[$k]=="incumplida")
+                <tr style="background-color: #ffb3b3" data-tipo="verga">
+                    <td><?=$codigo[$k];?></td>
+                    <td><?=$nombre[$k];?></td>
+                    <td><?=$cantidad[$k];?></td>
+                    <td><?=$tipoUnidad[$k];?></td>
+                    <td> Incumplida </td>
                     <td></td>
                     <td></td>
-                   <!-- @if($tp[$k])
-                        <td>Si</td>
-                    @else
-                        <td>No</td>
-                    @endif -->
-                   <script type="text/javascript">
-                      $('#'+'{{$k}}').css("background-color","lightgreen")
-                   </script>
-                   {{--<td></td>
-                   <td></td> --}}
-                @endif
-            </tr>
+                </tr>
+            @else
+                <tr style="background-color: lightgreen">
+                    <td><?=$codigo[$k];?></td>
+                    <td><?=$nombre[$k];?></td>
+                    <td><?=$cantidad[$k];?></td>
+                    <td><?=$tipoUnidad[$k];?></td>
+                    <td> Cumplida </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            @endif
         @endforeach
-        
     @endif
-    {{--<tr class="trProducto"> </tr>--}}
-     <tr><td><img src="{{asset('img/agregar.png') }}" width="30" height="30" style="cursor: pointer;"class="agregarProducto"/></td>
-        
-     </tr>
+    <tr>
+        <td>
+            <img src="{{asset('img/agregar.png') }}" width="30" height="30" style="cursor: pointer;"class="agregarProducto"/>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
     </tbody>
     @include('elementosComunes.cierreTabla')
     @include('elementosComunes.aperturaTitulo')
@@ -120,18 +123,23 @@
         Llegada de Insumos
     </h3>
     @include('elementosComunes.cierreTitulo')
-    @include('elementosComunes.aperturaTablaPlanificacion')
+    <div class="py-5"  >
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-11">
+                    <table class="table table-striped" id="tablaIns">
     <thead>
     <tr>
         <th>Código</th>
         <th>Insumo</th>
         <th>Cantidad</th>
         <th>Tipo Unidad</th>
+        <th>Estado</th>
         <th></th>
         <th></th>
 
     </tr>
-    <tr></tr>
     </thead>
     <tbody>
     <?php unset($codigo);unset($nombre);unset($cantidad);unset($estado);unset($tipoUnidad);unset($prodID)?>
@@ -150,47 +158,50 @@
             @endforeach
         @endif
     @endforeach
-    <tr hidden></tr>
+    <tr hidden>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
     @if(isset($codigo))
         @foreach($codigo as $k=>$a)
-
-            <tr id="insumo{{$k}}" class="trInsumo">
-
-              
-               
-                 @if($estado[$k]=="pendiente")
-                     <td hidden class="inte">{{$prodID[$k]}}</td>
+             @if($estado[$k]=="pendiente")
+                 <tr data-tipo="pendiente">
+                     {{--<td>{{$prodID[$k]}}</td>--}}
+                     <td><span hidden class="interesIns" >{{$prodID[$k]}}</span><?=$codigo[$k];?></td>
+                     <td><?=$nombre[$k];?></td>
+                     <td><span class="interesIns"><?=$cantidad[$k];?></span></td>
+                     <td><?=$tipoUnidad[$k];?></td>
+                     <td> Pendiente </td>
+                     <td><img  src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;"  class="modificar" /></td>
+                     <td><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" class="borrar" /></td>
+                 </tr>
+            @elseif ($estado[$k]=="incumplida")
+                 <tr style="background-color:#ffb3b3">
                      <td ><?=$codigo[$k];?></td>
-                    <td ><?=$nombre[$k];?></td>
-                    <td class="inte"><?=$cantidad[$k];?></td>
-                    <td id="tu"><?=$tipoUnidad[$k];?></td>
-                    <td><img  src="{{asset('img/modificar.png') }}" width="20" height="20" style="cursor: pointer;"  class="modificar" /></td>
-                    <td><img src="{{asset('img/borrar.png') }}" width="30" height="30" style="cursor: pointer;" class="borrar" /></td>
-                @elseif ($estado[$k]=="incumplida")
-                      <td ><?=$codigo[$k];?></td>
-                    <td ><?=$nombre[$k];?></td>
-                    <td ><?=$cantidad[$k];?></td>
-                    <td><?=$tipoUnidad[$k];?></td>
-                   <script type="text/javascript"> 
-                    
-                      $('#insumo'+'{{$k}}').css("background-color","#ffb3b3");
-                   </script>
-
-                @else
-                    <td ><?=$codigo[$k];?></td>
-                    <td ><?=$nombre[$k];?></td>
-                    <td ><?=$cantidad[$k];?></td>
-                    <td ><?=$tipoUnidad[$k];?></td>
-                   <script type="text/javascript">
-
-                      $('#insumo'+'{{$k}}').css("background-color","lightgreen");
-                   </script>
-
-                @endif
-            </tr>
-
+                     <td ><?=$nombre[$k];?></td>
+                     <td ><?=$cantidad[$k];?></td>
+                     <td><?=$tipoUnidad[$k];?></td>
+                     <td> Incumplida </td>
+                     <td></td>
+                     <td></td>
+                 </tr>
+            @else
+                 <tr style="background-color: lightgreen">
+                     <td ><?=$codigo[$k];?></td>
+                     <td ><?=$nombre[$k];?></td>
+                     <td ><?=$cantidad[$k];?></td>
+                     <td ><?=$tipoUnidad[$k];?></td>
+                     <td> Cumplida </td>
+                     <td></td>
+                     <td></td>
+                 </tr>
+            @endif
         @endforeach
-
     @endif
     <tr>
         <td>
@@ -201,7 +212,7 @@
         <td> </td>
         <td> </td>
         <td> </td>
-
+        <td> </td>
     </tr>
     </tbody>
     @include('elementosComunes.cierreTabla')
@@ -224,10 +235,6 @@
         <option value='{{$insumo['nombre']}}' data-codigo='{{$insumo['codigo']}}' data-tu="{{$insumo['tipoUnidad']}}" data-id="{{$insumo['id']}}"> {{$insumo['nombre']}} </option>
     @endforeach
     </select>
-     <select id="selecttp" >
-        <option>NO</option>
-         <option>SI</option>
-    </select>  
     <form>
         @csrf
         <button class="btn btn-primary" id="btnguardar"> Guardar y Salir</button>
@@ -235,10 +242,12 @@
     </body>
 @endsection
 @section('script')
-<script type="text/javascript" src="{{asset('js/planificacion/addPlanificacion.js')}}"></script>
-      <script type="text/javascript" src="{{asset('js/planificacion/guardarPlanificacion.js')}}"></script>
-       <script type="text/javascript" src="{{asset('js/planificacion/modificarPlanificacion.js')}}"></script>
-       <script type="text/javascript" src="{{asset('js/planificacion/borrarPlanificacion.js')}}"></script>
-       <script type="text/javascript" src="{{asset('js/planificacion/postPlanificacion.js')}}"></script>
+{{--<script type="text/javascript" src="{{asset('js/planificacion/addPlanificacion.js')}}"></script>--}}
+      {{--<script type="text/javascript" src="{{asset('js/planificacion/guardarPlanificacion.js')}}"></script>--}}
+       {{--<script type="text/javascript" src="{{asset('js/planificacion/modificarPlanificacion.js')}}"></script>--}}
+       {{--<script type="text/javascript" src="{{asset('js/planificacion/borrarPlanificacion.js')}}"></script>--}}
+      {{-- <script type="text/javascript" src="{{asset('js/planificacion/postPlanificacion.js')}}"></script>--}}
+       <script type="text/javascript" src="{{asset('js/planificacion/planificacion.js')}}"></script>
+
 
 @endsection

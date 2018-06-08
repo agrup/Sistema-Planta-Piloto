@@ -6,7 +6,7 @@ $(document).ready(function() {
        "aaSorting": [[ 2, "desc" ]],
        "bInfo": false,
       // "bAutoWidth": true,
-       "scrollY":        "23rem",
+       "scrollY":        "9.5rem",
           "scrollCollapse": true,
        "oLanguage": {"sZeroRecords": "", "sEmptyTable": ""},
            "columnDefs": [
@@ -21,10 +21,25 @@ $(document).ready(function() {
        "aaSorting": [[ 2, "desc" ]],
        "bInfo": false,
        "bAutoWidth": false,
-       "scrollY":        "24rem",
+       "scrollY": "18rem",
        "scrollCollapse": true,
        "oLanguage": {"sZeroRecords": "", "sEmptyTable": ""}
    });
+
+    $('table#tablaBase2').dataTable({
+        "bPaginate": false,
+        //"bLengthChange": false,
+        "bFilter": false,
+        "aaSorting": [[ 2, "desc" ]],
+        "bInfo": false,
+        // "bAutoWidth": true,
+        "scrollY":"9.5rem",
+        "scrollCollapse": true,
+        "oLanguage": {"sZeroRecords": "", "sEmptyTable": ""},
+        "columnDefs": [
+            { "width": "16%", "targets": 0 }
+        ],
+    });
 
 
 });

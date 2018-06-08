@@ -155,8 +155,7 @@ class Lote extends Model
         }
         $this->tipoLote = TipoLote::INICIADO;
         $this->fechaInicio = $datos['fechaInicio'];
-        $this->tipoTP = $datos['tipoTP'];
-        $this->asignatura = $datos['asignatura'];
+        $this->tipoTP = false;
         $this->cantidadElaborada = $datos['cantidadElaborada'];
         $this->save();
     }

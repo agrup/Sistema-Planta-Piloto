@@ -3,4 +3,4 @@
         <div class="row">
 
             <div class="col-md-11">
-                <table class="table table-striped" id="tablaPlanificacion" >
+                <table class="table table-striped" id="tablaProd">
