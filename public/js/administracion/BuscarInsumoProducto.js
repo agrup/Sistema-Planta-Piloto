@@ -34,9 +34,10 @@ $(document).ready(function() {
 			    var tbody = $("tbody");
 			    $(tbody).empty();
 			    //remove(tbody);
+			    console.log(data);
 			    data.forEach(function(item, index){
 		    	
-
+			    	console.log(item);
 			    	var tr=document.createElement("tr");
 			    	tr.setAttribute("data", "normal");
 			    	tr.setAttribute("role", "row");
