@@ -58,11 +58,11 @@
            
            <a id="path" value="" href="" style="margin-left: 10px;margin-top: 5px;font-size: 15px;" disabled="true "></a>
            </ul>
+
+           {{-- esto es para ver el path en el nav--}}
            <script type="text/javascript">
-              locationObj = location.href;
-              nombre=location.pathname;
-              console.log(locationObj);
-              console.log(nombre);
+              locationObj = location.href;  //la URL del path
+              nombre=location.pathname; //nombre del directorio
               $("#path").text(nombre);
              // $("#path").attr('href',locationObj);
             </script>
