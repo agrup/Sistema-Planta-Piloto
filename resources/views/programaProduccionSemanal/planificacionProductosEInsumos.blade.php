@@ -5,7 +5,9 @@
     <img src="{{asset('img/borrar.png') }}" width="30" height="30" style="display: none; cursor: pointer" class="borrar" id="iHBorrar" hidden />
     <img src="{{asset('img/guardar.png') }}" width="30" height="30" style="display: none; cursor: pointer" class="guardar" id="iHGuardar" hidden />
 
-    <?php 
+
+    <?php
+        $fecha= $planificaciones[0]['fecha'];
         setlocale(LC_TIME, 'spanish');
         Carbon\Carbon::setUtf8(true);
 
