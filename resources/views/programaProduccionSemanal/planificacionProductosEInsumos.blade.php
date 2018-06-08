@@ -5,8 +5,17 @@
     <img src="{{asset('img/borrar.png') }}" width="30" height="30" style="display: none; cursor: pointer" class="borrar" id="iHBorrar" hidden />
     <img src="{{asset('img/guardar.png') }}" width="30" height="30" style="display: none; cursor: pointer" class="guardar" id="iHGuardar" hidden />
 
-    
-    <?php $fecha=$planificaciones[0]['fecha'];?>
+
+    <?php
+        $fecha= $planificaciones[0]['fecha'];
+        setlocale(LC_TIME, 'spanish');
+        Carbon\Carbon::setUtf8(true);
+
+        $fechaC = Carbon\Carbon::createFromFormat('Y-m-d',$planificaciones[0]['fecha']);
+        $fechaActual=$fechaC->formatLocalized('%A %d de %B de %Y');
+    ?>
+   
+
 
     @include('elementosComunes.aperturaTitulo')
         Planificación Productos e Insumos  
@@ -14,7 +23,7 @@
 
     @include('elementosComunes.aperturaTitulo')
     <h4 style="text-align: center">
-    <b>Fecha Actual: <?= date("d-m-Y",strtotime($fecha)); ?></b>
+    <b>Fecha Actual: {{ $fechaActual}}</b>
     <input type="hidden" id="fecha" value="{{$fecha}}">
     </h4>
     @include('elementosComunes.cierreTitulo')
