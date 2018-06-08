@@ -65,8 +65,9 @@ class ProductoController extends Controller
 
       if (count(Producto::where('codigo',$datosInsumo['codigo'])->get())==0) {
               
-      $Producto = Producto::create($datosInsumo);
+      $producto = Producto::create($datosInsumo);
       $succes=true;
+      Movimiento::crearUltimoRealFicticio($producto->id);
       }else{
         throw new Exception('Codigo de Insumo existente');
       } 
