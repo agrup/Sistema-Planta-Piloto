@@ -309,16 +309,25 @@ public function modificarProducto()
 
 	   if($inspro=='producto'){
 
-    $productos= (Producto::filterRAW($codigo,$nombre,$categoria,$alarma))->toArray();
+    $productos = (Producto::filterRAW($codigo,$nombre,$categoria,$alarma));
+    $respuesta=[];
+        foreach ($productos as $producto) {
+          if (!empty($producto->getIngredientes())) {
+           array_push($respuesta, $producto);
+          }
+          
+        }       
+
+
      }
       if($inspro=='insumo'){
-        $productos=[];
+        $respuesta=[];
         
         $insumos= (Producto::filterRAW($codigo,$nombre,$categoria,$alarma));
 
         foreach ($insumos as $insumo) {
           if (empty($insumo->getIngredientes())) {
-           array_push($productos, $insumo);
+           array_push($respuesta, $insumo);
           }
           
         }
@@ -326,7 +335,8 @@ public function modificarProducto()
          //var_dump($productos);
       }
 
-		return  \Response::json($productos);
+
+		return  \Response::json($respuesta);
 
 
 

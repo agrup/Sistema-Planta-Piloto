@@ -611,17 +611,20 @@ class GestorStock
     {
         $result=[];
 
-         if(!$planificados)
+         if($planificados)
          {
                 
-            $movimientos =Movimiento::ultimoStockRealProdTodos();
-
+           // $movimientos =Movimiento::ultimoStockRealProdTodos();
+            
+            //self::recalcularPlanificados($fechaHasta);
+             self::recalcularPlanificados($fechaHasta);
+            $movimientos =Movimiento::ultimoStockProdTodos($fechaHasta);
 
          }
         else
         {
-            self::recalcularPlanificados($fechaHasta);
-             $movimientos =Movimiento::ultimoStockProdTodos($fechaHasta);
+           
+             $movimientos =Movimiento::ultimoStockRealProdTodosHasta($fechaHasta);
 
         }
         if(!empty($movimientos )){
