@@ -33,7 +33,7 @@
      <div class="menuPrincipal">
            <div class="contenedoropcion">
             <div class="flexboton"> 
-                <div class="flextitulo">  <h4 class="titulo">Gestionar de Stock</h4></div>
+                <div class="flextitulo">  <h4 class="titulo">Gestion de Stock</h4></div>
                  <form action="#" method="get">
                    <button><img src="img/menu/stock1.png" height="110px" width="120px"></button>  
                </form>
@@ -61,3 +61,4 @@
       </div>
 
 @endsection  
+
