@@ -26,6 +26,7 @@ class StockController extends Controller
 
 
         if($mostarPlanificados){
+            
             $mostarPlanificados=true;
         }else{
             $mostarPlanificados=false;

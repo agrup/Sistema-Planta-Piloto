@@ -174,6 +174,7 @@ class Movimiento extends Model
     {
 
 
+
     	return(self::where('producto_id','=',$producto_id)
 			    		->where('fecha','<',$fecha)
 			    		->orderBy('fecha','desc')
@@ -259,7 +260,8 @@ class Movimiento extends Model
         $productosid = self::distinct()->select('producto_id')->get();
         foreach ($productosid as $producto) {
             if (($aux = self::getAnteriorProd($producto->producto_id, $fechaHasta)) != null) {
-                $result[] = $aux;
+                array_push($result,$aux);
+                //$result[] = $aux;
             }
 
         }
@@ -267,6 +269,21 @@ class Movimiento extends Model
 
     }
 
+
+    public static function ultimoStockRealProdTodosHasta(string $fechaHasta)
+    {
+        $result = [];
+        $productosid = self::distinct()->select('producto_id')->get();
+        foreach ($productosid as $producto) {
+            if (($aux = self::getAnteriorRealProd($producto->producto_id, $fechaHasta)) != null) {
+                array_push($result,$aux);
+                //$result[] = $aux;
+            }
+
+        }
+        return $result;
+
+    }
 
 
 
