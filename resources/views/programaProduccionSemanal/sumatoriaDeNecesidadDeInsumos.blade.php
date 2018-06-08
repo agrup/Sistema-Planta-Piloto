@@ -1,7 +1,7 @@
 @extends('layouts.layoutPrincipal' )
 @section('section')
     @include('elementosComunes.aperturaTitulo')
-        Sumatoria de necesidades de Insumos
+        Verificar Insumos
     @include('elementosComunes.cierreTitulo')
     @include('elementosComunes.aperturaTitulo')
     
@@ -71,6 +71,17 @@
     @include('elementosComunes.cierreTabla')
 
   {{--@include('alertaStock')--}}  
-    
+    <div class="rowFlex" >
+        <div>
+            <form action="/planificacion" method="get">
+              <button  class="btn btn-primary" >Volver a la Semana</button>   
+            </form>
+         </div>
+         <div>
+            <form action="/planificacion" method="get"> 
+              <button action="/planificacion" class="btn btn-primary">Volver a la Fecha</button>   
+           </form>
+        </div>
+    </div>
 
 @endsection
