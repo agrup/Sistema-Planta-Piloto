@@ -316,7 +316,7 @@ public function modificarProducto()
 	   if($inspro=='producto'){
 
     $productos = (Producto::filterRAW($codigo,$nombre,$categoria,$alarma));
-    var_dump($productos);
+
     $respuesta=[];
         foreach ($productos as $producto) {
           if (!empty($producto->getIngredientes())) {

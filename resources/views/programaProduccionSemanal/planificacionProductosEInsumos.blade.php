@@ -24,7 +24,7 @@
     @include('elementosComunes.aperturaTitulo')
     <h4 style="text-align: center">
     <b>Fecha Actual: {{ $fechaActual}}</b>
-    <input type="hidden" id="fecha" value="{{$fecha}}">
+    <input type="hidden" id="fecha" value="{{$fechaActual}}">
     </h4>
     @include('elementosComunes.cierreTitulo')
     @include('elementosComunes.aperturaTitulo')
