@@ -6317,3 +6317,12 @@ th {
   font-weight: bold;
   margin-bottom: 10px;
 }
+
+/*Modifica el cuadradito que aparece cuando pones el mouse en un span con title*/
+[title]:hover:after{
+  content: attr(title);
+  background:whitesmoke;
+  padding: 5px;
+  border-radius:5px;
+  border:1px solid;
+}
