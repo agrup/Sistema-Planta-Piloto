@@ -53,7 +53,6 @@
             </div>
           </li>
 
-    
         
 
            
@@ -70,6 +69,7 @@
 
  @guest
              
+
                 <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
 
                 @else
