@@ -74,7 +74,9 @@ class ProductoController extends Controller
 
     return view('administracion.altaInsumoProducto')->with(compact('insumoProducto'))
                                                     ->with(compact('succes'))
-                                                    ->with(compact('insumos'));
+                                                    ->with(compact('insumos'))
+                                                    ->with('alert', 'Alta Exitosa');
+                                                    ;
   }
 
 

@@ -18,7 +18,7 @@
 
 
     @include('elementosComunes.aperturaTitulo')
-        Planificación Productos e Insumos  
+        Planificación Productos e insumos  
     @include('elementosComunes.cierreTitulo')
 
     @include('elementosComunes.aperturaTitulo')
@@ -244,10 +244,20 @@
         <option value='{{$insumo['nombre']}}' data-codigo='{{$insumo['codigo']}}' data-tu="{{$insumo['tipoUnidad']}}" data-id="{{$insumo['id']}}"> {{$insumo['nombre']}} </option>
     @endforeach
     </select>
-    <form>
-        @csrf
-        <button class="btn btn-primary" id="btnguardar"> Guardar y Salir</button>
-    </form>
+    <div class="rowFlex">
+        <div class="inputBoton">
+        <form>
+            @csrf
+            <button class="btn btn-primary" id="btnguardar"> Guardar y Salir</button>
+        </form>
+        </div>
+        <div class="inputBoton">
+         <form>
+            @csrf
+            <button class="btn btn-primary" id="btnguardar"> Guardar y Verificar Planificación</button>
+        </form>
+        </div>
+    </div>
     </body>
 @endsection
 @section('script')

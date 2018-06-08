@@ -4,18 +4,22 @@
 	
 					@include('elementosComunes.aperturaTitulo')
 						@if ($insumoProducto=='producto')			
-							Administración de Productos
+							Alta de Producto
 						@elseif ($insumoProducto=='insumo')
-							Administración de Insumos
+							Alta de Insumo
 						@endif
 					@include('elementosComunes.cierreTitulo')
 
 						@if ($insumoProducto=='producto')			
-							<form action="/productos/altaProducto" method="POST" id="myForm" >
+
+							<form action="/productos/altaProducto" class="" method="POST" id="myForm" >
+								{{csrf_field()}}
 						@elseif ($insumoProducto=='insumo')
-							<form action="/productos/altaInsumo" method="POST" id="myForm" >
+							<form action="/productos/altaInsumo" class="" method="POST" id="myForm" >
+								{{csrf_field()}}
+
 						@endif					    
-							@csrf
+							 
 					    	<div class="row">
 						    	<div class="col-md-6">
 						    		<div class="form-group">
