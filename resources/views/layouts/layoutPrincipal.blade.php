@@ -57,7 +57,7 @@
   <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
   <script src="{{asset('jquery/popper.min.js')}}" ></script>
   <script src="{{asset('jquery/bootstrap.min.js')}}" ></script>
- <script type="text/javascript" src="{{asset('js/nav/navbar.js')}}"></script>
+ {{--<script type="text/javascript" src="{{asset('js/nav/navbar.js')}}"></script>--}}
 </body>
 </main>
 </html>
