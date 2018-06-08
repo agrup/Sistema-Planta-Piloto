@@ -41,5 +41,19 @@ $(document).ready(function() {
         ],
     });
 
+    $('table#tablaSinOrdenar').dataTable({
+        "bPaginate": false,
+        //"bLengthChange": false,
+        "bFilter": false,
+        "bSorting": false,
+        "bInfo": false,
+        // "bAutoWidth": true,
+        "scrollY":"9.5rem",
+        "scrollCollapse": true,
+        "oLanguage": {"sZeroRecords": "", "sEmptyTable": ""},
+        "columnDefs": [
+            { "width": "16%", "targets": 0 }
+        ],
+    });
 
 });

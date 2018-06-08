@@ -31,6 +31,7 @@
 			        <div class="form-group">
 			            <label>Alarma</label>
 			            <select name="alarma" class="form-control" id="alarma">
+			            	<option value="no">No Filtrar</option>
 	  						<option value="True">Activa</option>
 	  						<option value="False">Inactiva</option>  						
 						</select>

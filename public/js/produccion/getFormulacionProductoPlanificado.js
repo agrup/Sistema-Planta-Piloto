@@ -84,7 +84,6 @@ $(document).ready(function(){
 	});
 
     $('body').on('change','#selectLote',function(){
-        alert("aSome");
         var stock=$('option:selected', this).data('stock');
         $(this).parent('td').next().next().next().text(stock);
     });
