@@ -111,7 +111,7 @@ class ProduccionController extends Controller
 
 
         //Los primeros 4 datos del lote no pueden estar vacios
-        for($i=0; $i<4;$i++){
+        for($i=0; $i<3;$i++){
             if(!isset($dataLoteArr[$i]) || trim($dataLoteArr[$i])===''){
                 throw new Exception('Campo que no se permite vacio');
             }
@@ -126,10 +126,12 @@ class ProduccionController extends Controller
             'producto_id'=>$dataLoteArr[0],
             'cantidadElaborada'=>$dataLoteArr[1],
             'fechaInicio'=>$fecha,
-            'tipoTP'=>$dataLoteArr[3],
-            'asignatura'=>$dataLoteArr[4]
+            'tipoTP'=>false,
         ];
         $lote = Lote::find($loteID);
+        if($lote==null){
+            throw new Exception('Lote inexistente');
+        }
         $lote->iniciarPlanificado($datosLote);
 
         $consumos = []; // armaré un array de consumos como lo necesita el gestor de stock
@@ -216,7 +218,7 @@ class ProduccionController extends Controller
 
 
         //Los primeros 4 datos del lote no pueden estar vacios
-        for($i=0; $i<4;$i++){
+        for($i=0; $i<3;$i++){
             if(!isset($dataLoteArr[$i]) || trim($dataLoteArr[$i])===''){
                 throw new Exception('Campo que no se permite vacio');
             }
@@ -231,8 +233,7 @@ class ProduccionController extends Controller
             'producto_id'=>$dataLoteArr[0],
             'cantidadElaborada'=>$dataLoteArr[1],
             'fechaInicio'=>$fecha,
-            'tipoTP'=>$dataLoteArr[3],
-            'asignatura'=>$dataLoteArr[4]
+            'tipoTP'=>false,
         ];
         $lote = Lote::crearLoteNoPlanificado($datosLote);
 
