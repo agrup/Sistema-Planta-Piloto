@@ -45,9 +45,16 @@
 	    @include('elementosComunes.aperturaTabla')
 	    	<thead>
 	    		<tr>
-	    			<th>Código</th> <th>Nombre</th> <th>Descripción</th>
-	    			<th>Unidad</th><th>Alarma</th><th>Alarma Amarilla</th>
-	    			<th>Alarma Roja</th><th>Categoría</th><th></th><th></th>
+	    			<th>Código</th> 
+	    			<th>Nombre</th>
+	    			<th>Descripción</th>
+	    			<th>Unidad</th>
+	    			<th>Alarma</th>
+	    			<th>Alarma Amarilla</th>
+	    			<th>Alarma Roja</th>
+	    			<th>Categoría</th>
+	    			<th></th>
+	    			<th></th>
 	    		</tr>
 	    	</thead>	    	
 	    	<tbody>	    		
