@@ -6326,3 +6326,8 @@ th {
   border-radius:5px;
   border:1px solid;
 }
+
+.divAlert{
+  /*display: none;*/
+  float:right;
+}
