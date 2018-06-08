@@ -59,6 +59,6 @@
            </div>
            </div>
       </div>
-
+       @include('alertaStock')
 @endsection  
 

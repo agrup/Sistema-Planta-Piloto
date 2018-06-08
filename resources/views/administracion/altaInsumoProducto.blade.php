@@ -11,11 +11,13 @@
 					@include('elementosComunes.cierreTitulo')
 
 						@if ($insumoProducto=='producto')			
+
 							<form action="/productos/altaProducto" class="" method="POST" id="myForm" >
 								{{csrf_field()}}
 						@elseif ($insumoProducto=='insumo')
 							<form action="/productos/altaInsumo" class="" method="POST" id="myForm" >
 								{{csrf_field()}}
+
 						@endif					    
 							 
 					    	<div class="row">
