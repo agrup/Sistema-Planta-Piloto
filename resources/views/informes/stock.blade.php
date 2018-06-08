@@ -1,9 +1,15 @@
 @extends('layouts.layoutPrincipal' )
 
 @section('section')
+		<?php 
+		setlocale(LC_TIME, 'spanish');
+		Carbon\Carbon::setUtf8(true);
 
+		$fechaC = Carbon\Carbon::createFromFormat('Y-m-d',$fecha);
+		$fechaActual=$fechaC->formatLocalized('%A %d de %B de %Y');
+	?>
 		@include('elementosComunes.aperturaTitulo')
-			Stock <h4>Hasta el dia {{date('d-m-Y',strtotime($fecha))}}</h4>
+			Stock <h4>Hasta el dia {{$fechaActual}}</h4>
 		@include('elementosComunes.cierreTitulo')
 		
 		{{-- FORM PARA STOCK A FUTURO --}}

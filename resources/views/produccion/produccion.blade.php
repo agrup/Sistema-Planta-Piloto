@@ -1,6 +1,13 @@
 @extends('layouts.layoutPrincipal' )
 
 @section('section')
+<?php 
+		setlocale(LC_TIME, 'spanish');
+		Carbon\Carbon::setUtf8(true);
+
+		$fechaC = Carbon\Carbon::createFromFormat('Y-m-d',$data["fecha"]);
+		$fechaActual=$fechaC->formatLocalized('%A %d de %B de %Y');
+	?>
 		@include('elementosComunes.aperturaTitulo')
 			Producción
 		@include('elementosComunes.cierreTitulo')
@@ -9,7 +16,7 @@
 
 		@include('elementosComunes.aperturaFormInline')
 
-			<h4><b>Programa de {{date('d-m-	Y',strtotime($data["fecha"]))}}</b></h4>        
+			<h4><b>Programa de {{$fechaActual}}</b></h4>        
 			
 		@include('elementosComunes.cierreFormInline')
 
