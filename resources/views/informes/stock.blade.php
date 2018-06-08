@@ -51,4 +51,8 @@
 	        
         @include('elementosComunes.cierreTabla')
 
+
+		@include('layouts.errors')
+
+
 @endsection

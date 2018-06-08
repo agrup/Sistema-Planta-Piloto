@@ -22,6 +22,9 @@ class ProductoController extends Controller
   
 
   public function showAltaInsumo(){
+
+
+
     $insumoProducto = "insumo";
     $insumos = [];
      $succes=false;
@@ -31,6 +34,18 @@ class ProductoController extends Controller
   }
 
   public function altaInsumo(){
+/*
+
+*/
+    $this->validate(request(),[
+       'nombre'=>'required',
+        'descripcion'=>'required',
+        'tipoUnidad'=>'required',
+        'codigo'=>'required',
+        'alarmaActiva'=>'required|boolean',
+
+      ]);
+
     $insumoProducto = "insumo";
     $insumos = [];
      $datosInsumo = [
@@ -173,8 +188,9 @@ public function altaProducto(){
         //$Producto = Producto::create($datosProducto);
         //recorro todos los ingredientes para agregarlos a la formulacion del producto creado
         $formulacion = explode(',',$formulacion);// pasa el string a array
-        var_dump($formulacion);
+
 /*
+    */
         for ($i= 0; $i<count($formulacion) ; $i=$i+2) {
           $ingrediente_id =$formulacion[$i];
           $cantidadProducto = $formulacion[$i+1];
@@ -183,7 +199,6 @@ public function altaProducto(){
           }
         }
 
-    */
         Movimiento::crearUltimoRealFicticio($Producto->id);
 
         $insumoProducto = 'producto';
