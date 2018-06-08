@@ -12,10 +12,11 @@
       </button>
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-      {{--   <ul class="navbar-nav mr-auto">
+      {{--
+         <ul class="navbar-nav mr-auto">
          
-		
-			  <li class="nav-item dropdown">
+    
+        <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle"  id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Planificación</span></a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
               <a class="dropdown-item" href="/planificacion">Productos y llegada de insumos</a>
@@ -26,6 +27,7 @@
          <li class="nav-item active">
             <a class="nav-link" href="/produccion"><span class="glyphicon glyphicon-compressed">Produccion</span> <span class="sr-only">(current)</span></a>
           </li>
+
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle"  id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Administracion</span></a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -50,7 +52,39 @@
 
             </div>
           </li>
-        </ul>--}} 
+
+        --}} 
+
+
+            @guest
+                <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
+
+                @else
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ Auth::user()->name }} <span class="caret"></span>
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                @if(Auth::user()->hasAnyRole('administrador'))
+                    <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                @endif
+                    @endguest
+
+        </ul>
+
+        </ul>
              <?php $url= url()->current();
              /* 
                $arregloNav[]= $titulo;;
@@ -60,6 +94,7 @@
   //$url=str_replace("http://127.0.0.1:8000","",$url);
   //$arregloNav=explode("/",$url);
   ?> 
+
 
 
   <ul class="navbar-nav mr-auto">     

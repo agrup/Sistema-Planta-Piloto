@@ -77,7 +77,7 @@
 
 
 @endsection
-
+		@include('layouts.errors')
 @section('script')
 	@if ($insumoProducto=='producto')
 		<script type="text/javascript" src="{{asset('js/administracion/agregarFormulacion.js')}}"></script>
