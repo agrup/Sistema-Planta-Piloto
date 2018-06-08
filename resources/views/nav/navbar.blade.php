@@ -90,9 +90,9 @@
                             </form>
                         </div>
                     </div>
-                @if(Auth::user()->hasAnyRole('administrador'))
+              {{--register  @if(Auth::user()->hasAnyRole('administrador'))
                     <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
-                @endif
+                @endif--}}
                     @endguest 
             
  </nav>

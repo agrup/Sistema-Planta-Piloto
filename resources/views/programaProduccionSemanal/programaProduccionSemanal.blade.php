@@ -20,7 +20,7 @@
             </form> 
         </div>
         <div  class="inputFecha"> 
-               <form action="planificacion/verificar" method="GET" enctype="multipart/form-data"  >
+               <form action="planificacion/verificar/{{$planificaciones[4]['fecha']}}" method="GET" enctype="multipart/form-data"  >
                 {{csrf_field()}}
                 <input  type="date" name="fecha" value="{{$planificaciones[4]['fecha']}}" hidden="true">
                 <input  class="btn btn-secondary"  type="submit" value="Verificar semana">
