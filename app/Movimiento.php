@@ -60,9 +60,8 @@ class Movimiento extends Model
      */
     public static function ultimoRealProd($producto_id)
     {
-       return self::whereRaw('producto_id=' . $producto_id  . 'and (tipo =' . TipoMovimiento::TIPO_MOV_CONSUMO .
-               'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO .
-               'or tipo=' . TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS . ')')
+       return self::whereIn('tipo',TipoMovimiento::reales())
+           ->where('producto_id',$producto_id)
            ->orderBy('fecha', 'desc')
            ->first();
     }
@@ -144,6 +143,7 @@ class Movimiento extends Model
     public static function getPlanificadosProd(int $producto_id, string $fechaHasta)
     {
 	return self::whereIn('tipo',TipoMovimiento::planificadosPendientes())
+                ->where('producto_id',$producto_id)
 				->where('fecha','<',$fechaHasta)
 				->orderBy('fecha','asc')
 				->get();
