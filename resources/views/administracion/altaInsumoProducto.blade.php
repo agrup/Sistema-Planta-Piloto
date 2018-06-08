@@ -4,9 +4,9 @@
 	
 					@include('elementosComunes.aperturaTitulo')
 						@if ($insumoProducto=='producto')			
-							Administración de Productos--> Agregar Producto
+							Administración de Productos
 						@elseif ($insumoProducto=='insumo')
-							Administración de Insumos--> Agregar Insumo
+							Administración de Insumos
 						@endif
 					@include('elementosComunes.cierreTitulo')
 
