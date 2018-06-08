@@ -316,7 +316,7 @@ class Planificacion extends Model
         for($i=0;$i < count($insumos);$i+=2){
             $productoID = $insumos[$i];
             $cantidad = $insumos[$i+1];
-            if(Producto::find($productoID)!=null && $cantidad=='' && $cantidad>0){
+            if(Producto::find($productoID)!=null && $cantidad!=='' && $cantidad>0){
                 //doy de alta movimiento
                 // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
                 $H_i_s = date('H:i:s');
