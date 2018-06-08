@@ -135,7 +135,7 @@
             @foreach($planificaciones as $planificacion)
             <td>
                 @if(isset($planificacion['insumos'][$i]))
-                {{ $planificacion['insumos'][$i]['nombre'] }}
+                    <span title="{{$planificacion['insumos'][$i]['cantidad']}} {{ $planificacion['insumos'][$i]['tipoUnidad']}}"> {{ $planificacion['insumos'][$i]['nombre'] }} </span>
                 @endif
             </td>
             @endforeach
