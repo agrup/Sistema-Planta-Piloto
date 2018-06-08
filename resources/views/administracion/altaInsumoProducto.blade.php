@@ -11,9 +11,9 @@
 					@include('elementosComunes.cierreTitulo')
 
 						@if ($insumoProducto=='producto')			
-							<form action="/productos/altaProducto" class="" method="POST" id="myForm" novalidate>
+							<form action="/productos/altaProducto" method="POST" id="myForm" >
 						@elseif ($insumoProducto=='insumo')
-							<form action="/productos/altaInsumo" class="" method="POST" id="myForm" novalidate>
+							<form action="/productos/altaInsumo" method="POST" id="myForm" >
 						@endif					    
 							@csrf
 					    	<div class="row">

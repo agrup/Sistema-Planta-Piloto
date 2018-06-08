@@ -157,6 +157,7 @@ class ProduccionController extends Controller
         $data['lotes']=self::getArrayLotes($fecha);
         $data['fecha']=$fecha;
         return view('produccion.produccion',compact('data'));
+        
     }
 
     public static function showLoteInProd ($id)
