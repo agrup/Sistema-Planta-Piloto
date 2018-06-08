@@ -69,5 +69,8 @@
     @endforeach
     </tbody>
     @include('elementosComunes.cierreTabla')
+
+    @include('alertaStock')
     
+
 @endsection
