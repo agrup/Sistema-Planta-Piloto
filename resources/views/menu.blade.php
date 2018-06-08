@@ -22,9 +22,11 @@
          <div class="contenedoropcion">     
                 <div class="flextitulo"><h4 class="titulo">Administración</h4></div>
                 <div class="flexboton"> 
-                 <form action="/planificacion" method="get">
+                 <form action="#" method="get">
                  <button><img src="img/menu/administracion2.png" height="110px" width="120px"></button>  
-          </form>      
+          </form>     
+          <li>  <a href="/productos/administracionProductos" style="font-size: 20px; color: blue" >Productos</a></li>
+            <li>  <a href="/productos/administracionInsumos" style="font-size: 20px; color: blue" >Insumos</a></li>  
          </div>
          </div>
     </div>
