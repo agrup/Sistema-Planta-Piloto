@@ -1,8 +1,16 @@
 @extends('layouts.layoutPrincipal' )
 
 @section('section')
+	<?php 
+		setlocale(LC_TIME, 'spanish');
+		Carbon\Carbon::setUtf8(true);
+
+		$fechaC = Carbon\Carbon::createFromFormat('Y-m-d',$lote["fecha"]);
+		$fechaActual=$fechaC->formatLocalized('%A %d de %B de %Y');
+	?>
+
 		@include('elementosComunes.aperturaTitulo')
-			Lote en Producción {{date('d-m-Y',strtotime($lote["fecha"]))}}
+			Lote en Producción {{$fechaActual}}
 		@include('elementosComunes.cierreTitulo')
 
 		@include('elementosComunes.aperturaTabla')    

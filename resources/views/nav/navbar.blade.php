@@ -12,11 +12,11 @@
       </button>
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-      {{--
+     
          <ul class="navbar-nav mr-auto">
-         
+     
     
-        <li class="nav-item dropdown">
+      {{-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle"  id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Planificación</span></a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
               <a class="dropdown-item" href="/planificacion">Productos y llegada de insumos</a>
@@ -52,15 +52,27 @@
 
             </div>
           </li>
+    --}} 
+        
 
-        --}} 
+           
+           <a id="path" value="" href="" style="margin-left: 10px;margin-top: 5px;font-size: 15px;" disabled="true "></a>
+           </ul>
+           <script type="text/javascript">
+              locationObj = location.href;
+              nombre=location.pathname;
+              console.log(locationObj);
+              console.log(nombre);
+              $("#path").text(nombre);
+             // $("#path").attr('href',locationObj);
+            </script>
 
-
-            @guest
+ @guest
+             
                 <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
 
                 @else
-                    <li class="nav-item dropdown">
+                    <div class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
@@ -76,31 +88,13 @@
                                 @csrf
                             </form>
                         </div>
-                    </li>
+                    </div>
                 @if(Auth::user()->hasAnyRole('administrador'))
                     <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                 @endif
-                    @endguest
+                    @endguest 
+            
+ </nav>
 
-        </ul>
-
-        </ul>
-             <?php $url= url()->current();
-             /* 
-               $arregloNav[]= $titulo;;
-               if($arregloNav!=""){
-                $arregloNav[]=$titulo;*/
-              
-  //$url=str_replace("http://127.0.0.1:8000","",$url);
-  //$arregloNav=explode("/",$url);
-  ?> 
-
-
-
-  <ul class="navbar-nav mr-auto">     
-       <li><a href="{{$url}}" data-place="home" id="home" class="navbar-brand" ></a></li>    
-  </ul>
-    </nav>
-
-      </div>
+      
  
