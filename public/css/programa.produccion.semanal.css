@@ -6253,7 +6253,7 @@ select.interes, input.interes{
   margin-bottom: 800px;
 }
 
-div.navSemanas {
+div.rowFlex {
     /*margin: 0.55rem;*/
    /* padding: 0.35rem;*/
     display: flex;
@@ -6262,7 +6262,12 @@ div.navSemanas {
 }
 
 div.inputFecha input {
-    margin: 1.5rem;
+    margin-top: 1.5rem;
+}
+div.inputBoton button {
+   flex-basis: 20%;
+  display: flex;
+  justify-content: space-between;
 }
 
 div.flechita {

@@ -29,6 +29,7 @@
                 </div>
             </div>
         </div>
+         @include('alertaStock')
     </body>
 </html>
 

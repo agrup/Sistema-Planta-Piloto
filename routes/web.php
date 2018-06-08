@@ -22,6 +22,7 @@ Route::post('/planificacion','PlanificacionController@show')->middleware('checkR
 Route::get('/calendarioSig','PlanificacionController@calendarioSig')->middleware('checkRoles:administrador,produccion,jefeProduccion'); //flechita << >>
 Route::get('/calendarioAnt','PlanificacionController@calendarioAnt')->middleware('checkRoles:administrador,produccion,jefeProduccion');
 Route::get('/sumarizacion','PlanificacionController@verNecesidadInsumos')->middleware('checkRoles:administrador,produccion,jefeProduccion');
+Route::get('planificacion/verificar','PlanificacionController@verificarPlanificacion')->middleware('checkRoles:administrador,produccion,jefeProduccion');
 //Dia
 Route::get('/planificacion/planificacionDia','PlanificacionController@PlanificacionDia')->middleware('checkRoles:administrador,produccion,jefeProduccion')->middleware('checkRoles:administrador,produccion,jefeProduccion');
 Route::post('/planificacion/planificacionDia','PlanificacionController@postPlanificacionDia')->middleware('checkRoles:administrador,produccion,jefeProduccion')->middleware('checkRoles:administrador,produccion,jefeProduccion');
