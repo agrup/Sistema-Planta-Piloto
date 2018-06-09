@@ -39,6 +39,7 @@
                </form>
                </div>
                <li>  <a href="/stock/entradaLoteInsumo" style="font-size: 20px; color: blue" >Entrada de Insumo</a></li>
+               <li>  <a href="/stock/controlExistencias" style="font-size: 20px; color: blue" >Control de Existencias</a></li>
            </div>
            <div class="contenedoropcion">
             <div class="flexboton"> 
