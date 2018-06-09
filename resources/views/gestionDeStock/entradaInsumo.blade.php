@@ -1,7 +1,7 @@
 @extends('layouts.layoutPrincipal' )
 
 @section('section')
-	
+
 	@include('elementosComunes.aperturaTitulo')
 		Entrada Lote de Insumo
 	@include('elementosComunes.cierreTitulo')
@@ -48,7 +48,13 @@
 				
 			</div>
 
+	       	<div class="btn-group">
 			<input type="submit" name="entradaInsumo" value="Guardar" class="btn btn-primary">
+	       		
+	       	@include('elementosComunes.aperturaBoton')
+						<a href="/" class="btn btn-primary">Volver</a>
+		    @include('elementosComunes.cierreBoton')			
+	       	</div>
 		</div>
 
 	</form>

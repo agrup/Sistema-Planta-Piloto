@@ -150,7 +150,7 @@ class Producto extends Model
      }
 
 
-     public function agregarIngrediente($cantidad,$cantidadProducto,$ingrediente_id)
+     public function agregarIngrediente($cantidadProducto,$cantidad,$ingrediente_id)
      {
 
        return $this->formulacion()->attach($ingrediente_id,['cantidad'=>$cantidad,'cantidadProducto'=>$cantidadProducto,'ingrediente_id'=>$ingrediente_id]);
