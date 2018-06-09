@@ -306,14 +306,11 @@ public function modificarProducto()
 		 $nombre=request()->input('nombre');
 		 $categoria=request()->input('categoria');
 		 $alarma=request()->input('alarma');
-     if($alarma=="no"){
-        $alarma = "";
-     }
 
 	   if($inspro=='producto'){
 
     $productos = (Producto::filterRAW($codigo,$nombre,$categoria,$alarma));
-    var_dump($productos);
+    //var_dump($productos);
     $respuesta=[];
         foreach ($productos as $producto) {
           if (!empty($producto->getIngredientes())) {
