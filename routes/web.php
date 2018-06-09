@@ -41,15 +41,24 @@ Route::get('/produccion','ProduccionController@index')->middleware('checkRoles:a
 Route::post('/produccion','ProduccionController@show')->middleware('checkRoles:administrador,produccion,jefeProduccion');
 Route::get('/produccion/loteEnProduccion/{id}','ProduccionController@loteEnProduccion')->middleware('checkRoles:administrador,produccion,jefeProduccion');
 
-Route::get('/produccion/iniciarPlanificado/{id}','ProduccionController@iniciarPlanificado')->middleware('checkRoles:administrador,jefeProduccion');
-Route::post('/produccion/iniciarPlanificado/','ProduccionController@postIniciarPlanificado')->middleware('checkRoles:administrador,jefeProduccion');;
-Route::get('/produccion/loteNoPlanificado/{fecha}', 'ProduccionController@indexLoteNoPlanificado')->middleware('checkRoles:administrador,jefeProduccion');;
-Route::post('/produccion/loteNoPlanificado', 'ProduccionController@newLoteNoPlanificado')->middleware('checkRoles:administrador,jefeProduccion');;
+Route::get('/produccion/iniciarPlanificado/{id}','ProduccionController@iniciarPlanificado')->middleware('checkRoles:administrador,jefeProduccion,produccion');
+
+Route::post('/produccion/iniciarPlanificado/','ProduccionController@postIniciarPlanificado')->middleware('checkRoles:administrador,jefeProduccion,produccion');
+
+Route::get('/produccion/loteNoPlanificado/{fecha}', 'ProduccionController@indexLoteNoPlanificado')->middleware('checkRoles:administrador,jefeProduccion');
+
+Route::post('/produccion/loteNoPlanificado', 'ProduccionController@newLoteNoPlanificado')->middleware('checkRoles:administrador,jefeProduccion');
+
 Route::get('/produccion/formulacion','ProduccionController@getFormulacion')->middleware('checkRoles:administrador,produccion,jefeProduccion');
+
 Route::get('/produccion/loteEnProduccion/{id}' ,'ProduccionController@showLoteInProd')->middleware('checkRoles:administrador,produccion,jefeProduccion');
+
 Route::get('/produccion/modificarIniciado/{id}','ProduccionController@showModificarIniciado')->middleware('checkRoles:administrador,produccion,jefeProduccion');
+
 Route::post('/produccion/modificarIniciado/{id}', 'ProduccionController@postModificarIniciado')->middleware('checkRoles:administrador,produccion,jefeProduccion');
+
 Route::post('/produccion/postMaduracion/{id}','ProduccionController@postMaduracion')->middleware('checkRoles:administrador,produccion,jefeProduccion');
+
 Route::post('/produccion/postFinalizarLote/{id}','ProduccionController@postFinalizarLote')->middleware('checkRoles:administrador,produccion,jefeProduccion');
 
 //Administracion

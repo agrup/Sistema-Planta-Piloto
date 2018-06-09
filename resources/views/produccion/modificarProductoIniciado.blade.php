@@ -165,10 +165,16 @@
 
         <button id="guardar" type="submit" class="btn btn-primary">Guardar</button>
 
+
         </div>
         </div>
         @include('elementosComunes.cierreTabla')
     </form>
+    <div>
+        <a href="/" class="btn btn-secondary">Volver al Menú</a>
+
+
+    </div>
 
 @endsection
 @section('script')

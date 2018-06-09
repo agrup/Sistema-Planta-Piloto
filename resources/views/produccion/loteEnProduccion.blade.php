@@ -141,7 +141,14 @@
 
 
 				 @default
-	        		<span>Something went wrong, please try again</span>
+				<div class="alert alert-danger">
+					<span>Este es un lote de Insumo</span>
+				</div>
 		    @endswitch
+	<div>
+		<a href="/" class="btn btn-secondary">Volver al Menú</a>
+
+
+	</div>
 @endsection
 		
