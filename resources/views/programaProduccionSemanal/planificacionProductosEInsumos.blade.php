@@ -257,6 +257,12 @@
             <button class="btn btn-primary" id="btnguardaryverificar"> Guardar y Verificar Planificación</button>
         </form>
         </div>
+        <div>
+            <form action="/planificacion" method="post">              
+                     <input type="date" name="fecha" class="form-control" value="{{$planificaciones[0]['fecha']}}" hidden="true">   
+              <button  class="btn btn-secondary" >Volver a la Semana</button>   
+            </form>
+         </div>
         {{-- <div class="inputBoton">
          <form>
             @csrf
@@ -264,6 +270,7 @@
         </form>
         </div>--}}
     </div>
+
     </body>
 @endsection
 @section('script')
