@@ -108,7 +108,7 @@ class Movimiento extends Model
                 ->where('fecha','>',$fechaInicio)
                 ->where('fecha','<',$fechaTope)
                 ->where('saldoGlobal','<','0')
-                ->where('tipo','=',9)
+                ->where('tipo','=',TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF)
                 ->orderBy('fecha','asc')
                 ->first();
             if($mov!=null){

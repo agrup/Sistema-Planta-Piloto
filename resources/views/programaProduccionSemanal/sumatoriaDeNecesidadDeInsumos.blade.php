@@ -6,11 +6,15 @@
     @include('elementosComunes.aperturaTitulo')
     
     <h5><b>Sumarizacion hasta: </b></h5>
-    <form action="/sumarizacion" method="get" class="form-inline">
+    <form action="/planificacion/verificar/{{$fechaHasta}}" method="get" class="form-inline">
         {{csrf_field()}}
         {{-- {date("d-m-Y",strtotime($fechaHasta))}} --}}
         <div class="input-group">
-        <input type="date" name="fecha" class="form-control" value="{{$fechaHasta}}">                     
+        @if(isset($_GET['fecha']))
+        <input type="date" name="fecha" class="form-control" value="{{$_GET['fecha']}}"> 
+        @else
+         <input type="date" name="fecha" class="form-control" value="{{$fechaHasta}}">   
+         @endif                 
         </div>
         <input type="submit" class="btn btn-primary" value="Ir a la Fecha">         
     </form>
@@ -73,15 +77,31 @@
   {{--@include('alertaStock')--}}  
     <div class="rowFlex" >
         <div>
-            <form action="/planificacion" method="get">
+            <form action="/planificacion" method="post">
+                  @if(isset($_GET['fecha']))
+                    <input type="date" name="fecha" class="form-control" value="{{$_GET['fecha']}}" hidden="true"> 
+                    @else
+                     <input type="date" name="fecha" class="form-control" value="{{$fechaHasta}}" hidden="true">   
+                     @endif  
               <button  class="btn btn-primary" >Volver a la Semana</button>   
             </form>
          </div>
+         
          <div>
-            <form action="/planificacion" method="get"> 
+            <form action="/planificacion/planificacionDia" method="get"> 
+                 @if(isset($_GET['fecha']))
+                    <input type="date" name="fecha" class="form-control" value="{{$_GET['fecha']}}" hidden="true"> 
+                    @else
+                     <input type="date" name="fecha" class="form-control" value="{{$fechaHasta}}" hidden="true">   
+                     @endif  
               <button action="/planificacion" class="btn btn-primary">Volver a la Fecha</button>   
            </form>
         </div>
+        <div>
+             <form action="/" method="get">
+                 <button  class="btn btn-secondary" >Volver al Menú</button>  
+             </form>
+         </div>
     </div>
 
 @endsection

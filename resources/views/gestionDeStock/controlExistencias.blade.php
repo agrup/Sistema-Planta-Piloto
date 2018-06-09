@@ -48,8 +48,13 @@
                 @include('elementosComunes.cierreBoton')
             </form>
 
-            @include('elementosComunes.aperturaTabla')
-                <thead>
+            <div class="py-5"  >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <table class="table table-striped" id="tablaExistencias" >
+
+                            <thead>
                     <tr><th>Fecha Control</th><th>Lote</th><th>Producto</th><th>Cantidad Observada</th><th>Tipo Unidad</th></tr>
                 </thead>
                 <tbody>

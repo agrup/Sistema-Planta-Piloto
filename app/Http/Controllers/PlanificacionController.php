@@ -12,6 +12,8 @@ use Mockery\Exception;
 
 class PlanificacionController extends Controller
 {
+
+    const MSJ_PLANIFICACION_CARGADA = "Planificación cargada exitosamente";
     public static function index()
     {
         $planificaciones = Planificacion::getSemana(Carbon::now()->format('Y-m-d'));
@@ -80,7 +82,7 @@ class PlanificacionController extends Controller
             throw new Exception('Fecha inválida');
         }
         $planificacion->actualizar($productos,$insumos);
-        return \Response::json(['fecha'=>$fecha,'insumos'=>$insumos, 'productos'=>count($productos), 'planificacion'=>$planificacion->toArray()]);
+        return \Response::json(['fecha'=>$fecha,'insumos'=>$insumos, 'productos'=>count($productos), 'planificacion'=>$planificacion->toArray()])/*->withSucces(self::MSJ_PLANIFICACION_CARGADA)*/;
     }
 
     public static function verNecesidadInsumos(){

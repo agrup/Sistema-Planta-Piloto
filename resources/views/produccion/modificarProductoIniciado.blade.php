@@ -102,7 +102,11 @@
             </table>
 
             <button id="guardar" type="submit" class="btn btn-primary">Guardar</button>
-
+            <div>
+             <form action="/" method="get">
+                 <button  class="btn btn-secondary" >Volver al Menú</button>  
+             </form>
+         </div>
    </div>
  </div>
  @include('elementosComunes.cierreTabla')
