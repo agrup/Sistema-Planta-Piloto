@@ -44,10 +44,10 @@
 									</select>
 						            <div class="form-group">
 						              <label> Cantidad para aviso de falta de stock</label>
-						              <input type="text" name="alarmaAmarilla" class="form-control" required> </div>
+						              <input type="text" name="alarmaAmarilla" id="alarmaAmarilla" class="form-control" required> </div>
 						            <div class="form-group">
 						              <label> Cantidad para aviso de falta de stock crítica</label>
-						              <input type="text" name="alarmaRoja" class="form-control" required> </div>
+						              <input type="text" name="alarmaRoja" id="alarmaRoja" class="form-control" required> </div>
 						        </div>
 					        </div>
 					        
