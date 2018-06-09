@@ -1,7 +1,7 @@
 @extends('layouts.layoutPrincipal' )
 @section('section')
     @include('elementosComunes.aperturaTitulo')
-        Programa de Producción Semanal   
+       Planificación Semanal   
     @include('elementosComunes.cierreTitulo')
     
     {{--  Input y boton para ir a una semana específica  --}}

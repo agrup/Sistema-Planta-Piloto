@@ -1,7 +1,7 @@
 @extends('layouts.layoutPrincipal' )
 @section('section')
     @include('elementosComunes.aperturaTitulo')
-        Verificar Insumos
+        Verificar Planificación
     @include('elementosComunes.cierreTitulo')
     @include('elementosComunes.aperturaTitulo')
     
@@ -12,7 +12,7 @@
         <div class="input-group">
             <input type="date" name="fechaAdicional" class="form-control" value="{{$fechaHasta}}">
         @if(isset($_GET['fecha']))
-        <input type="date" name="fecha" class="form-control" value="{{$_GET['fecha']}}">
+        <input type="date" name="fecha" class="form-control" value="{{$_GET['fecha']}}" hidden="true">
         @else
          <input type="date" name="fecha" class="form-control" value="{{$fechaHasta}}">
          @endif
@@ -32,7 +32,7 @@
         <th>Insumo</th>
         <th>Necesidad Final</th>
         <th>Fecha de Agotamiento</th>
-        <th>Necesidad</th>
+        <th>Necesidad en Fecha de Agotamiento</th>
     </tr>
     </thead>
     <tbody>
