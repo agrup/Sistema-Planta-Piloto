@@ -5,7 +5,7 @@
     @include('elementosComunes.cierreTitulo')
     
     {{--  Input y boton para ir a una semana específica  --}}
-    <div class="navSemanas">
+    <div class="rowFlex">
         <div class="flechita">
             <form action="calendarioAnt" method="GET" enctype="multipart/form-data" > {{csrf_field()}}
                 <input   type="hidden" name="fecha" value="{{$planificaciones[0]['fecha']}}">
@@ -17,7 +17,14 @@
                 {{csrf_field()}}
                 <input  type="date" name="fecha" value="{{$planificaciones[0]['fecha']}}" >
                 <input  class="btn btn-secondary"  type="submit" value="Ir a semana">
-            </form>
+            </form> 
+        </div>
+        <div  class="inputFecha"> 
+               <form action="planificacion/verificar/{{$planificaciones[4]['fecha']}}" method="GET" enctype="multipart/form-data"  >
+                {{csrf_field()}}
+                <input  type="date" name="fecha" value="{{$planificaciones[4]['fecha']}}" hidden="true">
+                <input  class="btn btn-secondary"  type="submit" value="Verificar semana">
+            </form>  
         </div>
         <div class="flechita">
             <form action="calendarioSig" method="GET" enctype="multipart/form-data"  >
