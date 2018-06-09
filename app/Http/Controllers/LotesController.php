@@ -90,7 +90,7 @@ public static function showentradaLoteInsumo()
             return \Response::json(['fecha'=>$lote]);    
 
         }*/
-        return \Response::json($lote);    
+        return \Response::json($lote->toArray());
     }
 
 }

@@ -110,7 +110,7 @@
  @section('script')
  <script type="text/javascript" src="{{asset('js/produccion/getFormulacionProductoPlanificado.js')}}"></script>
 
- <script type="text/javascript" src="{{asset('js/produccion/addRowLote.js')}}"></script>
+ <script type="text/javascript" src="{{asset('js/produccion/addRow Lote.js')}}"></script>
  <script src="{{asset('js/produccion/postLote.js')}}" type="text/javascript"></script>
  <script>
      document.addEventListener("DOMContentLoaded", function() {
