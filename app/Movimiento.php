@@ -34,15 +34,18 @@ class Movimiento extends Model
         if($planificacion_id==null){
             throw new Exception('planificacion id null');
         }
-        self::where('planificacion_id','=',$planificacion_id)
-            ->where('tipo','=',TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF)
-            ->delete();
-        self::where('planificacion_id','=',$planificacion_id)
-            ->where('tipo','=',TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF)
-            ->delete();
-        self::where('planificacion_id','=',$planificacion_id)
-            ->where('tipo','=',TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF)
-            ->delete();
+        $movimientos = self::whereIn('tipo',TipoMovimiento::planificadosPendientes())
+                        ->where('planificacion_id',$planificacion_id)->get();
+        foreach ($movimientos as $movimiento){
+            if($movimiento->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF){
+                $movimiento->delete();
+            } else {
+                $lote = Lote::find($movimiento->idLoteConsumidor);
+                if($lote->tipoLote == TipoLote::PLANIFICACION){
+                    $movimiento->delete();
+                }
+            }
+        }
     }
 
 

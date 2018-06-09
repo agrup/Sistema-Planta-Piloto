@@ -2,7 +2,14 @@
 var PostLote= {
 
     init: function (url) {
-        $("#guardar").click(function() {
+
+        $('body').on('change','#selectLote',function(){
+            let stock = $('option:selected', this).attr('name');
+            $(this).parent('td').next().next().next().text(stock);
+        });
+
+        $("#guardar").click(function(e) {
+            e.preventDefault();
             $('#myform').attr({'action': url,'method': 'POST','header':{'Content-Type': 'application/json'}});
 
             //armo un JSON con los datos que voy a enviar

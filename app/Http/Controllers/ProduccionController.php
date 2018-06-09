@@ -309,7 +309,9 @@ class ProduccionController extends Controller
         var_dump($consumosArrVista);
         return view('welcome');
 
-        $datosLote = [];
+        if($dataLoteArr[1]=='' || $dataLoteArr[2]==''){
+
+        }
         $consumos=[];
         $lote = Lote::find($datosLote['lote_id']);
         $fecha = $lote->fechaInicio;

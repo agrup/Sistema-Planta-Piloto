@@ -286,10 +286,11 @@ class Planificacion extends Model
      * @param array $insumos
      */
     public function actualizar( $productos,  $insumos){
-        //borro los lotes planificados
-        Lote::eliminarLotesPlanificados($this->fecha);
+
         //borro los movimientos planificados asociados a la planificacion
         Movimiento::eliminarMovsPlanificados($this->id);
+        //borro los lotes planificados
+        Lote::eliminarLotesPlanificados($this->fecha);
         //creo lotes y mov planificados para los productos
         for ($i=0;$i<count($productos);$i+=2){
                 $productoID = $productos[$i];

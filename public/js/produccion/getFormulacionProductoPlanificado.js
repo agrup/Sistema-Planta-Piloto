@@ -63,7 +63,7 @@ $(document).ready(function(){
                         option.attr("value",lote['id']);
                         // se guarda en data-stock la cantidad en stock para ser mostrada luego de seleccionar el lote
 
-                        option.data('stock',lote['stock']);
+                        option.attr('name',lote['stock']);
                         selectLote.append(option);  
                     });
 		  			
@@ -83,9 +83,6 @@ $(document).ready(function(){
 
 	});
 
-    $('body').on('change','#selectLote',function(){
-        var stock=$('option:selected', this).data('stock');
-        $(this).parent('td').next().next().next().text(stock);
-    });
+
 		
 });// post a /produccion/lotenoplanificado
