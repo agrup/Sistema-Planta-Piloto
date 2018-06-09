@@ -313,9 +313,6 @@ public function modificarProducto()
 		 $nombre=request()->input('nombre');
 		 $categoria=request()->input('categoria');
 		 $alarma=request()->input('alarma');
-     if($alarma=="no"){
-        $alarma = "";
-     }
 
 	   if($inspro=='producto'){
 
