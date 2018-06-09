@@ -25,7 +25,7 @@
               <tr></tr>
               <tr></tr>
             </tbody>
-        <input type="hidden" id="producto" value="{{$producto['id']}}">
+            <input type="hidden" id="producto" value="{{$producto['id']}}">
 
     @include('elementosComunes.cierreTabla')
   
@@ -85,10 +85,10 @@
                       <input type="hidden" value="{{$ingrediente['id']}}" class="interes">
                     <td>{{$ingrediente['nombre']}}</td>
                     
-                    <td><select class="interes">
+                    <td><select class="interes" id="selectLote" >
                       <option disabled="true" selected="true">--Seleccionar Lote--</option>
                       @foreach($ingrediente['lotes'] as $lote)
-                        <option value="{{$lote['id']}}" data-stock="{{$lote['stock']}}">{{$lote['id']}}</option>
+                        <option value="{{$lote['id']}}" name="{{$lote['stock']}}">{{$lote['id']}}</option>
                       @endforeach
                     </select></td>
                     <td><input type=""  placeholder="Teorica total:{{$ingrediente['cantidad']}}" class="interes"></td>

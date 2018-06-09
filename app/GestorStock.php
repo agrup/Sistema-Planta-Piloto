@@ -688,6 +688,7 @@ class GestorStock
             //y su stock final para ver la necesidad final
             $stockFinal = self::getStockProd($movC->producto_id,$fechaHasta);
             $fechaAgot = Carbon::createFromFormat(self::FORMATO_FECHA,$movC->fecha);
+            $necesidadAgot = abs($movC->saldoGlobal);
             //paso la fecha a yyyy/mm/dd
             $fechaAgot = $fechaAgot->format(Lote::FORMATO_FECHA);
             //armo el array
@@ -695,6 +696,7 @@ class GestorStock
             $arrAux['insumo']=$producto->nombre;
             $arrAux['tipoUnidad']=$producto->tipoUnidad;
             $arrAux['fechaAgotamiento']=$fechaAgot;
+            $arrAux['necesidadAgot']=$necesidadAgot;
             //calculo la necesidad en funcion del stock final del producto a la fecha
             if($stockFinal>0){
                 $necesidad = 0;

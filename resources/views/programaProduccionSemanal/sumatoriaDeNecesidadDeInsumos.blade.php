@@ -6,11 +6,11 @@
     @include('elementosComunes.aperturaTitulo')
     
     <h5><b>Sumarizacion hasta: </b></h5>
-    <form action="/sumarizacion" method="get" class="form-inline">
+    <form action="/planificacion/verificar/{{$fechaHasta}}" method="get" class="form-inline">
         {{csrf_field()}}
         {{-- {date("d-m-Y",strtotime($fechaHasta))}} --}}
         <div class="input-group">
-        <input type="date" name="fecha" class="form-control" value="{{$fechaHasta}}">                     
+            <input type="date" name="fechaAdicional" class="form-control" value="{{$fechaHasta}}">
         </div>
         <input type="submit" class="btn btn-primary" value="Ir a la Fecha">         
     </form>
@@ -26,7 +26,8 @@
         <th>Código</th>
         <th>Insumo</th>
         <th>Necesidad Final</th>
-        <th>Fecha Agotamiento</th>
+        <th>Fecha de Agotamiento</th>
+        <th>Necesidad</th>
     </tr>
     </thead>
     <tbody>
@@ -36,6 +37,7 @@
             <td>{{$v['insumo']}}</td>
             <td>{{$v['necesidadFinal']}}  {{$v['tipoUnidad']}}</td>
             <td>{{date("d-m-Y",strtotime($v['fechaAgotamiento']))}}</td>
+            <td>{{$v['necesidadAgot']}} {{$v['tipoUnidad']}}</td>
         </tr>
     @endforeach
     <?php unset($value);?>

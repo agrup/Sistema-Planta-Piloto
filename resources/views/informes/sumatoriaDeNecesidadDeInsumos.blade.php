@@ -27,6 +27,7 @@
         <th>Insumo</th>
         <th>Necesidad Final</th>
         <th>Fecha Agotamiento</th>
+        <th>Necesidad</th>
     </tr>
     </thead>
     <tbody>
@@ -36,6 +37,7 @@
             <td>{{$v['insumo']}}</td>
             <td>{{$v['necesidadFinal']}}  {{$v['tipoUnidad']}}</td>
             <td>{{date("d-m-Y",strtotime($v['fechaAgotamiento']))}}</td>
+            <td>{{$v['necesidadAgot']}} {{$v['tipoUnidad']}}</td>
         </tr>
     @endforeach
     <?php unset($value);?>

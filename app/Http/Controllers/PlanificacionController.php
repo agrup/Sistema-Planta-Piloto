@@ -84,7 +84,8 @@ class PlanificacionController extends Controller
         return \Response::json(['fecha'=>$fecha,'insumos'=>$insumos, 'productos'=>count($productos), 'planificacion'=>$planificacion->toArray()])/*->withSucces(self::MSJ_PLANIFICACION_CARGADA)*/;
     }
 
-    public static function verNecesidadInsumos(){
+    public static function
+    verNecesidadInsumos(){
         $fechaHasta = request()->input('fecha');
         if($fechaHasta==null){
             $fechaHasta=Carbon::now()->format('Y-m-d');
@@ -100,6 +101,9 @@ class PlanificacionController extends Controller
     public static function verificarPlanificacion($fecha){
         //$fechaHasta = request()->input('fecha');
         $fechaHasta =$fecha;
+        if(($fechaAdicional =request()->input('fechaAdicional'))!=null){
+            $fechaHasta = $fechaAdicional;
+        }
         if($fechaHasta==null)
             //throw new Exception('Fecha inválida');
             $fechaHasta=Carbon::now()->format('Y-m-d');
