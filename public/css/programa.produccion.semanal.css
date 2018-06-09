@@ -71,6 +71,7 @@ body {
   color: #333;
   text-align: left;
   background-color: white;
+  overflow-y: hidden;
 
    }
 

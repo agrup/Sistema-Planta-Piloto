@@ -68,9 +68,12 @@
 					<input type="text" class="form-control" style="width: 30%;margin-right: 5px;margin-bottom: 0px" placeholder="Número Lote" id='lote' name='lote' required> 	
 					<button  class="btn btn-primary" id="buscarLote">Buscar Lote</button>	
 			</div>
+
 			<div class="rowFlex" style="margin-top: 10px">
+				@if(Auth::user()->hasAnyRole('administrador'))
 				<form action="/produccion/loteNoPlanificado/{{$data["fecha"]}}" method="get">
 					<button  class="btn btn-primary" id="buscarLote">Nuevo Lote (No Planificado)</button>
+				@endif
 				</form>
 
              <form action="/" method="get">
