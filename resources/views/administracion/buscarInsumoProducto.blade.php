@@ -31,7 +31,7 @@
 			        <div class="form-group">
 			            <label>Alarma</label>
 			            <select name="alarma" class="form-control" id="alarma">
-			            	<option value="no">No Filtrar</option>
+			            	<option value="">No Filtrar</option>
 	  						<option value="True">Activa</option>
 	  						<option value="False">Inactiva</option>  						
 						</select>
@@ -43,7 +43,12 @@
 		    		<button data-insumoProducto="{{ $insumoProducto }}" type="button" class="btn btn-primary" id="btnBuscar"> Buscar</button>
 	          	@include('elementosComunes.cierreBoton')
 		    </form>
-	    @include('elementosComunes.aperturaTabla')
+	      <div class="py-5"  >
+    		<div class="container">
+      			<div class="row">
+
+			        <div class="col-md-11">
+          	<table class="table table-striped" id="tablaInsumoProducto" >
 	    	<thead>
 	    		<tr>
 	    			<th>Código</th> 

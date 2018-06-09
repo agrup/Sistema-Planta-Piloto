@@ -48,10 +48,10 @@
 									</select>
 						            <div class="form-group">
 						              <label> Cantidad para aviso de falta de stock</label>
-						              <input type="text" name="alarmaAmarilla" class="form-control" required> </div>
+						              <input type="text" name="alarmaAmarilla" id="alarmaAmarilla" class="form-control" required> </div>
 						            <div class="form-group">
 						              <label> Cantidad para aviso de falta de stock crítica</label>
-						              <input type="text" name="alarmaRoja" class="form-control" required> </div>
+						              <input type="text" name="alarmaRoja" id="alarmaRoja" class="form-control" required> </div>
 						        </div>
 					        </div>
 					        
@@ -83,7 +83,10 @@
 @endsection
 		@include('layouts.errors')
 @section('script')
+
+	<script type="text/javascript" src="{{asset('js/administracion/inhabilitarInputsCriticos.js')}}"></script>
+	
 	@if ($insumoProducto=='producto')
 		<script type="text/javascript" src="{{asset('js/administracion/agregarFormulacion.js')}}"></script>
-		@endif
+	@endif
 @endsection
