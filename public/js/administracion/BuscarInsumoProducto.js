@@ -33,6 +33,10 @@ $(document).ready(function() {
 	 		function(data, i) {	  					    
 			    var tbody = $("tbody");
 			    $(tbody).empty();
+			    //$(tbody).clear();
+			    //table = $('table#tablaBase').DataTable();
+    			//table.clear();
+			    
 			    //remove(tbody);
 			    console.log(data);
 			    data.forEach(function(item, index){
@@ -41,13 +45,7 @@ $(document).ready(function() {
 			    	var tr=document.createElement("tr");
 			    	tr.setAttribute("data", "normal");
 			    	tr.setAttribute("role", "row");
-			    	/*
-			    	if ((index % 2) == 0){
-			    		tr.setAttribute("class", "odd");	
-			    	}else{
-			    		tr.setAttribute("class", "even");
-			    	}
-			    	*/
+			    	
 			    	var td=document.createElement("td");	    			
 			    		td.innerHTML = item.codigo;
 			    		tr.appendChild(td);   
@@ -133,8 +131,30 @@ $(document).ready(function() {
 							  	}
 						  	);
 						}
-
+						
 					});
+			    if ( $.fn.dataTable.isDataTable('table#tablaInsumoProducto') ) {
+    				
+    				table = $('table#insumoProducto').dataTable();
+				}
+				else {
+    				table = $('table#tablaInsumoProducto').dataTable( {
+        				"bPaginate": false,
+					    "bLengthChange": false,
+					    "bFilter": false,
+					    "aaSorting": [[ 2, "desc" ]],
+					       "bInfo": false,
+					       "bAutoWidth": true,
+					       "scrollY":        "9.5rem",
+					        "scrollCollapse": true,
+					       "oLanguage": {"sZeroRecords": "", "sEmptyTable": ""},
+					           "columnDefs": [
+					               { "width": "16%", "targets": 0 }
+					           ],
+    				} );
+    				//table.clear();
+				}		    	
+
 			}).fail(function(){
 	  			console.log('Error');
 		  	}

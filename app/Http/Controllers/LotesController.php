@@ -85,6 +85,7 @@ public static function showentradaLoteInsumo()
 
 
         return \Response::json(compact($lote))->withSuccess('Alta Exitosa');    
+
     }
 
 }

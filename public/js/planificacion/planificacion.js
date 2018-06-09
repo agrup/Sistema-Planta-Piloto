@@ -267,6 +267,7 @@ $(document).ready(function() {
     $("#btnguardar").click(function (event) {
         event.preventDefault();
         let fecha = $("#fecha").val();
+        console.log(fecha);
         let productos = [];
         let insumos=[];
 

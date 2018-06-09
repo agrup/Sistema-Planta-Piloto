@@ -156,7 +156,11 @@
  
 
     </form>
-
+    <div>
+             <form action="/" method="get">
+                 <button  class="btn btn-secondary" >Volver al Menú</button>  
+             </form>
+         </div>
 
 
 @endsection

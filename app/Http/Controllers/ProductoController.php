@@ -72,12 +72,17 @@ class ProductoController extends Controller
         throw new Exception('Codigo de Insumo existente');
       } 
 
+     
+        
+        
 
     return view('administracion.altaInsumoProducto')->with(compact('insumoProducto'))
                                                     ->with(compact('succes'))
                                                     ->with(compact('insumos'))
+
                                                     ->with('alert', 'Alta Exitosa')
                                                     ->withSuccess('Alta Exitosa')
+
                                                     ;
   }
 
@@ -143,7 +148,7 @@ public function showModificarInsumo()
 
   public function showAltaProducto(){
   $insumoProducto = "producto";
- $succes=false;
+  $succes=false;
   $insumos=Producto::all()->toArray();
   //var_dump(compact('insumos'));
   return view('administracion.altaInsumoProducto')
@@ -209,11 +214,14 @@ public function altaProducto(){
 
         $insumoProducto = 'producto';
         $succes=true;
-
-        return view('administracion.buscarInsumoProducto')
+        //$continuar = request()->input('continuar');
+       $insumos=Producto::all()->toArray();
+          return view('administracion.altaInsumoProducto')->with(compact('insumos'))
                                           ->with(compact('succes'))
+
                                           ->with(compact('insumoProducto'))
                                            ->withSuccess('Alta Exitosa');
+
       }
 
 
@@ -313,9 +321,6 @@ public function modificarProducto()
 		 $nombre=request()->input('nombre');
 		 $categoria=request()->input('categoria');
 		 $alarma=request()->input('alarma');
-     if($alarma=="no"){
-        $alarma = "";
-     }
 
 	   if($inspro=='producto'){
 
