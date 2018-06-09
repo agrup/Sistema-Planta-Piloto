@@ -79,7 +79,10 @@
 @endsection
 		@include('layouts.errors')
 @section('script')
+
+	<script type="text/javascript" src="{{asset('js/administracion/inhabilitarInputsCriticos.js')}}"></script>
+	
 	@if ($insumoProducto=='producto')
 		<script type="text/javascript" src="{{asset('js/administracion/agregarFormulacion.js')}}"></script>
-		@endif
+	@endif
 @endsection
