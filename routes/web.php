@@ -42,7 +42,7 @@ Route::get('/produccion/loteEnProduccion/{id}','ProduccionController@loteEnProdu
 
 Route::get('/produccion/iniciarPlanificado/{id}','ProduccionController@iniciarPlanificado')->middleware('checkRoles:administrador,jefeProduccion');
 Route::post('/produccion/iniciarPlanificado/','ProduccionController@postIniciarPlanificado')->middleware('checkRoles:administrador,jefeProduccion');;
-Route::get('/produccion/loteNoPlanificado', 'ProduccionController@indexLoteNoPlanificado')->middleware('checkRoles:administrador,jefeProduccion');;
+Route::get('/produccion/loteNoPlanificado/{fecha}', 'ProduccionController@indexLoteNoPlanificado')->middleware('checkRoles:administrador,jefeProduccion');;
 Route::post('/produccion/loteNoPlanificado', 'ProduccionController@newLoteNoPlanificado')->middleware('checkRoles:administrador,jefeProduccion');;
 Route::get('/produccion/formulacion','ProduccionController@getFormulacion')->middleware('checkRoles:administrador,produccion,jefeProduccion');
 Route::get('/produccion/loteEnProduccion/{id}' ,'ProduccionController@showLoteInProd')->middleware('checkRoles:administrador,produccion,jefeProduccion');

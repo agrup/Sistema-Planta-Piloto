@@ -111,7 +111,7 @@ class ProduccionController extends Controller
 
 
         //Los primeros 4 datos del lote no pueden estar vacios
-        for($i=0; $i<3;$i++){
+        for($i=1; $i<3;$i++){
             if(!isset($dataLoteArr[$i]) || trim($dataLoteArr[$i])===''){
                 throw new Exception('Campo que no se permite vacio');
             }
@@ -123,7 +123,6 @@ class ProduccionController extends Controller
         $fechaStamp = $fecha . " ". $H_i_s;
         //crear el lote
         $datosLote=[
-            'producto_id'=>$dataLoteArr[0],
             'cantidadElaborada'=>$dataLoteArr[1],
             'fechaInicio'=>$fecha,
             'tipoTP'=>false,
@@ -189,8 +188,8 @@ class ProduccionController extends Controller
             ->with(compact('trazabilidad'));
     }
 
-    public static function indexLoteNoPlanificado(){
-        $fecha = Carbon::now()->format('Y-m-d');
+    public static function indexLoteNoPlanificado($fecha){
+
         $productos = Producto::getProductosSinInsumosArr();
 
         return view('produccion.iniciarLoteNoPlanificado')

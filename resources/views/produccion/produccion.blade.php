@@ -69,8 +69,8 @@
 					<button  class="btn btn-primary" id="buscarLote">Buscar Lote</button>	
 			</div>
 			<div class="rowFlex" style="margin-top: 10px">
-				<form action="/produccion/loteNoPlanificado" method="get">
-				<button  class="btn btn-primary" id="buscarLote">Nuevo Lote (No Planificado)</button>	
+				<form action="/produccion/loteNoPlanificado/{{$data["fecha"]}}" method="get">
+					<button  class="btn btn-primary" id="buscarLote">Nuevo Lote (No Planificado)</button>
 				</form>
 
              <form action="/" method="get">

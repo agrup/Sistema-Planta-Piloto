@@ -37,7 +37,7 @@
               <input type="hidden" value="{{$lote['id']}}" name="loteID">
             <div class="form-group">
               <label>Cantidad a Elaborar</label>
-              <input type="text" id="cantidad" class="form-control" >
+              <input type="text" id="cantidad" value="{{ $lote['cantidadElaborada'] }}" class="form-control" >
               <button type="button" id="btnformulacion" class="btn btn-primary">Actualizar Formulación</button>
           </div>
           

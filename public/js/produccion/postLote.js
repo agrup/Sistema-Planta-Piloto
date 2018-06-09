@@ -9,7 +9,7 @@ var PostLote= {
         });
 
         $("#guardar").click(function(e) {
-            e.preventDefault();
+            e.preventDefault()
             $('#myform').attr({'action': url,'method': 'POST','header':{'Content-Type': 'application/json'}});
 
             //armo un JSON con los datos que voy a enviar
