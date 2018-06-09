@@ -3,7 +3,7 @@
 		<h3>Alarmas</h3>
 	
 
-	<table>
+	<table class="table">
 		<thead>
 			<tr><th>Nombre</th><th>Cantidad</th><th>Alarma</th></tr>
 		</thead>
