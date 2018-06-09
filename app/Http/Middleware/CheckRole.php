@@ -17,12 +17,16 @@ class CheckRole
     public function handle($request, Closure $next, ...$roles)
     {
         if($request->user() === null){
-            return response("No posee los permisos nescesarios",401);
+            //return response("<div class='alert alert-danger'>No posee los permisos nescesarios</div>",401);
+            //response()->withErrors(['msg', 'No posee los permisos necesarios']);
+            return redirect()->back()->withErrors(['Ingreso inesperado', 'No posee los permisos necesarios']);
         }
 
         if(!$roles || $request->user()->hasAnyRole($roles)){
             return $next($request);
         }
-        return response("No posee los permisos nescesarios",401);
+        //response()->withErrors(['msg', 'No posee los permisos necesarios']);
+        //return response("<div class='alert alert-danger'>No posee los permisos nescesarios</div>",401);
+        return redirect()->back()->withErrors(['Ingreso inesperado', 'No posee los permisos necesarios']);
     }
 }

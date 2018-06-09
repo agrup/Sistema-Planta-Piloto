@@ -40,7 +40,7 @@
 
    </head>
 @include('layouts.alerts')
-
+@include('layouts.errors')
 <main role="main">
 <body class="container jumbotron">
 
