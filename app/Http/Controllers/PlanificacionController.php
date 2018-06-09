@@ -95,8 +95,9 @@ class PlanificacionController extends Controller
                 ->with(compact('fechaHasta'));
 
     }
-    public static function verificarPlanificacion(){
-        $fechaHasta = request()->input('fecha');
+    public static function verificarPlanificacion($fecha){
+        //$fechaHasta = request()->input('fecha');
+        $fechaHasta =$fecha;
         if($fechaHasta==null)
             //throw new Exception('Fecha inválida');
             $fechaHasta=Carbon::now()->format('Y-m-d');

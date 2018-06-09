@@ -291,7 +291,74 @@ $(document).ready(function() {
 
         );
     });
+    
+    // ==== POST PLANIFICACION Y VERFICACIÓN====
+    $("#btnguardaryverificar").click(function (event) {
+        event.preventDefault();
+        let fecha = $("#fecha").val();
+        let productos = [];
+        let insumos=[];
 
+        $('body').find('span.interes').each(function (index) {
+            productos.push($(this).text());
+        });
+        $('body').find('span.interesIns').each(function (index) {
+            insumos.push($(this).text());
+        });
+        console.log(productos,insumos,fecha);
+        $.ajax({
+            url: "/planificacion/planificacionDia",
+            data:JSON.stringify({ fechaa: fecha , insumoss: insumos, productoss : productos }),
+            type: 'POST',
+            dataType : "json",
+            contentType: "application/json"
+        }).done(function (data){
+                console.log(data);
+                alert('Planificacion Guardada Satisfactoriamente');
+                window.location.replace("/planificacion/verificar/"+fecha);           
+            }
 
+        );
+    });
+     // ==== POST PLANIFICACION Y AVANZAR AL SIGUIENTE DIA====
+    $("#btnguardarysig").click(function (event) {
+        event.preventDefault();
+        let fecha = $("#fecha").val();
+        //le paso la fecha del dia siguiente
+        var fechaSiguiente = new Date(fecha),
+              month = '' + (fechaSiguiente.getMonth() + 1),
+              day = '' + fechaSiguiente.getDate(),
+              year = fechaSiguiente.getFullYear();
+               if (month.length < 2) month = '0' + month;
+                if (day.length < 2) day = '0' + day;
+            fechaSiguiente=  fechaSiguiente.setDate(fechaSiguiente.getDate() + 2);
+             fechaSiguiente= [year, month, day].join('-');
+
+        
+        console.log(fechaSiguiente);
+        let productos = [];
+        let insumos=[];
+
+        $('body').find('span.interes').each(function (index) {
+            productos.push($(this).text());
+        });
+        $('body').find('span.interesIns').each(function (index) {
+            insumos.push($(this).text());
+        });
+        console.log(productos,insumos,fecha);
+        $.ajax({
+            url: "/planificacion/planificacionDia",
+            data:JSON.stringify({ fechaa: fecha , insumoss: insumos, productoss : productos }),
+            type: 'POST',
+            dataType : "json",
+            contentType: "application/json"
+        }).done(function (data){
+                console.log(data);
+                alert('Planificacion Guardada Satisfactoriamente');
+                window.location.replace("/planificacion/planificacionDia?fecha="+fecha);           
+            }
+
+        );
+    });
 
 });

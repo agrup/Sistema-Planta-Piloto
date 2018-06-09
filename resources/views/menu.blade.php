@@ -1,6 +1,6 @@
 @extends('layouts.layoutPrincipal' )
 @section('section') 
- 
+  @include('alertaStock')
   <div class="menuPrincipal">
          <div class="contenedoropcion">
           <div class="flextitulo"><h4 class="titulo">Planificar</h4></div>
@@ -59,6 +59,6 @@
            </div>
            </div>
       </div>
-       @include('alertaStock')
+      
 @endsection  
 
