@@ -45,7 +45,7 @@ $(document).ready(function(){
             		$('<option selected="selected" disabled></option>').text("-Selecccione un Lote-").appendTo(selectLote);
                     selectLote.addClass('interes');
             		var td3=document.createElement("td");
-            		var inputCant =$('<input>').attr({type:'text',placeholder:"Teorica Total: "+ing['cantidad'],id:"cantidad"}).appendTo(td3);            	inputCant.addClass('interes');
+            		var inputCant =$('<input>').attr({type:'text',placeholder:"Teorica: "+ing['cantidad'],id:"cantidad"}).appendTo(td3);            	inputCant.addClass('interes');
             		var td4=document.createElement("td");
             		var td5=document.createElement("td");               		
             		var agregarLote=$("<button>").attr({type:"button",value:"agregarLote"}).appendTo(td5);
