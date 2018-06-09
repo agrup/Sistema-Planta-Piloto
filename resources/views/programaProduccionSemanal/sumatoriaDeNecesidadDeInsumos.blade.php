@@ -10,11 +10,11 @@
         {{csrf_field()}}
         {{-- {date("d-m-Y",strtotime($fechaHasta))}} --}}
         <div class="input-group">
-            <input type="date" name="fechaAdicional" class="form-control" value="{{$fechaHasta}}">
+
         @if(isset($_GET['fecha']))
-        <input type="date" name="fecha" class="form-control" value="{{$_GET['fecha']}}" hidden="true">
+        <input type="date" name="fechaAdicional" class="form-control" value="{{$_GET['fecha']}}">
         @else
-         <input type="date" name="fecha" class="form-control" value="{{$fechaHasta}}">
+         <input type="date" name="fechaAdicional" class="form-control" value="{{$fechaHasta}}">
          @endif
         </div>
         <input type="submit" class="btn btn-primary" value="Ir a la Fecha">         

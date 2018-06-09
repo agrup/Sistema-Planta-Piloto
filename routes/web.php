@@ -19,6 +19,7 @@ Route::get('/detalleLote', 'LotesController@showDetalle')->middleware('checkRole
 //Planificacion
 Route::get('/planificacion', 'PlanificacionController@index')->middleware('checkRoles:administrador,produccion,jefeProduccion');
 Route::post('/planificacion','PlanificacionController@show')->middleware('checkRoles:administrador,produccion,jefeProduccion');
+/*Route::get('/planificacion/{fecha}','PlanificacionController@showFecha')->middleware('checkRoles:administrador,produccion,jefeProduccion');*/
 Route::get('/calendarioSig','PlanificacionController@calendarioSig')->middleware('checkRoles:administrador,produccion,jefeProduccion'); //flechita << >>
 Route::get('/calendarioAnt','PlanificacionController@calendarioAnt')->middleware('checkRoles:administrador,produccion,jefeProduccion');
 Route::get('/sumarizacion','PlanificacionController@verNecesidadInsumos')->middleware('checkRoles:administrador,produccion,jefeProduccion');

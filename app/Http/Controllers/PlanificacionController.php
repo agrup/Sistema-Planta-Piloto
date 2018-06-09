@@ -53,6 +53,20 @@ class PlanificacionController extends Controller
 
     }
 
+    public static function showFecha($fecha){
+       /* //agarro la fecha
+        $fechaC = Carbon::createFromFormat('Y-m-d',request()->input('fecha'));
+        $fechaC = $fechaC->startOfWeek();
+
+        // la paso a formato yyyy-mm-dd
+        $fecha = $fechaC->format('Y-m-d');*/
+
+        $planificaciones = Planificacion::getSemana($fecha);
+
+        return  view('programaProduccionSemanal.programaProduccionSemanal', ['planificaciones'=>$planificaciones]);
+
+    }
+
     public static function planificacionDia(){
         $fecha =request()->input('fecha');
         if($fecha==null){

@@ -287,7 +287,7 @@ $(document).ready(function() {
         }).done(function (data){
                 console.log(data);
                 alert('Planificacion Guardada Satisfactoriamente');
-                window.location.replace("/planificacion");           
+                window.location.replace("/planificacion"/*/+fecha*/);
             }
 
         );
