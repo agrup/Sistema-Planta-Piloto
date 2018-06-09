@@ -63,7 +63,7 @@
 					        	<input type="hidden" name="formulacion" value="" id="inputHidden"/>
 						        @include('administracion.agregarFormulacion')				         
 					        @endif							         
-					        
+					     
 						    @include('elementosComunes.aperturaBoton')
 						    	<input type="submit" name="action" class="btn btn-primary" value="Guardar">						    	
 						    @include('elementosComunes.cierreBoton')			
@@ -74,13 +74,13 @@
 								
 								@if ($insumoProducto=='producto')
 									<form action="/productos/administracionProductos" method="GET">
-									  	<button class="btn btn-primary" type="submit">Volver</button>	
+									  	<button class="btn btn-secondary" type="submit">Volver</button>	
 									  </form>
 							          {{-- <a class="btn btn-primary" href="/productos/administracionProductos">Volver</a> --}}
 							          
 								@elseif ($insumoProducto=='insumo')		 					 
 									<form action="/productos/administracionInsumos" method="GET">
-										<button class="btn btn-primary" type="submit">Volver</button>
+										<button class="btn btn-secondary" type="submit">Volver</button>
 							        	{{-- <a class="btn btn-primary" href="/productos/administracionInsumos">Volver</a> --}}
 							        </form>
 								@endif		        

@@ -366,7 +366,7 @@ class Movimiento extends Model
     }
 
     /**
-     * Elimina los consumos de ese lote_id y devuelve el planificacion_id si corresponde, sino null
+     * Elimina los consumos de ese lote_id
      * @param int $lote_id
      */
     public static function eliminarConsumos(int $lote_id)

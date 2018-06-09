@@ -1665,7 +1665,7 @@ fieldset:disabled a.btn {
   pointer-events: none; }
 
 .btn-primary {
-  color: #fff;
+  color: black;
   background-color: #12bbad;
   border-color: #12bbad;
   margin:0vw;
@@ -1691,9 +1691,9 @@ fieldset:disabled a.btn {
       box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125), 0 0 0 0.2rem rgba(18, 187, 173, 0.5); }
 
 .btn-secondary {
-  color: #fff;
-  background-color: #4f70ce;
-  border-color: #4f70ce;
+  color: black;
+  background-color: #98cbe8;
+  border-color: #2a88bd;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075); }
   .btn-secondary:hover {
     color: #fff;
@@ -6336,6 +6336,7 @@ th {
   /*display: none;*/
   float:right;
 }
+<<<<<<< HEAD
 .sidenav {
     height: 100%;
     width: 0;
@@ -6375,3 +6376,4 @@ th {
 .tdNumero{
   text-align: right;
 }
+

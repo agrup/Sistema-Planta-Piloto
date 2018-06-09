@@ -28,8 +28,9 @@ var PostLote= {
                 }
             });
 
+
             var lote=  [
-                $('#producto').val(),
+                $('#selectProducto').val(),
                 $('#cantidad').val(),
                 $('#fecha').val(),
                 $('#tp').val(),
