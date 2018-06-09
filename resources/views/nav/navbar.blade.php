@@ -20,7 +20,7 @@
             <a class="nav-link dropdown-toggle"  id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Planificación</span></a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
               <a class="dropdown-item" href="/planificacion">Productos y llegada de insumos</a>
-              <a class="dropdown-item" href="#">Disponibilidad de trabajadores</a>
+              <a class="dropdown-item" href="#">Disponibilidad de trabajadores (a futuro)</a>
             </div>
           </li>
 
@@ -39,7 +39,7 @@
            <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle"  id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt">Gestion de Stock</span></a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
-
+             
               <a class="dropdown-item" href="/stock/entradaLoteInsumo" id="dropdown05">Entrada de Insumo</a>
 
             </div>
@@ -49,6 +49,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdown01">
               <a class="dropdown-item" href="/stock">Stock</a>
                <a class="dropdown-item" href="/sumarizacion">Ver Necesidad de Insumos</a>
+                <a class="dropdown-item" href="#">Informe de Producción (a futuro)</a>
 
             </div>
           </li>
