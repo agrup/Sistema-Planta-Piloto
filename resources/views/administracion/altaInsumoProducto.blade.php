@@ -4,18 +4,22 @@
 	
 					@include('elementosComunes.aperturaTitulo')
 						@if ($insumoProducto=='producto')			
-							Administración de Productos
+							Alta de Producto
 						@elseif ($insumoProducto=='insumo')
-							Administración de Insumos
+							Alta de Insumo
 						@endif
 					@include('elementosComunes.cierreTitulo')
 
 						@if ($insumoProducto=='producto')			
-							<form action="/productos/altaProducto" method="POST" id="myForm" >
+
+							<form action="/productos/altaProducto" class="" method="POST" id="myForm" >
+								{{csrf_field()}}
 						@elseif ($insumoProducto=='insumo')
-							<form action="/productos/altaInsumo" method="POST" id="myForm" >
+							<form action="/productos/altaInsumo" class="" method="POST" id="myForm" >
+								{{csrf_field()}}
+
 						@endif					    
-							@csrf
+
 					    	<div class="row">
 						    	<div class="col-md-6">
 						    		<div class="form-group">
@@ -40,7 +44,7 @@
 						              <label>Alarma (Activa o Inactiva)</label>
 						              <select name="alarmaActiva" class="form-control" id="alarma" required>
 	  										<option value="1">Activa</option>
-	  										<option value="0">Inactiva</option>  					
+	  										<option value="0">Inactiva</option>
 									</select>
 						            <div class="form-group">
 						              <label> Cantidad para aviso de falta de stock</label>
