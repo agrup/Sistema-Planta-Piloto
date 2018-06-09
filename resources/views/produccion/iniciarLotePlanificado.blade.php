@@ -102,6 +102,11 @@
             </table>
             <button type="submit" id="guardar" class="btn btn-primary">Guardar</button>
           </form>
+          <div>
+             <form action="/" method="get">
+                 <button  class="btn btn-secondary" >Volver al Menú</button>  
+             </form>
+         </div>
         </div>
       </div>
     </div>

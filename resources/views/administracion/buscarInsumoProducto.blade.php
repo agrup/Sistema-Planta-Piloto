@@ -67,7 +67,8 @@
 
 	    	</tbody>		
         @include('elementosComunes.cierreTabla')
-
+		<div class="btn-group">
+			
         @if ($insumoProducto=='producto')
         	@include('elementosComunes.aperturaBoton')        		
 				<a href="/productos/altaProducto" class="btn btn-primary">Agregar Producto</a>	        		
@@ -77,8 +78,13 @@
 					<a href="/productos/altaInsumo" class="btn btn-primary">Agregar Insumo</a>
 	        @include('elementosComunes.cierreBoton')
         @endif
-       
+
+       	@include('elementosComunes.aperturaBoton')
+					<a href="/" class="btn btn-primary">Volver</a>
+	    @include('elementosComunes.cierreBoton')
+
        <input type="hidden" name="" id="alertConfirm" value="{{ $succes }}">
+		</div>
 @endsection
 
  @section('script')

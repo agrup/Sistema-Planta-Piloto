@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
 	var tbody = document.getElementsByTagName("tbody")[0];
 			$(tbody).empty();									
 	$('#botonCargarContinuar').click(function(e){
@@ -18,10 +19,13 @@ $(document).ready(function(){
 	        	cantidadObservada: cantidad,
 	        	tipoUnidad: tipo
 	  		},
-	  		type: "post"
+	  		type: "post",
+	  		dataType: "application/json",
 	  		
-	  	}).done(function(data, i) {	  					    
+	  	}).done(function(data, i) {	  
+	  	console.log(data);					    
 			//var tbody = $('tbody');
+
             let tbody = document.getElementsByTagName("tbody")[0];
             //$(tbody).empty();
             let tr = document.createElement("tr");
@@ -46,7 +50,7 @@ $(document).ready(function(){
             tbody.appendChild(tr);
 
 		}).fail(function(){
-	  		alert('Error, Lote No Encontrado');		  
+	  
 		});
 	});
 
