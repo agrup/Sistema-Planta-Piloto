@@ -21,7 +21,7 @@ class GestorStock
 
     // MOVIMIENTOS DE ENTRADA
     //REALES
-    const DIAS_DE_VIDA_INSUMO_PLANIF = 1;
+    const DIAS_DE_VIDA_INSUMO_PLANIF = 2;
     const FORMATO_FECHA = Movimiento::FORMATO_FECHA;
 
     /**
@@ -611,17 +611,20 @@ class GestorStock
     {
         $result=[];
 
-         if(!$planificados)
+         if($planificados)
          {
                 
-            $movimientos =Movimiento::ultimoStockRealProdTodos();
-
+           // $movimientos =Movimiento::ultimoStockRealProdTodos();
+            
+            //self::recalcularPlanificados($fechaHasta);
+             self::recalcularPlanificados($fechaHasta);
+            $movimientos =Movimiento::ultimoStockProdTodos($fechaHasta);
 
          }
         else
         {
-            self::recalcularPlanificados($fechaHasta);
-             $movimientos =Movimiento::ultimoStockProdTodos($fechaHasta);
+           
+             $movimientos =Movimiento::ultimoStockRealProdTodosHasta($fechaHasta);
 
         }
         if(!empty($movimientos )){
@@ -701,7 +704,7 @@ class GestorStock
             $arrAux['necesidadFinal']=$necesidad;
             array_push($necesidades,$arrAux);
         }
-        //calculo de las alarmas
+        //calculo de las alarmas futuras
         $stocks = self::getStockPorProd($fechaHasta,true);
         foreach ($stocks as $stock){
             $arrAux = [];
@@ -845,5 +848,24 @@ class GestorStock
 
     }
 
+
+    public static function getAlarmasActivas(){
+        $alarmas=[];
+        $fechaStr = Carbon::createFromFormat('Y-m-d H:i:s',Movimiento::getFechaUltimoReal())->format('Y-m-d');
+        $fecha =  $fechaStr . " ". '23:59:59';
+        $stocks = self::getStockPorProd($fecha,false);
+        foreach ($stocks as $stock){
+            $arrAux = [];
+            if($stock['alarma']!='normal'){
+                $arrAux['codigo']=$stock['codigo'];
+                $arrAux['nombre']=$stock['nombre'];
+                $arrAux['stock']=$stock['stock'];
+                $arrAux['tipoUnidad']=$stock['tipoUnidad'];
+                $arrAux['alarma']=$stock['alarma'];
+                array_push($alarmas,$arrAux);
+            }
+        }
+        return $alarmas;
+    }
 
 }

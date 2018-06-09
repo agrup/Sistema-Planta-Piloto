@@ -26,6 +26,7 @@ class StockController extends Controller
 
 
         if($mostarPlanificados){
+            
             $mostarPlanificados=true;
         }else{
             $mostarPlanificados=false;
@@ -37,7 +38,7 @@ class StockController extends Controller
     	$stock=GestorStock::getStockPorProd($fechaString,$mostarPlanificados);
     	return view('informes.stock')
                                     ->with('fecha',$fecha)
-                                    ->with($mostarPlanificados)
+                                    ->with(compact('mostarPlanificados'))
                                     ->with(compact('stock'));	
     }
 }

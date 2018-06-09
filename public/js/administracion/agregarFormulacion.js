@@ -113,9 +113,10 @@ $(document).ready(function() {
 	});
 
 	$('.eliminarRow').on('click', function(){
-		var parent = this.closest('tr');
+		let parent = this.closest('tr');
 		parent.remove();
 	});
 
+	
 
 });

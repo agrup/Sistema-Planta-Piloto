@@ -291,32 +291,32 @@ class Planificacion extends Model
         //borro los movimientos planificados asociados a la planificacion
         Movimiento::eliminarMovsPlanificados($this->id);
         //creo lotes y mov planificados para los productos
-        foreach ($productos as $producto){
-            if(count($producto)>=3) {
-                $productoID = $producto[0];
-                $cantidad = $producto[1];
-                $tipoTP = ($producto[2] == 'Si') ? true : false;
-                //creo lote planificados
-                $datosLote = [
-                    'producto_id' => $productoID,
-                    'tipoLote' => TipoLote::PLANIFICACION,
-                    'fechaInicio' => $this->fecha,
-                    'cantidadElaborada' => $cantidad,
-                    'tipoTP' => $tipoTP
-                ];
-                $lote = Lote::create($datosLote);
-                //doy de alta los movimientos
-                // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
-                $H_i_s = date('H:i:s');
-                $fechaStamp = $this->fecha . " " . $H_i_s;
-                GestorStock::entradaProductoPlanificado($lote->id, $productoID, $cantidad, $fechaStamp, $this->id);
-            }
+        for ($i=0;$i<count($productos);$i+=2){
+                $productoID = $productos[$i];
+                $cantidad = $productos[$i+1];
+                $tipoTP = false;
+                if(Producto::find($productoID)!=null && $cantidad!=='' && $cantidad>0){
+                    //creo lote planificados
+                    $datosLote = [
+                        'producto_id' => $productoID,
+                        'tipoLote' => TipoLote::PLANIFICACION,
+                        'fechaInicio' => $this->fecha,
+                        'cantidadElaborada' => $cantidad,
+                        'tipoTP' => $tipoTP
+                    ];
+                    $lote = Lote::create($datosLote);
+                    //doy de alta los movimientos
+                    // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
+                    $H_i_s = date('H:i:s');
+                    $fechaStamp = $this->fecha . " " . $H_i_s;
+                    GestorStock::entradaProductoPlanificado($lote->id, $productoID, $cantidad, $fechaStamp, $this->id);
+                }
         }
         //creo movimientos planificados para los insumos
-        foreach ($insumos as $insumo){
-            if(count($insumo)>=2){
-                $productoID = $insumo[0];
-                $cantidad = $insumo[1];
+        for($i=0;$i < count($insumos);$i+=2){
+            $productoID = $insumos[$i];
+            $cantidad = $insumos[$i+1];
+            if(Producto::find($productoID)!=null && $cantidad!=='' && $cantidad>0){
                 //doy de alta movimiento
                 // se concatena la horasminseg del momento a la fecha para crear el timestamp que requieren los movimientos
                 $H_i_s = date('H:i:s');

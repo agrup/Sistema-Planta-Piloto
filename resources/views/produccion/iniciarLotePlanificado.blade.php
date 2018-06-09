@@ -12,6 +12,7 @@
                 <th>Lote</th>
                 <th>Producto</th>
                 <th>Cantidad Planificada</th>
+                <th>Unidad</th>
               </tr>
             </thead>
             <tbody>
@@ -19,6 +20,7 @@
                 <td >{{ $lote['id'] }}</td>
                 <td>{{ $producto['nombre'] }}</td>
                 <td>{{ $lote['cantidadElaborada'] }}</td>
+                <td>{{$producto['tipoUnidad']}}</td>
               </tr>
               <tr></tr>
               <tr></tr>
@@ -38,16 +40,13 @@
               <input type="text" id="cantidad" class="form-control" >
               <button type="button" id="btnformulacion" class="btn btn-primary">Actualizar Formulación</button>
           </div>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Unidad</label>
-              <input type="text" id="tipoUnidad"  class="form-control" value="{{$producto['tipoUnidad']}}" disabled="true"> 
-            </div>
+          
           </div>
           <div class="col">
             <div class="form-group">
               <label for="exampleInputEmail1">Fecha Inicio</label>
               <input type="date" class="form-control" id="fecha" value="{{$fecha}}"> </div>
-            <div class="form-group">
+          {{-- <div class="form-group">
               <label></label>
               <label for="exampleInputEmail1">Trabajo Práctico</label>
               <select class="form-control" id="tp">
@@ -57,7 +56,7 @@
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Asignatura</label>
-              <input type="text" class="form-control" id="asignatura" > </div>
+              <input type="text" class="form-control" id="asignatura" > </div>--}}
           </div>
         </div>
          
@@ -72,10 +71,12 @@
             <table id="tformulacion" class="table">
               <thead>
                 <tr>
-                  <th>Insumo</th>
-                  <th>Lote&nbsp;</th>
-                  <th>Cantidad Utilizada</th>
-                  <th>Tipo Unidad</th>
+                  <th style="width:15% ">Insumo</th>
+                  <th style="width:15% ">Lote&nbsp;</th>
+                  <th style="width:15% ">Cantidad Utilizada</th>    
+                  <th style="width:15% ">Tipo Unidad</th>
+                  <th style="width:15% ">Stock</th>
+                  <th style="width:15% "> </th>
                 </tr>
               </thead>
               <tbody id="tbodyformulacion">
@@ -92,13 +93,20 @@
                     </select></td>
                     <td><input type=""  placeholder="Teorica total:{{$ingrediente['cantidad']}}" class="interes"></td>
                     <td> {{$ingrediente['tipoUnidad']}}</td>
+                    <td id="tdstock"></td>
                     <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
+                    
                   </tr>
                 @endforeach
               </tbody>
             </table>
             <button type="submit" id="guardar" class="btn btn-primary">Guardar</button>
           </form>
+          <div>
+             <form action="/" method="get">
+                 <button  class="btn btn-secondary" >Volver al Menú</button>  
+             </form>
+         </div>
         </div>
       </div>
     </div>
@@ -107,7 +115,7 @@
  @section('script')
  <script type="text/javascript" src="{{asset('js/produccion/getFormulacionProductoPlanificado.js')}}"></script>
 
- <script type="text/javascript" src="{{asset('js/produccion/addRowLote.js')}}"></script>
+ <script type="text/javascript" src="{{asset('js/produccion/addRow Lote.js')}}"></script>
  <script src="{{asset('js/produccion/postLote.js')}}" type="text/javascript"></script>
  <script>
      document.addEventListener("DOMContentLoaded", function() {

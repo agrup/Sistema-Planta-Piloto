@@ -1,8 +1,12 @@
 $(document).ready(function(){
-	$('#botonCargarContinuar').on('click', function(){
+	var tbody = document.getElementsByTagName("tbody")[0];
+			$(tbody).empty();									
+	$('#botonCargarContinuar').click(function(e){
+		e.preventDefault();
 		var lote = $('#lote_id').val();
 		var cantidad = $('#cantidadObservada').val();
 		var tipo = $('#tipoUnidad').val();
+		var fecha=$('#fecha').val();
 
 		$.ajax({
 	  		url: "/stock/controlExistencias",
@@ -14,40 +18,40 @@ $(document).ready(function(){
 	        	cantidadObservada: cantidad,
 	        	tipoUnidad: tipo
 	  		},
-	  		type: "POST"
+	  		type: "post"
 	  		
-	  	}).done(function(data) {	  					    
+	  	}).done(function(data, i) {	  					    
 			//var tbody = $('tbody');
-			var tbody = document.getElementsByTagName("tbody")[0];
-			//$(tbody).empty();									
-			var tr=document.createElement("tr");			    	
-			    	var td=document.createElement("td");	    			
-			    		td.innerHTML = $('#fecha').val();
-			    		tr.appendChild(td);   
-			    	var td=document.createElement("td");	    			
-			    		td.innerHTML = lote;
-			    		tr.appendChild(td);
-			    	var td=document.createElement("td");	    			
-			    		td.innerHTML = cantidad;
-			    		tr.appendChild(td);    
-			    	var td=document.createElement("td");	    			
-			    		td.innerHTML = data.lote;
-			    		tr.appendChild(td);    
-			    	var td=document.createElement("td");	    			
-			    		td.innerHTML = tipo;
-			    		tr.appendChild(td);   
+            let tbody = document.getElementsByTagName("tbody")[0];
+            //$(tbody).empty();
+            let tr = document.createElement("tr");
+            //Creo los td
+            let tdFecha = document.createElement("td");
+            let tdLote   = document.createElement("td");
+            let tdNombre = document.createElement("td");
+            let tdCantidadObs = document.createElement("td");
+            let tdTU = document.createElement("td");
+            //Asigno los valores
+            tdFecha.innerHTML = fecha;
+            tdLote.innerHTML = lote;
+            tdNombre.innerHTML = data.nombreProducto;
+            tdCantidadObs.innerHTML = cantidad;
+            tdTU.innerHTML = tipo;
+		    // Agrego los td a la row y la row a la table
+            tr.appendChild(tdFecha);
+            tr.appendChild(tdLote);
+            tr.appendChild(tdNombre);
+            tr.appendChild(tdCantidadObs);
+            tr.appendChild(tdTU);
+            tbody.appendChild(tr);
 
-
-			tbody.appendChild(tr)
-			    		
-
-					
 		}).fail(function(){
 	  		alert('Error, Lote No Encontrado');		  
 		});
 	});
 
-	$('#botonCargarTerminar').on('click', function(){
+	$('#botonCargarTerminar').click(function(e){
+        e.preventDefault();
 		var lote = $('#lote_id').val();
 		var cantidad = $('#cantidadObservada').val();
 		var tipo = $('#tipoUnidad').val();

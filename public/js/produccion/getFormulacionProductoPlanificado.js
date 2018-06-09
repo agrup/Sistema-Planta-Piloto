@@ -24,39 +24,41 @@ $(document).ready(function(){
                     	tr.setAttribute('class','trConsumo');
             		var td1=document.createElement("td");
             		//tiene el id
-            		var inputID= $('<input>').attr({type:'hidden',value: item['id'],id:"idInsumo"}).appendTo(tr);//tiene el id
+            		var inputID= $('<input>').attr({type:'hidden',value: ing['id'],id:"idInsumo"}).appendTo(tr);//tiene el id
 					inputID.addClass('interes');
             		var td2=document.createElement("td");
             		          	 	
-            		var selectLote=$('<select></select>').attr({id:"lote"}).appendTo(td2);
+            		var selectLote=$('<select></select>').attr({id:"selectLote"}).appendTo(td2);
                     $('<option selected="selected" disabled></option>').text("-Selecccione un Lote-").appendTo(selectLote);
-                    selectLote.addClass('interes');
+
             		var td3=document.createElement("td");
-            		var inputCant =$('<input>').attr({type:'text',placeholder:"Teorica Total: "+item['cantidad'],id:"cantidad"}).appendTo(td3);            	inputCant.addClass('interes');
+            		var inputCant =$('<input>').attr({type:'text',placeholder:"Teorica Total: "+ing['cantidad'],id:"cantidad"}).appendTo(td3);            	inputCant.addClass('interes');
             		var td4=document.createElement("td");            		
-            		td1.setAttribute("id",item['codigo']);//producto
+            		td1.setAttribute("id",ing['codigo']);//producto
                     var td5=document.createElement("td");                       
-                    var agregarLote=$("<button>").attr({type:"button",value:"agregarLote"}).appendTo(td5);
+                   
+                    var tdStock=document.createElement("td");   
+                    tdStock.setAttribute('id','tdstock');
+                     var agregarLote=$("<button>").attr({type:"button",value:"agregarLote"}).appendTo(td5);
                     agregarLote.addClass("btn btn-primary");
                     agregarLote.text("Agregar Lote");
-
 
             		$(td2).attr("id",index+"l");//lote
             		$(td3).attr("id",index+"c");//cantidad
             		$(td3).attr("name","cantidad");
             		
-            		td4.setAttribute("id",item['tipoUnidad']+index);//tu
-            		tr.append(td1,td2,td3,td4,td5);	
+            		td4.setAttribute("id",ing['tipoUnidad']+index);//tu
+            		tr.append(td1,td2,td3,td4,tdStock,td5);	
 -            		tbody.append(tr);
             		
             	
 					$("#tformulacion").append(tbody);
             		$("#tbodyformulacion").append(tr);
-		  			$("#"+item['codigo']).html(item['nombre']);
-					$("#"+item['tipoUnidad']+index).html(item['tipoUnidad']);
+		  			$("#"+ing['codigo']).html(ing['nombre']);
+					$("#"+ing['tipoUnidad']+index).html(ing['tipoUnidad']);
 
                     //Agrego las opciones al select de lotes
-                    item['lotes'].forEach(function(lote,index) {
+                    ing['lotes'].forEach(function(lote,index) {
                         var option=$('<option></option>').text(lote['id']);
                         option.attr("value",lote['id']);
                         // se guarda en data-stock la cantidad en stock para ser mostrada luego de seleccionar el lote
@@ -80,5 +82,10 @@ $(document).ready(function(){
 		$("#tipoUnidad").attr({value:tu});	
 
 	});
+
+    $('body').on('change','#selectLote',function(){
+        var stock=$('option:selected', this).data('stock');
+        $(this).parent('td').next().next().next().text(stock);
+    });
 		
 });// post a /produccion/lotenoplanificado

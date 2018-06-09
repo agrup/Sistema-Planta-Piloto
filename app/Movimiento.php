@@ -60,9 +60,8 @@ class Movimiento extends Model
      */
     public static function ultimoRealProd($producto_id)
     {
-       return self::whereRaw('producto_id=' . $producto_id  . 'and (tipo =' . TipoMovimiento::TIPO_MOV_CONSUMO .
-               'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO .
-               'or tipo=' . TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS . ')')
+       return self::whereIn('tipo',TipoMovimiento::reales())
+           ->where('producto_id',$producto_id)
            ->orderBy('fecha', 'desc')
            ->first();
     }
@@ -109,7 +108,7 @@ class Movimiento extends Model
                 ->where('fecha','>',$fechaInicio)
                 ->where('fecha','<',$fechaTope)
                 ->where('saldoGlobal','<','0')
-                ->where('tipo','=',9)
+                ->where('tipo','=',TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF)
                 ->orderBy('fecha','asc')
                 ->first();
             if($mov!=null){
@@ -144,6 +143,7 @@ class Movimiento extends Model
     public static function getPlanificadosProd(int $producto_id, string $fechaHasta)
     {
 	return self::whereIn('tipo',TipoMovimiento::planificadosPendientes())
+                ->where('producto_id',$producto_id)
 				->where('fecha','<',$fechaHasta)
 				->orderBy('fecha','asc')
 				->get();
@@ -172,6 +172,7 @@ class Movimiento extends Model
     //Ultimo movimiento real del id producto anterior a una fecha
     public static function getAnteriorProd(int $producto_id, string $fecha)
     {
+
 
 
     	return(self::where('producto_id','=',$producto_id)
@@ -259,7 +260,8 @@ class Movimiento extends Model
         $productosid = self::distinct()->select('producto_id')->get();
         foreach ($productosid as $producto) {
             if (($aux = self::getAnteriorProd($producto->producto_id, $fechaHasta)) != null) {
-                $result[] = $aux;
+                array_push($result,$aux);
+                //$result[] = $aux;
             }
 
         }
@@ -267,6 +269,21 @@ class Movimiento extends Model
 
     }
 
+
+    public static function ultimoStockRealProdTodosHasta(string $fechaHasta)
+    {
+        $result = [];
+        $productosid = self::distinct()->select('producto_id')->get();
+        foreach ($productosid as $producto) {
+            if (($aux = self::getAnteriorRealProd($producto->producto_id, $fechaHasta)) != null) {
+                array_push($result,$aux);
+                //$result[] = $aux;
+            }
+
+        }
+        return $result;
+
+    }
 
 
 

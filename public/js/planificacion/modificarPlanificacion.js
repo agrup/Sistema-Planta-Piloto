@@ -1,57 +1,32 @@
 $(document).ready(function(){
-			$('body').on('click','.modificar',function(){
-				
-				//genero inputs con los valores actuales para que sean modificados
-				var tr = $(this).closest('tr');
-				tr.each(function(){
-				$(this).find('td').each(function(){ //por cada td con img, borro el td
-				$(this).find('img').parent('td').remove();
-			
-			});});
+	$('body').on('click','.modificar',function(){
 
-				//ahora ponemos los select y los inputs
-				tr.each(function(){	
-					$(this).find('td').each(function(){
-						var valortd=$(this).text(); 
-						$(this).text("");
-						//si es el codigo (td "id") (de producto o insumo)
-						var n=$(this).attr('id');
-						if(n=="nombre"){
-							$(this).find('input').remove();
-							$(this).find('select').remove();
-							var select=$("#selectInsumos").clone().appendTo(this);
-							select.attr('id','insumos');
-							select.addClass('interes');
-							select.show();
-						}
-						if(n=="cantidad"){
-							var input=$('<input>').val(valortd);
-							$(this).append(input);
-						}
-						if(n=="tp"){
-							var valortd=$(this).text();
-							$(this).find('input').remove();
-							$(this).find('select').remove();
-							var select=$("#selecttp").clone().appendTo(this);
-							select.attr('id','tp');
-							select.addClass('interes');
-							select.val(valortd);
-							select.show();
-						}
-						//var input=$('<input>').val(valortd);
-						//$(this).append(input);
+		let tr = $(this).closest('tr');
+        let tdImgGuardar = $(this).closest('td');
+
+		let tdCant =$(this).closest('td').prev().prev();
+
+        //genero el input de cantidad con su valor anterior para ser modificado
+        let valorAnterior = tdCant.text();
+		tdCant.text('');
+		nuevoInput = $("<input>").attr({type:'text',class:'inputCant',value: valorAnterior});
+		tdCant.append(nuevoInput);
 
 
-					});
-				});		
-				//agrego el boton guardar
-				var td5=document.createElement("td");
-				var guardar=document.createElement('img');
-				guardar.src= $('img#iHGuardar').attr('src');
-				guardar.setAttribute('width','30px');
-				guardar.setAttribute('height','30px');
-				guardar.setAttribute('class','guardar');
-				td5.appendChild(guardar);
-				tr.append(td5);
-			});
+		//genero la nueva imagen
+        let imgGuardar = document.createElement('img');
+        imgGuardar.src= $('img#iHGuardar').attr('src');
+        imgGuardar.setAttribute('width','30px');
+        imgGuardar.setAttribute('height','30px');
+        imgGuardar.setAttribute('class','guardar');
+        //por cada td con img, se la elimino
+        tr.find('td').each(function(){
+            $(this).find('img').remove();
+        });
+        //agrego la nuevo imagen
+       	tdImgGuardar.append(imgGuardar);
+
+
+	});
+
 });

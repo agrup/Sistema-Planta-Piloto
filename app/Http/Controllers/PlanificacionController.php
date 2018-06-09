@@ -11,6 +11,8 @@ use Mockery\Exception;
 
 class PlanificacionController extends Controller
 {
+
+    const MSJ_PLANIFICACION_CARGADA = "Planificación cargada exitosamente";
     public static function index()
     {
         $planificaciones = Planificacion::getSemana(Carbon::now()->format('Y-m-d'));
@@ -57,6 +59,10 @@ class PlanificacionController extends Controller
             throw new Exception('Fecha inválida');
         }
         $planificacion=Planificacion::where('fecha','=',$fecha)->first();
+        if($planificacion==null){
+            Planificacion::getSemana($fecha);
+        }
+        $planificacion=Planificacion::where('fecha','=',$fecha)->first();
         $productos = Producto::getProductosSinInsumosArr();
         $insumos = Producto::all()->toArray();
         $planificaciones = [];
@@ -75,18 +81,32 @@ class PlanificacionController extends Controller
             throw new Exception('Fecha inválida');
         }
         $planificacion->actualizar($productos,$insumos);
-        return \Response::json(['fecha'=>$fecha,'insumos'=>$insumos, 'productos'=>$productos, 'planificacion'=>$planificacion->toArray()]);
+        return \Response::json(['fecha'=>$fecha,'insumos'=>$insumos, 'productos'=>count($productos), 'planificacion'=>$planificacion->toArray()])/*->withSucces(self::MSJ_PLANIFICACION_CARGADA)*/;
     }
 
     public static function verNecesidadInsumos(){
         $fechaHasta = request()->input('fecha');
+        if($fechaHasta==null){
+            $fechaHasta=Carbon::now()->format('Y-m-d');
+        }
+
+        //Stock necesita fecha tipo timestamp - se inicializa en la ultima hora del dia para tener en cuenta ese dia inclusive
+        $fechaStamp = $fechaHasta . ' ' . '23:59:59';
+        $necesidad =GestorStock::getNecesidadInsumos($fechaStamp);
+        return view('informes.sumatoriaDeNecesidadDeInsumos',compact('necesidad'))
+                ->with(compact('fechaHasta'));
+
+    }
+    public static function verificarPlanificacion($fecha){
+        //$fechaHasta = request()->input('fecha');
+        $fechaHasta =$fecha;
         if($fechaHasta==null)
             //throw new Exception('Fecha inválida');
             $fechaHasta=Carbon::now()->format('Y-m-d');
         //Stock necesita fecha tipo timestamp - se inicializa en la ultima hora del dia para tener en cuenta ese dia inclusive
         $fechaStamp = $fechaHasta . ' ' . '23:59:59';
         $necesidad =GestorStock::getNecesidadInsumos($fechaStamp);
-        return view('informes.sumatoriaDeNecesidadDeInsumos',compact('necesidad'))
+        return view('programaProduccionSemanal.sumatoriaDeNecesidadDeInsumos',compact('necesidad'))
                 ->with(compact('fechaHasta'));
 
     }
