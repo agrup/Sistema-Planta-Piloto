@@ -129,7 +129,8 @@ class ProduccionController extends Controller
         ];
         $lote = Lote::find($loteID);
         if($lote==null){
-            throw new Exception('Lote inexistente');
+            //throw new Exception('Lote inexistente');
+            return back()->withErrors('Lote Inexistente');
         }
         $lote->iniciarPlanificado($datosLote);
 
@@ -163,9 +164,12 @@ class ProduccionController extends Controller
     {
         //obtemgo el produco de ese lote
 
+
+
         $loteObj = Lote::find($id);
         if ($loteObj==null) {
-            throw new Exception('Lote inexistente');
+           // throw new Exception('Lote inexistente');
+            return back()->withErrors('Lote Inexistente');
         }
         $producto = Producto::find($loteObj->producto_id);
         if ($loteObj->tipoLote == TipoLote::FINALIZADO) {
