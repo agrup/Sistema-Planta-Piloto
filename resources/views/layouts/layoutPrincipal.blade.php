@@ -39,12 +39,12 @@
   </div>
 
    </head>
-
+@include('layouts.alerts')
 
 <main role="main">
 <body class="container jumbotron">
 
-@include('layouts.alerts')
+
 
 	
   @yield('section')
