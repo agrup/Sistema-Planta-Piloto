@@ -1,7 +1,12 @@
 @extends('layouts.layoutPrincipal' )
 @section('section') 
   @include('alertaStock')
+
+
   <div class="menuPrincipal">
+  
+        @if(Auth::user()->hasAnyRole(['administrador','jefeProduccion']))
+
          <div class="contenedoropcion">
           <div class="flextitulo"><h4 class="titulo">Planificar</h4></div>
            <div class="flexboton"> 
@@ -11,6 +16,8 @@
            </div>
          </div> 
 
+        @endif
+        
          <div class="contenedoropcion">        
                <div class="flextitulo"> <h4 class="titulo">Cargar Producción</h4></div>
                 <div class="flexboton"> 
@@ -19,18 +26,32 @@
               </form>
             </div>
          </div>
+
+
+
+@if(Auth::user()->hasAnyRole(['administrador','jefeProduccion']))
          <div class="contenedoropcion">     
-                <div class="flextitulo"><h4 class="titulo">Administración</h4></div>
-                <div class="flexboton"> 
-                 <form action="#" method="get">
-                 <button><img src="img/menu/administracion2.png" height="110px" width="120px"></button>  
-          </form>     
-          <li>  <a href="/productos/administracionProductos" style="font-size: 20px; color: blue" >Productos</a></li>
-            <li>  <a href="/productos/administracionInsumos" style="font-size: 20px; color: blue" >Insumos</a></li>  
+                  <div class="flextitulo">
+                    <h4 class="titulo">Administración</h4>
+                  </div>
+                  <div class="flexboton"> 
+                   <form action="#" method="get">
+                    <button><img src="img/menu/administracion2.png" height="110px" width="120px"></button>  
+                  </form>     
+                    <li>  <a href="/productos/administracionProductos" style="font-size: 20px; color: blue" >Productos</a> </li>
+                    <li>  <a href="/productos/administracionInsumos" style="font-size: 20px; color: blue" >Insumos</a></li>  
+                  </div>
          </div>
-         </div>
+
+@endif
+
     </div>
+
+
      <div class="menuPrincipal">
+
+
+
            <div class="contenedoropcion">
             <div class="flexboton"> 
                 <div class="flextitulo">  <h4 class="titulo">Gestion de Stock</h4></div>
@@ -40,6 +61,8 @@
                </div>
                <li>  <a href="/stock/entradaLoteInsumo" style="font-size: 20px; color: blue" >Entrada de Insumo</a></li>
            </div>
+
+@if(Auth::user()->hasAnyRole(['administrador','jefeProduccion']))
            <div class="contenedoropcion">
             <div class="flexboton"> 
                 <div class="flextitulo">  <h4 class="titulo">Informes</h4></div>
@@ -50,6 +73,8 @@
              <li>  <a href="/stock" style="font-size: 20px; color: blue" >Informe de Stock</a></li>
             <li>  <a href="/sumarizacion" style="font-size: 20px; color: blue" >Ver Necesidad de Insumos</a></li> 
            </div>
+
+
            <div class="contenedoropcion">
              <div class="flexboton"> 
                 <div class="flextitulo">  <h4 class="titulo">Estadísticas</h4></div>
@@ -59,6 +84,7 @@
            </div>
            </div>
       </div>
+@endif
       
 @endsection  
 
