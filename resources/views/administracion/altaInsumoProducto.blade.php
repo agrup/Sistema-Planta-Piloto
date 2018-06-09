@@ -90,7 +90,7 @@
 					
 
 
-				@include('layouts.errors')
+				
 
 @endsection
 
