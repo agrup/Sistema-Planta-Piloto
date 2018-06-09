@@ -289,14 +289,6 @@ class ProduccionController extends Controller
     }
 
     public static function postModificarIniciado($id){
-
-
-       /* $data['fecha']='2018-06-04';
-
-        $data['lotes']=self::getArrayLotes('2018-06-04');
-        return view('produccion.produccion',compact('data'));*/
-
-
         //Datos de la vista
         $loteVista = request()->input('lote');
         $consumosVista = request()->input('consumo');
@@ -304,27 +296,25 @@ class ProduccionController extends Controller
         //Parseo los datos de la request
         $dataLoteArr = explode(',',$loteVista);
         $consumosArrVista = explode(',',$consumosVista);
-        var_dump($loteID);
+        /*var_dump($loteID);
         var_dump($dataLoteArr);
         var_dump($consumosArrVista);
-        return view('welcome');
+        return view('welcome');*/
 
         if($dataLoteArr[1]=='' || $dataLoteArr[2]==''){
-
+            throw new Exception('Fecha o Cantidad vacias');
         }
-        $consumos=[];
-        $lote = Lote::find($datosLote['lote_id']);
-        $fecha = $lote->fechaInicio;
+
+        $lote = Lote::find($loteID);
+        $lote->cantidadElaborada = $dataLoteArr[1];
+        $lote->fechaInicio=$dataLoteArr[2];
         //modifico el lote
-        $lote->modificarLote($consumos,$fecha);
-
-
-
+        $lote->actualizarConsumos($consumosArrVista );
+        $lote->save();
         //Retorno a la vista inicial de produccion en la fecha de este lote
-        $data['lotes']=self::getArrayLotes($fecha);
-        $data['fecha']=$fecha;
+        $data['lotes']=self::getArrayLotes($lote->fechaInicio);
+        $data['fecha']=$lote->fechaInicio;
         return view('produccion.produccion',compact('data'));
-
     }
 
     /**
