@@ -27,7 +27,7 @@
 						<th>Estado</th> 
 						{{--<th>Asignatura</th>--}}
 						
-						<th></th></tr>
+						<th>Detalles</th></tr>
 			</thead>			
 			<tbody>
 				@foreach ($data['lotes'] as $lote)
@@ -41,7 +41,7 @@
 		        		{{--<td>@if ($lote['asignatura']!= null)						
 								{{ $lote['asignatura'] }}
 							@endif</td>--}}
-		        		<td> <a href="/produccion/loteEnProduccion/{{ $lote['lote'] }}">Detalles</a></td>
+		        		<td> <a href="/produccion/loteEnProduccion/{{ $lote['lote'] }}"> <img src="{{asset('img/details.png')}}" style="height: 24px; width: 24px" alt=""></a></td>
 		        	</tr> 
 		        	
 				@endforeach
@@ -66,7 +66,7 @@
 						
 					</form>		-->
 					<input type="text" class="form-control" style="width: 30%;margin-right: 5px;margin-bottom: 0px" placeholder="Número Lote" id='lote' name='lote' required> 	
-					<button  class="btn btn-primary" id="buscarLote">Buscar Lote</button>	
+					<button  class="btn btn-primary" id="buscarLote">Buscar Lote</button>
 			</div>
 
 			<div class="rowFlex" style="margin-top: 10px">

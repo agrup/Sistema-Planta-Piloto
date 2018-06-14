@@ -31,9 +31,18 @@
 						              <label>Descripcion</label>
 						              <input type="text" name="descripcion" class="form-control" required> </div>
 						            <div class="form-group">
-						              <label for="exampleInputEmail1">Categoría</label>
-						              <input type="text" name="categoria" class="form-control" required> </div>								    
-						        </div>
+										<label for="categoria">Categoría</label>
+										@if ($insumoProducto=='producto')
+											<select name="categoria" class="form-control" required>
+												@foreach(\App\Categorias::productos() as $categ)
+													<option value="{{$categ}}">{{$categ}}</option>
+												@endforeach
+											</select>
+										@elseif ($insumoProducto=='insumo')
+											<input type="text" value="Insumo" name="categoria" class="form-control" disabled>
+										@endif
+									</div>
+								</div>
 						        <div class="col-md-6">
 						            <div class="form-group">
 							            <label>Tipo de Unidad</label>

@@ -41,7 +41,7 @@
 						<th>Insumo/Producto</th> 
 						<th>Cantidad en Stock</th> 
 						<th>Unidad</th> 
-						<th></th></tr>
+						<th>Lotes</th></tr>
 			</thead>			
 	        <tbody >
 	        	@foreach ($stock as $s)	        	
@@ -50,14 +50,14 @@
 		        		<td>{{ $s['nombre'] }}</td> 
 		        		<td> {{ $s['stock'] }}</td> 
 		        		<td> {{ $s['tipoUnidad'] }}</td>
-		        		<td> <a href="verLotes?codigo={{ $s['codigo'] }}">Ver Detalles</a></td>
+		        		<td> <a href="verLotes?codigo={{ $s['codigo'] }}"><img src="{{asset('img/details.png')}}" style="height: 24px; width: 24px" alt=""></a></td>
 		        	</tr> 
 	        	@endforeach
 	        </tbody>
 	        
         @include('elementosComunes.cierreTabla')
 
-
+		<input type="button" class="btn btn-secondary" value="Imprimir" onClick="window.print()">
 		@include('layouts.errors')
 
 

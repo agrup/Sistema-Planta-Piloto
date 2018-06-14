@@ -72,8 +72,9 @@
     </tbody>
     @include('elementosComunes.cierreTabla')
 
+    <input type="button" class="btn btn-secondary" value="Imprimir" onClick="window.print()">
 
-  {{--@include('alertaStock')--}}  
+    {{--@include('alertaStock')--}}
 
     
 

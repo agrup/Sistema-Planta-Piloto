@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-md-12" >
                     <h1 class="text-gray-dark">Login</h1>
-                    
+
                     <form class="" method="post" action="{{ route('login') }}">
                          @csrf
                         <div class="form-group row">
@@ -30,8 +30,8 @@
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
-                                @endif  
-                        </div>                      
+                                @endif
+                        </div>
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
                                 <div class="checkbox">
@@ -40,7 +40,7 @@
                                     </label>
                                 </div>
                             </div>
-                       
+
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-{{-- 
+{{--
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

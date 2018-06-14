@@ -91,7 +91,7 @@
                         <option value="{{$lote['id']}}" name="{{$lote['stock']}}">{{$lote['id']}}</option>
                       @endforeach
                     </select></td>
-                    <td><input type=""  placeholder="Teorica total:{{$ingrediente['cantidad']}}" class="interes"></td>
+                    <td><input type="number"  placeholder="Teorica total:{{$ingrediente['cantidad']}}" class="interes" value="{{$ingrediente['cantidad']}}"></td>
                     <td> {{$ingrediente['tipoUnidad']}}</td>
                     <td id="tdstock"></td>
                     <td> <button type="button" value="agregarLote" class="btn btn-primary">Agregar Lote</button></td>
@@ -115,7 +115,7 @@
  @section('script')
  <script type="text/javascript" src="{{asset('js/produccion/getFormulacionProductoPlanificado.js')}}"></script>
 
- <script type="text/javascript" src="{{asset('js/produccion/addRow Lote.js')}}"></script>
+ <script type="text/javascript" src="{{asset('js/produccion/addRowLote.js')}}"></script>
  <script src="{{asset('js/produccion/postLote.js')}}" type="text/javascript"></script>
  <script>
      document.addEventListener("DOMContentLoaded", function() {

@@ -26,8 +26,18 @@
 		        <div class="col-md-6">
 			        <div class="form-group">
 			            <label>Categoría</label>
-			            <input type="text" class="form-control"" id="categoria"> 
-			        </div>
+			            {{--<input type="text" class="form-control" id="categoria">--}}
+						@if ($insumoProducto=='producto')
+							<select name="categoria" class="form-control" id="categoria">
+								<option value=""  selected>  </option>
+								@foreach(\App\Categorias::productos() as $categ)
+									<option value="{{$categ}}">{{$categ}}</option>
+								@endforeach
+							</select>
+						@elseif ($insumoProducto=='insumo')
+							<input type="text" value="Insumo" name="categoria"  id="categoria" class="form-control" disabled>
+						@endif
+					</div>
 			        <div class="form-group">
 			            <label>Alarma</label>
 			            <select name="alarma" class="form-control" id="alarma">
