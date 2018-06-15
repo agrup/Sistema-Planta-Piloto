@@ -34,15 +34,18 @@ class Movimiento extends Model
         if($planificacion_id==null){
             throw new Exception('planificacion id null');
         }
-        self::where('planificacion_id','=',$planificacion_id)
-            ->where('tipo','=',TipoMovimiento::TIPO_MOV_ENTRADA_PRODUCTO_PLANIF)
-            ->delete();
-        self::where('planificacion_id','=',$planificacion_id)
-            ->where('tipo','=',TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF)
-            ->delete();
-        self::where('planificacion_id','=',$planificacion_id)
-            ->where('tipo','=',TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF)
-            ->delete();
+        $movimientos = self::whereIn('tipo',TipoMovimiento::planificadosPendientes())
+                        ->where('planificacion_id',$planificacion_id)->get();
+        foreach ($movimientos as $movimiento){
+            if($movimiento->tipo == TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO_PLANIF){
+                $movimiento->delete();
+            } else {
+                $lote = Lote::find($movimiento->idLoteConsumidor);
+                if($lote->tipoLote == TipoLote::PLANIFICACION){
+                    $movimiento->delete();
+                }
+            }
+        }
     }
 
 
@@ -60,9 +63,8 @@ class Movimiento extends Model
      */
     public static function ultimoRealProd($producto_id)
     {
-       return self::whereRaw('producto_id=' . $producto_id  . 'and (tipo =' . TipoMovimiento::TIPO_MOV_CONSUMO .
-               'or tipo=' . TipoMovimiento::TIPO_MOV_ENTRADA_INSUMO .
-               'or tipo=' . TipoMovimiento::TIPO_MOV_CONTROL_EXISTENCIAS . ')')
+       return self::whereIn('tipo',TipoMovimiento::reales())
+           ->where('producto_id',$producto_id)
            ->orderBy('fecha', 'desc')
            ->first();
     }
@@ -109,7 +111,7 @@ class Movimiento extends Model
                 ->where('fecha','>',$fechaInicio)
                 ->where('fecha','<',$fechaTope)
                 ->where('saldoGlobal','<','0')
-                ->where('tipo','=',9)
+                ->where('tipo','=',TipoMovimiento::TIPO_MOV_CONSUMO_PLANIF)
                 ->orderBy('fecha','asc')
                 ->first();
             if($mov!=null){
@@ -144,6 +146,7 @@ class Movimiento extends Model
     public static function getPlanificadosProd(int $producto_id, string $fechaHasta)
     {
 	return self::whereIn('tipo',TipoMovimiento::planificadosPendientes())
+                ->where('producto_id',$producto_id)
 				->where('fecha','<',$fechaHasta)
 				->orderBy('fecha','asc')
 				->get();
@@ -172,6 +175,7 @@ class Movimiento extends Model
     //Ultimo movimiento real del id producto anterior a una fecha
     public static function getAnteriorProd(int $producto_id, string $fecha)
     {
+
 
 
     	return(self::where('producto_id','=',$producto_id)
@@ -259,7 +263,8 @@ class Movimiento extends Model
         $productosid = self::distinct()->select('producto_id')->get();
         foreach ($productosid as $producto) {
             if (($aux = self::getAnteriorProd($producto->producto_id, $fechaHasta)) != null) {
-                $result[] = $aux;
+                array_push($result,$aux);
+                //$result[] = $aux;
             }
 
         }
@@ -267,6 +272,21 @@ class Movimiento extends Model
 
     }
 
+
+    public static function ultimoStockRealProdTodosHasta(string $fechaHasta)
+    {
+        $result = [];
+        $productosid = self::distinct()->select('producto_id')->get();
+        foreach ($productosid as $producto) {
+            if (($aux = self::getAnteriorRealProd($producto->producto_id, $fechaHasta)) != null) {
+                array_push($result,$aux);
+                //$result[] = $aux;
+            }
+
+        }
+        return $result;
+
+    }
 
 
 
@@ -346,7 +366,7 @@ class Movimiento extends Model
     }
 
     /**
-     * Elimina los consumos de ese lote_id y devuelve el planificacion_id si corresponde, sino null
+     * Elimina los consumos de ese lote_id
      * @param int $lote_id
      */
     public static function eliminarConsumos(int $lote_id)

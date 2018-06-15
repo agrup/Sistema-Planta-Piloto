@@ -65,31 +65,27 @@ public static function showentradaLoteInsumo()
         GestorStock::entradaInsumo($lote->id,$producto_id,$cantidad,$fechaStamp);//,id lote, id producto, cantidad , fecha
         $insumos= Producto::all();
         return view('gestionDeStock.entradaInsumo',compact('insumos'))
-                                        ->with(['succes'=>true]);
+                                        ->with(['succes'=>true])->withSuccess('Alta Exitosa');
     }
 
     public static function showControlExist(){
 
         $tipoUnidades = Producto::tipoUnidadesTodas();
+        $productos= Producto::all();
         return view('gestionDeStock.controlExistencias')->with(compact('tipoUnidades'));
     }
 
     public static function saveControlExist(){
+
         $lote_id = request()->input('lote_id');
         $cantidadObservada = request()->input('cantidadObservada');
         $tipoUnidad = request()->input('tipoUnidad');
 
         $lote = Lote::find(request()->input('lote_id'));
 
-        
-        if($lote==null){
-            return view('gestionDeStock.loteNoEncontrado')->with(compact('lote_id'))
-                ->with(compact('cantidadObservada'))
-                ->with(compact('tipoUnidad'));
-        }else{
-            return \Response::json(['fecha'=>$lote], 200);    
 
-        }
+        return \Response::json(compact($lote))->withSuccess('Alta Exitosa');    
+
     }
 
 }

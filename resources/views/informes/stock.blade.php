@@ -1,9 +1,15 @@
 @extends('layouts.layoutPrincipal' )
 
 @section('section')
+		<?php 
+		setlocale(LC_TIME, 'spanish');
+		Carbon\Carbon::setUtf8(true);
 
+		$fechaC = Carbon\Carbon::createFromFormat('Y-m-d',$fecha);
+		$fechaActual=$fechaC->formatLocalized('%A %d de %B de %Y');
+	?>
 		@include('elementosComunes.aperturaTitulo')
-			Stock <h4>Hasta el dia {{date('d-m-Y',strtotime($fecha))}}</h4>
+			Stock <h4>Hasta el dia {{$fechaActual}}</h4>
 		@include('elementosComunes.cierreTitulo')
 		
 		{{-- FORM PARA STOCK A FUTURO --}}
@@ -18,8 +24,12 @@
 				</div>
 				<input  type="submit" class="btn btn-primary" value="Actualizar"> 
 				<div class="input-group">
-				<input type="checkbox" name="mostarPlanificados" checked="True">
-				<h6>Tener en cuenta productos planificados</h6>
+					@if($mostarPlanificados==true)
+						<input type="checkbox" name="mostarPlanificados" checked>
+					@else
+						<input type="checkbox" name="mostarPlanificados">
+					@endif
+					<h6>Tener en cuenta productos planificados</h6>
 				</div>
 			</form>
 
@@ -31,7 +41,7 @@
 						<th>Insumo/Producto</th> 
 						<th>Cantidad en Stock</th> 
 						<th>Unidad</th> 
-						<th></th></tr>
+						<th>Lotes</th></tr>
 			</thead>			
 	        <tbody >
 	        	@foreach ($stock as $s)	        	
@@ -40,11 +50,15 @@
 		        		<td>{{ $s['nombre'] }}</td> 
 		        		<td> {{ $s['stock'] }}</td> 
 		        		<td> {{ $s['tipoUnidad'] }}</td>
-		        		<td> <a href="verLotes?codigo={{ $s['codigo'] }}">Ver Detalles</a></td>
+		        		<td> <a href="verLotes?codigo={{ $s['codigo'] }}"><img src="{{asset('img/details.png')}}" style="height: 24px; width: 24px" alt=""></a></td>
 		        	</tr> 
 	        	@endforeach
 	        </tbody>
 	        
         @include('elementosComunes.cierreTabla')
+
+		<input type="button" class="btn btn-secondary" value="Imprimir" onClick="window.print()">
+		@include('layouts.errors')
+
 
 @endsection

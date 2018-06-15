@@ -90,13 +90,28 @@ class Lote extends Model
 
     }
 
-    public function modificarLote($consumos, $fecha){
+    public function actualizarConsumos($consumosArrVista){
 
-
+        $consumos = []; // armaré un array de consumos como lo necesita el gestor de stock
+        for($i=0;$i<count($consumosArrVista);$i+=3){
+            $arrAux=[];
+            $prodIngId=$consumosArrVista[$i];
+            $loteIngId=$consumosArrVista[$i+1];
+            $cantidadIng = $consumosArrVista[$i+2];
+            //La vista devuelve 'idInsumo',',' para los insumos que no han sido cargados (no se cargo el consumo)
+            //Porlo que solo agregare al array de consumos los que correspondan
+            if(isset($loteIngId) && trim($loteIngId)!=='' && isset($cantidadIng) && trim($cantidadIng)!=='' && $cantidadIng>0){
+                //GestorStock::actualizarConsumo($lote->id, $loteIngId,$prodIngId,floatval($cantidadIng),$fechaStamp);
+                $arrAux['producto_id']=$prodIngId;
+                $arrAux['lote_id']=$loteIngId;
+                $arrAux['cantidad']=floatval($cantidadIng);
+                array_push($consumos,$arrAux);
+            }
+        }
         switch ($this->tipoLote) {
             case TipoLote::INICIADO: {
-                //actualizar datos del lote
-                //TODO
+                /*//actualizar datos del lote
+
                 //actualizo los consumos
                 $producto=Producto::find($this->producto_id);
                 $trazabilidad = GestorLote::getTrazabilidadLote($this->id);
@@ -114,21 +129,19 @@ class Lote extends Model
                     }
                     if($banderaMatch){ // si matcheo hay que actualizar, modificando lo que estaba previamente cargado
                         //GestorStock::modificarConsumo($this->id,$);
-                        //TODO hay que resolver el problema de cargar consumos de n lotes diferentes de un mismo producto.
+
                     } else { //sino se da de alta un nuevo consumo
                         GestorStock::altaConsumo($this->id,$consumo['idLote'],$consumo['producto_id'],$consumo['cantidad'],$fecha);
 
-                    }
+                    }*/
 
-                    //guardo los cambios
-                    $this->save();
-                }
-
+                //Elimino los consumos del lote
+                $fecha = $this->fechaInicio . ' ' . date('H:i:s');
+                GestorStock::actualizarConsumos($this->id,$consumos,$this->fechaInicio);
+                //guardo los cambios
                 break;
             }
-
             default : {
-
                 return null;
             }
         }
@@ -155,8 +168,7 @@ class Lote extends Model
         }
         $this->tipoLote = TipoLote::INICIADO;
         $this->fechaInicio = $datos['fechaInicio'];
-        $this->tipoTP = $datos['tipoTP'];
-        $this->asignatura = $datos['asignatura'];
+        $this->tipoTP = false;
         $this->cantidadElaborada = $datos['cantidadElaborada'];
         $this->save();
     }

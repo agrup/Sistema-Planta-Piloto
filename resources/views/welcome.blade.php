@@ -10,16 +10,26 @@
         
     </head>
     <body>
+        <div class="card-body">
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            You are logged in!
+        </div>
         <div class="flex-center position-ref full-height">
 
  
             <div class="content">
             <img src="{{ asset('img/planta.JPG') }}" alt="Norway" width="1000" height="400">
                 <div class="title m-b-md">
-                    Bienvenidos a la Planta Piloto
+                    Bienvenido a la Planta Piloto
                 </div>
             </div>
         </div>
+        
     </body>
 </html>
 

@@ -22,6 +22,9 @@ class ProductoController extends Controller
   
 
   public function showAltaInsumo(){
+
+
+
     $insumoProducto = "insumo";
     $insumos = [];
      $succes=false;
@@ -31,6 +34,18 @@ class ProductoController extends Controller
   }
 
   public function altaInsumo(){
+/*
+
+*/
+    $this->validate(request(),[
+       'nombre'=>'required',
+        'descripcion'=>'required',
+        'tipoUnidad'=>'required',
+        'codigo'=>'required',
+        'alarmaActiva'=>'required|boolean',
+
+      ]);
+
     $insumoProducto = "insumo";
     $insumos = [];
      $datosInsumo = [
@@ -50,16 +65,25 @@ class ProductoController extends Controller
 
       if (count(Producto::where('codigo',$datosInsumo['codigo'])->get())==0) {
               
-      $Producto = Producto::create($datosInsumo);
+      $producto = Producto::create($datosInsumo);
       $succes=true;
+      Movimiento::crearUltimoRealFicticio($producto->id);
       }else{
         throw new Exception('Codigo de Insumo existente');
       } 
 
+     
+        
+        
 
     return view('administracion.altaInsumoProducto')->with(compact('insumoProducto'))
                                                     ->with(compact('succes'))
-                                                    ->with(compact('insumos'));
+                                                    ->with(compact('insumos'))
+
+                                                    ->with('alert', 'Alta Exitosa')
+                                                    ->withSuccess('Alta Exitosa')
+
+                                                    ;
   }
 
 
@@ -114,9 +138,9 @@ public function showModificarInsumo()
   public function deleteInsumo(){
     $insumoProducto = 'insumo';
 
-    Producto::where('codigo',equest()->input('codigo'))->delete();
+    Producto::where('codigo',request()->input('codigo'))->delete();
 
-    return view('administracion.deleteInsumo')->with(compact('insumoProducto'));
+    return view('administracion.deleteInsumo')->with(compact('insumoProducto')) ->withSuccess('Baja Exitosa');
   }
 
 
@@ -124,13 +148,15 @@ public function showModificarInsumo()
 
   public function showAltaProducto(){
   $insumoProducto = "producto";
- $succes=false;
+  $succes=false;
   $insumos=Producto::all()->toArray();
   //var_dump(compact('insumos'));
   return view('administracion.altaInsumoProducto')
                                                     ->with(compact('insumos'))
                                                     ->with(compact('insumoProducto'))
-                                                    ->with(compact('succes'));
+                                                    ->with(compact('succes'))
+                                                    
+                                                    ;
 }
 
   public function administracionProducto(){
@@ -178,9 +204,9 @@ public function altaProducto(){
     */
         for ($i= 0; $i<count($formulacion) ; $i=$i+2) {
           $ingrediente_id =$formulacion[$i];
-          $cantidadProducto = $formulacion[$i+1];
-          if ($Producto->agregarIngrediente($cantidad,$cantidadProducto,$ingrediente_id)){
-            throw new Exception('erro ingrediente ingrediente ya agregado');
+          $cantidadIngrediente = $formulacion[$i+1];
+          if ($Producto->agregarIngrediente($cantidad,$cantidadIngrediente,$ingrediente_id)){
+            throw new Exception('error ingrediente ingrediente ya agregado');
           }
         }
 
@@ -188,10 +214,14 @@ public function altaProducto(){
 
         $insumoProducto = 'producto';
         $succes=true;
-
-        return view('administracion.buscarInsumoProducto')
+        //$continuar = request()->input('continuar');
+       $insumos=Producto::all()->toArray();
+          return view('administracion.altaInsumoProducto')->with(compact('insumos'))
                                           ->with(compact('succes'))
-                                          ->with(compact('insumoProducto'));
+
+                                          ->with(compact('insumoProducto'))
+                                           ->withSuccess('Alta Exitosa');
+
       }
 
 
@@ -248,7 +278,7 @@ public function modificarProducto()
   
 
 
-  return view('administracion.modificarProducto');
+  return view('administracion.modificarProducto') ->withSuccess('Modificacion Exitosa');
 }
 
   public function showdeleteProducto(){
@@ -266,7 +296,7 @@ public function modificarProducto()
     //return \Response::json(['response'=>true]);
     //return response()->json($producto);
     $result = true;
-    return Response::json(['success' => $result], 200);
+    return Response::json(['success' => $result], 200) ->withSuccess('Baja Exitosa');
     //return view('administracion.deleteProducto')->with(compact('insumoProducto'));
   }
 
@@ -294,16 +324,26 @@ public function modificarProducto()
 
 	   if($inspro=='producto'){
 
-    $productos= (Producto::filterRAW($codigo,$nombre,$categoria,$alarma))->toArray();
+    $productos = (Producto::filterRAW($codigo,$nombre,$categoria,$alarma));
+
+    $respuesta=[];
+        foreach ($productos as $producto) {
+          if (!empty($producto->getIngredientes())) {
+           array_push($respuesta, $producto);
+          }
+          
+        }       
+
+
      }
       if($inspro=='insumo'){
-        $productos=[];
+        $respuesta=[];
         
         $insumos= (Producto::filterRAW($codigo,$nombre,$categoria,$alarma));
 
         foreach ($insumos as $insumo) {
           if (empty($insumo->getIngredientes())) {
-           array_push($productos, $insumo);
+           array_push($respuesta, $insumo);
           }
           
         }
@@ -311,7 +351,8 @@ public function modificarProducto()
          //var_dump($productos);
       }
 
-		return  \Response::json($productos);
+
+		return  \Response::json($respuesta);
 
 
 

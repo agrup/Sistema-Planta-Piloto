@@ -111,7 +111,7 @@ class ProduccionController extends Controller
 
 
         //Los primeros 4 datos del lote no pueden estar vacios
-        for($i=0; $i<4;$i++){
+        for($i=1; $i<3;$i++){
             if(!isset($dataLoteArr[$i]) || trim($dataLoteArr[$i])===''){
                 throw new Exception('Campo que no se permite vacio');
             }
@@ -123,13 +123,15 @@ class ProduccionController extends Controller
         $fechaStamp = $fecha . " ". $H_i_s;
         //crear el lote
         $datosLote=[
-            'producto_id'=>$dataLoteArr[0],
             'cantidadElaborada'=>$dataLoteArr[1],
             'fechaInicio'=>$fecha,
-            'tipoTP'=>$dataLoteArr[3],
-            'asignatura'=>$dataLoteArr[4]
+            'tipoTP'=>false,
         ];
         $lote = Lote::find($loteID);
+        if($lote==null){
+            //throw new Exception('Lote inexistente');
+            return back()->withErrors('Lote Inexistente');
+        }
         $lote->iniciarPlanificado($datosLote);
 
         $consumos = []; // armaré un array de consumos como lo necesita el gestor de stock
@@ -155,15 +157,19 @@ class ProduccionController extends Controller
         $data['lotes']=self::getArrayLotes($fecha);
         $data['fecha']=$fecha;
         return view('produccion.produccion',compact('data'));
+        
     }
 
     public static function showLoteInProd ($id)
     {
         //obtemgo el produco de ese lote
 
+
+
         $loteObj = Lote::find($id);
         if ($loteObj==null) {
-            throw new Exception('Lote inexistente');
+           // throw new Exception('Lote inexistente');
+            return back()->withErrors('Lote Inexistente');
         }
         $producto = Producto::find($loteObj->producto_id);
         if ($loteObj->tipoLote == TipoLote::FINALIZADO) {
@@ -186,8 +192,8 @@ class ProduccionController extends Controller
             ->with(compact('trazabilidad'));
     }
 
-    public static function indexLoteNoPlanificado(){
-        $fecha = Carbon::now()->format('Y-m-d');
+    public static function indexLoteNoPlanificado($fecha){
+
         $productos = Producto::getProductosSinInsumosArr();
 
         return view('produccion.iniciarLoteNoPlanificado')
@@ -216,7 +222,7 @@ class ProduccionController extends Controller
 
 
         //Los primeros 4 datos del lote no pueden estar vacios
-        for($i=0; $i<4;$i++){
+        for($i=0; $i<3;$i++){
             if(!isset($dataLoteArr[$i]) || trim($dataLoteArr[$i])===''){
                 throw new Exception('Campo que no se permite vacio');
             }
@@ -231,8 +237,7 @@ class ProduccionController extends Controller
             'producto_id'=>$dataLoteArr[0],
             'cantidadElaborada'=>$dataLoteArr[1],
             'fechaInicio'=>$fecha,
-            'tipoTP'=>$dataLoteArr[3],
-            'asignatura'=>$dataLoteArr[4]
+            'tipoTP'=>false,
         ];
         $lote = Lote::crearLoteNoPlanificado($datosLote);
 
@@ -287,14 +292,6 @@ class ProduccionController extends Controller
     }
 
     public static function postModificarIniciado($id){
-
-
-       /* $data['fecha']='2018-06-04';
-
-        $data['lotes']=self::getArrayLotes('2018-06-04');
-        return view('produccion.produccion',compact('data'));*/
-
-
         //Datos de la vista
         $loteVista = request()->input('lote');
         $consumosVista = request()->input('consumo');
@@ -302,25 +299,25 @@ class ProduccionController extends Controller
         //Parseo los datos de la request
         $dataLoteArr = explode(',',$loteVista);
         $consumosArrVista = explode(',',$consumosVista);
-        var_dump($loteID);
+        /*var_dump($loteID);
         var_dump($dataLoteArr);
         var_dump($consumosArrVista);
-        return view('welcome');
+        return view('welcome');*/
 
-        $datosLote = [];
-        $consumos=[];
-        $lote = Lote::find($datosLote['lote_id']);
-        $fecha = $lote->fechaInicio;
+        if($dataLoteArr[1]=='' || $dataLoteArr[2]==''){
+            throw new Exception('Fecha o Cantidad vacias');
+        }
+
+        $lote = Lote::find($loteID);
+        $lote->cantidadElaborada = $dataLoteArr[1];
+        $lote->fechaInicio=$dataLoteArr[2];
         //modifico el lote
-        $lote->modificarLote($consumos,$fecha);
-
-
-
+        $lote->actualizarConsumos($consumosArrVista );
+        $lote->save();
         //Retorno a la vista inicial de produccion en la fecha de este lote
-        $data['lotes']=self::getArrayLotes($fecha);
-        $data['fecha']=$fecha;
+        $data['lotes']=self::getArrayLotes($lote->fechaInicio);
+        $data['fecha']=$lote->fechaInicio;
         return view('produccion.produccion',compact('data'));
-
     }
 
     /**

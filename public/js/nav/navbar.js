@@ -3,10 +3,13 @@ $(document).ready(function(){
 	if(lugar=="home"){
 		$("#dropdown00").css('color','#ff4d4d');
 	}
-		
+	//voy poniendo el nombre de la vista donde esto parado
+	var nombreAtual=$('#home').text();	
+	console.log(nombreAtual);
+	var nombreVista=$('#tituloPagina').text();
+	console.log(nombreVista);
+
+	$('#home').text(nombreAtual+"->"+nombreVista);
+	console.log($('#home').text());
 });
 
-
-$('.btn-expand-collapse').click(function(e) {
-				$('.navbar-primary').toggleClass('collapsed');
-});

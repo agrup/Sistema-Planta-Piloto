@@ -21,7 +21,7 @@ class GestorStock
 
     // MOVIMIENTOS DE ENTRADA
     //REALES
-    const DIAS_DE_VIDA_INSUMO_PLANIF = 1;
+    const DIAS_DE_VIDA_INSUMO_PLANIF = 2;
     const FORMATO_FECHA = Movimiento::FORMATO_FECHA;
 
     /**
@@ -611,17 +611,20 @@ class GestorStock
     {
         $result=[];
 
-         if(!$planificados)
+         if($planificados)
          {
                 
-            $movimientos =Movimiento::ultimoStockRealProdTodos();
-
+           // $movimientos =Movimiento::ultimoStockRealProdTodos();
+            
+            //self::recalcularPlanificados($fechaHasta);
+             self::recalcularPlanificados($fechaHasta);
+            $movimientos =Movimiento::ultimoStockProdTodos($fechaHasta);
 
          }
         else
         {
-            self::recalcularPlanificados($fechaHasta);
-             $movimientos =Movimiento::ultimoStockProdTodos($fechaHasta);
+           
+             $movimientos =Movimiento::ultimoStockRealProdTodosHasta($fechaHasta);
 
         }
         if(!empty($movimientos )){
@@ -685,6 +688,7 @@ class GestorStock
             //y su stock final para ver la necesidad final
             $stockFinal = self::getStockProd($movC->producto_id,$fechaHasta);
             $fechaAgot = Carbon::createFromFormat(self::FORMATO_FECHA,$movC->fecha);
+            $necesidadAgot = abs($movC->saldoGlobal);
             //paso la fecha a yyyy/mm/dd
             $fechaAgot = $fechaAgot->format(Lote::FORMATO_FECHA);
             //armo el array
@@ -692,6 +696,7 @@ class GestorStock
             $arrAux['insumo']=$producto->nombre;
             $arrAux['tipoUnidad']=$producto->tipoUnidad;
             $arrAux['fechaAgotamiento']=$fechaAgot;
+            $arrAux['necesidadAgot']=$necesidadAgot;
             //calculo la necesidad en funcion del stock final del producto a la fecha
             if($stockFinal>0){
                 $necesidad = 0;
@@ -701,7 +706,7 @@ class GestorStock
             $arrAux['necesidadFinal']=$necesidad;
             array_push($necesidades,$arrAux);
         }
-        //calculo de las alarmas
+        //calculo de las alarmas futuras
         $stocks = self::getStockPorProd($fechaHasta,true);
         foreach ($stocks as $stock){
             $arrAux = [];
@@ -845,5 +850,24 @@ class GestorStock
 
     }
 
+
+    public static function getAlarmasActivas(){
+        $alarmas=[];
+        $fechaStr = Carbon::createFromFormat('Y-m-d H:i:s',Movimiento::getFechaUltimoReal())->format('Y-m-d');
+        $fecha =  $fechaStr . " ". '23:59:59';
+        $stocks = self::getStockPorProd($fecha,false);
+        foreach ($stocks as $stock){
+            $arrAux = [];
+            if($stock['alarma']!='normal'){
+                $arrAux['codigo']=$stock['codigo'];
+                $arrAux['nombre']=$stock['nombre'];
+                $arrAux['stock']=$stock['stock'];
+                $arrAux['tipoUnidad']=$stock['tipoUnidad'];
+                $arrAux['alarma']=$stock['alarma'];
+                array_push($alarmas,$arrAux);
+            }
+        }
+        return $alarmas;
+    }
 
 }

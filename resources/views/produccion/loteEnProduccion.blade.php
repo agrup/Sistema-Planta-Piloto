@@ -1,23 +1,32 @@
 @extends('layouts.layoutPrincipal' )
 
 @section('section')
+	<?php 
+		setlocale(LC_TIME, 'spanish');
+		Carbon\Carbon::setUtf8(true);
+
+		$fechaC = Carbon\Carbon::createFromFormat('Y-m-d',$lote["fecha"]);
+		$fechaActual=$fechaC->formatLocalized('%A %d de %B de %Y');
+	?>
+
 		@include('elementosComunes.aperturaTitulo')
-			Lote en Producción {{ $lote['fecha']}}
+			Lote en Producción {{$fechaActual}}
 		@include('elementosComunes.cierreTitulo')
 
-		@include('elementosComunes.aperturaTabla')    
-			<thead><tr><th>Lote</th> 
-						<th>Nombre</th> 
-						<th>Cantidad</th> 
-						<th>Estado</th> 						
-						<th></th>
-					</tr>
+		@include('elementosComunes.aperturaTablaSinOrdenar')
+			<thead>
+				<tr>
+					<th>Lote</th>
+					<th>Nombre</th>
+					<th>Cantidad</th>
+					<th>Tipo</th>
+				</tr>
 			</thead>	
 			<tbody>
 				<tr>
 					<td>{{ $lote['id'] }}</td>
 					<td>{{ $producto['nombre'] }}</td>
-					<td>{{ $lote['cantidad']}}{{ $producto['tipoUnidad'] }}</td>
+					<td>{{ $lote['cantidad']}} {{ $producto['tipoUnidad'] }}</td>
 					<td>{{ $lote['tipoLote'] }}</td>
 				</tr>		
 			</tbody>		
@@ -74,7 +83,7 @@
                         <td>{{$insumo['nombre']}}</td>
                         <td> 0 {{ $insumo['tipoUnidad']}}</td>
                         <td> - </td>
-                        <td> {{$insumo['cantTeorica']}} </td>
+                        <td> {{$insumo['cantTeorica']}} {{ $insumo['tipoUnidad']}} </td>
                     </tr>
                 @else {{-- Si posee consumos --}}
                     @foreach($insumo['consumos'] as $consumo)
@@ -99,21 +108,23 @@
 					@break
 
 				@case('iniciado')
-				<form action="/produccion/modificarIniciado/{{$lote['id']}}" method="get" class="col-md-4">
+				<div class="rowFlex">
+
+				    <form action="/produccion/modificarIniciado/{{$lote['id']}}" method="get" class="col-md-4">
 				{{ csrf_field() }}
-					<button type="submit" class="btn btn-primary">Modificar</button>
-				</form>
-				<form action="" method="post" class="col-md-4">
+					    <button type="submit" class="btn btn-primary">Modificar</button>
+				    </form>
+				<form action="" method="post">
 					{{ csrf_field() }}
 				@include('produccion.registrarMaduracion')
 				</form>
 
-				<form action="" method="post" class="col-md-4">
+				<form action="" method="post">
 					{{ csrf_field() }}
 					@include('produccion.finalizarLote')
 				</form>
-					
 
+                </div>
 					@break
 
 				@case('maduracion')
@@ -130,7 +141,14 @@
 
 
 				 @default
-	        		<span>Something went wrong, please try again</span>
+				<div class="alert alert-danger">
+					<span>Este es un lote de Insumo</span>
+				</div>
 		    @endswitch
+	<div>
+		<a href="/" class="btn btn-secondary">Volver al Menú</a>
+
+
+	</div>
 @endsection
 		

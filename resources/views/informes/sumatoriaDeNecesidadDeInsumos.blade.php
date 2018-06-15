@@ -1,12 +1,21 @@
 @extends('layouts.layoutPrincipal' )
 @section('section')
     @include('elementosComunes.aperturaTitulo')
-  
         Sumatoria de necesidades de Insumos
-   
     @include('elementosComunes.cierreTitulo')
     @include('elementosComunes.aperturaTitulo')
-    <h4 class="">Sumarizacion hasta: {{$fechaHasta}}</h4>
+    
+    <h5><b>Sumarizacion hasta: </b></h5>
+    <form action="/sumarizacion" method="get" class="form-inline">
+        {{csrf_field()}}
+        {{-- {date("d-m-Y",strtotime($fechaHasta))}} --}}
+        <div class="input-group">
+        <input type="date" name="fecha" class="form-control" value="{{$fechaHasta}}">                     
+        </div>
+        <input type="submit" class="btn btn-primary" value="Ir a la Fecha">         
+    </form>
+
+    
     @include('elementosComunes.cierreTitulo')
     @include('elementosComunes.aperturaTitulo')
     <h4 class="">En necesidad</h4>
@@ -18,6 +27,7 @@
         <th>Insumo</th>
         <th>Necesidad Final</th>
         <th>Fecha Agotamiento</th>
+        <th>Necesidad</th>
     </tr>
     </thead>
     <tbody>
@@ -26,7 +36,8 @@
             <td> {{$v['codigo']}}</td>
             <td>{{$v['insumo']}}</td>
             <td>{{$v['necesidadFinal']}}  {{$v['tipoUnidad']}}</td>
-            <td>{{$v['fechaAgotamiento']}}</td>
+            <td>{{date("d-m-Y",strtotime($v['fechaAgotamiento']))}}</td>
+            <td>{{$v['necesidadAgot']}} {{$v['tipoUnidad']}}</td>
         </tr>
     @endforeach
     <?php unset($value);?>
@@ -60,25 +71,11 @@
     @endforeach
     </tbody>
     @include('elementosComunes.cierreTabla')
-    <form action="/sumarizacion" method="get">
-        {{csrf_field()}}
-    <div class="py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h5 class="">Revisar Planificacion Hasta:</h5>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-3">
-                    <input type="date" name="fecha" class="form-control"> </div>
-            </div>
-        </div>
+    <input type="button" class="btn btn-secondary" value="Imprimir" onClick="window.print()">
 
-    </div>
-    @include('elementosComunes.aperturaBoton')
-    <input type="submit" class="btn btn-primary" value="Ir a la Fecha">
-    @include('elementosComunes.cierreBoton')
-    </form>
+    {{--@include('alertaStock')--}}
+
+    
+
 @endsection
