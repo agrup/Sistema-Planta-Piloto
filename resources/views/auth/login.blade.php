@@ -22,7 +22,7 @@
                               {{--<input type="email" name="email" class="form-control" placeholder="Enter email"> </div>--}}
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-1 text-md-left">Password</label>
+                            <label class="col-md-1 text-md-left">Contraseña</label>
                             <div class="col-md-3">
                               <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
                             </div>
@@ -36,7 +36,7 @@
                             <div class="col-md-6 offset-md-4">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}
+                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Recordarme') }}
                                     </label>
                                 </div>
                             </div>
