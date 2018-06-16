@@ -117,6 +117,7 @@ Route::post('/stock/controlExistencias','LotesController@saveControlExist')->mid
 
 Route::get('/','MainController@index')->middleware('checkRoles:administrador,produccion,jefeProduccion');
 
+Route::get('/logout','MainController@index')->middleware('checkRoles:administrador,produccion,jefeProduccion');
 Auth::routes();
 
 
