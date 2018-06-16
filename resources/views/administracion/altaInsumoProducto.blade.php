@@ -33,20 +33,28 @@
 						            <div class="form-group">
 										<label for="categoria">Categoría</label>
 										@if ($insumoProducto=='producto')
-											<select name="categoria" class="form-control" required>
+											<select name="categoria"  class="form-control" required>
 												@foreach(\App\Categorias::productos() as $categ)
 													<option value="{{$categ}}">{{$categ}}</option>
 												@endforeach
 											</select>
 										@elseif ($insumoProducto=='insumo')
-											<input type="text" value="Insumo" name="categoria" class="form-control" disabled>
+											<input type="text" value="Insumo" name="categoria" class="form-control">
 										@endif
 									</div>
 								</div>
 						        <div class="col-md-6">
 						            <div class="form-group">
 							            <label>Tipo de Unidad</label>
-							            <input type="text" name="tipoUnidad" id="inputTipoUnidad" class="form-control" required> 
+							            <select name="tipoUnidad" id="inputTipoUnidad" class="form-control">
+							            	<option selected disabled>--Tipo Unidad--</option>
+							            	<option value="Gr">Gr</option>
+							            	<option value="Kg">Kg</option>
+							            	<option value="Lts">Lts</option>
+							            	<option value="Ml">Ml</option>
+							            	<option value="U">U</option>
+							            </select>
+							            <!--input type="text" name="tipoUnidad" id="inputTipoUnidad" class="form-control" required--> 
 						          	</div>
 						            <div class="form-group">
 							            <label>Alarma (Activa o Inactiva)</label>

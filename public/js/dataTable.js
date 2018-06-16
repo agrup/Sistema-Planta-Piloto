@@ -16,12 +16,16 @@ $(document).ready(function() {
    $('table#tablaStock').dataTable({
        "bPaginate": false,
        "bLengthChange": false,
-       "bFilter": false,
+       "bFilter": true,
        "aaSorting": [[ 2, "desc" ]],
        "bInfo": false,
        "bAutoWidth": false,
-       "scrollY": "18rem",
+       "scrollY": "30rem",
        "scrollCollapse": true,
+       "language": {
+        "sSearch":         "Buscar:", 
+       },
+       
        "oLanguage": {"sZeroRecords": "", "sEmptyTable": ""}
    });
 
