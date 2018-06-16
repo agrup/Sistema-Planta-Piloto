@@ -14,7 +14,7 @@
 						<th>Vencimiento</th> 
 						<th>Cantidad en Stock</th> 
 						<th>Tipo Unidad</th>
-						<th></th></tr>
+						<th>Detalle</th></tr>
 			</thead>			
 	        <tbody >
 	        	@foreach ($lote['lotes'] as $l)	        	
@@ -24,7 +24,7 @@
 		        		<td>{{ $l['vencimiento'] }}</td> 
 		        		<td> {{ $l['cantidad'] }}</td> 
 		        		<td> {{ $lote['tipoUnidad'] }}</td>
-		        		<td> <a href="detalleLote?lote={{ $l['numeroLote'] }}">Ver Detalles de Lote</a></td>
+		        		<td> <a href="detalleLote?lote={{ $l['numeroLote'] }}"><img src="{{asset('img/details.png')}}" style="height: 24px; width: 24px" alt=""></a></td>
 		        	</tr> 
 	        	@endforeach
 	        </tbody>

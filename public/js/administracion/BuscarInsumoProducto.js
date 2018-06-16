@@ -125,14 +125,14 @@ $(document).ready(function() {
 								    	alert('Se ha eliminado el producto');
 								    	$(this).closest('tr').hide();
 								    }
-								}).fail(function(){
+							}).fail(function(){
 									alert('Ha ocurrido un error al eliminar el producto');
 						  			console.log('Error');
 							  	}
 						  	);
 						}
 						
-					});
+				});
 			    if ( $.fn.dataTable.isDataTable('table#tablaInsumoProducto') ) {
     				
     				table = $('table#insumoProducto').dataTable();
