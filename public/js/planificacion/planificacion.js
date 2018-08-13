@@ -350,9 +350,10 @@ $(document).ready(function() {
         $.ajax({
             url: "/planificacion/planificacionDia",
             data:JSON.stringify({ fechaa: fecha , insumoss: insumos, productoss : productos }),
-            type: 'POST',
+            type: 'get',
             dataType : "json",
-            contentType: "application/json"
+            contentType: "application/json",
+           
         }).done(function (data){
                 console.log(data);
                 alert('Planificacion Guardada Satisfactoriamente');
